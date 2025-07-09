@@ -4,27 +4,16 @@ using UnityEngine.UI;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
-    [field: System.NonSerialized] public int id;
-
-    void Start()
+    [field: System.NonSerialized] private int id;
+    [SerializeField] private Text _costText;
+    public void SetID(int ID)
     {
-        InGameManager.Instance.onDropCharacter += OnRaycastTargetTrue;
-        InGameManager.Instance.onSelectCharacter += OnRaycastTargetFalse;
+        id = ID;
+        _costText.text = InGameManager.Instance.CharacterDataManager.GetCharacterData(id).Cost.ToString();
     }
-    void OnRaycastTargetFalse()
-    {
-        Debug.Log("CharacterIcon.OnRaycastTargetChange");
-        GetComponent<Image>().raycastTarget = false;
-    }
-
-    void OnRaycastTargetTrue()
-    {
-        Debug.Log("CharacterIcon.OnRaycastTargetTrue");
-        GetComponent<Image>().raycastTarget = true;
-    }
+    
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("CharacterButton.OnPointerDown");
         InGameManager.Instance.SelectCharacter(id);
     }
 }

@@ -5,4 +5,9 @@ public class CharacterDataManager : ScriptableObject
 {
     [SerializeField] private CharacterData[] characterDatas;
     public CharacterData[] CharacterDatas { get { return characterDatas; } }
+    
+    public CharacterData GetCharacterData(int index)
+    {
+        return characterDatas[index];
+    }
 }

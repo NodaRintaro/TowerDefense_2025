@@ -7,11 +7,12 @@ public class InGameManager : MonoBehaviour
     public static InGameManager Instance => _instance;
     
     [SerializeField] private GameObject _characterIconPrefab;
-    [SerializeField] private CharacterDataManager _characterDataManager;
     [SerializeField] private GameObject _characterBasePrefab;
+    [SerializeField] private CharacterDataManager _characterDataManager;
     private int _selectedCharacterID = -1;
     private GameObject _selectedCharacterObj;
     private playerState _playerState = playerState.Idle;
+    public CharacterDataManager CharacterDataManager => _characterDataManager;
     
     public event Action onDropCharacter;
     public event Action onSelectCharacter;
@@ -85,7 +86,7 @@ public class InGameManager : MonoBehaviour
         {
             CharacterIcon characterIcon = Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform).GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
-            characterIcon.id = i;
+            characterIcon.SetID(i);
         }
     }
 }

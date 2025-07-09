@@ -9,11 +9,9 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
     [SerializeField] private CharacterDataManager _characterDataManager;
-    private int _selectedCharacterID = -1;
     private GameObject _selectedCharacterObj;
     private playerState _playerState = playerState.Idle;
     public CharacterDataManager CharacterDataManager => _characterDataManager;
-    
     public event Action onDropCharacter;
     public event Action onSelectCharacter;
 
@@ -49,19 +47,18 @@ public class InGameManager : MonoBehaviour
     //アイコンをポインターが押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
-        _selectedCharacterID = characterID; 
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
         _playerState = playerState.DraggingCharacter;
         onSelectCharacter?.Invoke();
     }
 
+    //ドラッグ中の処理
     void DraggingCharacter()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(hit.collider.gameObject.name);
             _selectedCharacterObj.transform.position = hit.point;
         }
         if(Input.GetButtonUp("Fire1"))
@@ -70,6 +67,7 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    //ドロップ可能か確認(予定)
     void canDropCharacter()
     {
         _playerState = playerState.Idle;

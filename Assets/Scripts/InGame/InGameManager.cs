@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class InGameManager : MonoBehaviour
     private int _selectedCharacterID = -1;
     private GameObject _selectedCharacterObj;
     private playerState _playerState = playerState.Idle;
+    
+    public event Action onDropCharacter;
+    public event Action onSelectCharacter;
 
     private void Awake()
     {
@@ -44,10 +48,10 @@ public class InGameManager : MonoBehaviour
     //アイコンをポインターが押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
-        Debug.Log("Selected Character ID: " + _selectedCharacterID);
         _selectedCharacterID = characterID; 
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
         _playerState = playerState.DraggingCharacter;
+        onSelectCharacter?.Invoke();
     }
 
     void DraggingCharacter()
@@ -56,17 +60,19 @@ public class InGameManager : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
+            Debug.Log(hit.collider.gameObject.name);
             _selectedCharacterObj.transform.position = hit.point;
         }
         if(Input.GetButtonUp("Fire1"))
         {
-            _playerState = playerState.Idle;
+            canDropCharacter();
         }
     }
 
     void canDropCharacter()
     {
-        
+        _playerState = playerState.Idle;
+        onDropCharacter?.Invoke();
     }
     
     //キャラクターアイコンを生成

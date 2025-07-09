@@ -612,8 +612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5516e6793ad7ed44fbaa83c15f143a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterButtonPrefab: {fileID: 2482917324385761965, guid: c4110db9477d3814185656a919b02170, type: 3}
+  _characterIconPrefab: {fileID: 2326454433887610143, guid: 20b3b052d36a5fb42a3400a925bcbcdc, type: 3}
   _characterDataManager: {fileID: 11400000, guid: 0a4f7fc59db2cb84d9e32ccf541ed836, type: 2}
+  _characterBasePrefab: {fileID: 4324148163610486775, guid: 74f6fd7a1c20bbe4caeec46e3604edb6, type: 3}
 --- !u!4 &2026831754
 Transform:
   m_ObjectHideFlags: 0

@@ -9,11 +9,12 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
     [SerializeField] private CharacterDataManager _characterDataManager;
+    private Cell _selectedCell;
     private GameObject _selectedCharacterObj;
     private playerState _playerState = playerState.Idle;
     public CharacterDataManager CharacterDataManager => _characterDataManager;
-    public event Action onDropCharacter;
-    public event Action onSelectCharacter;
+    public event Action OnDropCharacter;
+    public event Action OnSelectCharacter;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class InGameManager : MonoBehaviour
     {
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
         _playerState = playerState.DraggingCharacter;
-        onSelectCharacter?.Invoke();
+        OnSelectCharacter?.Invoke();
     }
 
     //ドラッグ中の処理
@@ -60,18 +61,46 @@ public class InGameManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             _selectedCharacterObj.transform.position = hit.point;
-        }
-        if(Input.GetButtonUp("Fire1"))
-        {
-            canDropCharacter();
+            
+            if(Input.GetButtonUp("Fire1"))
+            {
+                DropCharacter();
+                return;
+            }
+            
+            if (hit.transform.gameObject.CompareTag("Cell"))
+            {
+                Cell cell = hit.transform.GetComponent<Cell>();
+                OnEnterCell(cell);
+            }
+            else
+            {
+                OnExitCell();
+            }
         }
     }
 
     //ドロップ可能か確認(予定)
-    void canDropCharacter()
+    void DropCharacter()
     {
         _playerState = playerState.Idle;
-        onDropCharacter?.Invoke();
+        OnDropCharacter?.Invoke();
+        if (_selectedCell == null || !_selectedCell.SetCharacter(_selectedCharacterObj)) Destroy(_selectedCharacterObj);
+        OnExitCell();
+    }
+
+    void OnEnterCell(Cell cell)
+    {
+        if(_selectedCell == cell) return;
+        _selectedCell = cell;
+        _selectedCell.OnPointerEnter();
+    }
+
+    void OnExitCell()
+    {
+        if (_selectedCell == null) return;
+        _selectedCell.OnPointerExit();
+        _selectedCell = null;
     }
     
     //キャラクターアイコンを生成

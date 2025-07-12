@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class CharacterBase : MonoBehaviour
 {
-    [SerializeField] float ID = 0;
+    private int _id;
+    private CharacterData _characterData;
 
     void Init()
     {
-        
+        _characterData = InGameManager.Instance.CharacterDataManager.GetCharacterData(_id);
     }
 }

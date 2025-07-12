@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e52b0081e460104094884eba16ddbce, type: 3}
   m_Name: Character_2
   m_EditorClassIdentifier: 
-  color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+  Color: {r: 0, g: 0.0038642883, b: 1, a: 1}
   CharacterName: Defender
+  Cost: 2
   HP: 12
   MP: 3
   AttackPower: 2
   Defense: 4
+  AttackSpeed: 0
+  Range: 0

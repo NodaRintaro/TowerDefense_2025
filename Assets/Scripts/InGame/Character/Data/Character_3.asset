@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e52b0081e460104094884eba16ddbce, type: 3}
   m_Name: Character_3
   m_EditorClassIdentifier: 
-  color: {r: 0.05724919, g: 1, b: 0, a: 0}
+  Color: {r: 0.10984874, g: 1, b: 0, a: 1}
   CharacterName: Healer
+  Cost: 3
   HP: 5
   MP: 7
   AttackPower: 1
   Defense: 1
+  AttackSpeed: 0
+  Range: 0

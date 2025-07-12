@@ -6,10 +6,12 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
     [field: System.NonSerialized] private int id;
     [SerializeField] private Text _costText;
+    [SerializeField] private Image _icon;
     public void SetID(int ID)
     {
         id = ID;
         _costText.text = InGameManager.Instance.CharacterDataManager.GetCharacterData(id).Cost.ToString();
+        _icon.color = InGameManager.Instance.CharacterDataManager.GetCharacterData(id).Color;
     }
     
     public void OnPointerDown(PointerEventData eventData)

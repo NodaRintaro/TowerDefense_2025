@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _costText: {fileID: 8972919485527997358}
+  _icon: {fileID: 1258397539721166904}
 --- !u!1 &3882218864119705531
 GameObject:
   m_ObjectHideFlags: 0

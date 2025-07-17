@@ -10,3 +10,10 @@ public class CharacterBase : MonoBehaviour
         _characterData = InGameManager.Instance.CharacterDataManager.GetCharacterData(_id);
     }
 }
+public enum CharacterType
+{
+    Tank,
+    Shooter,
+    Healer,
+    Enemy
+}

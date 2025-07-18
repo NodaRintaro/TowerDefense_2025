@@ -182,3 +182,4 @@ public class GenerateScriptableObjectMenu : EditorWindow
         return array;
     }
 }
+#endif

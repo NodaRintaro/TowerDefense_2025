@@ -5,12 +5,20 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     public Color Color;
+    public CharacterType CharacterType;
     public string CharacterName;
-    public int Cost;
+    public float Cost;
     public float HP;
     public float MP;
     public float AttackPower;
     public float Defense;
     public float AttackSpeed;
     public float Range;
+}
+
+public enum ChatacterType
+{
+    Attacker,
+    Defender,
+    Healer,
 }

@@ -45,7 +45,7 @@ public class InGameManager : MonoBehaviour
         }
     }
     
-    //アイコンをポインターが押下した時に呼び出される関数
+    //アイコンを押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
@@ -92,6 +92,7 @@ public class InGameManager : MonoBehaviour
     void OnEnterCell(Cell cell)
     {
         if(_selectedCell == cell) return;
+        OnExitCell();
         _selectedCell = cell;
         _selectedCell.OnPointerEnter();
     }

@@ -6,6 +6,24 @@ public sealed class ExampleInspector : Editor
 {
     private const float SPACE       = 1;
     private const float SPACE_HALF  = SPACE / 2;
+    private static Transform _stageTransform;
+
+    [InitializeOnLoadMethod]//unity起動時に実行される（スクリプト更新時にしか読んでくれない...）
+    static void Initialize()
+    {
+        var stageObj = GameObject.Find( "Stage" );
+        if ( stageObj == null )
+        {
+            stageObj = new GameObject( "Stage" );
+        }
+        _stageTransform = stageObj.transform;
+    }
+
+    private void OnEnable()
+    {
+        var example = target as Example;
+        SetParent(example.transform);
+    }
 
     private void OnSceneGUI()
     {
@@ -43,7 +61,6 @@ public sealed class ExampleInspector : Editor
             // scaleZ.intValue = ( int )result.z;
             // transform.localScale = result;
         }
-
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -55,5 +72,15 @@ public sealed class ExampleInspector : Editor
     private static float MultipleRound( float value, float multiple )
     {
         return MultipleFloor( value + multiple * 0.5f, multiple );
+    }
+    
+    private static void SetParent(Transform transform)
+    {
+        if (_stageTransform == null)
+        {
+            Debug.LogError("Stage object not found!");
+            return;
+        }
+        transform.SetParent( _stageTransform.transform );
     }
 }

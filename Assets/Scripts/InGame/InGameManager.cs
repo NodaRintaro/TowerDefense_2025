@@ -49,6 +49,7 @@ public class InGameManager : MonoBehaviour
     public void SelectCharacter(int characterID)
     {
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
+        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDataManager.CharacterDatas[characterID].Color;
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
     }

@@ -5,3 +5,6 @@ https://candle-stoplight-544.notion.site/6-1b439cbfbab98018bb6eeb97e8ba49d1
 ・
 ステージをデータとして保存するときは
 {座標、高さ、設置できるキャラクターの情報}みたいな感じにして保存する
+
+・Editor拡張のTips
+//https://yotiky.hatenablog.com/entry/unity_editorextension-tips

@@ -8,8 +8,8 @@ public sealed class ExampleInspector : Editor
     private const float SPACE_HALF  = SPACE / 2;
     private static Transform _stageTransform;
 
-    [InitializeOnLoadMethod]//unity起動時に実行される（スクリプト更新時にしか読んでくれない...）
-    static void Initialize()
+    //[InitializeOnLoadMethod]//unity起動時に実行される（スクリプト更新時にしか読んでくれない...）
+    void Awake()
     {
         var stageObj = GameObject.Find( "Stage" );
         if ( stageObj == null )
@@ -78,7 +78,7 @@ public sealed class ExampleInspector : Editor
     {
         if (_stageTransform == null)
         {
-            Debug.LogError("Stage object not found!");
+            Debug.LogError("StageObjIsNull1");
             return;
         }
         transform.SetParent( _stageTransform.transform );

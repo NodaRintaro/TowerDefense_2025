@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor( typeof( Example ) )]
-public sealed class ExampleInspector : Editor
+public sealed class CustomInspector : Editor
 {
     private const float SPACE       = 1;
     private const float SPACE_HALF  = SPACE / 2;

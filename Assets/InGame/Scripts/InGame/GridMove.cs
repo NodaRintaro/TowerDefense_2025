@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 [Serializable]
-public sealed class Example : MonoBehaviour
+public sealed class GridMove : MonoBehaviour
 {
     [SerializeField][HideInInspector] private int m_posX    = 0;
     [SerializeField][HideInInspector] private int m_posZ    = 0;

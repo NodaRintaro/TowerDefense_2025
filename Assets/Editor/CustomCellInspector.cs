@@ -1,16 +1,16 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor( typeof( Example ) )]
-public sealed class CustomInspector : Editor
+[CustomEditor( typeof( GridMove ) )]
+public sealed class CustomCellInspector : Editor
 {
     private const float SPACE       = 1;
     private const float SPACE_HALF  = SPACE / 2;
     private static Transform _stageTransform;
 
-    //[InitializeOnLoadMethod]//unity起動時に実行される（スクリプト更新時にしか読んでくれない...）
     void Awake()
     {
+        //Unity起動時にStageObjectを検索する。
         var stageObj = GameObject.Find( "Stage" );
         if ( stageObj == null )
         {
@@ -21,13 +21,14 @@ public sealed class CustomInspector : Editor
 
     private void OnEnable()
     {
-        var example = target as Example;
+        //Unity開始時、また新たにオブジェクトを配置するときにStageObjectの子オブジェクトにする。
+        var example = target as GridMove;
         SetParent(example.transform);
     }
 
     private void OnSceneGUI()
     {
-        var example = target as Example;
+        var example = target as GridMove;
         var posX    = serializedObject.FindProperty( "m_posX"   );
         var posZ    = serializedObject.FindProperty( "m_posZ"   );
         var scaleX  = serializedObject.FindProperty( "m_scaleX" );
@@ -78,7 +79,7 @@ public sealed class CustomInspector : Editor
     {
         if (_stageTransform == null)
         {
-            Debug.LogError("StageObjIsNull1");
+            Debug.LogError("StageObjIsNull");
             return;
         }
         transform.SetParent( _stageTransform.transform );

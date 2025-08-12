@@ -35,18 +35,18 @@ public class CreateStageWindow : EditorWindow
             Directory.CreateDirectory(_mustSavePath + _saveFolderPath);
         }
         
+        StageData stageData = ScriptableObject.CreateInstance<StageData>();
+        stageData.name = _stageName;
+        
         //Stageというオブジェクトの子オブジェクトを取得する。
         GameObject stageObj = GameObject.Find("Stage");
         int childObjCount = stageObj.transform.childCount;
-        CellData[] cellDatas = new CellData[childObjCount];
+        stageData.SetCells(new CellData[childObjCount]);
         for (int i = 0; i < childObjCount; i++)
         {
-            cellDatas[i].position = stageObj.transform.GetChild(i).position;
+            stageData.SetCell(i, new CellData(stageObj.transform.GetChild(i).position, default));
         }
 
-        //ステージデータを作る
-        StageData stageData = ScriptableObject.CreateInstance<StageData>();
-        stageData.SetCells(cellDatas);
         
         // 保存パスの指定
         string assetPath = $"{_mustSavePath + _saveFolderPath}/RoomData_{_stageName + System.DateTime.Now.Ticks}.asset";

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor( typeof( GridMove ) )]
+[CustomEditor( typeof( CellGridMove ) )]
 public sealed class CustomCellInspector : Editor
 {
     private const float SPACE       = 1;
@@ -22,26 +22,30 @@ public sealed class CustomCellInspector : Editor
     private void OnEnable()
     {
         //Unity開始時、また新たにオブジェクトを配置するときにStageObjectの子オブジェクトにする。
-        var example = target as GridMove;
+        var example = target as CellGridMove;
         SetParent(example.transform);
     }
 
     private void OnSceneGUI()
     {
-        var example = target as GridMove;
+        var example = target as CellGridMove;
         var posX    = serializedObject.FindProperty( "m_posX"   );
+        var posY    = serializedObject.FindProperty( "m_posY"   );
         var posZ    = serializedObject.FindProperty( "m_posZ"   );
         var scaleX  = serializedObject.FindProperty( "m_scaleX" );
+        var scaleY  = serializedObject.FindProperty( "m_scaleY" );
         var scaleZ  = serializedObject.FindProperty( "m_scaleZ" );
 
         var transform = example.transform;
 
         {
-            var position = new Vector3( posX.intValue, 0, posZ.intValue );
+            var position = new Vector3( posX.intValue, posY.intValue, posZ.intValue );
             var result = Handles.PositionHandle( position, transform.rotation );
             result.x = MultipleRound( result.x, SPACE_HALF );
+            result.y = MultipleRound( result.y, SPACE_HALF );
             result.z = MultipleRound( result.z, SPACE_HALF );
             posX.intValue = ( int )result.x;
+            posY.intValue = ( int )result.y;
             posZ.intValue = ( int )result.z;
             transform.position = result;
         }

@@ -15,10 +15,10 @@ MonoBehaviour:
   _dataList:
   - _id: 1
     _characterName: FallenAngelNishinoGodOneWingTUBASAPeace
-    _physical: 30
-    _power: 47
-    _intelligence: 40
-    _speed: 500
+    _physical: 999
+    _power: 999
+    _intelligence: 999
+    _speed: 999
   - _id: 2
     _characterName: Akasan
     _physical: 90
@@ -37,3 +37,9 @@ MonoBehaviour:
     _power: 45
     _intelligence: 60
     _speed: 48
+  - _id: 5
+    _characterName: Handa
+    _physical: 1
+    _power: 1
+    _intelligence: 1
+    _speed: 1

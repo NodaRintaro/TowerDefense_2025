@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-
-public class TrainedCharacterRegistry : MonoBehaviour
+[CreateAssetMenu(fileName = "CharacterDataList", menuName = "ScriptableObject/CharacterDataList")]
+public class TrainedCharacterRegistry : ScriptableObject
 {
-   
+    [SerializeField, Header("育成済みキャラクターのデータリスト")]
+    private List<TrainedCharacterData> _trainedCharacterDataList = new();
+
+    public List<TrainedCharacterData> TrainedCharacterDataList => _trainedCharacterDataList;
 }

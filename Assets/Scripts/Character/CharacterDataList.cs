@@ -16,6 +16,7 @@ public class CharacterDataList : ScriptableObject
     }
 }
 
+/// <summary> キャラクターのベースデータ </summary>
 [System.Serializable]
 public class CharacterData
 {
@@ -36,19 +37,19 @@ public class CharacterData
     /// パラメータのセッター
     /// </summary>
     /// <param name="id">ID</param>
-    /// <param name="characterName">名前</param>
-    /// <param name="physical">体力</param>
-    /// <param name="power">筋力</param>
-    /// <param name="intelligence">知力</param>
-    /// <param name="speed">素早さ</param>
-    public void InitData(string id, string characterName, string physical, string power, string intelligence, string speed)
+    /// <param name="charaName">名前</param>
+    /// <param name="physi">体力</param>
+    /// <param name="pow">筋力</param>
+    /// <param name="intelli">知力</param>
+    /// <param name="sp">素早さ</param>
+    public void InitData(string id, string charaName, string physi, string pow, string intelli, string sp)
     {
         _id = uint.Parse(id);
-        _characterName = characterName;
-        _physical = uint.Parse(physical);
-        _power = uint.Parse(power);
-        _intelligence = uint.Parse(intelligence);
-        _speed = uint.Parse(speed);
+        _characterName = charaName;
+        _physical = uint.Parse(physi);
+        _power = uint.Parse(pow);
+        _intelligence = uint.Parse(intelli);
+        _speed = uint.Parse(sp);
     }
     
     public uint ID => _id;

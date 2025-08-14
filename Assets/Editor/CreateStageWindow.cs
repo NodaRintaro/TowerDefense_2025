@@ -11,7 +11,7 @@ public class CreateStageWindow : EditorWindow
     private string _saveFolderPath = "DefaultRooms";
     private string _stageName = "NewRoom";
     
-    [MenuItem("Tools/CreateStage")]
+    [MenuItem("Tools/CreateStageData")]
     public static void ShowWindow()
     {
         GetWindow<CreateStageWindow>();
@@ -54,5 +54,29 @@ public class CreateStageWindow : EditorWindow
         AssetDatabase.CreateAsset(stageData, assetPath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+    }
+
+    void EditStageByStageData()
+    {
+        EditorGUILayout.LabelField("Edit Stage by StageData");
+        StageData stageData = (StageData)EditorGUILayout.ObjectField(null, typeof(StageData), false);
+        if (stageData == null)
+        {
+            return;
+        }
+        
+        // ステージデータを元にステージを生成する
+        GameObject stageObj = GameObject.Find("Stage");
+        if (stageObj == null)
+        {
+            stageObj = new GameObject("Stage");
+        }
+        //stageObj.transform.GetChild(1).
+        for (int i = 0; i < stageData.GetCells().Length; i++)
+        {
+            GameObject cellObj = new GameObject("Cell");
+            cellObj.transform.parent = stageObj.transform;
+            cellObj.transform.position = stageData.GetCell(i).position;
+        }
     }
 }

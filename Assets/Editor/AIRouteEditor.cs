@@ -54,12 +54,11 @@ public class AIRouteEditor : Editor
             // コンボボックスを表示する
             EditorGUI.BeginChangeCheck();
             var rect = new Rect(screenPos.x, screenPos.y + 10, 100, 20);
-            var editedTag = (AIRoute.TagType)EditorGUI.EnumPopup(rect, wayPoint.tag);
+            EditorGUI.TextField(rect, $"{i}");
             // 変更されたら反映する
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(instance, "Edit Destination");
-                wayPoint.tag = editedTag;
                 EditorUtility.SetDirty(instance);
             }
 

@@ -8,6 +8,9 @@ public class StageData : ScriptableObject
 
     public void SetCells(CellData[] cellDatas) { _cellDatas = cellDatas;}
     public void SetCell(int index, CellData cellData) { _cellDatas[index] = cellData; }
+    
+    public CellData[] GetCells() { return _cellDatas; }
+    public CellData GetCell(int index) { return _cellDatas[index]; }
 }
 
 [Serializable]

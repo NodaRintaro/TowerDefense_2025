@@ -5,19 +5,17 @@ using UnityEngine;
 [Serializable]
 public class AIRoute
 {
-    public enum TagType
-    {
-        Start,
-        Goal,
-        Normal,
-    }
     public Vector3 position;
-    public TagType tag = TagType.Normal;
+    public int arrayIndex;
 }
 
-[CreateAssetMenu(fileName = "AIRoutes", menuName = "MyGame/WayPoints", order = 1)]
+[CreateAssetMenu(fileName = "AIRoutes", menuName = "Tools/WayPoints", order = 1)]
 public class AIRoutes : ScriptableObject
 {
-    [field:SerializeField]
-    public List<AIRoute> Points { get; private set; } = new List<AIRoute>();
+    [field: SerializeField]
+    public List<AIRoute> Points
+    {
+        get;
+        private set;
+    } = new List<AIRoute>();
 }

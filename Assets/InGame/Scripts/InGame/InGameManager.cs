@@ -8,14 +8,15 @@ public class InGameManager : MonoBehaviour
     
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
-    [SerializeField] private CharacterDataManager _characterDataManager;
+    [SerializeField] private UnitDataManager unitDataManager;
     private Cell _selectedCell;
     private GameObject _selectedCharacterObj;
     private playerState _playerState = playerState.Idle;
-    public CharacterDataManager CharacterDataManager => _characterDataManager;
+    public UnitDataManager UnitDataManager => unitDataManager;
     public event Action OnDropCharacter;
     public event Action OnSelectCharacter;
 
+    #region UnityMethod
     private void Awake()
     {
         if (_instance == null)
@@ -44,12 +45,13 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-    
+    #endregion
+    #region UIMethod
     //アイコンを押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
-        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDataManager.CharacterDatas[characterID].Color;
+        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = unitDataManager.CharacterDatas[characterID].Color;
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
     }
@@ -81,7 +83,7 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    //ドロップ可能か確認(予定)
+    //ドラッグしたキャラクターをドロップ
     void DropCharacter()
     {
         _playerState = playerState.Idle;
@@ -90,6 +92,7 @@ public class InGameManager : MonoBehaviour
         OnExitCell();
     }
 
+    //マウスポインターがセルに入った時の処理
     void OnEnterCell(Cell cell)
     {
         if(_selectedCell == cell) return;
@@ -98,6 +101,7 @@ public class InGameManager : MonoBehaviour
         _selectedCell.OnPointerEnter();
     }
 
+    //マウスポインターがセルから出た時の処理
     void OnExitCell()
     {
         if (_selectedCell == null) return;
@@ -111,13 +115,14 @@ public class InGameManager : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
-        for (int i = 0; i < _characterDataManager.CharacterDatas.Length; i++)
+        for (int i = 0; i < unitDataManager.CharacterDatas.Length; i++)
         {
             CharacterIcon characterIcon = Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform).GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
             characterIcon.SetID(i);
         }
     }
+    #endregion
 }
 
 public enum playerState

@@ -6,7 +6,6 @@ using UnityEngine;
 public class AIRoute
 {
     public Vector3 position;
-    public int arrayIndex;
 }
 
 [CreateAssetMenu(fileName = "AIRoutes", menuName = "Tools/WayPoints", order = 1)]

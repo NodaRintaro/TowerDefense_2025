@@ -2,10 +2,9 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "InGame/CharacterData"), Serializable]
-public class CharacterData : ScriptableObject
+public class UnitData : ScriptableObject
 {
     public Color Color;
-    public CharacterType CharacterType;
     public string CharacterName;
     public float Cost;
     public float HP;
@@ -14,11 +13,4 @@ public class CharacterData : ScriptableObject
     public float Defense;
     public float AttackSpeed;
     public float Range;
-}
-
-public enum ChatacterType
-{
-    Attacker,
-    Defender,
-    Healer,
 }

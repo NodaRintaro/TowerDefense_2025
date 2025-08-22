@@ -10,16 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Route1
+  m_Name: AIRoutes_1
   m_EditorClassIdentifier: Assembly-CSharp::AIRoutes
   <Points>k__BackingField:
-  - position: {x: -1.6397587, y: 0, z: 1.3225913}
-    arrayIndex: 0
-  - position: {x: 1.6707431, y: 0, z: 1.2916322}
-    arrayIndex: 0
-  - position: {x: -1.7935019, y: 0, z: -1.9848018}
-    arrayIndex: 0
-  - position: {x: 1.804526, y: 0, z: -0.06884718}
-    arrayIndex: 0
-  - position: {x: 1.5110803, y: 0, z: -1.9859238}
-    arrayIndex: 0
+  - position: {x: -2.0109584, y: 0, z: 0.46165872}
+  - position: {x: 2.2322886, y: 0, z: 0.53897595}
+  - position: {x: 2.1310728, y: 0, z: -2.5640805}
+  - position: {x: -2.099302, y: 0, z: -2.87623}

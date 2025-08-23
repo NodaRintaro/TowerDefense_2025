@@ -4,14 +4,14 @@ public class UnitBase : MonoBehaviour
 {
     //所属グループ
     [SerializeField] private GroupType group;
-    [SerializeField]int maxHp;            // 最大HP
-    [SerializeField]int attack;           // 攻撃力
-    [SerializeField]int defense;          // 防御力
-    protected bool _isDead = false;         // 死亡フラグ
-    public float actionInterval;          // 行動間隔
-    protected float ActionWait;             // 次の行動までの時間
-    protected UnitBase BattleTarget;        // 交戦相手
-    protected int CurrentHp;                // 現在のＨＰ
+    [SerializeField] private int maxHp;            // 最大HP
+    [SerializeField] private int attack;           // 攻撃力
+    [SerializeField] private int defense;          // 防御力
+    public float actionInterval;           // 行動間隔
+    protected bool _isDead = false;        // 死亡フラグ
+    protected float ActionWait;            // 次の行動までの時間
+    protected UnitBase BattleTarget;       // 交戦相手
+    protected int CurrentHp;               // 現在のＨＰ
 
     void Start()
     {
@@ -86,7 +86,9 @@ public class UnitBase : MonoBehaviour
         CurrentHp = Mathf.Max(CurrentHp - damage, 0);
         if(CurrentHp == 0)
         {
+            _isDead = true;
             Debug.Log("撃破されました");
+            Debug.Log(gameObject.name);
         }
     }
     

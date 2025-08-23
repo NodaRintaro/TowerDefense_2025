@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyUnit : UnitBase
 {
-    public Vector3 targetPosition; // 目標地点
+    [HideInInspector]public Vector3 targetPosition; // 目標地点
     public float moveSpeed;        // 移動速度
     private int _routeIndex = 1;
     
@@ -16,11 +16,6 @@ public class EnemyUnit : UnitBase
 
     public override void UpdateUnit(float deltaTime)
     {
-        if (IsDead())
-        {
-            Destroy(this);
-            return;
-        }
         //ユニットの行動を記述する
         if (BattleTarget != null)
         {   // 交戦相手がいるとき、攻撃行動を取る

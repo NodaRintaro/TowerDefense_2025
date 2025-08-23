@@ -13,7 +13,7 @@ public class DebugSystem : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Jump"))
         {
             battleManager.PlaceEnemyUnit(enemyPrefab);   
         }

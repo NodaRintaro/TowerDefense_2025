@@ -5,10 +5,13 @@ public class BattleManager : MonoBehaviour
 {
     private static BattleManager _instace;
     public static BattleManager Instance => _instace;
-    public AIRoutes aiRoutes;                      // Enemyの基地, Enemyの出撃地点はIndex０、それ以降は敵が通るルート
-    [HideInInspector]public List<UnitBase> unitList;                   // ユニット
-    private bool _isPaused = false;
-    private float _timeSpeed = 1;                   //ゲーム内の時間の速さ
+    public AIRoutes aiRoutes;                         // Enemyの基地, Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    [HideInInspector]
+    public List<UnitBase> unitList;                   // ユニット
+    public List<UnitBase> deadUnitList;               //倒されたユニット
+    private bool _isPaused = false;                   //ポーズ中かどうか
+    private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
+    
 
     #region Unity Functions
     private void Awake()
@@ -24,7 +27,21 @@ public class BattleManager : MonoBehaviour
         float timeSpeed = _timeSpeed * Time.deltaTime;
         foreach(var unit in unitList)
         {
+            if (unit.IsDead())
+            {
+                deadUnitList.Add(unit);
+                continue;
+            }
             unit.UpdateUnit(timeSpeed);
+        }
+
+        if (deadUnitList.Count > 0)
+        {
+            foreach (var deadUnit in deadUnitList)
+            {
+                RemoveUnit(deadUnit);
+            }
+            deadUnitList.Clear();
         }
     }
 
@@ -38,6 +55,12 @@ public class BattleManager : MonoBehaviour
     public void AddUnit(UnitBase unit)
     {
         unitList.Add(unit);
+    }
+    //ユニットを削除するメソッド
+    public void RemoveUnit(UnitBase unit)
+    {
+        unitList.Remove(unit);
+        Destroy(unit.gameObject);
     }
 
     // 敵のユニットを出現するメソッド
@@ -76,12 +99,12 @@ public class BattleManager : MonoBehaviour
         // 一番近い敵を返す
         return nearest_enemy;
     }
-
+    
     public Vector3 GetTargetPosition(UnitBase unit, int index)
     {
         if (index >= aiRoutes.Points.Count)
         {
-            unitList.Remove(unit);
+            RemoveUnit(unit);
             GetEnemyOnGoal();
             return new Vector3(0,0,0);
         }

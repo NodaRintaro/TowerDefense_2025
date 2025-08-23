@@ -1,4 +1,6 @@
+using System;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [CustomEditor( typeof( CellGridMove ) )]
@@ -11,20 +13,18 @@ public sealed class CustomCellInspector : Editor
     void Awake()
     {
         //Unity起動時にStageObjectを検索する。
-        var stageObj = GameObject.Find( "Stage" );
-        if ( stageObj == null )
-        {
-            stageObj = new GameObject( "Stage" );
-        }
-        _stageTransform = stageObj.transform;
+        
     }
 
-    private void OnEnable()
-    {
-        //Unity開始時、また新たにオブジェクトを配置するときにStageObjectの子オブジェクトにする。
-        var example = target as CellGridMove;
-        SetParent(example.transform);
-    }
+    // private void OnEnable()
+    // {
+    //     //Unity開始時、また新たにオブジェクトを配置するときにStageObjectの子オブジェクトにする。
+    //     if (PrefabStageUtility.GetCurrentPrefabStage() == null)
+    //     {
+    //         var example = target as CellGridMove;
+    //         SetParent(example.transform);
+    //     }
+    // }
 
     private void OnSceneGUI()
     {
@@ -49,23 +49,6 @@ public sealed class CustomCellInspector : Editor
             posZ.intValue = ( int )result.z;
             transform.position = result;
         }
-
-        {
-            // var scale = transform.localScale;//new Vector3( scaleX.intValue, 0, scaleZ.intValue );
-            // var size = 1;//HandleUtility.GetHandleSize( transform.position ) * 1.5f;
-            // var result  = Handles.ScaleHandle
-            // (
-            //     scale       : scale,
-            //     position    : transform.position,
-            //     rotation    : transform.rotation,
-            //     size        : size
-            // );
-            // result.x = MultipleRound( result.x, SPACE );
-            // result.z = MultipleRound( result.z, SPACE );
-            // scaleX.intValue = ( int )result.x;
-            // scaleZ.intValue = ( int )result.z;
-            // transform.localScale = result;
-        }
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -79,13 +62,18 @@ public sealed class CustomCellInspector : Editor
         return MultipleFloor( value + multiple * 0.5f, multiple );
     }
     
-    private static void SetParent(Transform transform)
-    {
-        if (_stageTransform == null)
-        {
-            Debug.LogError("StageObjIsNull");
-            return;
-        }
-        transform.SetParent( _stageTransform.transform );
-    }
+    // private static void SetParent(Transform transform)
+    // {
+    //     if (_stageTransform == null)
+    //     {
+    //         //Debug.LogError("StageObjIsNull");
+    //         var stageObj = GameObject.Find( "Stage" );
+    //         if ( stageObj == null )
+    //         {
+    //             stageObj = new GameObject( "Stage" );
+    //         }
+    //         _stageTransform = stageObj.transform;
+    //     }
+    //     transform.SetParent( _stageTransform.transform );
+    // }
 }

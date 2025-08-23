@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AIRoutes_1
   m_EditorClassIdentifier: Assembly-CSharp::AIRoutes
   <Points>k__BackingField:
-  - position: {x: -2.0109584, y: 0, z: 0.46165872}
+  - position: {x: -2, y: 0, z: 1.5}
   - position: {x: 2.5, y: 0, z: 0.5}
-  - position: {x: 2.1310728, y: 0, z: -2.5640805}
-  - position: {x: -2.099302, y: 0, z: -2.87623}
+  - position: {x: 2.5, y: 0, z: -3}
+  - position: {x: -2, y: 0, z: -3}

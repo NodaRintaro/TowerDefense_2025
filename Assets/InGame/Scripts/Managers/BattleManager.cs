@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ public class BattleManager : MonoBehaviour
     private static BattleManager _instace;
     public static BattleManager Instance => _instace;
     public AIRoutes aiRoutes;                      // Enemyの基地, Enemyの出撃地点はIndex０、それ以降は敵が通るルート
-    public List<UnitBase> unitList;                   // ユニット
+    [HideInInspector]public List<UnitBase> unitList;                   // ユニット
     private bool _isPaused = false;
     private float _timeSpeed = 1;                   //ゲーム内の時間の速さ
 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class AIRouteEditor : Editor
 {
     private static AIRoutes instance = null;
+    private const float SPACE       = 1;
+    private const float SPACE_HALF  = SPACE / 2;
     
     // 選択されたとき
     private void OnEnable()
@@ -44,6 +46,7 @@ public class AIRouteEditor : Editor
             // WayPointの位置が変更されたら反映する
             if (EditorGUI.EndChangeCheck())
             {
+                pos = MultipleFloor(pos, SPACE_HALF);
                 wayPoint.position = pos;
                 EditorUtility.SetDirty(instance);
             }
@@ -64,5 +67,13 @@ public class AIRouteEditor : Editor
 
             Handles.EndGUI();
         }
+    }
+    private static Vector3 MultipleFloor( Vector3 value, float multiple )
+    {
+        Vector3 vec = new Vector3();
+        vec.x = Mathf.Floor( value.x / multiple ) * multiple;
+        vec.y = Mathf.Floor( value.y / multiple ) * multiple;
+        vec.z = Mathf.Floor( value.z / multiple ) * multiple;
+        return vec;
     }
 }

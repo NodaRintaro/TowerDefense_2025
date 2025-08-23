@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AIRoutes
   <Points>k__BackingField:
   - position: {x: -2.0109584, y: 0, z: 0.46165872}
-  - position: {x: 2.2322886, y: 0, z: 0.53897595}
+  - position: {x: 2.5, y: 0, z: 0.5}
   - position: {x: 2.1310728, y: 0, z: -2.5640805}
   - position: {x: -2.099302, y: 0, z: -2.87623}

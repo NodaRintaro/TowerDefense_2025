@@ -19,17 +19,17 @@ public class TrainingView : MonoBehaviour
     [SerializeField, Header("スタミナの残量を表すSlider")]
     private Slider _staminaGage = default;
 
-    public void SetTrainingEvent()
+    public void SetTrainingMenuGUI()
     {
-
+        
     }
 
-    public void SetRaidEventGUIText(string eventCountDownText)
+    public void SetRaidCountDownGUI(string eventCountDownText)
     {
         _raidEventGUI.text = eventCountDownText;
     }
 
-    public void SetStaminaView(uint staminaNum)
+    public void SetStaminaBarGUI(uint staminaNum)
     {
         _staminaGage.value = staminaNum;
     }

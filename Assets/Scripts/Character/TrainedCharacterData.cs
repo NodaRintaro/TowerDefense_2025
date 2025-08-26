@@ -1,21 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/// <summary> ƒgƒŒ[ƒjƒ“ƒOÏ‚Ý‚ÌƒLƒƒƒ‰ƒNƒ^[ƒf[ƒ^ </summary>
+/// <summary> ãƒˆãƒ¬ãƒ¼ãƒ‹ãƒ³ã‚°æ¸ˆã¿ã®ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ </summary>
 [System.Serializable]
 public class TrainedCharacterData
 {
-    [SerializeField, Header("‹­‰»‚µ‚½ƒLƒƒƒ‰ƒNƒ^[‚Ìƒf[ƒ^")]
+    [SerializeField, Header("å¼·åŒ–ã—ãŸã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿")]
     private CharacterData _baseCharacter;
-    [SerializeField, Header("‘Ì—Í‘‰Á’l")]
+    [SerializeField, Header("ä½“åŠ›å¢—åŠ å€¤")]
     private uint _physical;
-    [SerializeField, Header("‹Ø—Í‘‰Á’l")]
+    [SerializeField, Header("ç­‹åŠ›å¢—åŠ å€¤")]
     private uint _power;
-    [SerializeField, Header("’m—Í‘‰Á’l")]
+    [SerializeField, Header("çŸ¥åŠ›å¢—åŠ å€¤")]
     private uint _intelligence;
-    [SerializeField, Header("‘f‘‚³‘‰Á’l")]
+    [SerializeField, Header("ç´ æ—©ã•å¢—åŠ å€¤")]
     private uint _speed;
 
-    #region ŽQÆ—pƒvƒƒpƒeƒB
+    #region å‚ç…§ç”¨ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
     public CharacterData BaseCharacter => _baseCharacter;
     public uint Physical => _physical;
     public uint Power => _power;

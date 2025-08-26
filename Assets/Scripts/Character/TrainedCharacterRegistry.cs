@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CharacterDataList", menuName = "ScriptableObject/CharacterDataList")]
+[System.Serializable, CreateAssetMenu(fileName = "TrainedCharacterRegistry", menuName = "ScriptableObject/TrainedCharacterRegistry")]
 public class TrainedCharacterRegistry : ScriptableObject
 {
     [SerializeField, Header("育成済みキャラクターのデータリスト")]

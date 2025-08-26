@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 249889645}
   - component: {fileID: 249889646}
   m_Layer: 5
-  m_Name: StaminaGauge
+  m_Name: StaminaGage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2551,6 +2551,71 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1644200363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644200364}
+  - component: {fileID: 1644200366}
+  - component: {fileID: 1644200365}
+  m_Layer: 0
+  m_Name: TrainingUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644200364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644200363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 594.04, y: 964.5145, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644200365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644200363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e1b7f41f0db2741a9a48112885723b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _trainingParameters: []
+  _trainingButtons:
+  - _trainingType: 0
+    _trainingButton: {fileID: 208186746}
+    _trainingText: {fileID: 2000975178}
+    _trainingName: PhysicalTraining
+  _raidEventGUI: {fileID: 0}
+  _staminaGage: {fileID: 0}
+--- !u!114 &1644200366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644200363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 245f48109eaa9c044a2e25eea2ffe8fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1733569066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,6 +2967,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1991151968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1991151969}
+  - component: {fileID: 1991151970}
+  m_Layer: 0
+  m_Name: TrainingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1991151969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991151968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 582.7389, y: 1624.1808, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1991151970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991151968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217ad17244db847439ca2083ceac4960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterDataList: {fileID: 11400000, guid: 8ae0a852e3dda20448a14c6e1384b3bd, type: 2}
+  _raidEventCountDown: 0
+  _trainingMenuList:
+  - _trainingType: 0
+    _trainingBuffList:
+    - _trainingBuffType: 0
+      _baseBuffPoints: 0
+  - _trainingType: 1
+    _trainingBuffList: []
 --- !u!1 &2000975176
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,3 +3272,5 @@ SceneRoots:
   - {fileID: 2034761090}
   - {fileID: 392767259}
   - {fileID: 824929919}
+  - {fileID: 1991151969}
+  - {fileID: 1644200364}

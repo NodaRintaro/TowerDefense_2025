@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName ="CharacterDataList",menuName = "ScriptableObject/CharacterDataList")]
 public class CharacterDataList : ScriptableObject

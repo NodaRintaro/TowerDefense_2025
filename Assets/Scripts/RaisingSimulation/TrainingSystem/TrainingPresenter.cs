@@ -1,18 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainingPresenter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private TrainingManager _trainingManager;
+    private TrainingView _trainingView;
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        
+        _trainingManager = FindAnyObjectByType<TrainingManager>();
+        _trainingView = FindAnyObjectByType<TrainingView>();
     }
 }

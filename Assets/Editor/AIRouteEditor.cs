@@ -34,10 +34,10 @@ public class AIRouteEditor : Editor
             if (i > 1)
             {
                 var wayPoint2 = instance.Points[i - 1];
-                Debug.DrawLine(wayPoint.position, wayPoint2.position);
+                Debug.DrawLine(wayPoint, wayPoint2);
             }
             // WayPointの位置を取得する
-            Vector3 pos = wayPoint.position;
+            Vector3 pos = wayPoint;
 
             // ハンドルを表示する
             EditorGUI.BeginChangeCheck();
@@ -47,7 +47,8 @@ public class AIRouteEditor : Editor
             if (EditorGUI.EndChangeCheck())
             {
                 pos = MultipleFloor(pos, SPACE_HALF);
-                wayPoint.position = pos;
+                wayPoint = pos;
+                instance.Points[i] = wayPoint;
                 EditorUtility.SetDirty(instance);
             }
             Handles.BeginGUI();

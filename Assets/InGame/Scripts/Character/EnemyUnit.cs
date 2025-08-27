@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyUnit : UnitBase
 {
     [HideInInspector]public Vector3 targetPosition; // 目標地点
+    private AIRoutes _routes; 
     public float moveSpeed;        // 移動速度
     private int _routeIndex = 1;
     
@@ -41,13 +42,13 @@ public class EnemyUnit : UnitBase
         if (transform.position == targetPosition)
         {
             Debug.Log("Get Over");
-            _routeIndex++;
-            GetTargetPosition(this,_routeIndex);
+            GetTargetPosition(this);
         }
     }
 
-    private void GetTargetPosition(UnitBase unit, int index)
+    private void GetTargetPosition(UnitBase unit)
     {
-        targetPosition = BattleManager.Instance.GetTargetPosition(unit, index);
+        _routeIndex++;
+        targetPosition = BattleManager.Instance.GetTargetPosition(unit, _routeIndex);
     }
 }

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: AIRoutes_1
-  m_EditorClassIdentifier: Assembly-CSharp::AIRoutes
+  m_Script: {fileID: 11500000, guid: cb39b6a1d8274e54b93ec6eb5c874b8b, type: 3}
+  m_Name: AIRoutes
+  m_EditorClassIdentifier: 
   <Points>k__BackingField:
-  - position: {x: -2, y: 0, z: 1.5}
-  - position: {x: 2.5, y: 0, z: 0.5}
-  - position: {x: 2.5, y: 0, z: -3}
-  - position: {x: -2, y: 0, z: -3}
+  - {x: 2, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -2, y: 0, z: -3}

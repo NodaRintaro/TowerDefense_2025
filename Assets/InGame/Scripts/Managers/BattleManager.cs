@@ -5,18 +5,17 @@ public class BattleManager : MonoBehaviour
 {
     private static BattleManager _instace;
     public static BattleManager Instance => _instace;
-    public AIRoutes aiRoutes;                         // Enemyの基地, Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    public AIRoutes _aiRoutes;                         // Enemyの出撃地点はIndex０、それ以降は敵が通るルート
     [HideInInspector]
     public List<UnitBase> unitList;                   // ユニット
-    public List<UnitBase> deadUnitList;               //倒されたユニット
+    public Queue<UnitBase> DeadUnits = new Queue<UnitBase>();                 //倒されたユニット
     private bool _isPaused = false;                   //ポーズ中かどうか
     private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
-    
 
     #region Unity Functions
     private void Awake()
     {
-        if (_instace!= null && _instace != this) { Destroy(this.gameObject); }
+        if (_instace != null && _instace != this) { Destroy(this.gameObject); }
         else { _instace = this; }
     }
 
@@ -25,23 +24,25 @@ public class BattleManager : MonoBehaviour
         //ポーズ中ならば更新しない
         if (_isPaused) return;
         float timeSpeed = _timeSpeed * Time.deltaTime;
+        
         foreach(var unit in unitList)
         {
             if (unit.IsDead())
             {
-                deadUnitList.Add(unit);
+                DeadUnits.Enqueue(unit);
                 continue;
             }
             unit.UpdateUnit(timeSpeed);
         }
 
-        if (deadUnitList.Count > 0)
+        int count = DeadUnits.Count;
+        if (count > 0)
         {
-            foreach (var deadUnit in deadUnitList)
+            for (int i = 0; i < count; i++)
             {
-                RemoveUnit(deadUnit);
+                UnitBase unit = DeadUnits.Dequeue();
+                RemoveUnit(unit);
             }
-            deadUnitList.Clear();
         }
     }
 
@@ -68,12 +69,13 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("InstanciateEnemyUnit");
         // 駒を生成する
-        GameObject go = Instantiate(unitPrefab, aiRoutes.Points[0].position, Quaternion.identity);
+        GameObject go = Instantiate(unitPrefab, _aiRoutes.Points[0], Quaternion.identity);
         // プレイヤーの基地から出発
-        go.transform.position = aiRoutes.Points[0].position;
+        go.transform.position = _aiRoutes.Points[0];
         // ユニットの目標を設定する
         EnemyUnit unit = go.GetComponent<EnemyUnit>();
-        unit.SetTargetPosition(aiRoutes.Points[1].position);
+        unit.SetTargetPosition(_aiRoutes.Points[1]);
+        Debug.Log("AIAIAIAIAIA");
     }
     
     //最寄りの敵対ユニットを返す
@@ -102,15 +104,15 @@ public class BattleManager : MonoBehaviour
     
     public Vector3 GetTargetPosition(UnitBase unit, int index)
     {
-        if (index >= aiRoutes.Points.Count)
+        if (index >= _aiRoutes.Points.Count)
         {
             RemoveUnit(unit);
             GetEnemyOnGoal();
             return new Vector3(0,0,0);
         }
-        return aiRoutes.Points[index].position;
+        return _aiRoutes.Points[index];
     }
-    private void GetEnemyOnGoal()
+    public void GetEnemyOnGoal()
     {
         Debug.Log("敵が防衛ラインを突破！！");
     }

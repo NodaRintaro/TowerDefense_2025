@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DebugSystem : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class DebugSystem : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            battleManager.PlaceEnemyUnit(enemyPrefab);   
+            battleManager.PlaceEnemyUnit(enemyPrefab);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {

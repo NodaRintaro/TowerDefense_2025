@@ -8,3 +8,6 @@ https://candle-stoplight-544.notion.site/6-1b439cbfbab98018bb6eeb97e8ba49d1
 
 ・Editor拡張のTips
 //https://yotiky.hatenablog.com/entry/unity_editorextension-tips
+
+・Unitの作り参照
+https://zenn.dev/supple/articles/64c9f9aaf2e7ca6f7151

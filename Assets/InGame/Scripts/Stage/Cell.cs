@@ -7,7 +7,7 @@ public class Cell : MonoBehaviour
     public bool IsCharacter => _isCharacter;
     private void Start()
     {
-        defaultMaterial = GetComponent<Renderer>().material;
+        defaultMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
     }
 
     public void OnPointerEnter()

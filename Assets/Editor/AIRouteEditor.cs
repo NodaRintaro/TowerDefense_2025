@@ -5,6 +5,8 @@ using UnityEngine;
 public class AIRouteEditor : Editor
 {
     private static AIRoutes instance = null;
+    private const float SPACE       = 1;
+    private const float SPACE_HALF  = SPACE / 2;
     
     // 選択されたとき
     private void OnEnable()
@@ -32,10 +34,10 @@ public class AIRouteEditor : Editor
             if (i > 1)
             {
                 var wayPoint2 = instance.Points[i - 1];
-                Debug.DrawLine(wayPoint.position, wayPoint2.position);
+                Debug.DrawLine(wayPoint, wayPoint2);
             }
             // WayPointの位置を取得する
-            Vector3 pos = wayPoint.position;
+            Vector3 pos = wayPoint;
 
             // ハンドルを表示する
             EditorGUI.BeginChangeCheck();
@@ -44,7 +46,9 @@ public class AIRouteEditor : Editor
             // WayPointの位置が変更されたら反映する
             if (EditorGUI.EndChangeCheck())
             {
-                wayPoint.position = pos;
+                pos = MultipleFloor(pos, SPACE_HALF);
+                wayPoint = pos;
+                instance.Points[i] = wayPoint;
                 EditorUtility.SetDirty(instance);
             }
             Handles.BeginGUI();
@@ -64,5 +68,13 @@ public class AIRouteEditor : Editor
 
             Handles.EndGUI();
         }
+    }
+    private static Vector3 MultipleFloor( Vector3 value, float multiple )
+    {
+        Vector3 vec = new Vector3();
+        vec.x = Mathf.Floor( value.x / multiple ) * multiple;
+        vec.y = Mathf.Floor( value.y / multiple ) * multiple;
+        vec.z = Mathf.Floor( value.z / multiple ) * multiple;
+        return vec;
     }
 }

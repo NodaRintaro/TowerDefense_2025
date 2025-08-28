@@ -2,24 +2,16 @@ using UnityEngine;
 
 public class UnitBase : MonoBehaviour
 {
-    // private int _id;
-    // private UnitData _unitData;
-    //
-    // void Init()
-    // {
-    //     _unitData = InGameManager.Instance.UnitDataManager.GetCharacterData(_id);
-    // }
-    
     //所属グループ
     [SerializeField] private GroupType group;
-    [SerializeField]int maxHp;            // 最大HP
-    [SerializeField]int attack;           // 攻撃力
-    [SerializeField]int defense;          // 防御力
-    private bool _isDead = false;         // 死亡フラグ
-    public float actionInterval;          // 行動間隔
-    protected float actionWait;             // 次の行動までの時間
-    protected UnitBase battleTarget;        // 交戦相手
-    protected int currentHp;                // 現在のＨＰ
+    [SerializeField] private int maxHp;            // 最大HP
+    [SerializeField] private int attack;           // 攻撃力
+    [SerializeField] private int defense;          // 防御力
+    public float actionInterval;           // 行動間隔
+    protected bool _isDead = false;        // 死亡フラグ
+    protected float ActionWait;            // 次の行動までの時間
+    protected UnitBase BattleTarget;       // 交戦相手
+    protected int CurrentHp;               // 現在のＨＰ
 
     void Start()
     {
@@ -32,7 +24,7 @@ public class UnitBase : MonoBehaviour
     public virtual void UpdateUnit(float deltaTime)
     {
         //ユニットの行動を記述する
-        if (battleTarget != null)
+        if (BattleTarget != null)
         {   // 交戦相手がいるとき、攻撃行動を取る
             AttackAction(deltaTime);	
         }
@@ -41,7 +33,7 @@ public class UnitBase : MonoBehaviour
             UnitBase enemy = BattleManager.Instance.FindNearestEnemy(this);
             if(enemy != null && Distance(enemy) <= searchEnemyDistance)
             {   // 一番近い敵が索敵範囲内なら交戦に入る
-                battleTarget = enemy;
+                BattleTarget = enemy;
             }
             else
             {   // いなかったら目的地に向かって移動する
@@ -59,18 +51,18 @@ public class UnitBase : MonoBehaviour
     protected void AttackAction(float deltaTime)
     {
         // 次の行動間隔まで待つ
-        actionWait -= deltaTime;
-        if (actionWait > 0) return;
+        ActionWait -= deltaTime;
+        if (ActionWait > 0) return;
 
         // 次の行動をするまでの待ち時間をセット
-        actionWait += actionInterval;
+        ActionWait += actionInterval;
 
         // 攻撃する
-        Attack(battleTarget);
-        if (battleTarget.IsDead())
+        Attack(BattleTarget);
+        if (BattleTarget.IsDead())
         {
             // 相手を倒したらターゲットから外す
-            battleTarget = null;
+            BattleTarget = null;
         }
     }
 
@@ -91,10 +83,12 @@ public class UnitBase : MonoBehaviour
     protected void GetDamage(int damage)
     {
         // HPが０未満にならないようにダメージを受ける
-        currentHp = Mathf.Max(currentHp - damage, 0);
-        if(currentHp == 0)
+        CurrentHp = Mathf.Max(CurrentHp - damage, 0);
+        if(CurrentHp == 0)
         {
+            _isDead = true;
             Debug.Log("撃破されました");
+            Debug.Log(gameObject.name);
         }
     }
     

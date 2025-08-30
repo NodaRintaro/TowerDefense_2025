@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00bda0dde13c2148a922103d20787bf, type: 3}
+  m_Name: 'CharacterData '
+  m_EditorClassIdentifier: 
+  _dataList:
+  - _id: 1
+    _characterName: FallenAngelNishinoGodOneWingTUBASAPeace
+    _physical: 999
+    _power: 999
+    _intelligence: 999
+    _speed: 999
+  - _id: 2
+    _characterName: Akasan
+    _physical: 90
+    _power: 90
+    _intelligence: 35
+    _speed: 40
+  - _id: 3
+    _characterName: Tamaki
+    _physical: 60
+    _power: 10
+    _intelligence: 70
+    _speed: 50
+  - _id: 4
+    _characterName: Guttii
+    _physical: 63
+    _power: 45
+    _intelligence: 60
+    _speed: 48
+  - _id: 5
+    _characterName: Handa
+    _physical: 1
+    _power: 1
+    _intelligence: 1
+    _speed: 1

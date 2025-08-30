@@ -5,9 +5,10 @@ public class BattleManager : MonoBehaviour
 {
     private static BattleManager _instace;
     public static BattleManager Instance => _instace;
-    public AIRoutes _aiRoutes;                         // Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    public AIRoutes aiRoutes;                         // Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    public TrainedCharacterRegistry trainedCharacters;// テスト用！育成済みキャラクターデータ
     [HideInInspector]
-    public List<UnitBase> unitList;                   // ユニット
+    public List<UnitBase> unitList;                   // ユニットのリスト
     private bool _isPaused = false;                   //ポーズ中かどうか
     private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
 
@@ -27,7 +28,7 @@ public class BattleManager : MonoBehaviour
         for(int i = 0; i < unitList.Count; i++)
         {
             UnitBase unit = unitList[i];
-            if (unit.IsDead())
+            if (unit.IsDead)
             {
                 RemoveUnit(unit);
             }
@@ -43,7 +44,8 @@ public class BattleManager : MonoBehaviour
         _instace = null;
     }
     #endregion
-    
+
+    #region  Battle Functions
     //ユニットを追加するメソッド
     public void AddUnit(UnitBase unit)
     {
@@ -59,14 +61,13 @@ public class BattleManager : MonoBehaviour
     // 敵のユニットを出現するメソッド
     public void PlaceEnemyUnit(GameObject unitPrefab)
     {
-        Debug.Log("InstanciateEnemyUnit");
         // 駒を生成する
-        GameObject go = Instantiate(unitPrefab, _aiRoutes.Points[0], Quaternion.identity);
+        GameObject go = Instantiate(unitPrefab, aiRoutes.Points[0], Quaternion.identity);
         // プレイヤーの基地から出発
-        go.transform.position = _aiRoutes.Points[0];
+        go.transform.position = aiRoutes.Points[0];
         // ユニットの目標を設定する
         EnemyUnit unit = go.GetComponent<EnemyUnit>();
-        unit.SetTargetPosition(_aiRoutes.Points[1]);
+        unit.SetTargetPosition(aiRoutes.Points[1]);
         unit.Init();
     }
     
@@ -78,7 +79,7 @@ public class BattleManager : MonoBehaviour
 
         foreach (UnitBase enemy in unitList)
         {
-            if (enemy.IsDead() || !unit.IsEnemy(enemy))
+            if (enemy.IsDead || !unit.IsEnemy(enemy))
             {   // 死んでいる敵は無視する
                 continue;
             }
@@ -96,13 +97,13 @@ public class BattleManager : MonoBehaviour
     
     public Vector3 GetTargetPosition(UnitBase unit, int index)
     {
-        if (index >= _aiRoutes.Points.Count)
+        if (index >= aiRoutes.Points.Count)
         {
             RemoveUnit(unit);
             GetEnemyOnGoal();
             return new Vector3(0,0,0);
         }
-        return _aiRoutes.Points[index];
+        return aiRoutes.Points[index];
     }
     public void GetEnemyOnGoal()
     {
@@ -112,4 +113,5 @@ public class BattleManager : MonoBehaviour
     {
         _timeSpeed = timeSpeed;
     }
+    #endregion
 }

@@ -9,12 +9,11 @@ https://candle-stoplight-544.notion.site/6-1b439cbfbab98018bb6eeb97e8ba49d1
 ・Editor拡張のTips
 //https://yotiky.hatenablog.com/entry/unity_editorextension-tips
 
-<<<<<<< HEAD
 ・Unitの作り参照
 https://zenn.dev/supple/articles/64c9f9aaf2e7ca6f7151
+
+・データ管理参考
+https://qiita.com/marthallll/items/d2072a41e864bc62dacb
 =======
 やること
-・敵と味方の攻撃システム
-・ルート生成時のポイントのグリッド移動化
-・
->>>>>>> 011da1d7dd221954d506d86edbd101b476386e30
+・味方ユニットが倒された後に置かれていたセルに再度配置できない不具合を修正する

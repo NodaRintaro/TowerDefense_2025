@@ -2883,9 +2883,17 @@ PrefabInstance:
       value: BattleManager
       objectReference: {fileID: 0}
     - target: {fileID: 7212923966837971309, guid: b8f7716542bb32542a34169174f87fc4, type: 3}
+      propertyPath: aiRoutes
+      value: 
+      objectReference: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}
+    - target: {fileID: 7212923966837971309, guid: b8f7716542bb32542a34169174f87fc4, type: 3}
       propertyPath: _aiRoutes
       value: 
       objectReference: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}
+    - target: {fileID: 7212923966837971309, guid: b8f7716542bb32542a34169174f87fc4, type: 3}
+      propertyPath: trainedCharacters
+      value: 
+      objectReference: {fileID: 11400000, guid: d21ec68dbc6e37a4084212b2c807d0d5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+/// <summary>これをアタッチしたオブジェクトはグリッドに沿って動くようになる</summary>
 [Serializable]
 public sealed class CellGridMove : MonoBehaviour
 {

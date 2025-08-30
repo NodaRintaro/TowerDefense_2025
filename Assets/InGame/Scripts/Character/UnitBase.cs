@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class UnitBase : MonoBehaviour
@@ -7,12 +8,24 @@ public class UnitBase : MonoBehaviour
     [SerializeField] private int maxHp;            // 最大HP
     [SerializeField] private int attack;           // 攻撃力
     [SerializeField] private int defense;          // 防御力
+    public float searchEnemyDistance;      // 索敵範囲
     public float actionInterval;           // 行動間隔
     protected bool _isDead = false;        // 死亡フラグ
     protected float ActionWait;            // 次の行動までの時間
     protected UnitBase BattleTarget;       // 交戦相手
     protected int CurrentHp;               // 現在のＨＰ
 
+    public bool IsDead
+    {
+        get { return _isDead; }
+        private set
+        {
+            _isDead = value; 
+            if(value == true)
+                OnDeathEvent?.Invoke();
+        }
+    }
+    public event Action OnDeathEvent;   //ユニット死亡時のイベント 
     public void Init()
     {
         Debug.Log("Unit Start");
@@ -59,7 +72,7 @@ public class UnitBase : MonoBehaviour
 
         // 攻撃する
         Attack(BattleTarget);
-        if (BattleTarget.IsDead())
+        if (BattleTarget.IsDead)
         {
             // 相手を倒したらターゲットから外す
             BattleTarget = null;
@@ -86,16 +99,13 @@ public class UnitBase : MonoBehaviour
         CurrentHp = Mathf.Max(CurrentHp - damage, 0);
         if(CurrentHp == 0)
         {
-            _isDead = true;
+            IsDead = true;
         }
     }
-    
     public float Distance(UnitBase targetUnit)
     {
         return Vector3.Distance(transform.position, targetUnit.transform.position);
     }
-    public float searchEnemyDistance;   // 索敵範囲
-    public bool IsDead() { return _isDead; }
     public enum GroupType
     {
         Player,

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CharacterIcon : MonoBehaviour, IPointerDownHandler
 {
-    [field: System.NonSerialized] private int id;
+    private int id;
     [SerializeField] private Text _costText;
     [SerializeField] private Image _icon;
     public void SetID(int ID)

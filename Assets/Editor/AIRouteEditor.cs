@@ -46,7 +46,7 @@ public class AIRouteEditor : Editor
             // WayPointの位置が変更されたら反映する
             if (EditorGUI.EndChangeCheck())
             {
-                pos = MultipleFloor(pos, SPACE_HALF);
+                pos = MultipleFloor(pos, SPACE);
                 wayPoint = pos;
                 instance.Points[i] = wayPoint;
                 EditorUtility.SetDirty(instance);

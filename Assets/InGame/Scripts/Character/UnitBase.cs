@@ -13,9 +13,9 @@ public class UnitBase : MonoBehaviour
     protected UnitBase BattleTarget;       // 交戦相手
     protected int CurrentHp;               // 現在のＨＰ
 
-    void Start()
+    public void Init()
     {
-        Debug.Log("UnitBase Start");
+        Debug.Log("Unit Start");
         // ユニットリストに自分を追加する
         BattleManager.Instance.AddUnit(this);
     }
@@ -87,8 +87,6 @@ public class UnitBase : MonoBehaviour
         if(CurrentHp == 0)
         {
             _isDead = true;
-            Debug.Log("撃破されました");
-            Debug.Log(gameObject.name);
         }
     }
     

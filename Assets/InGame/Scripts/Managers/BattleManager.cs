@@ -8,7 +8,6 @@ public class BattleManager : MonoBehaviour
     public AIRoutes _aiRoutes;                         // Enemyの出撃地点はIndex０、それ以降は敵が通るルート
     [HideInInspector]
     public List<UnitBase> unitList;                   // ユニット
-    public Queue<UnitBase> DeadUnits = new Queue<UnitBase>();                 //倒されたユニット
     private bool _isPaused = false;                   //ポーズ中かどうか
     private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
 
@@ -25,23 +24,16 @@ public class BattleManager : MonoBehaviour
         if (_isPaused) return;
         float timeSpeed = _timeSpeed * Time.deltaTime;
         
-        foreach(var unit in unitList)
+        for(int i = 0; i < unitList.Count; i++)
         {
+            UnitBase unit = unitList[i];
             if (unit.IsDead())
             {
-                DeadUnits.Enqueue(unit);
-                continue;
-            }
-            unit.UpdateUnit(timeSpeed);
-        }
-
-        int count = DeadUnits.Count;
-        if (count > 0)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                UnitBase unit = DeadUnits.Dequeue();
                 RemoveUnit(unit);
+            }
+            else
+            {
+                unit.UpdateUnit(timeSpeed);   
             }
         }
     }
@@ -75,14 +67,14 @@ public class BattleManager : MonoBehaviour
         // ユニットの目標を設定する
         EnemyUnit unit = go.GetComponent<EnemyUnit>();
         unit.SetTargetPosition(_aiRoutes.Points[1]);
-        Debug.Log("AIAIAIAIAIA");
+        unit.Init();
     }
     
     //最寄りの敵対ユニットを返す
     public UnitBase FindNearestEnemy(UnitBase unit)
     {
-        UnitBase nearest_enemy = null;
-        float nearest_distance = float.MaxValue;
+        UnitBase nearestEnemy = null;
+        float nearestDistance = float.MaxValue;
 
         foreach (UnitBase enemy in unitList)
         {
@@ -92,14 +84,14 @@ public class BattleManager : MonoBehaviour
             }
 
             float distance = unit.Distance(enemy);
-            if (distance < nearest_distance)
+            if (distance < nearestDistance)
             {   // 一番近い敵を覚えておく
-                nearest_enemy = enemy;
-                nearest_distance = distance;
+                nearestEnemy = enemy;
+                nearestDistance = distance;
             }
         }
         // 一番近い敵を返す
-        return nearest_enemy;
+        return nearestEnemy;
     }
     
     public Vector3 GetTargetPosition(UnitBase unit, int index)

@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class DebugSystem : MonoBehaviour
 {
-    BattleManager battleManager;
+    private BattleManager _battleManager;
     [SerializeField] private GameObject enemyPrefab;
     void Start()
     {
-        battleManager = BattleManager.Instance;
+        _battleManager = BattleManager.Instance;
     }
     void Update()
     {
         if (Input.GetButtonDown("Jump"))
         {
-            battleManager.PlaceEnemyUnit(enemyPrefab);
+            _battleManager.PlaceEnemyUnit(enemyPrefab);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            battleManager.ChangeTimeSpeed(2);   
+            _battleManager.ChangeTimeSpeed(2);   
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            battleManager.ChangeTimeSpeed(1);   
+            _battleManager.ChangeTimeSpeed(1);   
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            battleManager.ChangeTimeSpeed(0.5f);   
+            _battleManager.ChangeTimeSpeed(0.5f);   
         }
     }
 }

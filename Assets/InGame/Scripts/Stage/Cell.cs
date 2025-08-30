@@ -1,26 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    Material defaultMaterial;
+    private Material _defaultMaterial;
     private bool _isCharacter = false;
     public bool IsCharacter => _isCharacter;
     private void Start()
     {
-        defaultMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
+        _defaultMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
     }
 
     public void OnPointerEnter()
     {
         if(IsCharacter)
-            defaultMaterial.color = Color.red;
+            _defaultMaterial.color = Color.red;
         else
-            defaultMaterial.color = Color.green;
+            _defaultMaterial.color = Color.green;
     }
 
     public void OnPointerExit()
     {
-        defaultMaterial.color = Color.white;
+        _defaultMaterial.color = Color.white;
     }
 
     public bool SetCharacter(GameObject character)
@@ -29,6 +30,7 @@ public class Cell : MonoBehaviour
         character.transform.parent = transform;
         character.transform.localPosition = Vector3.zero;
         _isCharacter = true;
+        character.GetComponent<UnitBase>().Init();
         return true;
     }
 }

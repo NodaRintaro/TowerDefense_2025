@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class TrainingManager : MonoBehaviour
 {
-    [SerializeField,Header("キャラクターのベースデータの保存クラス")]
-    private CharacterDataList _characterDataList = default;
+    [SerializeField, Header("キャラクターのデータのデータの保存先")]
+    private string _characterDataPath = "CharacterData";
 
     [SerializeField, Header("トレーニングするキャラクターのベースデータ")]
-    private static TrainingCharacterData _currentTrainigCharacter = default;
+    private TrainingCharacterData _currentTrainigCharacter = default;
 
     [SerializeField, Header("レイドイベント開始までのカウントダウン")]
     private uint _raidEventCountDown;
 
     [SerializeField, Header("Trainingの種類一覧")]
-    private List<TrainingMenu> _trainingMenuList = new();
+    private TrainingMenu[] _trainingMenuList = default;
+
+    private int _trainingCharacterID = 0;
+
+    private CharacterDataList _characterDataList = default;
+
+    public TrainingCharacterData CurrentTrainingCharacterData => _currentTrainigCharacter;
+
+    public TrainingMenu[] TrainingMenuList => _trainingMenuList;
+
+    private void Start()
+    {
+        _characterDataList = Resources.Load<CharacterDataList>(_characterDataPath);
+    }
+
+    public void SetCharacterID(int id) => _trainingCharacterID = id;
+
+    public void RaidCountDown() => _raidEventCountDown--;
 
     /// <summary> トレーニングの開始時の処理 </summary>
     /// <param name="characterID"> キャラのID </param>
@@ -23,6 +40,8 @@ public class TrainingManager : MonoBehaviour
         _currentTrainigCharacter = new();
 
         _currentTrainigCharacter.SetBaseCharacter(CharacterDataFind(characterID));
+
+        
     }
 
     /// <summary> キャラクターのトレーニングが終了したときの処理 </summary>
@@ -50,20 +69,23 @@ public class TrainingManager : MonoBehaviour
 [System.Serializable]
 public class TrainingCharacterData
 {
-    [SerializeField,Header("キャラクターのベースデータ")]
+    [SerializeField, Header("キャラクターのベースデータ")]
     private CharacterData _baseCharacterData;
 
-    [SerializeField,Header("体力の増加値")]
-    private uint _currentPhysical;
+    [SerializeField, Header("体力の増加値")]
+    private uint _currentPhysicalBuff = 0;
 
     [SerializeField, Header("攻撃力の増加値")]
-    private uint _currentPower;
+    private uint _currentPowerBuff = 0;
 
     [SerializeField, Header("知力の増加値")]
-    private uint _currentIntelligence;
+    private uint _currentIntelligenceBuff = 0;
 
     [SerializeField, Header("素早さの増加値")]
-    private uint _currentSpeed;
+    private uint _currentSpeedBuff = 0;
+
+    [SerializeField, Header("スタミナの最大値")]
+    private uint _maxStamina;
 
     [SerializeField, Header("キャラクターのスタミナ")]
     private uint _currentStamina;
@@ -71,20 +93,20 @@ public class TrainingCharacterData
     public CharacterData BaseCharacterData => _baseCharacterData;
 
     #region 各種パラメータの参照用プロパティ
-    public uint CurrentPhysical => _currentPhysical;
-    public uint CurrentPower => _currentPower;
-    public uint CurrentIntelligence => _currentIntelligence;
-    public uint CurrentSpeed => _currentSpeed;
+    public uint CurrentPhysicalBuff => _currentPhysicalBuff;
+    public uint CurrentPowerBuff => _currentPowerBuff;
+    public uint CurrentIntelligenceBuff => _currentIntelligenceBuff;
+    public uint CurrentSpeedBuff => _currentSpeedBuff;
     public uint CurrentStamina => _currentStamina;
     #endregion
 
     public void SetBaseCharacter(CharacterData baseCharacter) => _baseCharacterData = baseCharacter;
 
     #region 各種パラメータの増加処理
-    public void AddCurrentPhysical(uint physical) => _currentPhysical += physical;
-    public void AddCurrentPower(uint power) => _currentPower += power;
-    public void AddCurrentIntelligence(uint intelligence) => _currentIntelligence += intelligence;
-    public void AddCurrentSpeed(uint speed) => _currentSpeed += speed;
+    public void AddCurrentPhysical(uint physical) => _currentPhysicalBuff += physical;
+    public void AddCurrentPower(uint power) => _currentPowerBuff += power;
+    public void AddCurrentIntelligence(uint intelligence) => _currentIntelligenceBuff += intelligence;
+    public void AddCurrentSpeed(uint speed) => _currentSpeedBuff += speed;
     public void UseStamina(uint stamina) => _currentStamina -= stamina;
     public void TakeBreak(uint stamina) => _currentStamina += stamina;
     #endregion

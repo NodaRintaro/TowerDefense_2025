@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TrainingMenu : ITraining
+public class TrainingMenu : ITrainingMenu
 {
-    [SerializeField,Header("ƒgƒŒ[ƒjƒ“ƒO‚Ìí—Ş")] 
+    [SerializeField,Header("ãƒˆãƒ¬ãƒ¼ãƒ‹ãƒ³ã‚°ã®ç¨®é¡")] 
     private TrainingType _trainingType;
 
-    [SerializeField, Header("ƒgƒŒ[ƒjƒ“ƒO‚É‚æ‚Á‚Äã¸‚·‚éƒXƒe[ƒ^ƒXˆê——")] 
+    [SerializeField, Header("ãƒˆãƒ¬ãƒ¼ãƒ‹ãƒ³ã‚°ã«ã‚ˆã£ã¦ä¸Šæ˜‡ã™ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ä¸€è¦§")] 
     private List<CharacterStatusBuff> _trainingBuffList;
 
     private uint _bonusEnhanceNum;
@@ -17,11 +17,16 @@ public class TrainingMenu : ITraining
 
     public void SetBonusEnhance(uint bonusNum) => _bonusEnhanceNum = bonusNum;
 
-    public void TrainingEvent(TrainingCharacterData trainingCharacter)
+    public void TrainingEvent(TrainingCharacterData trainingCharacterData)
+    {
+        StatusBuff(trainingCharacterData);
+    }
+
+    private void StatusBuff(TrainingCharacterData trainingCharacterData)
     {
         foreach (var training in _trainingBuffList)
         {
-            training.BuffStatus(trainingCharacter, _bonusEnhanceNum);
+            training.BuffStatus(trainingCharacterData, _bonusEnhanceNum);
         }
     }
 }

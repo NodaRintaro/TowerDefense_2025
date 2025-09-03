@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab325a1824230e4f875669ad8e6cfbe, type: 3}
   m_Name: TrainedCharacterRegistry
   m_EditorClassIdentifier: 
-  _trainedCharacterDataList: []
+  _trainedCharacterDataList:
+  - _baseCharacter:
+      _id: 1
+      _characterName: NISHINO
+      _physical: 10
+      _power: 10
+      _intelligence: 10
+      _speed: 10
+    _physical: 20
+    _power: 20
+    _intelligence: 20
+    _speed: 20

@@ -8,15 +8,16 @@ public class InGameManager : MonoBehaviour
     
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
-    [SerializeField] private UnitDataManager unitDataManager;
+    [SerializeField] private DebugDataManager _debugDataManager;
+    private CharacterDeck _characterDeck;
     private Cell _selectedCell;
     private GameObject _selectedCharacterObj;
     private playerState _playerState = playerState.Idle;
-    public UnitDataManager UnitDataManager => unitDataManager;
+    public CharacterDeck CharacterDeck => _characterDeck;
     public event Action OnDropCharacter;
     public event Action OnSelectCharacter;
 
-    #region UnityMethod
+    #region UnityFunctions
     private void Awake()
     {
         if (_instance == null)
@@ -27,6 +28,7 @@ public class InGameManager : MonoBehaviour
 
     private void Start()
     {
+        _characterDeck = new CharacterDeck(_debugDataManager.CharacterDatas);
         InstantiateCharacterIcons();
     }
 
@@ -46,12 +48,12 @@ public class InGameManager : MonoBehaviour
         }
     }
     #endregion
-    #region UIMethod
+    #region UIFunctions
     //アイコンを押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
-        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = unitDataManager.CharacterDatas[characterID].Color;
+        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDeck.GetCharacterData(characterID).Color;
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
     }
@@ -115,7 +117,7 @@ public class InGameManager : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
-        for (int i = 0; i < unitDataManager.CharacterDatas.Length; i++)
+        for (int i = 0; i < _characterDeck.Count; i++)
         {
             CharacterIcon characterIcon = Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform).GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;

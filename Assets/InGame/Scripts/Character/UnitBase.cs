@@ -12,8 +12,11 @@ public class UnitBase : MonoBehaviour
     public float actionInterval;           // 行動間隔
     protected bool _isDead = false;        // 死亡フラグ
     protected float ActionWait;            // 次の行動までの時間
-    protected UnitBase BattleTarget;       // 交戦相手
     protected int CurrentHp;               // 現在のＨＰ
+    public int ID;                         // ユニットID
+    protected UnitBase BattleTarget;       // 交戦相手
+    
+    public event Action OnDeathEvent;   //ユニット死亡時のイベント 
 
     public bool IsDead
     {
@@ -25,36 +28,15 @@ public class UnitBase : MonoBehaviour
                 OnDeathEvent?.Invoke();
         }
     }
-    public event Action OnDeathEvent;   //ユニット死亡時のイベント 
     public void Init()
     {
-        Debug.Log("Unit Start");
         // ユニットリストに自分を追加する
-        BattleManager.Instance.AddUnit(this);
+        InGameManager.Instance.AddUnit(this);
     }
     
     // ユニットの状態を更新する
-    public virtual void UpdateUnit(float deltaTime)
-    {
-        //ユニットの行動を記述する
-        if (BattleTarget != null)
-        {   // 交戦相手がいるとき、攻撃行動を取る
-            AttackAction(deltaTime);	
-        }
-        else
-        {   // 交戦相手がいないとき一番近い敵を探す
-            UnitBase enemy = BattleManager.Instance.FindNearestEnemy(this);
-            if(enemy != null && Distance(enemy) <= searchEnemyDistance)
-            {   // 一番近い敵が索敵範囲内なら交戦に入る
-                BattleTarget = enemy;
-            }
-            else
-            {   // いなかったら目的地に向かって移動する
-                //MoveAction(deltaTime);	
-            }
-        }
-    }
-
+    public virtual void UpdateUnit(float deltaTime) { }
+    //敵陣営か判定
     public bool IsEnemy(UnitBase targetUnit)
     {
         return group != targetUnit.group;

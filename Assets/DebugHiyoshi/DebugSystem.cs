@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DebugSystem : MonoBehaviour
 {
-    private BattleManager _battleManager;
+    private InGameManager _battleManager;
     [SerializeField] private GameObject enemyPrefab;
     void Start()
     {
-        _battleManager = BattleManager.Instance;
+        _battleManager = InGameManager.Instance;
     }
     void Update()
     {

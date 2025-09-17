@@ -13,4 +13,5 @@ public class UnitData : ScriptableObject
     public float Defense;
     public float AttackSpeed;
     public float Range;
+    public float IntervalTime;
 }

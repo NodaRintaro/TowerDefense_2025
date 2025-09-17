@@ -24,10 +24,17 @@ public class Cell : MonoBehaviour
     {
         _defaultMaterial.color = Color.white;
     }
-
-    public bool SetCharacter(GameObject character)
+    /// <summary>
+    /// セルにユニットを配置できるか
+    /// </summary>
+    /// <returns></returns>
+    public bool CanPlaceCharacter()
     {
-        if (IsCharacter) return false;
+        return!IsCharacter;
+    }
+
+    public void SetCharacter(GameObject character)
+    {
         character.transform.parent = transform;
         character.transform.localPosition = Vector3.zero;
         _isCharacter = true;
@@ -35,7 +42,6 @@ public class Cell : MonoBehaviour
         UnitBase unit = character.GetComponent<UnitBase>();
         unit.Init();
         unit.OnDeathEvent += OnUnitDead;
-        return true;
     }
     //配置されたユニットが倒されたときに呼ばれる。
     void OnUnitDead()

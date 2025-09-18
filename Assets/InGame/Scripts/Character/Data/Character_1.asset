@@ -21,3 +21,4 @@ MonoBehaviour:
   Defense: 1
   AttackSpeed: 0
   Range: 0
+  RePlaceInterval: 5

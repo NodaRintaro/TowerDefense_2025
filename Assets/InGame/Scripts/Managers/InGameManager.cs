@@ -54,6 +54,7 @@ public class InGameManager : MonoBehaviour
         }
         float timeSpeed = _timeSpeed * Time.deltaTime;
         UpdateUnits(timeSpeed);
+        _characterDeck.UpdateTime(timeSpeed);
     }
     private void OnDestroy()
     {
@@ -183,7 +184,7 @@ public class InGameManager : MonoBehaviour
     private void RemoveUnit(UnitBase unit)
     {
         unitList.Remove(unit);
-        _characterDeck.SetCanPlaceCharacter(unit.ID, true);
+        _characterDeck.CharacterRemoved(unit.ID);
         Destroy(unit.gameObject);
     }
 

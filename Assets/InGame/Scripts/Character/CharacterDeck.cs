@@ -6,7 +6,7 @@ public class CharacterDeck
     private float[] _intervalTimer;
     public int Count { get { return _characterDatas.Length; } }
 
-    void UpdateTime(float time)
+    public void UpdateTime(float time)
     {
         for (int i = 0; i < _characterDatas.Length; i++)
         {
@@ -41,9 +41,14 @@ public class CharacterDeck
         return _canPlaceCharacter[index];
     }
 
-    public void SetIntervalTimer(int index, float interval)
+    public void SetRePlaceTimer(int index, float interval)
     {
         _intervalTimer[index] = interval;
+    }
+
+    public void CharacterRemoved(int index)
+    {
+        SetRePlaceTimer(index, _characterDatas[index].RePlaceInterval);
     }
 
     public void SetCanPlaceCharacter(int index, bool canPlace)

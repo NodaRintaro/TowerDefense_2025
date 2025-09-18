@@ -30,7 +30,7 @@ public class Cell : MonoBehaviour
     /// <returns></returns>
     public bool CanPlaceCharacter()
     {
-        return!IsCharacter;
+        return !IsCharacter;
     }
 
     public void SetCharacter(GameObject character)

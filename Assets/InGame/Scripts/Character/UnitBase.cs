@@ -16,7 +16,7 @@ public class UnitBase : MonoBehaviour
     public int ID;                         // ユニットID
     protected UnitBase BattleTarget;       // 交戦相手
     
-    public event Action OnDeathEvent;   //ユニット死亡時のイベント 
+    public event Action OnRemovedEvent;   //ユニット削除時イベント
 
     public bool IsDead
     {
@@ -24,18 +24,24 @@ public class UnitBase : MonoBehaviour
         private set
         {
             _isDead = value; 
-            if(value == true)
-                OnDeathEvent?.Invoke();
         }
     }
     public void Init()
     {
         // ユニットリストに自分を追加する
         InGameManager.Instance.AddUnit(this);
+        Initialize();
     }
+
+    public virtual void Initialize() { }
     
     // ユニットの状態を更新する
     public virtual void UpdateUnit(float deltaTime) { }
+
+    public void Remove()
+    {
+        OnRemovedEvent?.Invoke();
+    }
     //敵陣営か判定
     public bool IsEnemy(UnitBase targetUnit)
     {

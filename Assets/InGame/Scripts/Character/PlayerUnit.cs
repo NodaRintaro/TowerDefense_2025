@@ -1,5 +1,11 @@
+using UnityEngine;
+
 public class PlayerUnit : UnitBase
 {
+    public override void Initialize()
+    {
+        GetComponent<CapsuleCollider>().enabled = true;
+    }
     // ユニットの状態を更新する
     public override void UpdateUnit(float deltaTime)
     {
@@ -17,7 +23,6 @@ public class PlayerUnit : UnitBase
             }
             else
             {   // いなかったら目的地に向かって移動する
-                //MoveAction(deltaTime);	
             }
         }
     }

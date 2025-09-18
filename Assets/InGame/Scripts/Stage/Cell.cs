@@ -41,7 +41,7 @@ public class Cell : MonoBehaviour
         
         UnitBase unit = character.GetComponent<UnitBase>();
         unit.Init();
-        unit.OnDeathEvent += OnUnitDead;
+        unit.OnRemovedEvent += OnUnitDead;
     }
     //配置されたユニットが倒されたときに呼ばれる。
     void OnUnitDead()

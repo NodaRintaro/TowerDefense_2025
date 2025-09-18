@@ -44,6 +44,20 @@ public class InGameManager : MonoBehaviour
         {
             case playerState.Idle:
             {
+                if (Input.GetButtonDown("Fire2"))
+                {
+                    Debug.Log("Fire2");
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        Debug.Log($"Hit: {hit.transform.gameObject.name}");
+                        if (hit.transform.gameObject.CompareTag("PlayerUnit"))
+                        {
+                            RemoveUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                        }
+                    }
+                }
                 break;
             }
             case playerState.DraggingCharacter:
@@ -183,6 +197,7 @@ public class InGameManager : MonoBehaviour
     //ユニットを削除するメソッド
     private void RemoveUnit(UnitBase unit)
     {
+        unit.Remove();
         unitList.Remove(unit);
         _characterDeck.CharacterRemoved(unit.ID);
         Destroy(unit.gameObject);

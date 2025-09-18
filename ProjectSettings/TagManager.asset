@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stage
   - Cell
+  - PlayerUnit
   layers:
   - Default
   - TransparentFX

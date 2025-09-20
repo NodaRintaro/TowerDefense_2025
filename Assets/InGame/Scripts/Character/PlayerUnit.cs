@@ -21,9 +21,6 @@ public class PlayerUnit : UnitBase
             {   // 一番近い敵が索敵範囲内なら交戦に入る
                 BattleTarget = enemy;
             }
-            else
-            {   // いなかったら目的地に向かって移動する
-            }
         }
     }
 }

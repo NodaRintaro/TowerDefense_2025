@@ -2232,7 +2232,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2829,6 +2829,14 @@ PrefabInstance:
       propertyPath: _debugDataManager
       value: 
       objectReference: {fileID: 11400000, guid: 0a4f7fc59db2cb84d9e32ccf541ed836, type: 2}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: _enemyTowerPrefab
+      value: 
+      objectReference: {fileID: 6199569191452549408, guid: ef82cb8e4d5cdd64fa52181c242c8943, type: 3}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: _playerTowerPrefab
+      value: 
+      objectReference: {fileID: 2914503950216079662, guid: 307f416a93218ac4ab730f44a26a51f2, type: 3}
     - target: {fileID: 8571625024540193801, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
       propertyPath: m_Name
       value: InGameManager

@@ -10,7 +10,9 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
     [SerializeField] private DebugDataManager _debugDataManager;
-    public AIRoutes aiRoutes;                         //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    [SerializeField] private GameObject _enemyTowerPrefab;      //敵の基地
+    [SerializeField] private GameObject _playerTowerPrefab;     //プレイヤーの基地
+    [SerializeField] public AIRoutes aiRoutes;        //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
     private bool _isPaused = false;                   //ポーズ中かどうか
     private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
     public List<UnitBase> unitList;                   //ユニットのリスト
@@ -36,6 +38,8 @@ public class InGameManager : MonoBehaviour
     {
         _characterDeck = new CharacterDeck(_debugDataManager.CharacterDatas);
         InstantiateCharacterIcons();
+        Instantiate(_enemyTowerPrefab, aiRoutes.Points[0], Quaternion.identity); 
+        Instantiate(_playerTowerPrefab, aiRoutes.Points[aiRoutes.Count-1], Quaternion.identity);
     }
 
     private void Update()
@@ -242,7 +246,7 @@ public class InGameManager : MonoBehaviour
     //敵の次の目標地点を返す
     public Vector3 GetTargetRoutePosition(UnitBase unit, int index)
     {
-        if (index >= aiRoutes.Points.Count)
+        if (index >= aiRoutes.Count)
         {
             RemoveUnit(unit);
             GetEnemyOnGoal();

@@ -9,10 +9,14 @@ public class InGameManager : MonoBehaviour
     
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
-    [SerializeField] private DebugDataManager _debugDataManager;
+    [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject _enemyTowerPrefab;      //敵の基地
     [SerializeField] private GameObject _playerTowerPrefab;     //プレイヤーの基地
+    [SerializeField] private DebugDataManager _debugDataManager;//デバッグ用のデータ格納庫
     [SerializeField] public AIRoutes aiRoutes;        //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    [SerializeField]  public WaveData waveData;               //敵の出現パターン
+    private int _waveCount = 0;                       //敵の出現回数(敵の出現パターンのIndex)
+    private float _ingameTimer = 0;                   //ゲーム内時間
     private bool _isPaused = false;                   //ポーズ中かどうか
     private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
     public List<UnitBase> unitList;                   //ユニットのリスト
@@ -21,9 +25,21 @@ public class InGameManager : MonoBehaviour
     private GameObject _selectedCharacterObj;         //選択中のキャラクターObject
     private int _selectedCharacterID;                 //選択中のキャラクターID
     public CharacterDeck CharacterDeck => _characterDeck;
+
+    private float ingameTimer
+    {
+        get => _ingameTimer;
+        set
+        {
+            _ingameTimer = value;
+            OnInGameTimeUpdated?.Invoke(value);
+        }
+    }
     private playerState _playerState = playerState.Idle;
     public event Action OnDropCharacter;
     public event Action OnSelectCharacter;
+    public event Action<float> OnInGameTimeUpdated;
+    public event Action<float> OnIngameDeltaTimeUpdated;
 
     #region UnityFunctions
     private void Awake()
@@ -37,9 +53,15 @@ public class InGameManager : MonoBehaviour
     private void Start()
     {
         _characterDeck = new CharacterDeck(_debugDataManager.CharacterDatas);
+        //アイコンの生成
         InstantiateCharacterIcons();
+        //敵の基地とプレイヤーの基地の生成
         Instantiate(_enemyTowerPrefab, aiRoutes.Points[0], Quaternion.identity); 
         Instantiate(_playerTowerPrefab, aiRoutes.Points[aiRoutes.Count-1], Quaternion.identity);
+        //イベント関数への登録
+        OnIngameDeltaTimeUpdated += UpdateUnits;
+        OnIngameDeltaTimeUpdated += _characterDeck.UpdateTime;
+        OnInGameTimeUpdated += GenerateEnemyUnit;
     }
 
     private void Update()
@@ -70,9 +92,10 @@ public class InGameManager : MonoBehaviour
                 break;
             }
         }
-        float timeSpeed = _timeSpeed * Time.deltaTime;
-        UpdateUnits(timeSpeed);
-        _characterDeck.UpdateTime(timeSpeed);
+        
+        float ingameDeltaTime = _timeSpeed * Time.deltaTime;
+        ingameTimer += ingameDeltaTime;
+        if(OnIngameDeltaTimeUpdated!= null) OnIngameDeltaTimeUpdated(ingameDeltaTime);
     }
     private void OnDestroy()
     {
@@ -208,16 +231,31 @@ public class InGameManager : MonoBehaviour
     }
 
     // 敵のユニットを出現するメソッド
-    public void PlaceEnemyUnit(GameObject unitPrefab)
+    public void GenerateEnemyUnit(float time)
     {
-        // 駒を生成する
-        GameObject go = Instantiate(unitPrefab, aiRoutes.Points[0], Quaternion.identity);
-        // プレイヤーの基地から出発
-        go.transform.position = aiRoutes.Points[0];
-        // ユニットの目標を設定する
-        EnemyUnit unit = go.GetComponent<EnemyUnit>();
-        unit.SetTargetPosition(aiRoutes.Points[1]);
-        unit.Init();
+        // 敵の出現パターンのIndexを更新する  
+        if (waveData.IsOverGenerateTime(_ingameTimer, _waveCount))
+        {
+            // 駒を生成する
+            GameObject enemyObj = Instantiate(enemyPrefab, aiRoutes.Points[0], Quaternion.identity);
+            // プレイヤーの基地から出発
+            enemyObj.transform.position = aiRoutes.Points[0];
+            // ユニットの目標を設定する
+            EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
+            unit.SetTargetPosition(aiRoutes.Points[1]);
+            unit.Init();
+            
+            // 敵の出現パターンのIndexを更新する
+            _waveCount++;
+            if (_waveCount >= waveData.Count)
+            {
+                // 出現パターンのIndexが最大値を超えたら終了
+                OnInGameTimeUpdated -= GenerateEnemyUnit;
+                return;
+            }
+            //生成し終えたらカウントを増やし出撃するタイミングが同じ場合も考慮し、もう一度GenerateEnemyUnit関数を呼ぶ
+            GenerateEnemyUnit(time);
+        }
     }
     
     //最寄りの敵対ユニットを返す

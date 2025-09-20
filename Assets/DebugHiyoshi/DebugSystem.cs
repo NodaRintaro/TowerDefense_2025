@@ -5,7 +5,6 @@ using UnityEngine;
 public class DebugSystem : MonoBehaviour
 {
     private InGameManager _inGameManager;
-    [SerializeField] private GameObject enemyPrefab;
     void Start()
     {
         _inGameManager = InGameManager.Instance;
@@ -14,7 +13,7 @@ public class DebugSystem : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            _inGameManager.PlaceEnemyUnit(enemyPrefab);
+            
         }
         if (Input.GetKeyDown(KeyCode.A))
         {

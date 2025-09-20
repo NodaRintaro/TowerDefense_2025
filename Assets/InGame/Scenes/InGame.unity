@@ -933,7 +933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51034022bda5c914e8c5cea2e4baf090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2822865266447699257, guid: be340099d6760744c8462b5b2fb25542, type: 3}
 --- !u!4 &548752707
 Transform:
   m_ObjectHideFlags: 0
@@ -1179,13 +1178,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637493799}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29849622, y: -0, z: -0, w: 0.95441085}
-  m_LocalPosition: {x: 0, y: 7.08, z: -10}
+  m_LocalRotation: {x: 0.40218747, y: 0, z: 0, w: 0.9155574}
+  m_LocalPosition: {x: 0, y: 6.8, z: -6.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 34.735, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 47.43, y: 0, z: 0}
 --- !u!4 &657715927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6325866645415624305, guid: d93445af1de28114f85d2c50f3ff432c, type: 3}
@@ -2825,6 +2824,14 @@ PrefabInstance:
       propertyPath: aiRoutes
       value: 
       objectReference: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: waveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6294e8146fb5673418d74c5ff51b7141, type: 2}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 2822865266447699257, guid: be340099d6760744c8462b5b2fb25542, type: 3}
     - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
       propertyPath: _debugDataManager
       value: 

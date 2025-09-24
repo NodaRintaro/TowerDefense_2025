@@ -39,7 +39,6 @@ public class EnemyUnit : UnitBase
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * deltaTime);
         if (transform.position == targetPosition)
         {
-            Debug.Log("Get Over");
             GetTargetPosition(this);
         }
     }

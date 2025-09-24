@@ -6,9 +6,10 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [SerializeField] public string enemyName;
-    [SerializeField] public int health;
+    [SerializeField] public int hp;
     [SerializeField] public float speed;
-    [SerializeField] public float attackRange;
+    [SerializeField] public float range;
     [SerializeField] public float attackRate;
-    [SerializeField] public float damage;
+    [SerializeField] public float attack;
+    [SerializeField] public float defence;
 }

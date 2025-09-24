@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerUnit : UnitBase
 {
+    
     public override void Initialize()
     {
         GetComponent<CapsuleCollider>().enabled = true;

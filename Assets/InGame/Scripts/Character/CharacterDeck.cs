@@ -48,7 +48,7 @@ public class CharacterDeck
 
     public void CharacterRemoved(int index)
     {
-        SetRePlaceTimer(index, _characterDatas[index].RePlaceInterval);
+        SetRePlaceTimer(index, _characterDatas[index].rePlaceInterval);
     }
 
     public void SetCanPlaceCharacter(int index, bool canPlace)

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e52b0081e460104094884eba16ddbce, type: 3}
   m_Name: Character_2
   m_EditorClassIdentifier: 
-  Color: {r: 0, g: 0.0038642883, b: 1, a: 1}
-  CharacterName: Defender
-  Cost: 2
-  HP: 12
-  MP: 3
-  AttackPower: 2
-  Defense: 4
-  AttackSpeed: 0
-  Range: 0
-  RePlaceInterval: 5
+  color: {r: 0, g: 0.056025982, b: 1, a: 0}
+  characterName: B
+  cost: 0
+  hp: 22
+  mp: 1
+  attackPower: 2
+  defense: 1
+  attackSpeed: 1
+  range: 1
+  rePlaceInterval: 1

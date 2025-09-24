@@ -19,7 +19,7 @@ public class InGameManager : MonoBehaviour
     private float _ingameTimer = 0;                   //ゲーム内時間
     private bool _isPaused = false;                   //ポーズ中かどうか
     private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
-    public List<UnitBase> unitList;                   //ユニットのリスト
+    private List<UnitBase> _unitList = new List<UnitBase>();                 //ユニットのリスト
     private CharacterDeck _characterDeck;             //キャラクターの編成
     private Cell _selectedCell;                       //選択中のセル
     private GameObject _selectedCharacterObj;         //選択中のキャラクターObject
@@ -52,7 +52,7 @@ public class InGameManager : MonoBehaviour
 
     private void Start()
     {
-        _characterDeck = new CharacterDeck(_debugDataManager.CharacterDatas);
+        _characterDeck = new CharacterDeck(_debugDataManager.characterDatas);
         //アイコンの生成
         InstantiateCharacterIcons();
         //敵の基地とプレイヤーの基地の生成
@@ -110,7 +110,7 @@ public class InGameManager : MonoBehaviour
         if (!_characterDeck.CanPlaceCharacter(characterID)) return;
         _selectedCharacterID = characterID;
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
-        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDeck.GetCharacterData(characterID).Color;
+        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDeck.GetCharacterData(characterID).color;
         _selectedCharacterObj.GetComponent<UnitBase>().ID = characterID;
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
@@ -160,6 +160,10 @@ public class InGameManager : MonoBehaviour
 
     private void PlaceCharacter()
     {
+        UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
+        unit.SetUnitData(_characterDeck.GetCharacterData(_selectedCharacterID), UnitBase.GroupType.Player);
+        unit.Init();
+        
         _selectedCell.SetCharacter(_selectedCharacterObj);
         _selectedCharacterObj = null;
         _characterDeck.SetCanPlaceCharacter(_selectedCharacterID,false);
@@ -203,9 +207,9 @@ public class InGameManager : MonoBehaviour
         //ポーズ中ならば更新しない
         if (_isPaused) return;
         
-        for(int i = 0; i < unitList.Count; i++)
+        for(int i = 0; i < _unitList.Count; i++)
         {
-            UnitBase unit = unitList[i];
+            UnitBase unit = _unitList[i];
             if (unit.IsDead)
             {
                 RemoveUnit(unit);
@@ -219,13 +223,13 @@ public class InGameManager : MonoBehaviour
     //ユニットを追加するメソッド
     public void AddUnit(UnitBase unit)
     {
-        unitList.Add(unit);
+        _unitList.Add(unit);
     }
     //ユニットを削除するメソッド
     private void RemoveUnit(UnitBase unit)
     {
         unit.Remove();
-        unitList.Remove(unit);
+        _unitList.Remove(unit);
         _characterDeck.CharacterRemoved(unit.ID);
         Destroy(unit.gameObject);
     }
@@ -243,6 +247,7 @@ public class InGameManager : MonoBehaviour
             // ユニットの目標を設定する
             EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
             unit.SetTargetPosition(aiRoutes.Points[1]);
+            unit.SetUnitData(_debugDataManager.enemyDatas[0]);
             unit.Init();
             
             // 敵の出現パターンのIndexを更新する
@@ -264,7 +269,7 @@ public class InGameManager : MonoBehaviour
         UnitBase nearestEnemy = null;
         float nearestDistance = float.MaxValue;
 
-        foreach (UnitBase enemy in unitList)
+        foreach (UnitBase enemy in _unitList)
         {
             if (enemy.IsDead || !unit.IsEnemy(enemy))
             {   // 死んでいる敵は無視する

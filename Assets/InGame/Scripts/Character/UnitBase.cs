@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class UnitBase : MonoBehaviour
 {
+    [SerializeField] private HPBar _hpBar;   // HPバー
     //所属グループ
-    [SerializeField] private GroupType group;
-    [SerializeField] private int maxHp;            // 最大HP
-    [SerializeField] private int attack;           // 攻撃力
-    [SerializeField] private int defense;          // 防御力
+    private GroupType _group = GroupType.Enemy;
+    private float _maxHp;            // 最大HP
+    private float _attack;           // 攻撃力
+    private float _defense;          // 防御力
     public float searchEnemyDistance;      // 索敵範囲
     public float actionInterval;           // 行動間隔
     protected bool _isDead = false;        // 死亡フラグ
     protected float ActionWait;            // 次の行動までの時間
-    protected int CurrentHp;               // 現在のＨＰ
+    private float _currentHp;                // 現在のＨＰ
     public int ID;                         // ユニットID
     protected UnitBase BattleTarget;       // 交戦相手
+    protected UnitData UnitData;           // ユニットデータ
     
     public event Action OnRemovedEvent;   //ユニット削除時イベント
+    public event Action<float> OnHealthChangedEvent;   //ユニット選択時イベント
 
     public bool IsDead
     {
@@ -26,11 +29,23 @@ public class UnitBase : MonoBehaviour
             _isDead = value; 
         }
     }
+    protected float CurrentHp
+    {
+        get { return _currentHp; }
+        set
+        {
+            _currentHp = value;
+            OnHealthChangedEvent?.Invoke(value);
+        }
+    }
     public void Init()
     {
         // ユニットリストに自分を追加する
         InGameManager.Instance.AddUnit(this);
         Initialize();
+        // HPバーを初期化
+        _hpBar.Init(_maxHp);
+        OnHealthChangedEvent += _hpBar.UpdateHp;
     }
 
     public virtual void Initialize() { }
@@ -45,7 +60,7 @@ public class UnitBase : MonoBehaviour
     //敵陣営か判定
     public bool IsEnemy(UnitBase targetUnit)
     {
-        return group != targetUnit.group;
+        return _group != targetUnit._group;
     }
 
     // 攻撃行動ををするメソッド
@@ -75,13 +90,13 @@ public class UnitBase : MonoBehaviour
             return;
         }
         // 自分の攻撃力から相手の防御力を引いたものをダメージとする（０未満にはならない）
-        int damage = Mathf.Max(attack - target.defense, 0);
+        float damage = Mathf.Max(_attack - target._defense, 0);
         // 攻撃相手はダメージを受ける
         target.GetDamage(damage);
     }
     
     // ダメージを受ける
-    protected void GetDamage(int damage)
+    protected void GetDamage(float damage)
     {
         // HPが０未満にならないようにダメージを受ける
         CurrentHp = Mathf.Max(CurrentHp - damage, 0);
@@ -93,6 +108,29 @@ public class UnitBase : MonoBehaviour
     public float Distance(UnitBase targetUnit)
     {
         return Vector3.Distance(transform.position, targetUnit.transform.position);
+    }
+
+    public void SetUnitData(UnitData unitData, GroupType group)
+    {
+        UnitData = unitData;
+        _currentHp = unitData.hp;
+        _maxHp = unitData.hp;
+        _attack = unitData.attackPower;
+        _defense = unitData.defense;
+        _group = group;
+        searchEnemyDistance = unitData.range;
+        actionInterval = unitData.attackSpeed;
+    }
+
+    public void SetUnitData(EnemyData enemyData)
+    {
+        _currentHp = enemyData.hp;
+        _maxHp = enemyData.hp;
+        _attack = enemyData.attack;
+        _defense = enemyData.defence;
+        searchEnemyDistance = enemyData.range;
+        actionInterval = enemyData.speed;
+        _group = GroupType.Enemy;
     }
     public enum GroupType
     {

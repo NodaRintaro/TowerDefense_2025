@@ -19,27 +19,46 @@ MonoBehaviour:
     _power: 999
     _intelligence: 999
     _speed: 999
+    _roleType: 7
   - _id: 2
-    _characterName: Akasan
+    _characterName: "\u30BF\u30F3\u30AB\u30FC"
     _physical: 90
     _power: 90
     _intelligence: 35
     _speed: 40
+    _roleType: 2
   - _id: 3
-    _characterName: Tamaki
+    _characterName: "\u30DE\u30B8\u30B7\u30E3\u30F3"
     _physical: 60
     _power: 10
     _intelligence: 70
     _speed: 50
+    _roleType: 3
   - _id: 4
-    _characterName: Guttii
+    _characterName: "\u72D9\u6483\u624B"
     _physical: 63
-    _power: 45
+    _power: 50
     _intelligence: 60
     _speed: 48
+    _roleType: 4
   - _id: 5
-    _characterName: Handa
-    _physical: 1
-    _power: 1
-    _intelligence: 1
-    _speed: 1
+    _characterName: "\u5263\u58EB"
+    _physical: 40
+    _power: 70
+    _intelligence: 40
+    _speed: 70
+    _roleType: 1
+  - _id: 6
+    _characterName: "\u795E\u5B98"
+    _physical: 70
+    _power: 10
+    _intelligence: 60
+    _speed: 45
+    _roleType: 5
+  - _id: 7
+    _characterName: "\u30B5\u30DD\u30FC\u30BF\u30FC"
+    _physical: 50
+    _power: 30
+    _intelligence: 50
+    _speed: 50
+    _roleType: 6

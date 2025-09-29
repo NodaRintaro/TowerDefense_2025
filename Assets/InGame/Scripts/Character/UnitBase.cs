@@ -115,7 +115,7 @@ public class UnitBase : MonoBehaviour
         UnitData = unitData;
         _currentHp = unitData.hp;
         _maxHp = unitData.hp;
-        _attack = unitData.attackPower;
+        _attack = unitData.atk;
         _defense = unitData.defense;
         _group = group;
         searchEnemyDistance = unitData.range;

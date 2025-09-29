@@ -9,7 +9,7 @@ public class UnitData : ScriptableObject
     public float cost;
     public float hp;
     public float mp;
-    public float attackPower;
+    public float atk;
     public float defense;
     public float attackSpeed;
     public float range;

@@ -4,25 +4,25 @@ using UnityEngine;
 /// </summary>
 public class Cell : MonoBehaviour
 {
-    private Material _defaultMaterial;
+    private Material _material;
     private bool _isCharacter = false;
     public bool IsCharacter => _isCharacter;
     private void Start()
     {
-        _defaultMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
+        _material = transform.GetChild(0).GetComponent<Renderer>().material;
     }
 
     public void OnPointerEnter()
     {
         if(IsCharacter)
-            _defaultMaterial.color = Color.red;
+            _material.color = Color.red;
         else
-            _defaultMaterial.color = Color.green;
+            _material.color = Color.green;
     }
 
     public void OnPointerExit()
     {
-        _defaultMaterial.color = Color.white;
+        _material.color = Color.white;
     }
     /// <summary>
     /// セルにユニットを配置できるか

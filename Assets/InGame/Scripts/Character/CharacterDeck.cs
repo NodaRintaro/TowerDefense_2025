@@ -40,17 +40,24 @@ public class CharacterDeck
     {
         return _canPlaceCharacter[index];
     }
-
+    /// <summary>
+    /// 再配置時間を設定
+    /// </summary>
     public void SetRePlaceTimer(int index, float interval)
     {
         _intervalTimer[index] = interval;
     }
-
+    
     public void CharacterRemoved(int index)
     {
         SetRePlaceTimer(index, _characterDatas[index].rePlaceInterval);
     }
 
+    /// <summary>
+    /// キャラクターの配置可能状態を設定
+    /// </summary>
+    /// <param name="index">チームのインデックス</param>
+    /// <param name="canPlace"></param>
     public void SetCanPlaceCharacter(int index, bool canPlace)
     {
         _canPlaceCharacter[index] = canPlace;

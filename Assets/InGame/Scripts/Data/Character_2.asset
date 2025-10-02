@@ -12,13 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e52b0081e460104094884eba16ddbce, type: 3}
   m_Name: Character_2
   m_EditorClassIdentifier: 
+  _trainedCharacterData:
+    _baseCharacter:
+      _id: 2
+      _characterName: Beta
+      _physical: 32
+      _power: 1
+      _intelligence: 2
+      _speed: 1
+      _roleType: 2
+    _physical: 1
+    _power: 1
+    _intelligence: 0
+    _speed: 0
   color: {r: 0, g: 0.056025982, b: 1, a: 0}
-  characterName: B
-  cost: 0
-  hp: 22
-  mp: 1
-  attackPower: 2
+  cost: 1
   defense: 1
-  attackSpeed: 1
   range: 1
   rePlaceInterval: 1

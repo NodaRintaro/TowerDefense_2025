@@ -113,13 +113,13 @@ public class UnitBase : MonoBehaviour
     public void SetUnitData(UnitData unitData, GroupType group)
     {
         UnitData = unitData;
-        _currentHp = unitData.hp;
-        _maxHp = unitData.hp;
-        _attack = unitData.atk;
+        _currentHp = unitData.Physical;
+        _maxHp = unitData.Physical;
+        _attack = unitData.Power;
         _defense = unitData.defense;
         _group = group;
         searchEnemyDistance = unitData.range;
-        actionInterval = unitData.attackSpeed;
+        actionInterval = unitData.AttackSpeed;
     }
 
     public void SetUnitData(EnemyData enemyData)

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainingScreenController : MonoBehaviour
+public class ScreenController : MonoBehaviour
 {
     /// <summary> ScreenTypeが変化した際に通知するための変数 </summary>
     private event Action<ScreenType> _onChangedScreenType;

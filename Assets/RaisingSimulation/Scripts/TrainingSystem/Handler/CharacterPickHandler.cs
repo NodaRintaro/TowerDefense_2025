@@ -6,13 +6,3 @@ public class CharacterPickHandler : MonoBehaviour
 {
     
 }
-
-public class PickCharacterData
-{
-    private Sprite _characterSprite;
-
-    private int _characterID;
-
-
-
-}

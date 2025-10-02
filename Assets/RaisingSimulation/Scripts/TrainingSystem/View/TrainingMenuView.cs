@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class TrainingMenuView : IUiView
+public class TrainingMenuView : IUiHolder
 {
     [SerializeField, Header("Canvasのオブジェクト")]
     GameObject _viewCanvas;

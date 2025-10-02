@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IUiView
+public interface IUiHolder
 {
     public GameObject ViewCanvasObj { get; }
 }

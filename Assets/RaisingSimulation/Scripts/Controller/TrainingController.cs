@@ -12,7 +12,7 @@ public class TrainingController : MonoBehaviour
     [SerializeField, Header("トレーニングイベントUI")]
     private CharacterPickView _trainingEventView;
     
-
+    
     private GameObject _currentActiveCanvas = null;
 
     /// <summary> ModelClassの変数 </summary>
@@ -20,13 +20,13 @@ public class TrainingController : MonoBehaviour
     private TrainingMenuHandler _trainingEventHandler;
 
 
-    private TrainingScreenController _screenChanger;
+    private ScreenController _screenChanger;
 
     public void Awake()
     {
         _characterPickHandler = FindAnyObjectByType<CharacterPickHandler>();
         _trainingEventHandler = FindAnyObjectByType<TrainingMenuHandler>();
-        _screenChanger = FindAnyObjectByType<TrainingScreenController>();
+        _screenChanger = FindAnyObjectByType<ScreenController>();
     }
 
     public void OnEnable()

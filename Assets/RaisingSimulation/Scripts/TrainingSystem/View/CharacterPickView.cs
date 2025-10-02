@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class CharacterPickView : IUiView
+public class CharacterPickView : IUiHolder
 {
     [SerializeField, Header("Canvasのオブジェクト")]
     GameObject _viewCanvas;

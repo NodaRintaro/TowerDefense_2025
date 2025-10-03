@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New Wave Data", menuName = "InGame/Wave Data")]
 public class WaveData : ScriptableObject

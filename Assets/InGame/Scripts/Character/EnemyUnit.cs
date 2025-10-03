@@ -22,7 +22,7 @@ public class EnemyUnit : UnitBase
         else
         {   // 交戦相手がいないとき一番近い敵を探す
             UnitBase enemy = InGameManager.Instance.FindNearestEnemy(this);
-            if(enemy != null && Distance(enemy) <= searchEnemyDistance)
+            if(enemy != null && Distance(enemy) <= UnitData.AttackRange)
             {   // 一番近い敵が索敵範囲内なら交戦に入る
                 BattleTarget = enemy;
             }

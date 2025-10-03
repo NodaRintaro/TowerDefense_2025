@@ -19,8 +19,8 @@ public class HPBar : MonoBehaviour
     public void UpdateHp(float hp)
     {
         float hpBarLength = hp * CurrentHpBar;
+        Debug.Log($"MaxHpBar:{MaxHpBar}\nhpBarLemgth:{hpBarLength}\nCurrentHpBar:{CurrentHpBar}\nPosition.x:{HpBarObject.rectTransform.position.x}\nhp:{hp}");
         HpBarObject.rectTransform.sizeDelta = new Vector2(hpBarLength, HpBarObject.rectTransform.sizeDelta.y);
         HpBarObject.rectTransform.position = new Vector2((hpBarLength / 2f)/100, HpBarObject.rectTransform.position.y);
-        Debug.Log($"MaxHpBar:{MaxHpBar}\nhpBarLemgth:{hpBarLength}\nCurrentHpBar:{CurrentHpBar}\nPosition.x:{HpBarObject.rectTransform.position.x}\nhp:{hp}");
     }
 }

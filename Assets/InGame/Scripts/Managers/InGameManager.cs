@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class InGameManager : MonoBehaviour
 {
     private static InGameManager _instance;
@@ -9,24 +8,25 @@ public class InGameManager : MonoBehaviour
     
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyTowerPrefab;      //敵の基地
     [SerializeField] private GameObject _playerTowerPrefab;     //プレイヤーの基地
     [SerializeField] private DebugDataManager _debugDataManager;//デバッグ用のデータ格納庫
-    [SerializeField] public AIRoutes aiRoutes;        //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
-    [SerializeField]  public WaveData waveData;               //敵の出現パターン
-    private int _waveCount = 0;                       //敵の出現回数(敵の出現パターンのIndex)
-    private float _ingameTimer = 0;                   //ゲーム内時間
-    private bool _isPaused = false;                   //ポーズ中かどうか
-    private float _timeSpeed = 1;                     //ゲーム内の時間の速さ
+    [SerializeField] public AIRoutes aiRoutes;                  //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    [SerializeField] public WaveData waveData;                  //敵の出現パターン
+    private int _waveCount = 0;                                 //敵の出現回数(敵の出現パターンのIndex)
+    private float _ingameTimer = 0;                             //ゲーム内時間
+    private bool _isPaused = false;                             //ポーズ中かどうか
+    private float _timeSpeed = 1;                               //ゲーム内の時間の速さ
     private List<UnitBase> _unitList = new List<UnitBase>();                 //ユニットのリスト
-    private CharacterDeck _characterDeck;             //キャラクターの編成
-    private Cell _selectedCell;                       //選択中のセル
-    private GameObject _selectedCharacterObj;         //選択中のキャラクターObject
-    private int _selectedCharacterID;                 //選択中のキャラクターID
+    private CharacterDeck _characterDeck;                       //キャラクターの編成
+    private Cell _selectedCell;                                 //選択中のセル
+    private GameObject _selectedCharacterObj;                   //選択中のキャラクターObject
+    private int _selectedCharacterID;                           //選択中のキャラクターID
+    private playerState _playerState = playerState.Idle;        //プレイヤーの状態
     public CharacterDeck CharacterDeck => _characterDeck;
 
-    private float ingameTimer
+    private float IngameTimer
     {
         get => _ingameTimer;
         set
@@ -35,11 +35,18 @@ public class InGameManager : MonoBehaviour
             OnInGameTimeUpdated?.Invoke(value);
         }
     }
-    private playerState _playerState = playerState.Idle;
+    #region Events
     public event Action OnDropCharacter;
     public event Action OnSelectCharacter;
+    /// <summary>
+    /// ゲーム開始からの経過時間が更新された時に呼び出される
+    /// </summary>
     public event Action<float> OnInGameTimeUpdated;
+    /// <summary>
+    /// 前フレームからの経過時間が更新された時に呼び出される
+    /// </summary>
     public event Action<float> OnIngameDeltaTimeUpdated;
+    #endregion
 
     #region UnityFunctions
     private void Awake()
@@ -56,8 +63,9 @@ public class InGameManager : MonoBehaviour
         //アイコンの生成
         InstantiateCharacterIcons();
         //敵の基地とプレイヤーの基地の生成
-        Instantiate(_enemyTowerPrefab, aiRoutes.Points[0], Quaternion.identity); 
+        Instantiate(_enemyTowerPrefab, aiRoutes.Points[0], Quaternion.identity);
         Instantiate(_playerTowerPrefab, aiRoutes.Points[aiRoutes.Count-1], Quaternion.identity);
+        
         //イベント関数への登録
         OnIngameDeltaTimeUpdated += UpdateUnits;
         OnIngameDeltaTimeUpdated += _characterDeck.UpdateTime;
@@ -94,8 +102,8 @@ public class InGameManager : MonoBehaviour
         }
         
         float ingameDeltaTime = _timeSpeed * Time.deltaTime;
-        ingameTimer += ingameDeltaTime;
-        if(OnIngameDeltaTimeUpdated!= null) OnIngameDeltaTimeUpdated(ingameDeltaTime);
+        IngameTimer += ingameDeltaTime;
+        OnIngameDeltaTimeUpdated?.Invoke(ingameDeltaTime);
     }
     private void OnDestroy()
     {
@@ -110,8 +118,8 @@ public class InGameManager : MonoBehaviour
         if (!_characterDeck.CanPlaceCharacter(characterID)) return;
         _selectedCharacterID = characterID;
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
-        _selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDeck.GetCharacterData(characterID).color;
-        _selectedCharacterObj.GetComponent<UnitBase>().ID = characterID;
+        //_selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDeck.GetCharacterData(characterID).color;
+        //_selectedCharacterObj.GetComponent<UnitBase>() = characterID;
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
     }
@@ -161,7 +169,7 @@ public class InGameManager : MonoBehaviour
     private void PlaceCharacter()
     {
         UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
-        unit.SetUnitData(_characterDeck.GetCharacterData(_selectedCharacterID), UnitBase.GroupType.Player);
+        unit.UnitData = new UnitData(_characterDeck.GetCharacterData(_selectedCharacterID));
         unit.Init();
         
         _selectedCell.SetCharacter(_selectedCharacterObj);
@@ -230,7 +238,7 @@ public class InGameManager : MonoBehaviour
     {
         unit.Remove();
         _unitList.Remove(unit);
-        _characterDeck.CharacterRemoved(unit.ID);
+        _characterDeck.CharacterRemoved(unit.UnitData.ID);
         Destroy(unit.gameObject);
     }
 
@@ -241,13 +249,14 @@ public class InGameManager : MonoBehaviour
         if (waveData.IsOverGenerateTime(_ingameTimer, _waveCount))
         {
             // 駒を生成する
-            GameObject enemyObj = Instantiate(enemyPrefab, aiRoutes.Points[0], Quaternion.identity);
+            GameObject enemyObj = Instantiate(_enemyPrefab, aiRoutes.Points[0], Quaternion.identity);
             // プレイヤーの基地から出発
             enemyObj.transform.position = aiRoutes.Points[0];
             // ユニットの目標を設定する
             EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
             unit.SetTargetPosition(aiRoutes.Points[1]);
-            unit.SetUnitData(_debugDataManager.enemyDatas[0]);
+            // ユニットのデータを設定する
+            unit.UnitData = new EnemyUnitData(_debugDataManager.enemyDatas[0]);
             unit.Init();
             
             // 敵の出現パターンのIndexを更新する

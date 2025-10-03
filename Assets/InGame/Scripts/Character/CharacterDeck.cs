@@ -1,7 +1,9 @@
 
+using UnityEngine;
+
 public class CharacterDeck
 {
-    private UnitData[] _characterDatas;
+    private TrainedCharacterData[] _characterDatas;
     private bool[] _canPlaceCharacter;
     private float[] _intervalTimer;
     public int Count { get { return _characterDatas.Length; } }
@@ -20,14 +22,14 @@ public class CharacterDeck
             }
         }
     }
-    public CharacterDeck(UnitData[] characterDatas)
+    public CharacterDeck(TrainedCharacterData[] characterDatas)
     {
         _characterDatas = characterDatas;
         _canPlaceCharacter = new bool[characterDatas.Length];
         _intervalTimer = new float[characterDatas.Length];
         for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
     }
-    public UnitData GetCharacterData(int index)
+    public TrainedCharacterData GetCharacterData(int index)
     {
         return _characterDatas[index];
     }
@@ -43,14 +45,16 @@ public class CharacterDeck
     /// <summary>
     /// 再配置時間を設定
     /// </summary>
-    public void SetRePlaceTimer(int index, float interval)
+    private void SetRePlaceTimer(uint index, float interval)
     {
         _intervalTimer[index] = interval;
     }
     
-    public void CharacterRemoved(int index)
+    public void CharacterRemoved(uint index)
     {
-        SetRePlaceTimer(index, _characterDatas[index].rePlaceInterval);
+        //SetRePlaceTimer(index, _characterDatas[index].);
+        SetRePlaceTimer(index, 1.0f);
+        Debug.Log("要修正");
     }
 
     /// <summary>

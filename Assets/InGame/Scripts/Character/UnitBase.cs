@@ -5,46 +5,48 @@ public class UnitBase : MonoBehaviour
 {
     [SerializeField] private HPBar _hpBar;   // HPバー
     //所属グループ
-    private GroupType _group = GroupType.Enemy;
-    private float _maxHp;            // 最大HP
-    private float _attack;           // 攻撃力
-    private float _defense;          // 防御力
-    public float searchEnemyDistance;      // 索敵範囲
-    public float actionInterval;           // 行動間隔
-    protected bool _isDead = false;        // 死亡フラグ
-    protected float ActionWait;            // 次の行動までの時間
-    private float _currentHp;                // 現在のＨＰ
-    public int ID;                         // ユニットID
+    //private GroupType _group = GroupType.Enemy;
+    //private float _maxHp;          // 最大HP
+    //private float _attack;           // 攻撃力
+    //private float _defense;          // 防御力
+    //public float searchEnemyDistance;      // 索敵範囲
+    //public float actionInterval;           // 行動間隔
+    //protected bool _isDead = false;        // 死亡フラグ
+    //protected float ActionWait;            // 次の行動までの時間
+    //private float _currentHp;              // 現在のＨＰ
+    //public int ID;                         // ユニットID
     protected UnitBase BattleTarget;       // 交戦相手
-    protected UnitData UnitData;           // ユニットデータ
+    public UnitData UnitData;           // ユニットデータ
     
     public event Action OnRemovedEvent;   //ユニット削除時イベント
     public event Action<float> OnHealthChangedEvent;   //ユニット選択時イベント
 
+    #region Property
     public bool IsDead
     {
-        get { return _isDead; }
+        get { return UnitData.IsDead; }
         private set
         {
-            _isDead = value; 
+            UnitData.IsDead = value; 
         }
     }
     protected float CurrentHp
     {
-        get { return _currentHp; }
+        get { return UnitData.CurrentHp; }
         set
         {
-            _currentHp = value;
+            UnitData.CurrentHp = value;
             OnHealthChangedEvent?.Invoke(value);
         }
     }
+    #endregion
     public void Init()
     {
         // ユニットリストに自分を追加する
         InGameManager.Instance.AddUnit(this);
         Initialize();
         // HPバーを初期化
-        _hpBar.Init(_maxHp);
+        _hpBar.Init(UnitData.Attack);
         OnHealthChangedEvent += _hpBar.UpdateHp;
     }
 
@@ -60,18 +62,18 @@ public class UnitBase : MonoBehaviour
     //敵陣営か判定
     public bool IsEnemy(UnitBase targetUnit)
     {
-        return _group != targetUnit._group;
+        return UnitData.Group != targetUnit.UnitData.Group;
     }
 
     // 攻撃行動ををするメソッド
     protected void AttackAction(float deltaTime)
     {
         // 次の行動間隔まで待つ
-        ActionWait -= deltaTime;
-        if (ActionWait > 0) return;
+        UnitData.ActionTimer -= deltaTime;
+        if (UnitData.ActionTimer > 0) return;
 
         // 次の行動をするまでの待ち時間をセット
-        ActionWait += actionInterval;
+        UnitData.ActionTimer += UnitData.ActionInterval;
 
         // 攻撃する
         Attack(BattleTarget);
@@ -90,7 +92,7 @@ public class UnitBase : MonoBehaviour
             return;
         }
         // 自分の攻撃力から相手の防御力を引いたものをダメージとする（０未満にはならない）
-        float damage = Mathf.Max(_attack - target._defense, 0);
+        float damage = Mathf.Max(UnitData.Attack - target.UnitData.Defence, 0);
         // 攻撃相手はダメージを受ける
         target.GetDamage(damage);
     }
@@ -105,36 +107,36 @@ public class UnitBase : MonoBehaviour
             IsDead = true;
         }
     }
+
+    public void Heal(float heal)
+    {
+        CurrentHp = Mathf.Min(CurrentHp + heal, UnitData.MaxHp);
+    }
     public float Distance(UnitBase targetUnit)
     {
         return Vector3.Distance(transform.position, targetUnit.transform.position);
     }
 
-    public void SetUnitData(UnitData unitData, GroupType group)
-    {
-        UnitData = unitData;
-        _currentHp = unitData.Physical;
-        _maxHp = unitData.Physical;
-        _attack = unitData.Power;
-        _defense = unitData.defense;
-        _group = group;
-        searchEnemyDistance = unitData.range;
-        actionInterval = unitData.AttackSpeed;
-    }
-
-    public void SetUnitData(EnemyData enemyData)
-    {
-        _currentHp = enemyData.hp;
-        _maxHp = enemyData.hp;
-        _attack = enemyData.attack;
-        _defense = enemyData.defence;
-        searchEnemyDistance = enemyData.range;
-        actionInterval = enemyData.speed;
-        _group = GroupType.Enemy;
-    }
-    public enum GroupType
-    {
-        Player,
-        Enemy,
-    }
+    // public void SetUnitData(UnitData unitData, GroupType group)
+    // {
+    //     UnitData = unitData;
+    //     _currentHp = unitData.Physical;
+    //     _maxHp = unitData.Physical;
+    //     _attack = unitData.Power;
+    //     _defense = unitData.defense;
+    //     _group = group;
+    //     searchEnemyDistance = unitData.range;
+    //     actionInterval = unitData.AttackSpeed;
+    // }
+    //
+    // public void SetUnitData(EnemyData enemyData)
+    // {
+    //     _currentHp = enemyData.hp;
+    //     _maxHp = enemyData.hp;
+    //     _attack = enemyData.attack;
+    //     _defense = enemyData.defence;
+    //     searchEnemyDistance = enemyData.range;
+    //     actionInterval = enemyData.speed;
+    //     _group = GroupType.Enemy;
+    // }
 }

@@ -47,13 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 464269644519523414}
-  group: 1
-  maxHp: 55
-  attack: 5
-  defense: 2
-  searchEnemyDistance: 1
-  actionInterval: 1
-  ID: 0
   targetPosition: {x: 0, y: 0, z: 0}
   moveSpeed: 1
 --- !u!1 &6461006711662993034
@@ -153,11 +146,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 172308855581428275, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.452
+      value: 0.61
       objectReference: {fileID: 0}
     - target: {fileID: 172308855581428275, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.53
       objectReference: {fileID: 0}
     - target: {fileID: 172308855581428275, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_LocalRotation.w

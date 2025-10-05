@@ -4,8 +4,12 @@
 [System.Serializable]
 public class TrainedCharacterData
 {
+    [SerializeField, Header("トレーニング後のキャラクターID")]
+    private uint _id;
+
     [SerializeField, Header("強化したキャラクターのデータ")]
     private CharacterData _baseCharacter;
+
     [SerializeField, Header("体力増加値")]
     private uint _physical;
     [SerializeField, Header("筋力増加値")]
@@ -14,6 +18,9 @@ public class TrainedCharacterData
     private uint _intelligence;
     [SerializeField, Header("素早さ増加値")]
     private uint _speed;
+
+    /// <summary> トレーニング後のキャラクターデータID </summary>
+    public uint TrainedCharacterID => _id;
 
     #region 増加値の参照用プロパティ
     public CharacterData BaseCharacter => _baseCharacter;
@@ -30,8 +37,9 @@ public class TrainedCharacterData
     public uint TotalSpeed => _speed + _baseCharacter.Speed;
     #endregion
 
-    public void SetCharacterTrainedData(CharacterData setChara, uint setPhysi, uint setPow, uint setInt, uint setSp)
+    public void SetCharacterTrainedData(CharacterData setChara, uint newID, uint setPhysi, uint setPow, uint setInt, uint setSp)
     {
+        _id = newID;
         _baseCharacter = setChara;
         _physical = setPhysi;
         _power = setPow;

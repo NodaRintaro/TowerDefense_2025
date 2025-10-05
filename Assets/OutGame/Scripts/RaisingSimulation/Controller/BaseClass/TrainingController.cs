@@ -1,31 +1,31 @@
 ﻿using System;
 using UnityEngine;
 
-public class TrainingController : MonoBehaviour
+public class TrainingControllerBase : MonoBehaviour
 {
     [SerializeField, Header("トレーニング選択画面UIのViewClass")]
-    private TrainingMenuView _trainingMenuView;
+    private TrainingMenuUIHolder _trainingMenuView;
 
     [SerializeField, Header("キャラクター選択画面UIのViewClass")]
-    private CharacterPickView _characterPickView;
+    private CharacterPickUIHolder _characterPickView;
 
     [SerializeField, Header("トレーニングイベントUI")]
-    private CharacterPickView _trainingEventView;
+    private CharacterPickUIHolder _trainingEventView;
     
     
     private GameObject _currentActiveCanvas = null;
 
     /// <summary> ModelClassの変数 </summary>
-    private CharacterPickHandler _characterPickHandler;
-    private TrainingMenuHandler _trainingEventHandler;
+    private CharacterPickController _characterPickHandler;
+    private TrainingMenuController _trainingEventHandler;
 
 
     private ScreenController _screenChanger;
 
     public void Awake()
     {
-        _characterPickHandler = FindAnyObjectByType<CharacterPickHandler>();
-        _trainingEventHandler = FindAnyObjectByType<TrainingMenuHandler>();
+        _characterPickHandler = FindAnyObjectByType<CharacterPickController>();
+        _trainingEventHandler = FindAnyObjectByType<TrainingMenuController>();
         _screenChanger = FindAnyObjectByType<ScreenController>();
     }
 
@@ -39,9 +39,6 @@ public class TrainingController : MonoBehaviour
         _screenChanger.OnChangedScreenType -= ChangeView;
     }
 
-    #region キャラクター選択画面の処理
-
-    #endregion
     private void ChangeView(ScreenType screenType)
     {
         if(_currentActiveCanvas != null)

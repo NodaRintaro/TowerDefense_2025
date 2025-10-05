@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// トレーニングイベントの入力を受けてトレーニングへの移行を行うクラス
 /// </summary>
-public class TrainingMenuHandler : MonoBehaviour
+public class TrainingMenuController : MonoBehaviour
 {
     [SerializeField, Header("キャラクターのデータの保存先")]
     private string _characterDataPath = "CharacterData";

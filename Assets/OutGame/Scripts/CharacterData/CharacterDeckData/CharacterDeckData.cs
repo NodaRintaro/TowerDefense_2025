@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class CharacterDeckData
 {
-    [SerializeField] private TrainedCharacterData[] _trainedCharacterDeck;
+    [SerializeField] private uint[] _trainedCharacterDeck;
 }

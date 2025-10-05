@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class CharacterDeckRegistry
 {
-    [SerializeField] private CharacterDeckData _characterDeckRegistry; 
+    [SerializeField] private uint[] _characterDeckRegistry; 
 }

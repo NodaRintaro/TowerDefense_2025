@@ -3,20 +3,35 @@ using UnityEngine;
 
 public class StageData : ScriptableObject
 {
-    private string _stageName;
-    private CellData[] _cellDatas;
+    public string stageName;
+    public int width;
+    public int height;
+    public CellData[] cellDatas;
 
-    public void SetCells(CellData[] cellDatas) { _cellDatas = cellDatas;}
-    public void SetCell(int index, CellData cellData) { _cellDatas[index] = cellData; }
-    
-    public CellData[] GetCells() { return _cellDatas; }
-    public CellData GetCell(int index) { return _cellDatas[index]; }
+    #region 
+    public StageData()
+    {
+        this.stageName = "New Stage";
+        this.width = 5;
+        this.height = 5;
+        this.cellDatas = new CellData[5 * 5];
+    }
+    public StageData(string stageName, int  width, int height)
+    {
+        this.stageName = stageName;
+        this.width = width;
+        this.height = height;
+        this.cellDatas = new CellData[width * height];
+    }
+
+    #endregion
 }
 
 [Serializable]
 public class CellData
 {
     public Vector3 position;
+    public CellType cellType;
     public Material material;
     
     public CellData(Vector3 position, Material material)
@@ -24,4 +39,10 @@ public class CellData
         this.position = position;
         this.material = material;
     }
+}
+[System.Serializable]
+public enum CellType
+{
+    Flat,
+    High,
 }

@@ -16,5 +16,6 @@ https://zenn.dev/supple/articles/64c9f9aaf2e7ca6f7151
 https://qiita.com/marthallll/items/d2072a41e864bc62dacb
 =======
 やること
-・敵の出現するウェーブデータの作成
-・敵のデータの作成
+回復機能を作る
+攻撃範囲を円ではなくグリッドにする。
+ロールで配置できるマスを決定できるようにする。

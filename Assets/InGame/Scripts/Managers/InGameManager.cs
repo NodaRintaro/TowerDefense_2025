@@ -12,7 +12,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _enemyTowerPrefab;      //敵の基地
     [SerializeField] private GameObject _playerTowerPrefab;     //プレイヤーの基地
     [SerializeField] private DebugDataManager _debugDataManager;//デバッグ用のデータ格納庫
-    [SerializeField] public AIRoutes aiRoutes;                  //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
+    [SerializeField] public AIRoute aiRoute;                  //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
     [SerializeField] public WaveData waveData;                  //敵の出現パターン
     private int _waveCount = 0;                                 //敵の出現回数(敵の出現パターンのIndex)
     private float _ingameTimer = 0;                             //ゲーム内時間
@@ -63,8 +63,8 @@ public class InGameManager : MonoBehaviour
         //アイコンの生成
         InstantiateCharacterIcons();
         //敵の基地とプレイヤーの基地の生成
-        Instantiate(_enemyTowerPrefab, aiRoutes.Points[0], Quaternion.identity);
-        Instantiate(_playerTowerPrefab, aiRoutes.Points[aiRoutes.Count-1], Quaternion.identity);
+        Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
+        Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
         
         //イベント関数への登録
         OnIngameDeltaTimeUpdated += UpdateUnits;
@@ -249,12 +249,12 @@ public class InGameManager : MonoBehaviour
         if (waveData.IsOverGenerateTime(_ingameTimer, _waveCount))
         {
             // 駒を生成する
-            GameObject enemyObj = Instantiate(_enemyPrefab, aiRoutes.Points[0], Quaternion.identity);
+            GameObject enemyObj = Instantiate(_enemyPrefab, aiRoute.Points[0], Quaternion.identity);
             // プレイヤーの基地から出発
-            enemyObj.transform.position = aiRoutes.Points[0];
+            enemyObj.transform.position = aiRoute.Points[0];
             // ユニットの目標を設定する
             EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
-            unit.SetTargetPosition(aiRoutes.Points[1]);
+            unit.SetTargetPosition(aiRoute.Points[1]);
             // ユニットのデータを設定する
             unit.UnitData = new EnemyUnitData(_debugDataManager.enemyDatas[0]);
             unit.Init();
@@ -298,13 +298,13 @@ public class InGameManager : MonoBehaviour
     //敵の次の目標地点を返す
     public Vector3 GetTargetRoutePosition(UnitBase unit, int index)
     {
-        if (index >= aiRoutes.Count)
+        if (index >= aiRoute.Count)
         {
             RemoveUnit(unit);
             GetEnemyOnGoal();
             return new Vector3(0,0,0);
         }
-        return aiRoutes.Points[index];
+        return aiRoute.Points[index];
     }
     public void GetEnemyOnGoal()
     {

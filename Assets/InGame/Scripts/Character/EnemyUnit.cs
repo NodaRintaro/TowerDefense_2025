@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyUnit : UnitBase
 {
     [HideInInspector]public Vector3 targetPosition; // 目標地点
-    private AIRoutes _routes; 　　　//ルート管理クラス
+    private AIRoute _route; 　　　//ルート管理クラス
     public float moveSpeed;        // 移動速度
     private int _routeIndex = 1;   // ルートのインデックス
 

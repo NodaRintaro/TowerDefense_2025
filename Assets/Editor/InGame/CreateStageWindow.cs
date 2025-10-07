@@ -28,7 +28,7 @@ public class CreateStageWindow : EditorWindow
     [MenuItem("Tools/CreateStageWindow")]
     public static void ShowWindow()
     {
-        GetWindow<RoomMakingWindow>();
+        GetWindow<CreateStageWindow>();
     }
     
     private void OnGUI()
@@ -65,7 +65,7 @@ public class CreateStageWindow : EditorWindow
         
         if(_isInit)
         {
-            RoomMakeGUI();
+            StageMakeGUI();
         }
         
         EditorGUILayout.EndScrollView();
@@ -73,14 +73,14 @@ public class CreateStageWindow : EditorWindow
 
     #region Gridの表示処理
     /// <summary>Gridの表示</summary>
-    private void RoomMakeGUI()
+    private void StageMakeGUI()
     {
         EditorGUILayout.LabelField("新しく作るステージの名前");
         _stageName = EditorGUILayout.DelayedTextField(_stageName);
         EditorGUILayout.LabelField("現在のステージの大きさ");
         EditorGUILayout.LabelField("横の長さ:" + _width + "マス");
         EditorGUILayout.LabelField("縦の長さ:" + _height + "マス");
-            
+        
         EditorGUILayout.Space();
         
         for (int y = 0; y < _height; y++)
@@ -153,7 +153,7 @@ public class CreateStageWindow : EditorWindow
     }
     #endregion
 	
-    /// <summary>clickされた際にTileTypeを変える機能</summary>
+    /// <summary>clickされた際にCellTypeを変える機能</summary>
     /// <param name="type"></param>
     /// <returns></returns>
     private CellType ChangeCellType(CellType type)
@@ -175,18 +175,19 @@ public class CreateStageWindow : EditorWindow
         }
     }
     
-    /// <summary>指定したタイルの情報を取得</summary>
+    /// <summary>指定したセルの情報を取得</summary>
     public CellType GetTile(int x, int y)
     {
         return _gridStageData[CellPos(x,y)];
     }
     
-    /// <summary>指定したタイルのタイプを変更</summary>
+    /// <summary>指定したセルのタイプを変更</summary>
     public void SetCell(int tilePosX, int tilePosY, CellType cellType)
     {
         _gridStageData[CellPos(tilePosX,tilePosY)] = cellType;
     }
 
+    /// <summary>指定した座標のセルの位置を計算</summary>
     private int CellPos(int x, int y)
     {
         return x + y * _width;

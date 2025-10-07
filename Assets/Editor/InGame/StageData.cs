@@ -7,6 +7,7 @@ public class StageData : ScriptableObject
     public int width;
     public int height;
     public CellData[] cellDatas;
+    public AIRoute aiRoute;
 
     #region 
     public StageData()
@@ -30,15 +31,11 @@ public class StageData : ScriptableObject
 [Serializable]
 public class CellData
 {
-    public Vector3 position;
     public CellType cellType;
     public Material material;
     
-    public CellData(Vector3 position, Material material)
-    {
-        this.position = position;
-        this.material = material;
-    }
+    public CellData(Material material) { this.material = material; }
+    public CellData(CellType cellType) {this.cellType = cellType;}
 }
 [System.Serializable]
 public enum CellType

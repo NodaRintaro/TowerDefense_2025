@@ -2821,6 +2821,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: aiRoute
+      value: 
+      objectReference: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
       propertyPath: aiRoutes
       value: 
       objectReference: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}

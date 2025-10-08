@@ -56,21 +56,20 @@ public class CreateStageEditor : Editor
                 if (cellData.cellType == CellType.Flat)
                 {
                     mat.color = Color.white;
-                    gridObj.GetComponent<Renderer>().material = mat;
                     gridObj.transform.position = new Vector3(i, 0, -j);
                 }
                 else if (cellData.cellType == CellType.High)
                 {
                     mat.color = Color.green;
-                    gridObj.GetComponent<Renderer>().material = mat;
                     gridObj.transform.position = new Vector3(i, 0.5f, -j);
                 }
                 else
                 {
                     mat.color = Color.magenta;
-                    gridObj.GetComponent<Renderer>().material = mat;
                     gridObj.transform.position = new Vector3(i, 0, -j);
                 }
+                gridObj.GetComponent<Renderer>().material = mat;
+                
                 Handles.color = _stageWireColor;
                 //Handles.DrawWireCube(gridObj.transform.position, Vector3.one);
                 Vector3[] vecs = new Vector3[4]

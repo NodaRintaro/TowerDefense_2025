@@ -8,6 +8,9 @@ https://candle-stoplight-544.notion.site/6-1b439cbfbab98018bb6eeb97e8ba49d1
 
 ・Editor拡張のTips
 //https://yotiky.hatenablog.com/entry/unity_editorextension-tips
+・ステージdate作り(Editor)
+https://bluebirdofoz.hatenablog.com/entry/2023/10/08/235543
+https://qiita.com/sebunwork009/items/b7bb17d29dfd3348d0aa
 
 ・Unitの作り参照
 https://zenn.dev/supple/articles/64c9f9aaf2e7ca6f7151

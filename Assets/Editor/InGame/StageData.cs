@@ -17,12 +17,12 @@ public class StageData : ScriptableObject
         this.height = 5;
         this.cellDatas = new CellData[5 * 5];
     }
-    public StageData(string stageName, int  width, int height)
+    public StageData(string stageName, int  width, int height, CellData[] cellDatas)
     {
         this.stageName = stageName;
         this.width = width;
         this.height = height;
-        this.cellDatas = new CellData[width * height];
+        this.cellDatas = cellDatas;
     }
 
     #endregion
@@ -33,6 +33,10 @@ public class CellData
 {
     public CellType cellType;
     public Material material;
+    public CellData()
+    {
+        this.cellType = CellType.Flat;
+    }
     
     public CellData(Material material) { this.material = material; }
     public CellData(CellType cellType) {this.cellType = cellType;}

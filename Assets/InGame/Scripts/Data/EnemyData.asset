@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   enemyName: DDD
-  hp: 22
+  hp: 44
   moveSpeed: 1
   range: 1
   attackRate: 1

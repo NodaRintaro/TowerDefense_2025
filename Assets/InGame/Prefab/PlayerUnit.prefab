@@ -48,13 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 2514168558043955735}
-  group: 0
-  maxHp: 0
-  attack: 0
-  defense: 0
-  searchEnemyDistance: 0
-  actionInterval: 0
-  ID: 0
 --- !u!136 &-3759488789859258066
 CapsuleCollider:
   m_ObjectHideFlags: 0

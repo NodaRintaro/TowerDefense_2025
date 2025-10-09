@@ -4,17 +4,6 @@ using UnityEngine;
 public class UnitBase : MonoBehaviour
 {
     [SerializeField] private HPBar _hpBar;   // HPバー
-    //所属グループ
-    //private GroupType _group = GroupType.Enemy;
-    //private float _maxHp;          // 最大HP
-    //private float _attack;           // 攻撃力
-    //private float _defense;          // 防御力
-    //public float searchEnemyDistance;      // 索敵範囲
-    //public float actionInterval;           // 行動間隔
-    //protected bool _isDead = false;        // 死亡フラグ
-    //protected float ActionWait;            // 次の行動までの時間
-    //private float _currentHp;              // 現在のＨＰ
-    //public int ID;                         // ユニットID
     protected UnitBase BattleTarget;       // 交戦相手
     public UnitData UnitData;           // ユニットデータ
     
@@ -116,27 +105,4 @@ public class UnitBase : MonoBehaviour
     {
         return Vector3.Distance(transform.position, targetUnit.transform.position);
     }
-
-    // public void SetUnitData(UnitData unitData, GroupType group)
-    // {
-    //     UnitData = unitData;
-    //     _currentHp = unitData.Physical;
-    //     _maxHp = unitData.Physical;
-    //     _attack = unitData.Power;
-    //     _defense = unitData.defense;
-    //     _group = group;
-    //     searchEnemyDistance = unitData.range;
-    //     actionInterval = unitData.AttackSpeed;
-    // }
-    //
-    // public void SetUnitData(EnemyData enemyData)
-    // {
-    //     _currentHp = enemyData.hp;
-    //     _maxHp = enemyData.hp;
-    //     _attack = enemyData.attack;
-    //     _defense = enemyData.defence;
-    //     searchEnemyDistance = enemyData.range;
-    //     actionInterval = enemyData.speed;
-    //     _group = GroupType.Enemy;
-    // }
 }

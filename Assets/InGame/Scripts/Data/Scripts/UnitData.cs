@@ -1,5 +1,3 @@
-using System;
-using UnityEngine;
 public class UnitData
 {
     public UnitData(TrainedCharacterData trainedCharacterData)
@@ -23,29 +21,26 @@ public class UnitData
         _actionInterval = trainedCharacterData.Speed;
         _currentHp = 0f;
     }
-    /// <summary>
-    /// キャラクターのタイプ
-    /// </summary>
-    private RoleType _roleType;
-    private GroupType _group;
-    private uint _id;                         // ユニットID
-    private string _name;                    // ユニット名
-    private float _cost;
-    private float _rePlaceInterval;
-    private bool _isDead = false;        // 死亡フラグ
+    private RoleType _roleType;             // ユニットのタイプ
+    private GroupType _group;               // ユニットが属しているグループ   
+    private uint _id;                       // ユニットID
+    private string _name;                   // ユニット名
+    private float _cost;                    // ユニットを出すのに必要なコスト
+    private float _rePlaceInterval;         // 再出撃に必要な時間
+    private bool _isDead = false;           // 死亡フラグ
     private float _maxHp;                   // 最大HP
     private float _attack;                  // 攻撃力
     private float _magicPower;              // 魔法力
     private float _defence;                 // 防御力
-    private float _attackRange;      // 索敵範囲
-    private float _actionInterval;           // 行動間隔
-    private float _currentHp;              // 現在のＨＰ
-    private float _actionTimer;             // 行動時間
+    private float _attackRange;             // 索敵範囲
+    private float _actionInterval;          // 行動間隔
+    private float _currentHp;               // 現在のＨＰ
+    private float _actionTimer;             // 行動時間計測用タイマー
+    private float _rePlaceTimer;            // 再出撃用タイマー
+    
+    
 
-    protected UnitData()
-    {
-        
-    }
+    protected UnitData() { }
 
     #region Properties
     public RoleType RoleType { get => _roleType; set => _roleType = value; }
@@ -62,6 +57,7 @@ public class UnitData
     public float ActionInterval { get => _actionInterval; set => _actionInterval = value; }
     public float CurrentHp { get => _currentHp; set => _currentHp = value; }
     public float ActionTimer { get => _actionTimer; set => _actionTimer = value; }
+    public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }
     #endregion
     public enum GroupType
     {

@@ -1,17 +1,17 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(AIRoutes))]
+[CustomEditor(typeof(AIRoute))]
 public class AIRouteEditor : Editor
 {
-    private static AIRoutes instance = null;
+    private static AIRoute instance = null;
     private const float SPACE       = 1;
     //private const float SPACE_HALF  = SPACE / 2;
     
     // 選択されたとき
     private void OnEnable()
     {
-        instance = target as AIRoutes;
+        instance = target as AIRoute;
         SceneView.duringSceneGui += OnSceneGUI;
     }
 

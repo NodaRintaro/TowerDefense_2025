@@ -1,37 +1,43 @@
-
 using UnityEngine;
-
-public class CharacterDeck
+public class UnitDeck
 {
-    private TrainedCharacterData[] _characterDatas;
+    private UnitData[] _unitDatas;
     private bool[] _canPlaceCharacter;
-    private float[] _intervalTimer;
-    public int Count { get { return _characterDatas.Length; } }
+    public int Count { get { return _unitDatas.Length; } }
 
     public void UpdateTime(float time)
     {
-        for (int i = 0; i < _characterDatas.Length; i++)
+        for (int i = 0; i < _unitDatas.Length; i++)
         {
-            if (_intervalTimer[i] > 0)
+            if (_unitDatas[i].RePlaceTimer > 0)
             {
-                _intervalTimer[i] -= time;
-                if (_intervalTimer[i] <= 0)
+                _unitDatas[i].RePlaceTimer -= time;
+                if (_unitDatas[i].RePlaceTimer <= 0)
                 {
                     _canPlaceCharacter[i] = true;
                 }
             }
         }
     }
-    public CharacterDeck(TrainedCharacterData[] characterDatas)
+    public UnitDeck(UnitData[] unitDatas)
     {
-        _characterDatas = characterDatas;
-        _canPlaceCharacter = new bool[characterDatas.Length];
-        _intervalTimer = new float[characterDatas.Length];
+        _unitDatas = unitDatas;
+        _canPlaceCharacter = new bool[unitDatas.Length];
         for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
     }
-    public TrainedCharacterData GetCharacterData(int index)
+    public UnitDeck(TrainedCharacterData[] trainedCharacterDatas)
     {
-        return _characterDatas[index];
+        _unitDatas = new UnitData[trainedCharacterDatas.Length];
+        for (int i = 0; i < trainedCharacterDatas.Length; i++)
+        {
+            _unitDatas[i] = new UnitData(trainedCharacterDatas[i]);
+        }
+        _canPlaceCharacter = new bool[trainedCharacterDatas.Length];
+        for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
+    }
+    public UnitData GetCharacterData(int index)
+    {
+        return _unitDatas[index];
     }
     /// <summary>
     /// Trueなら配置可能
@@ -47,7 +53,7 @@ public class CharacterDeck
     /// </summary>
     private void SetRePlaceTimer(uint index, float interval)
     {
-        _intervalTimer[index] = interval;
+        _unitDatas[index].RePlaceTimer = interval;
     }
     
     public void CharacterRemoved(uint index)

@@ -1178,13 +1178,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637493799}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40218747, y: 0, z: 0, w: 0.9155574}
-  m_LocalPosition: {x: 0, y: 6.8, z: -6.4}
+  m_LocalRotation: {x: 0.5167575, y: 0, z: 0, w: 0.85613185}
+  m_LocalPosition: {x: 0, y: 5.19, z: -4.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 47.43, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 62.23, y: 0, z: 0}
 --- !u!4 &657715927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6325866645415624305, guid: d93445af1de28114f85d2c50f3ff432c, type: 3}
@@ -2820,6 +2820,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: aiRoute
+      value: 
+      objectReference: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}
     - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
       propertyPath: aiRoutes
       value: 

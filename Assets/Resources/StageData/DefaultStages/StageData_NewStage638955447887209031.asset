@@ -128,4 +128,4 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  aiRoute: {fileID: 0}
+  waveDatas: []

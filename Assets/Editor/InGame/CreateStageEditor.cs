@@ -96,6 +96,7 @@ public class CreateStageEditor : Editor
         // WayPointの位置をSceneView上で変更できるハンドルを表示する
         for (int i = 0; i < _instance.waveDatas.Length; i++)
         {
+<<<<<<< HEAD
             AIRoute aiRoute = _instance.waveDatas[i].aiRoute;
             for (int j = 0; j < aiRoute.Points.Count; j++)
             {
@@ -108,6 +109,18 @@ public class CreateStageEditor : Editor
                     Handles.color = _aiRouteColor;
                     Handles.DrawLine(wayPoint + new Vector3(0, 0.5f, 0), wayPoint2 + new Vector3(0, 0.5f, 0), 2f);
                 }
+=======
+            // WayPointの位置を取得する
+            Vector3 wayPoint = _instance.aiRoute.Points[i];
+            if (i >= 1)
+            {
+                var wayPoint2 = _instance.aiRoute.Points[i - 1];
+                Handles.color = _aiRouteColor;
+                Handles.DrawLine(wayPoint + new Vector3(0, 0.5f, 0), wayPoint2 + new Vector3(0, 0.5f, 0), 2f);
+            }
+            // WayPointの位置を取得する
+            Vector3 pos = wayPoint;
+>>>>>>> 624edde4c78987e901e3329429774d28a7b32f28
 
                 // WayPointの位置を取得する
                 Vector3 pos = wayPoint;

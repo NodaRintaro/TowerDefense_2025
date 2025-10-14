@@ -48,32 +48,41 @@ public class CreateStageEditor : Editor
     private void OnSceneGUI(SceneView sceneView)
     {
         if (_instance == null) return;
-        for (int i = 0; i < _instance.cellDatas.Length; i++)
+        for (int i = 0; i < _instance.width; i++)
         {
-            GameObject grid = _grid[i];
-            CellData cellData = _instance.cellDatas[i];
-            Material mat = new Material(Shader.Find("Standard"));
-            if (cellData.cellType == CellType.Flat)
+            for (int j = 0; j < _instance.height; j++)
             {
-                mat.color = Color.white;
-                grid.GetComponent<Renderer>().material = mat;
-                grid.transform.position = new Vector3(i % _instance.width, 0, -i / _instance.height);
+                GameObject gridObj = _grid[i + j * _instance.width];
+                CellData cellData = _instance.cellDatas[i + j * _instance.width];
+                Material mat = new Material( Shader.Find("Standard") );
+                if (cellData.cellType == CellType.Flat)
+                {
+                    mat.color = Color.white;
+                    gridObj.transform.position = new Vector3(i, 0, -j);
+                }
+                else if (cellData.cellType == CellType.High)
+                {
+                    mat.color = Color.green;
+                    gridObj.transform.position = new Vector3(i, 0.5f, -j);
+                }
+                else
+                {
+                    mat.color = Color.magenta;
+                    gridObj.transform.position = new Vector3(i, 0, -j);
+                }
+                gridObj.GetComponent<Renderer>().material = mat;
+                
+                Handles.color = _stageWireColor;
+                //Handles.DrawWireCube(gridObj.transform.position, Vector3.one);
+                Vector3[] vecs = new Vector3[4]
+                {
+                    new Vector3(0.5f,0.5f,0.5f) + gridObj.transform.position,
+                    new Vector3(0.5f,0.5f,-0.5f) + gridObj.transform.position,
+                    new Vector3(-0.5f,0.5f,-0.5f) + gridObj.transform.position,
+                    new Vector3(-0.5f,0.5f,0.5f) + gridObj.transform.position
+                };
+                Handles.DrawSolidRectangleWithOutline(vecs,new Color(0,0,0,0),Color.grey);
             }
-            else if (cellData.cellType == CellType.High)
-            {
-                mat.color = Color.green;
-                grid.GetComponent<Renderer>().material = mat;
-                grid.transform.position = new Vector3(i % _instance.width, 0.5f, -i / _instance.height);
-            }
-            else
-            {
-                mat.color = Color.magenta;
-                grid.GetComponent<Renderer>().material = mat;
-                grid.transform.position = new Vector3(i % _instance.width, 0, -i / _instance.height);
-            }
-
-            Handles.color = _stageWireColor;
-            Handles.DrawWireCube(grid.transform.position, Vector3.one);
         }
 
         if (_instance.waveDatas == null)

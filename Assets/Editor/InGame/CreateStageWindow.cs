@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CreateStageWindow : EditorWindow
 {
-    private CellType[] _gridStageData;
+    private CellData[] _cellData;
     
     private Vector2 _scrollPos;
     private int _scrollHeight = 600;
@@ -57,7 +57,7 @@ public class CreateStageWindow : EditorWindow
         //ボタンを押すと1つ前の画面に戻って部屋の大きさを設定できるようになる
         if (GUILayout.Button("Delete Grid"))
         {
-            _gridStageData = null;
+            _cellData = null;
             _isInit = false;
         }
         
@@ -89,7 +89,7 @@ public class CreateStageWindow : EditorWindow
             EditorGUILayout.BeginHorizontal();
             for (int x = 0; x < _width; x++)
             {
-                CellType currentTile = GetTile(x, y);
+                CellType currentTile = GetCell(x, y);
 
                 Color color = GetColor(currentTile);
                 GUI.backgroundColor = color;
@@ -118,10 +118,16 @@ public class CreateStageWindow : EditorWindow
     /// <summary>Gridの初期化</summary>
     private void InitGrid()
     {
-        _gridStageData = new CellType[_width * _height];
+        _cellData = new CellData[_width * _height];
         for (int i = 0; i < _width; i++)
-        for (int j = 0; j < _height; j++)
-            _gridStageData[i + _width * j] = CellType.Flat;
+        {
+            for (int j = 0; j < _height; j++)
+            {
+                _cellData[i + _width * j] = new CellData();
+                _cellData[i + _width * j].cellType = CellType.Flat;
+            }
+        }
+
         _isInit = true;
     }
     #endregion
@@ -140,6 +146,7 @@ public class CreateStageWindow : EditorWindow
         stageData.stageName = _stageName;
         stageData.width = _width;
         stageData.height = _height;
+        stageData.cellDatas =  _cellData;
         
         // 保存パスの指定
         string assetPath = $"{MustSavePath + _saveFolderPath}/StageData_{_stageName + System.DateTime.Now.Ticks}.asset";
@@ -176,15 +183,15 @@ public class CreateStageWindow : EditorWindow
     }
     
     /// <summary>指定したセルの情報を取得</summary>
-    public CellType GetTile(int x, int y)
+    public CellType GetCell(int x, int y)
     {
-        return _gridStageData[CellPos(x,y)];
+        return _cellData[CellPos(x,y)].cellType;
     }
     
     /// <summary>指定したセルのタイプを変更</summary>
     public void SetCell(int tilePosX, int tilePosY, CellType cellType)
     {
-        _gridStageData[CellPos(tilePosX,tilePosY)] = cellType;
+        _cellData[CellPos(tilePosX,tilePosY)].cellType = cellType;
     }
 
     /// <summary>指定した座標のセルの位置を計算</summary>

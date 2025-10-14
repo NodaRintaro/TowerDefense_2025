@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76c4f739e5583d408776068db5307a7, type: 3}
   m_Name: New Wave Data
   m_EditorClassIdentifier: 
+  aiRoute: {fileID: 11400000, guid: e343205e94a134d4e86cbf39d710b95a, type: 2}
   enemyGenerateData:
   - enemyData: {fileID: 11400000, guid: 3b2d2a8c3b00b1c4daf471c295e3b9ee, type: 2}
     spawnTime: 3

@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
-
+[Serializable]
 public class StageData : ScriptableObject
 {
     public string stageName;
     public int width;
     public int height;
     public CellData[] cellDatas;
-    public AIRoute aiRoute;
+    public WaveData[] waveDatas;
 
     #region 
     public StageData()

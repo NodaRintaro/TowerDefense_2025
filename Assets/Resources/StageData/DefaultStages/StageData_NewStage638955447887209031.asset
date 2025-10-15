@@ -128,4 +128,6 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  waveDatas: []
+  waveDatas:
+  - {fileID: 0}
+  - {fileID: 0}

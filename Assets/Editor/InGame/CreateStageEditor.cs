@@ -213,59 +213,79 @@ public class CreateStageEditor : Editor
     /// </summary>
     private void WaveDataGUI()
     {
-        GUILayout.Space(10);
-        EditorGUILayout.LabelField("WaveData :" + _instance.width);
+        using (new EditorGUILayout.HorizontalScope())
+        {
+            GUILayout.Label("WaveData :" + _instance.width,GUILayout.ExpandWidth(false));
+            if (GUILayout.Button("Add Wave",GUILayout.Width(100f)))
+            {
+                AddWaveData();
+            }
+        }
+        
         for (int i = 0; i < _instance.waveDatas.Length; i++)
         {
-            GUILayout.Space(10);
-            if (GUILayout.Button("Add WayPoint"))
+            using (new EditorGUILayout.HorizontalScope())
             {
-                _instance.waveDatas[i].aiRoute.Points.Add(Vector3.zero);
-            }
-
-            if (GUILayout.Button("Remove WayPoint"))
-            {
-                if (_instance.waveDatas[i].aiRoute.Points.Count > 0)
+                GUILayout.Label($"Wave{i}",GUILayout.ExpandWidth(false));
+                if (GUILayout.Button("Remove Wave",GUILayout.Width(100f)))
                 {
-                    _instance.waveDatas[i].aiRoute.Points.RemoveAt(_instance.waveDatas[i].aiRoute.Points.Count - 1);
+                    RemoveWaveData(i);
+                }
+            }
+            //要素を横にする
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("Add WayPoint",GUILayout.ExpandWidth(false)))
+                {
+                    _instance.waveDatas[i].aiRoute.Points.Add(Vector3.zero);
+                }
+
+                if (GUILayout.Button("Remove WayPoint",GUILayout.ExpandWidth(false)))
+                {
+                    if (_instance.waveDatas[i].aiRoute.Points.Count > 0)
+                    {
+                        _instance.waveDatas[i].aiRoute.Points.RemoveAt(_instance.waveDatas[i].aiRoute.Points.Count - 1);
+                    }
                 }
             }
             GUILayout.Space(10);
             for (int j = 0; j < _instance.waveDatas[i].enemyGenerateDatas.Length; j++)
             {
-                EditorGUILayout.LabelField($"敵生成データ{j}");
-                _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime = EditorGUILayout.FloatField("SpawnTime",
-                    _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime);
-                if (GUILayout.Button("Remove EnemyData"))
+                //要素を横にする
+                using (new EditorGUILayout.HorizontalScope(GUILayout.ExpandWidth(false)))
                 {
-                    RemoveEnemyGenerateData(i,j);
+                    GUILayout.Label($"敵データ[{_instance.waveDatas[i].enemyGenerateDatas[j].enemyData.enemyName}]");
+                    
+                    _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime = EditorGUILayout.FloatField("SpawnTime",
+                        _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime,GUILayout.ExpandWidth(false));
+                    if (GUILayout.Button("Remove EnemyData"))
+                    {
+                        RemoveEnemyGenerateData(i,j);
+                    }
                 }
             }
             //新しく敵を追加する用のGUI
-            EditorGUILayout.LabelField($"敵はここに入れる");
-            EnemyData enemyData = EditorGUILayout.ObjectField("EG",null, typeof(EnemyData), true) as EnemyData;
+            EnemyData enemyData = EditorGUILayout.ObjectField(
+                "新規EnemyData",null, typeof(EnemyData), 
+                false,
+                GUILayout.ExpandWidth(false)
+                ) as EnemyData;
             if (enemyData != null)
             {
                 Array.Resize(ref _instance.waveDatas[i].enemyGenerateDatas, _instance.waveDatas[i].enemyGenerateDatas.Length + 1);
                 _instance.waveDatas[i].enemyGenerateDatas[_instance.waveDatas[i].enemyGenerateDatas.Length - 1] 
                     = new EnemyGenerateData() { enemyData = enemyData, spawnTime = 0 };
             }
-            if (GUILayout.Button("Remove Wave"))
-            {
-                RemoveWaveData(i);
-            }
+            GUILayout.Space(10);
         }
         GUILayout.Space(10);
-        if (GUILayout.Button("Add Wave"))
-        {
-            AddWaveData();
-        }
         GUILayout.Space(10);
     }
 
     void RemoveEnemyGenerateData(int waveIndex,int generateIndex)
     {
-        EnemyGenerateData[] enemyGenerateDatas = new EnemyGenerateData[_instance.waveDatas[waveIndex].enemyGenerateDatas.Length - 1];
+        EnemyGenerateData[] enemyGenerateDatas = 
+            new EnemyGenerateData[_instance.waveDatas[waveIndex].enemyGenerateDatas.Length - 1];
         for (int i = 0 , j = 0; i < enemyGenerateDatas.Length; i++)
         {
             if (i != generateIndex) j++;

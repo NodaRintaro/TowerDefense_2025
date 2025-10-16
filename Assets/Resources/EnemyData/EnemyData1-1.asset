@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7793c3f923f13be43afc87ad62166290, type: 3}
   m_Name: EnemyData1-1
   m_EditorClassIdentifier: 
-  enemyName: 
+  enemyName: CCC
   hp: 1
   moveSpeed: 3
   range: 4

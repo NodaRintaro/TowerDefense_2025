@@ -230,6 +230,7 @@ public class CreateStageEditor : Editor
                 if (GUILayout.Button("Remove Wave",GUILayout.Width(100f)))
                 {
                     RemoveWaveData(i);
+                    return;
                 }
             }
             //要素を横にする
@@ -303,9 +304,9 @@ public class CreateStageEditor : Editor
     void RemoveWaveData(int index)
     {
         WaveData[] waveDatas = new WaveData[_instance.waveDatas.Length - 1];
-        for (int i = 0 , j = 0; i < waveDatas.Length; i++)
+        for (int i = 0 , j = 0; i < waveDatas.Length; i++,j++)
         {
-            if (i != index) j++;
+            if (i == index) j++;
             waveDatas[i] = _instance.waveDatas[j];
         }
         _instance.waveDatas = waveDatas;

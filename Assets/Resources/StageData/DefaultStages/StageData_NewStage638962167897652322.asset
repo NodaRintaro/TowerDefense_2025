@@ -88,7 +88,7 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -113,5 +113,6 @@ MonoBehaviour:
   - cellType: 0
     material: {fileID: 0}
   waveDatas:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

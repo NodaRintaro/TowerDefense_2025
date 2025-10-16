@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7793c3f923f13be43afc87ad62166290, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  enemyName: Enemy_1
-  health: 5
-  speed: 1
-  attackRange: 3
+  enemyName: AAA
+  hp: 0
+  moveSpeed: 0
+  range: 0
   attackRate: 1
-  damage: 1
+  attack: 0
+  defence: 0

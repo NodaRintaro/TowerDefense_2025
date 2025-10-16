@@ -10,13 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 143b9c6fca9641a4b8866884deb95028, type: 3}
-  m_Name: StageData_NewStage638955447887209031
+  m_Name: StageData_NewStage638962167897652322
   m_EditorClassIdentifier: 
   stageName: NewStage
   width: 8
-  height: 7
+  height: 6
   cellDatas:
-  - cellType: 0
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -34,7 +48,37 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
   - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -48,79 +92,19 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}

@@ -286,9 +286,9 @@ public class CreateStageEditor : Editor
     {
         EnemyGenerateData[] enemyGenerateDatas = 
             new EnemyGenerateData[_instance.waveDatas[waveIndex].enemyGenerateDatas.Length - 1];
-        for (int i = 0 , j = 0; i < enemyGenerateDatas.Length; i++)
+        for (int i = 0 , j = 0; i < enemyGenerateDatas.Length; i++,j++)
         {
-            if (i != generateIndex) j++;
+            if (i == generateIndex) j++;
             enemyGenerateDatas[i] = _instance.waveDatas[waveIndex].enemyGenerateDatas[j];
         }
         _instance.waveDatas[waveIndex].enemyGenerateDatas = enemyGenerateDatas;

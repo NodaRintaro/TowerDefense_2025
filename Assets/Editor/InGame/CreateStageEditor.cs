@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(StageData))]
-public class CreateStageEditor : Editor
+public class CreateStageEditor : UnityEditor.Editor
 {
     private static StageData _instance;
     GameObject _parent;
@@ -41,7 +40,7 @@ public class CreateStageEditor : Editor
     {
         _instance = null;
         SceneView.duringSceneGui -= OnSceneGUI;
-        
+
         DestroyGrid();
     }
 
@@ -54,7 +53,7 @@ public class CreateStageEditor : Editor
             {
                 GameObject gridObj = _grid[i + j * _instance.width];
                 CellData cellData = _instance.cellDatas[i + j * _instance.width];
-                Material mat = new Material( Shader.Find("Standard") );
+                Material mat = new Material(Shader.Find("Standard"));
                 if (cellData.cellType == CellType.Flat)
                 {
                     mat.color = Color.white;
@@ -70,18 +69,19 @@ public class CreateStageEditor : Editor
                     mat.color = Color.magenta;
                     gridObj.transform.position = new Vector3(i, 0, -j);
                 }
+
                 gridObj.GetComponent<Renderer>().material = mat;
-                
+
                 Handles.color = _stageWireColor;
                 //Handles.DrawWireCube(gridObj.transform.position, Vector3.one);
                 Vector3[] vecs = new Vector3[4]
                 {
-                    new Vector3(0.5f,0.5f,0.5f) + gridObj.transform.position,
-                    new Vector3(0.5f,0.5f,-0.5f) + gridObj.transform.position,
-                    new Vector3(-0.5f,0.5f,-0.5f) + gridObj.transform.position,
-                    new Vector3(-0.5f,0.5f,0.5f) + gridObj.transform.position
+                    new Vector3(0.5f, 0.5f, 0.5f) + gridObj.transform.position,
+                    new Vector3(0.5f, 0.5f, -0.5f) + gridObj.transform.position,
+                    new Vector3(-0.5f, 0.5f, -0.5f) + gridObj.transform.position,
+                    new Vector3(-0.5f, 0.5f, 0.5f) + gridObj.transform.position
                 };
-                Handles.DrawSolidRectangleWithOutline(vecs,new Color(0,0,0,0),Color.grey);
+                Handles.DrawSolidRectangleWithOutline(vecs, new Color(0, 0, 0, 0), Color.grey);
             }
         }
 
@@ -91,62 +91,17 @@ public class CreateStageEditor : Editor
             return;
         }
 
-        #region AIRoute用GUI
-
         // WayPointの位置をSceneView上で変更できるハンドルを表示する
         for (int i = 0; i < _instance.waveDatas.Length; i++)
         {
-            AIRoute aiRoute = _instance.waveDatas[i].aiRoute;
-            for (int j = 0; j < aiRoute.Points.Count; j++)
+            if (_instance.waveDatas[i] == null)
             {
-                // WayPointの位置を取得する
-                var wayPoint = aiRoute.Points[j];
-                if (j >= 1)
-                {
-                    var wayPoint2 = aiRoute.Points[j - 1];
-                    //Debug.DrawLine(wayPoint + new Vector3(0, 0.5f, 0), wayPoint2 + new Vector3(0, 0.5f, 0));
-                    Handles.color = _aiRouteColor;
-                    Handles.DrawLine(wayPoint + new Vector3(0, 0.5f, 0), wayPoint2 + new Vector3(0, 0.5f, 0), 2f);
-                }
-
-                // WayPointの位置を取得する
-                Vector3 pos = wayPoint;
-
-                // ハンドルを表示する
-                EditorGUI.BeginChangeCheck();
-                pos = Handles.PositionHandle(pos, Quaternion.identity);
-
-                // WayPointの位置が変更されたら反映する
-                if (EditorGUI.EndChangeCheck())
-                {
-                    pos = MultipleFloor(pos, SPACE);
-                    aiRoute.Points[j] = pos;
-                    //EditorUtility.SetDirty(aiRoute);
-                    EditorUtility.SetDirty(_instance);
-                }
-
-                Handles.BeginGUI();
-                // コンボボックス
-                // スクリーン座標に変換する
-                var screenPos = HandleUtility.WorldToGUIPointWithDepth(pos);
-                // コンボボックスを表示する
-                EditorGUI.BeginChangeCheck();
-                var rect = new Rect(screenPos.x, screenPos.y + 10, 100, 20);
-                EditorGUI.TextField(rect, $"{j}");
-                _instance.waveDatas[i].aiRoute = aiRoute;
-                // 変更されたら反映する
-                if (EditorGUI.EndChangeCheck())
-                {
-                    // Undo.RecordObject(aiRoute, "Edit Destination");
-                    // EditorUtility.SetDirty(aiRoute);
-                    Undo.RecordObject(_instance, "Edit Destination");
-                    EditorUtility.SetDirty(_instance);
-                }
-                Handles.EndGUI();
+                Debug.Log($"WaveDataIsNull{i}");
+                return;
             }
-        }
 
-        #endregion
+            AIRouteGUI(ref _instance.waveDatas[i].aiRoute);
+        }
     }
 
     public override void OnInspectorGUI()
@@ -156,7 +111,6 @@ public class CreateStageEditor : Editor
         GUILayout.Space(10);
         WaveDataGUI();
         GUILayout.Space(10);
-        EditorGUILayout.EndScrollView();
     }
 
     private void CellGUI()
@@ -166,7 +120,7 @@ public class CreateStageEditor : Editor
         //nullの場合Dataを初期化
         if (_instance.cellDatas == null)
         {
-            _instance.cellDatas = new CellData[_instance.cellDatas.Length];
+            _instance.cellDatas = new CellData[_instance.width * _instance.height];
             EditorUtility.SetDirty(_instance);
         }
 
@@ -179,6 +133,7 @@ public class CreateStageEditor : Editor
 
         _displayGridSize =
             EditorGUILayout.IntSlider("ステージの表示サイズ", _displayGridSize, _minDisplayGridSize, _maxDisplayGridSize);
+        EditorGUILayout.EndScrollView();
     }
 
     private void TileTypeGUI(StageData stageData, int displaySize)
@@ -215,104 +170,164 @@ public class CreateStageEditor : Editor
     {
         using (new EditorGUILayout.HorizontalScope())
         {
-            GUILayout.Label("WaveData :" + _instance.width,GUILayout.ExpandWidth(false));
-            if (GUILayout.Button("Add Wave",GUILayout.Width(100f)))
+            GUILayout.Label("WaveData", GUILayout.ExpandWidth(false));
+            if (GUILayout.Button("Add Wave", GUILayout.Width(100f)))
             {
                 AddWaveData();
             }
         }
-        
+
         for (int i = 0; i < _instance.waveDatas.Length; i++)
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                GUILayout.Label($"Wave{i}",GUILayout.ExpandWidth(false));
-                if (GUILayout.Button("Remove Wave",GUILayout.Width(100f)))
+                GUILayout.Label($"Wave{i}", GUILayout.ExpandWidth(false));
+                if (GUILayout.Button("Remove Wave", GUILayout.Width(100f)))
                 {
                     RemoveWaveData(i);
                     return;
                 }
             }
+
             //要素を横にする
+            //AIRouteGUI
             using (new EditorGUILayout.HorizontalScope())
             {
-                if (GUILayout.Button("Add WayPoint",GUILayout.ExpandWidth(false)))
+                if (GUILayout.Button("Add WayPoint", GUILayout.ExpandWidth(false)))
                 {
-                    _instance.waveDatas[i].aiRoute.Points.Add(Vector3.zero);
+                    _instance.waveDatas[i].aiRoute.AddPoint(Vector3.zero);
                 }
 
-                if (GUILayout.Button("Remove WayPoint",GUILayout.ExpandWidth(false)))
+                if (GUILayout.Button("Remove WayPoint", GUILayout.ExpandWidth(false)))
                 {
-                    if (_instance.waveDatas[i].aiRoute.Points.Count > 0)
+                    if (_instance.waveDatas[i].aiRoute.Length > 0)
                     {
-                        _instance.waveDatas[i].aiRoute.Points.RemoveAt(_instance.waveDatas[i].aiRoute.Points.Count - 1);
+                        _instance.waveDatas[i].aiRoute.RemoveAtPoint(_instance.waveDatas[i].aiRoute.Length - 1);
                     }
                 }
             }
+
             GUILayout.Space(10);
+            if (_instance.waveDatas[i].enemyGenerateDatas == null)
+            {
+                Debug.Log("GenerateData Is NULL");
+                return;
+            }
             for (int j = 0; j < _instance.waveDatas[i].enemyGenerateDatas.Length; j++)
             {
                 //要素を横にする
                 using (new EditorGUILayout.HorizontalScope(GUILayout.ExpandWidth(false)))
                 {
                     GUILayout.Label($"敵データ[{_instance.waveDatas[i].enemyGenerateDatas[j].enemyData.enemyName}]");
-                    
+
                     _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime = EditorGUILayout.FloatField("SpawnTime",
-                        _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime,GUILayout.ExpandWidth(false));
+                        _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime, GUILayout.ExpandWidth(false));
                     if (GUILayout.Button("Remove EnemyData"))
                     {
-                        RemoveEnemyGenerateData(i,j);
+                        RemoveEnemyGenerateData(i, j);
                     }
                 }
             }
+
             //新しく敵を追加する用のGUI
             EnemyData enemyData = EditorGUILayout.ObjectField(
-                "新規EnemyData",null, typeof(EnemyData), 
+                "新規EnemyData", null, typeof(EnemyData),
                 false,
                 GUILayout.ExpandWidth(false)
-                ) as EnemyData;
+            ) as EnemyData;
             if (enemyData != null)
             {
-                Array.Resize(ref _instance.waveDatas[i].enemyGenerateDatas, _instance.waveDatas[i].enemyGenerateDatas.Length + 1);
-                _instance.waveDatas[i].enemyGenerateDatas[_instance.waveDatas[i].enemyGenerateDatas.Length - 1] 
-                    = new EnemyGenerateData() { enemyData = enemyData, spawnTime = 0 };
+                Array.Resize(ref _instance.waveDatas[i].enemyGenerateDatas,_instance.waveDatas[i].enemyGenerateDatas.Length + 1);
+                _instance.waveDatas[i].enemyGenerateDatas[_instance.waveDatas[i].enemyGenerateDatas.Length - 1]
+                    = new EnemyGenerateData(enemyData, 0);
             }
+
             GUILayout.Space(10);
         }
+
         GUILayout.Space(10);
         GUILayout.Space(10);
     }
-
-    void RemoveEnemyGenerateData(int waveIndex,int generateIndex)
+    private void AIRouteGUI(ref AIRoute aiRoute)
     {
-        EnemyGenerateData[] enemyGenerateDatas = 
+        for (int j = 0; j < aiRoute.points.Length; j++)
+        {
+            // WayPointの位置を取得する
+            var wayPoint = aiRoute.points[j];
+            if (j >= 1)
+            {
+                var wayPoint2 = aiRoute.points[j - 1];
+                //Debug.DrawLine(wayPoint + new Vector3(0, 0.5f, 0), wayPoint2 + new Vector3(0, 0.5f, 0));
+                Handles.color = _aiRouteColor;
+                Handles.DrawLine(wayPoint + new Vector3(0, 0.5f, 0), wayPoint2 + new Vector3(0, 0.5f, 0), 2f);
+            }
+
+            // WayPointの位置を取得する
+            Vector3 pos = wayPoint;
+
+            // ハンドルを表示する
+            EditorGUI.BeginChangeCheck();
+            pos = Handles.PositionHandle(pos, Quaternion.identity);
+
+            // WayPointの位置が変更されたら反映する
+            if (EditorGUI.EndChangeCheck())
+            {
+                pos = MultipleFloor(pos, SPACE);
+                aiRoute.points[j] = pos;
+                //EditorUtility.SetDirty(aiRoute);
+                EditorUtility.SetDirty(_instance);
+            }
+
+            Handles.BeginGUI();
+            // コンボボックス
+            // スクリーン座標に変換する
+            var screenPos = HandleUtility.WorldToGUIPointWithDepth(pos);
+            // コンボボックスを表示する
+            EditorGUI.BeginChangeCheck();
+            var rect = new Rect(screenPos.x, screenPos.y + 10, 100, 20);
+            EditorGUI.TextField(rect, $"{j}");
+            // 変更されたら反映する
+            if (EditorGUI.EndChangeCheck())
+            {
+                // Undo.RecordObject(aiRoute, "Edit Destination");
+                // EditorUtility.SetDirty(aiRoute);
+                Undo.RecordObject(_instance, "Edit Destination");
+                EditorUtility.SetDirty(_instance);
+            }
+
+            Handles.EndGUI();
+        }
+    }
+    void RemoveEnemyGenerateData(int waveIndex, int generateIndex)
+    {
+        EnemyGenerateData[] enemyGenerateDatas =
             new EnemyGenerateData[_instance.waveDatas[waveIndex].enemyGenerateDatas.Length - 1];
-        for (int i = 0 , j = 0; i < enemyGenerateDatas.Length; i++,j++)
+        for (int i = 0, j = 0; i < enemyGenerateDatas.Length; i++, j++)
         {
             if (i == generateIndex) j++;
             enemyGenerateDatas[i] = _instance.waveDatas[waveIndex].enemyGenerateDatas[j];
         }
+
         _instance.waveDatas[waveIndex].enemyGenerateDatas = enemyGenerateDatas;
     }
-    
     void AddWaveData()
     {
         Array.Resize(ref _instance.waveDatas, _instance.waveDatas.Length + 1);
-        _instance.waveDatas[_instance.waveDatas.Length - 1] = new WaveData();
+        _instance.waveDatas[^1] = new WaveData();
         EditorUtility.SetDirty(_instance);
     }
     void RemoveWaveData(int index)
     {
         WaveData[] waveDatas = new WaveData[_instance.waveDatas.Length - 1];
-        for (int i = 0 , j = 0; i < waveDatas.Length; i++,j++)
+        for (int i = 0, j = 0; i < waveDatas.Length; i++, j++)
         {
             if (i == index) j++;
             waveDatas[i] = _instance.waveDatas[j];
         }
+
         _instance.waveDatas = waveDatas;
         EditorUtility.SetDirty(_instance);
     }
-
     private void CreateGrid()
     {
         if (_parent == null)

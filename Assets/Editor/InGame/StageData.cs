@@ -16,6 +16,7 @@ public class StageData : ScriptableObject
         this.width = 5;
         this.height = 5;
         this.cellDatas = new CellData[5 * 5];
+        this.waveDatas = new WaveData[0];
     }
     public StageData(string stageName, int  width, int height, CellData[] cellDatas)
     {
@@ -23,6 +24,7 @@ public class StageData : ScriptableObject
         this.width = width;
         this.height = height;
         this.cellDatas = cellDatas;
+        this.waveDatas = new WaveData[0];
     }
 
     #endregion

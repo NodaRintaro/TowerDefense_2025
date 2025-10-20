@@ -25,7 +25,7 @@ public class CreateStageWindow : EditorWindow
     
     private bool _isInit = false;
     
-    [MenuItem("Tools/CreateStageWindow")]
+    [MenuItem("Tools/CreateStage")]
     public static void ShowWindow()
     {
         GetWindow<CreateStageWindow>();

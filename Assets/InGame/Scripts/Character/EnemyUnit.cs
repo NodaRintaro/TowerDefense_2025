@@ -46,6 +46,6 @@ public class EnemyUnit : UnitBase
     private void GetTargetPosition(UnitBase unit)
     {
         _routeIndex++;
-        targetPosition = InGameManager.Instance.GetTargetRoutePosition(unit, _routeIndex);
+        //targetPosition = InGameManager.Instance.GetTargetRoutePosition(unit, _routeIndex);
     }
 }

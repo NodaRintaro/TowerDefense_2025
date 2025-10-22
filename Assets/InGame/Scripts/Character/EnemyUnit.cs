@@ -7,11 +7,6 @@ public class EnemyUnit : UnitBase
     public float moveSpeed;        // 移動速度
     private int _routeIndex = 1;   // ルートのインデックス
 
-    public void SetTargetPosition(Vector3 position)
-    {
-        targetPosition = position;
-    }
-
     public override void UpdateUnit(float deltaTime)
     {
         //ユニットの行動を記述する
@@ -47,5 +42,10 @@ public class EnemyUnit : UnitBase
     {
         _routeIndex++;
         //targetPosition = InGameManager.Instance.GetTargetRoutePosition(unit, _routeIndex);
+    }
+
+    public void SetAIroute(ref AIRoute route)
+    {
+        _route = route;
     }
 }

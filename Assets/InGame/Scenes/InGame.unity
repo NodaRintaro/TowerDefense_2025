@@ -2833,6 +2833,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 6294e8146fb5673418d74c5ff51b7141, type: 2}
     - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: stageData
+      value: 
+      objectReference: {fileID: 11400000, guid: bdecd97a0f9a08a46982ab32dd6ce99c, type: 2}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
+      propertyPath: _cellPrefab
+      value: 
+      objectReference: {fileID: 3044630795889415623, guid: cc913cfb7cd6b5d4e95abe71f673d1ea, type: 3}
+    - target: {fileID: 6811434239907616255, guid: 8fa5bf14fc1fa1545b9c694a114e8e9b, type: 3}
       propertyPath: enemyPrefab
       value: 
       objectReference: {fileID: 2822865266447699257, guid: be340099d6760744c8462b5b2fb25542, type: 3}

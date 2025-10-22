@@ -9,11 +9,11 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
     [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject _cellPrefab;
     [SerializeField] private GameObject _enemyTowerPrefab;      //敵の基地
     [SerializeField] private GameObject _playerTowerPrefab;     //プレイヤーの基地
     [SerializeField] private DebugDataManager _debugDataManager;//デバッグ用のデータ格納庫
-    //[SerializeField] public AIRoute aiRoute;                  //Enemyの出撃地点はIndex０、それ以降は敵が通るルート
-    [SerializeField] public WaveData waveData;                  //敵の出現パターン
+    [SerializeField] public StageData stageData;                       //ステージのデータ
     private int _waveCount = 0;                                 //敵の出現回数(敵の出現パターンのIndex)
     private float _ingameTimer = 0;                             //ゲーム内時間
     private bool _isPaused = false;                             //ポーズ中かどうか
@@ -32,7 +32,7 @@ public class InGameManager : MonoBehaviour
         set
         {
             _ingameTimer = value;
-            OnInGameTimeUpdated?.Invoke(value);
+            OnTimeUpdated?.Invoke(value);
         }
     }
     #region Events
@@ -41,11 +41,11 @@ public class InGameManager : MonoBehaviour
     /// <summary>
     /// ゲーム開始からの経過時間が更新された時に呼び出される
     /// </summary>
-    public event Action<float> OnInGameTimeUpdated;
+    public event Action<float> OnTimeUpdated;
     /// <summary>
     /// 前フレームからの経過時間が更新された時に呼び出される
     /// </summary>
-    public event Action<float> OnIngameDeltaTimeUpdated;
+    public event Action<float> OnPreviousTimeUpdated;
     #endregion
 
     #region UnityFunctions
@@ -65,11 +65,12 @@ public class InGameManager : MonoBehaviour
         //敵の基地とプレイヤーの基地の生成
         //Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
         //Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
+        CreateStageObjects(stageData);
         
         //イベント関数への登録
-        OnIngameDeltaTimeUpdated += UpdateUnits;
-        OnIngameDeltaTimeUpdated += _unitDeck.UpdateTime;
-        OnInGameTimeUpdated += GenerateEnemyUnit;
+        OnPreviousTimeUpdated += UpdateUnits;
+        OnPreviousTimeUpdated += _unitDeck.UpdateTime;
+        OnTimeUpdated += GenerateEnemyUnit;
     }
 
     private void Update()
@@ -103,7 +104,7 @@ public class InGameManager : MonoBehaviour
         
         float ingameDeltaTime = _timeSpeed * Time.deltaTime;
         IngameTimer += ingameDeltaTime;
-        OnIngameDeltaTimeUpdated?.Invoke(ingameDeltaTime);
+        OnPreviousTimeUpdated?.Invoke(ingameDeltaTime);
     }
     private void OnDestroy()
     {
@@ -238,38 +239,38 @@ public class InGameManager : MonoBehaviour
     {
         unit.Remove();
         _unitList.Remove(unit);
-        _unitDeck.CharacterRemoved(unit.UnitData.ID);
+        _unitDeck.CharacterRemoved(unit.PlayerData.ID);
         Destroy(unit.gameObject);
     }
 
     // 敵のユニットを出現するメソッド
     public void GenerateEnemyUnit(float time)
     {
-        // 敵の出現パターンのIndexを更新する  
-        if (waveData.IsOverGenerateTime(_ingameTimer, _waveCount))
-        {
-            // 駒を生成する
-            //GameObject enemyObj = Instantiate(_enemyPrefab, aiRoute.Points[0], Quaternion.identity);
-            // プレイヤーの基地から出発
-            //enemyObj.transform.position = aiRoute.Points[0];
-            // ユニットの目標を設定する
-            //EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
-            //unit.SetTargetPosition(aiRoute.Points[1]);
-            // ユニットのデータを設定する
-            //unit.UnitData = new EnemyUnitData(_debugDataManager.enemyDatas[0]);
-            //unit.Init();
-            
-            // 敵の出現パターンのIndexを更新する
-            _waveCount++;
-            if (_waveCount >= waveData.Count)
-            {
-                // 出現パターンのIndexが最大値を超えたら終了
-                OnInGameTimeUpdated -= GenerateEnemyUnit;
-                return;
-            }
-            //生成し終えたらカウントを増やし出撃するタイミングが同じ場合も考慮し、もう一度GenerateEnemyUnit関数を呼ぶ
-            GenerateEnemyUnit(time);
-        }
+        // // 敵の出現パターンのIndexを更新する  
+        // if (waveData.IsOverGenerateTime(_ingameTimer, _waveCount))
+        // {
+        //     // 駒を生成する
+        //     //GameObject enemyObj = Instantiate(_enemyPrefab, aiRoute.Points[0], Quaternion.identity);
+        //     // プレイヤーの基地から出発
+        //     //enemyObj.transform.position = aiRoute.Points[0];
+        //     // ユニットの目標を設定する
+        //     //EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
+        //     //unit.SetTargetPosition(aiRoute.Points[1]);
+        //     // ユニットのデータを設定する
+        //     //unit.UnitData = new EnemyUnitData(_debugDataManager.enemyDatas[0]);
+        //     //unit.Init();
+        //     
+        //     // 敵の出現パターンのIndexを更新する
+        //     _waveCount++;
+        //     if (_waveCount >= waveData.Count)
+        //     {
+        //         // 出現パターンのIndexが最大値を超えたら終了
+        //         OnTimeUpdated -= GenerateEnemyUnit;
+        //         return;
+        //     }
+        //     //生成し終えたらカウントを増やし出撃するタイミングが同じ場合も考慮し、もう一度GenerateEnemyUnit関数を呼ぶ
+        //     GenerateEnemyUnit(time);
+        // }
     }
     
     //最寄りの敵対ユニットを返す
@@ -316,6 +317,34 @@ public class InGameManager : MonoBehaviour
         _timeSpeed = timeSpeed;
     }
     #endregion
+
+    private void CreateStageObjects(StageData data)
+    {
+        GameObject parent = new GameObject("StageObjects");
+        // ステージのオブジェクトを生成する
+        // 敵の基地とプレイヤーの基地の生成
+        for (int i = 0; i < data.width; i++)
+        {
+            for (int j = 0; j < data.height; j++)
+            {
+                CellData cellData = data.cellDatas[i + j * data.width];
+                Vector3 position = new Vector3();
+                if (cellData.cellType == CellType.Flat)
+                {
+                    position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
+                }
+                else if (cellData.cellType == CellType.High)
+                {
+                    position = new Vector3(i - data.width / 2, 0.5f, j - data.height / 2);
+                }
+                else
+                {
+                    position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
+                }
+                Instantiate(_cellPrefab, position, Quaternion.identity, parent.transform);
+            }
+        }
+    }
 }
 
 public enum playerState

@@ -38,6 +38,7 @@ public class CreateStageEditor : UnityEditor.Editor
     // 選択が解除されたとき
     private void OnDisable()
     {
+        SortGenerateData();
         _instance = null;
         SceneView.duringSceneGui -= OnSceneGUI;
 
@@ -109,6 +110,7 @@ public class CreateStageEditor : UnityEditor.Editor
         GUILayout.Space(10);
         CellGUI();
         GUILayout.Space(10);
+        if(GUILayout.Button("SortGenerateData")) SortGenerateData();
         WaveDataGUI();
         GUILayout.Space(10);
     }
@@ -298,7 +300,7 @@ public class CreateStageEditor : UnityEditor.Editor
             Handles.EndGUI();
         }
     }
-    void RemoveEnemyGenerateData(int waveIndex, int generateIndex)
+    private void RemoveEnemyGenerateData(int waveIndex, int generateIndex)
     {
         EnemyGenerateData[] enemyGenerateDatas =
             new EnemyGenerateData[_instance.waveDatas[waveIndex].enemyGenerateDatas.Length - 1];
@@ -310,13 +312,13 @@ public class CreateStageEditor : UnityEditor.Editor
 
         _instance.waveDatas[waveIndex].enemyGenerateDatas = enemyGenerateDatas;
     }
-    void AddWaveData()
+    private void AddWaveData()
     {
         Array.Resize(ref _instance.waveDatas, _instance.waveDatas.Length + 1);
         _instance.waveDatas[^1] = new WaveData();
         EditorUtility.SetDirty(_instance);
     }
-    void RemoveWaveData(int index)
+    private void RemoveWaveData(int index)
     {
         WaveData[] waveDatas = new WaveData[_instance.waveDatas.Length - 1];
         for (int i = 0, j = 0; i < waveDatas.Length; i++, j++)
@@ -344,7 +346,6 @@ public class CreateStageEditor : UnityEditor.Editor
             _grid[i].transform.parent = _parent.transform;
         }
     }
-
     private void DestroyGrid()
     {
         foreach (var variable in _grid)
@@ -353,6 +354,13 @@ public class CreateStageEditor : UnityEditor.Editor
         }
 
         DestroyImmediate(_parent.gameObject);
+    }
+    private void SortGenerateData()
+    {
+        for (int i = 0; i < _instance.waveDatas.Length; i++)
+        {
+            Array.Sort(_instance.waveDatas[i].enemyGenerateDatas, (a, b) => a.spawnTime.CompareTo(b.spawnTime));
+        }
     }
 
     /// <summary>グリッド上の表記をわかり安くする</summary>
@@ -365,14 +373,12 @@ public class CreateStageEditor : UnityEditor.Editor
             default: return Color.magenta;
         }
     }
-
     /// <summary>clickされた際にTileTypeを変える処理</summary>
     private CellType ChangeCellType(CellType type)
     {
         int next = ((int)type + 1) % System.Enum.GetValues(typeof(CellType)).Length;
         return (CellType)next;
     }
-
     private static Vector3 MultipleFloor(Vector3 value, float multiple)
     {
         Vector3 vec = new Vector3();

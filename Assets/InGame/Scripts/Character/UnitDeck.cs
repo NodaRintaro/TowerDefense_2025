@@ -1,7 +1,7 @@
 using UnityEngine;
 public class UnitDeck
 {
-    private UnitData[] _unitDatas;
+    private PlayerUnitData[] _unitDatas;
     private bool[] _canPlaceCharacter;
     public int Count { get { return _unitDatas.Length; } }
 
@@ -19,7 +19,7 @@ public class UnitDeck
             }
         }
     }
-    public UnitDeck(UnitData[] unitDatas)
+    public UnitDeck(PlayerUnitData[] unitDatas)
     {
         _unitDatas = unitDatas;
         _canPlaceCharacter = new bool[unitDatas.Length];
@@ -27,10 +27,10 @@ public class UnitDeck
     }
     public UnitDeck(TrainedCharacterData[] trainedCharacterDatas)
     {
-        _unitDatas = new UnitData[trainedCharacterDatas.Length];
+        _unitDatas = new PlayerUnitData[trainedCharacterDatas.Length];
         for (int i = 0; i < trainedCharacterDatas.Length; i++)
         {
-            _unitDatas[i] = new UnitData(trainedCharacterDatas[i]);
+            _unitDatas[i] = new PlayerUnitData(trainedCharacterDatas[i]);
         }
         _canPlaceCharacter = new bool[trainedCharacterDatas.Length];
         for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}

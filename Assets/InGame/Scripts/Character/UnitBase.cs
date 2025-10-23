@@ -6,6 +6,8 @@ public class UnitBase : MonoBehaviour
     [SerializeField] private HPBar _hpBar;   // HPバー
     protected UnitBase BattleTarget;       // 交戦相手
     public UnitData UnitData;           // ユニットデータ
+    public PlayerUnitData PlayerData => UnitData as PlayerUnitData;   // プレイヤーユニットデータ
+    public EnemyUnitData EnemyData => UnitData as EnemyUnitData;   // 敵ユニットデータ
     
     public event Action OnRemovedEvent;   //ユニット削除時イベント
     public event Action<float> OnHealthChangedEvent;   //ユニット選択時イベント

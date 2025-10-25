@@ -7,6 +7,7 @@
     "com.unity.timeline": "1.7.7",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.4",
+    "jp.hadashikick.vcontainer": "1.17.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -41,8 +42,15 @@
   },
   "scopedRegistries": [
     {
-      "name": "OpenUpm",
+      "name": "VContainer",
       "url": "https://package.openupm.com",
+      "scopes": [
+        "jp.hadashikick.vcontainer"
+      ]
+    },
+    {
+      "name": "UniTask",
+      "url": "http://package.openupm.com",
       "scopes": [
         "com.cysharp.unitask"
       ]

@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System;
 using System.IO;
 using System.Text;
@@ -12,8 +12,11 @@ public class GenerateScriptableObjectMenu : EditorWindow
 {
     private string _gasUrl = "";
     private string _scriptableObjectName = "";
+    private string _dataSaveFilePath = "";
     private string _outPutCsvFilePath = "";
     private string _scriptableObjectFilePath = "";
+
+    private DataType _dataType;
 
     private int _spaceSize = 10;
 
@@ -27,7 +30,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
     {
         // TextFieldでGASのURLを入力
         EditorGUILayout.Space(_spaceSize);
-        EditorGUILayout.LabelField("GASのURL");
+        EditorGUILayout.LabelField("欲しいDataのGASのURL");
         _gasUrl = EditorGUILayout.TextField("gasUrl", _gasUrl);
 
         //TextFieldで自動生成するScriptableObjectの名前を入力
@@ -35,17 +38,38 @@ public class GenerateScriptableObjectMenu : EditorWindow
         EditorGUILayout.LabelField("自動生成するScriptableObjectの名前");
         _scriptableObjectName = EditorGUILayout.TextField("scriptableObjectName", _scriptableObjectName);
 
+        //ほぞんさきのPathを指定
+        EditorGUILayout.Space(_spaceSize);
+        EditorGUILayout.LabelField("ほぞんさきのPath");
+        _dataSaveFilePath = EditorGUILayout.TextField("dataSaveFilePath", _dataSaveFilePath);
+
+        //生成するDataを選択
+        EditorGUILayout.Space(_spaceSize);
+        EditorGUILayout.LabelField("生成するDataのタイプを選択");
+        _dataType = (DataType)EditorGUILayout.EnumPopup("GenerateDataType", _dataType);
+
+
         //生成したScriptableObjectの保存先のPath
-        _scriptableObjectFilePath = "Assets/Resources/CharacterData/" + _scriptableObjectName +" .asset";
+        _scriptableObjectFilePath = "Assets/Resources/" + _dataSaveFilePath + "/" + _scriptableObjectName + " .asset";
 
         // GASから取得したCSVデータを保存するファイル名のパスを設定
-        _outPutCsvFilePath = Application.dataPath + "/Resources/CharacterData/" + _scriptableObjectName + ".csv";
+        _outPutCsvFilePath = Application.dataPath + "/Resources/" + _dataSaveFilePath + "/" + _scriptableObjectName + "CSV" + ".csv";
 
         EditorGUILayout.Space(_spaceSize);
-        if (GUILayout.Button("GenerateScriptableObject"))
+        if (GUILayout.Button("GenerateScriptableObject") && NullCheckData())
         {
             await GenerateScriptableObject();
         }
+    }
+
+    private bool NullCheckData()
+    {
+        if (_scriptableObjectFilePath == null) return false;
+        else if(_gasUrl  == null) return false;
+        else if(_scriptableObjectName == null) return false;
+        else if(_dataType == DataType.None) return false;
+
+        return true;
     }
 
     private async UniTask GenerateScriptableObject()
@@ -68,10 +92,10 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 SaveCsvFile(csvData);
 
                 // GASから受け取ったCSVデータを2次元配列に変換
-                var ParseCsvData = ParseCsv(csvData);
+                var parseCsvData = ParseCsv(csvData);
 
                 // ScriptableObjectを生成
-                GenerateCharacterScriptableObject(ParseCsvData);
+                DataGenerate(_dataType, parseCsvData);
             }
         }
     }
@@ -131,37 +155,6 @@ public class GenerateScriptableObjectMenu : EditorWindow
         return fields;
     }
 
-    /// <summary> キャラクターのスクリプタブルオブジェクトを生成 </summary>
-    /// <param name="parseCsvData"> 2次元配列に格納されたキャラクターのCSVデータ </param>
-    private void GenerateCharacterScriptableObject(string[,] parseCsvData)
-    {
-        CharacterDataList characterDataList = CreateInstance<CharacterDataList>();
-
-        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
-        {
-            CharacterData characterData = new();
-
-            characterData.InitData(
-                parseCsvData[columnCount, 0],
-                parseCsvData[columnCount, 1],
-                parseCsvData[columnCount, 2],
-                parseCsvData[columnCount, 3],
-                parseCsvData[columnCount, 4],
-                parseCsvData[columnCount, 5],
-                parseCsvData[columnCount, 6]
-                );
-
-            characterDataList.AddData(characterData);
-        }
-
-        // アセットとして保存
-        AssetDatabase.CreateAsset(characterDataList, _scriptableObjectFilePath);
-        AssetDatabase.SaveAssets();
-
-        //AssetDataBaseの内容を更新
-        AssetDatabase.Refresh();
-    }
-
     /// <summary> 外部から生成したCSVファイルを2次元配列でロードする関数 </summary>
     /// <param name="filePath"> 生成先のPath </param>
     public static string[,] LoadCsvAs2DArray(string filePath)
@@ -181,6 +174,90 @@ public class GenerateScriptableObjectMenu : EditorWindow
         }
 
         return array;
+    }
+
+    public void DataGenerate(DataType dataType, string[,] parseCsvData)
+    {
+        switch(dataType)
+        {
+            case DataType.CharacterData:
+                GenerateCharacterData(parseCsvData);
+                break;
+            case DataType.SupportCard:
+                GenerateSupportCardData(parseCsvData);
+                break;
+        }
+    }
+
+    /// <summary> キャラクターのスクリプタブルオブジェクトを生成 </summary>
+    /// <param name="parseCsvData"> 2次元配列に格納されたキャラクターのCSVデータ </param>
+    private void GenerateCharacterData(string[,] parseCsvData)
+    {
+        CharacterDataHolder characterDataList = CreateInstance<CharacterDataHolder>();
+
+        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            CharacterData characterData = new();
+
+            characterData.InitData(
+                parseCsvData[columnCount, 0],
+                parseCsvData[columnCount, 1],
+                parseCsvData[columnCount, 2],
+                parseCsvData[columnCount, 3],
+                parseCsvData[columnCount, 4],
+                parseCsvData[columnCount, 5],
+                parseCsvData[columnCount, 6]
+                );
+
+            characterDataList.AddData(characterData);
+        }
+
+        AssetDataCreate(characterDataList);
+    }
+
+    /// <summary> サポートカードのスクリプタブルオブジェクトを生成 </summary>
+    /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
+    private void GenerateSupportCardData(string[,] parseCsvData)
+    {
+        SupportCardDataHolder supportCardDataHolder = CreateInstance<SupportCardDataHolder>();
+
+        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            SupportCardData cardData = new();
+
+            cardData.InitData(
+                parseCsvData[columnCount, 0],
+                parseCsvData[columnCount, 1],
+                parseCsvData[columnCount, 2],
+                parseCsvData[columnCount, 3],
+                parseCsvData[columnCount, 4],
+                parseCsvData[columnCount, 5],
+                parseCsvData[columnCount, 6],
+                parseCsvData[columnCount, 7]
+                );
+
+            supportCardDataHolder.AddData(cardData);
+        }
+
+        AssetDataCreate(supportCardDataHolder);
+    }
+
+    private void AssetDataCreate(UnityEngine.Object data)
+    {
+        // アセットとして保存
+        AssetDatabase.CreateAsset(data, _scriptableObjectFilePath);
+        AssetDatabase.SaveAssets();
+
+        //AssetDataBaseの内容を更新
+        AssetDatabase.Refresh();
+    }
+
+    public enum DataType
+    {
+        None,
+        CharacterData,
+        SupportCard,
+        EnemyData
     }
 }
 #endif

@@ -97,14 +97,7 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
-<<<<<<< HEAD
-
-#MyIgnore
-.idea
-private/
-=======
-Assets/TextMesh Pro/
->>>>>>> 5cc0fa5130c3316422b21d2558e191909fc91761
+Assets/TextMesh Pro/5cc0fa5130c3316422b21d2558e191909fc91761
 Assets/Plugins/UniRx/Examples.meta
 Assets/Plugins/UniRx/Scripts/UnityEngineBridge/AsyncOperationExtensions.cs
 Assets/Plugins/UniRx/
@@ -112,3 +105,10 @@ Assets/Resources/SpriteData/Public/
 Assets/Resources/SpriteData/RaisingSimulation/TrainingMenu/
 Assets/Resources/SpriteData/Rank/
 Assets/Resources/SpriteData/RoleIcon/
+
+#MyIgnore
+.vsconfig
+
+# Jetbrain Rider Cache
+.idea/
+Assets/Plugins/Editor/JetBrains*

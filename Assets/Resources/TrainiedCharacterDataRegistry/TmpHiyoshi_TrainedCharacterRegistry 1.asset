@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab325a1824230e4f875669ad8e6cfbe, type: 3}
+  m_Name: TmpHiyoshi_TrainedCharacterRegistry 1
+  m_EditorClassIdentifier: 
+  _trainedCharacterDataList:
+  - _baseCharacter:
+      _id: 1
+      _characterName: Nishino
+      _physical: 12
+      _power: 2
+      _intelligence: 4
+      _speed: 2
+    _physical: 1
+    _power: 1
+    _intelligence: 1
+    _speed: 1
+  - _baseCharacter:
+      _id: 2
+      _characterName: NoD
+      _physical: 18
+      _power: 1
+      _intelligence: 3
+      _speed: 3
+    _physical: 3
+    _power: 2
+    _intelligence: 5
+    _speed: 1
+  - _baseCharacter:
+      _id: 3
+      _characterName: Kouga
+      _physical: 22
+      _power: 3
+      _intelligence: 4
+      _speed: 5
+    _physical: 1
+    _power: 2
+    _intelligence: 1
+    _speed: 1

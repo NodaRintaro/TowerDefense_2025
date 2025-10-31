@@ -112,3 +112,21 @@ Assets/Resources/SpriteData/RoleIcon/
 # Jetbrain Rider Cache
 .idea/
 Assets/Plugins/Editor/JetBrains*
+Assets/TextMesh Pro/
+Assets/AssetStoreTools/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
+Assets/AssetStoreTools/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans SDF - Overlay.mat
+Assets/AssetStoreTools/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF - Drop Shadow.mat.meta
+Assets/AssetStoreTools/TextMesh Pro/
+Assets/AssetStoreTools/NuGet/
+Assets/AssetStoreTools/
+Assets/RaisingSimulation/Image/Public/
+Assets/RaisingSimulation/Image/RaidCountDown/
+Assets/RaisingSimulation/Image/RaisingSimulation/
+Assets/RaisingSimulation/Image/Rank/
+Assets/RaisingSimulation/Image/RoleIcon/
+Assets/RaisingSimulation/Image/Stamina/
+Assets/RaisingSimulation/Image/Status/
+Assets/RaisingSimulation/Image/ParamGage/
+Assets/RaisingSimulation/Image/CountDown/
+Assets/RaisingSimulation/Image/CharacterCard/
+Assets/RaisingSimulation/Image/TrainingStart/

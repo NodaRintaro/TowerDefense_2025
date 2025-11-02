@@ -6,7 +6,7 @@ using VContainer;
 
 public sealed class CharacterPickController : MonoBehaviour
 {
-    [SerializeField] CharacterData _selectCharacterData;
+    [SerializeField] CharacterBaseData _selectCharacterData;
 
     [SerializeField, Header("キャラクターの選択ボタンのサイズ")]
     private int _characterSelectButtonsize = 50;
@@ -22,9 +22,9 @@ public sealed class CharacterPickController : MonoBehaviour
     [SerializeField, Header("ViewClass")] 
     private CharacterPickUIHolder _characterPickUIHolder = new();
 
-    private Dictionary<CharacterData, CharacterResource> _characterInformationDict = new Dictionary<CharacterData, CharacterResource>();
+    private Dictionary<CharacterBaseData, CharacterResource> _characterInformationDict = new Dictionary<CharacterBaseData, CharacterResource>();
     private TrainingDataHolder _trainingDataHolder;
-    private TrainingCharacterSaveDataManager _trainingCharacterSaveDataManager;
+    private TrainingDataManager _trainingCharacterSaveDataManager;
     private TrainingDataSelectLifeTimeScope _characterPickLifeTimeScope;
     private SupportCardSelectController _supportCardSelectController;
     private CharacterSelectScreenChanger _screenChanger;
@@ -34,7 +34,7 @@ public sealed class CharacterPickController : MonoBehaviour
 
     public CharacterPickUIHolder CharacterPickUIHolder => _characterPickUIHolder;
 
-    public Dictionary<CharacterData, CharacterResource> CharacterInformationDict => _characterInformationDict;
+    public Dictionary<CharacterBaseData, CharacterResource> CharacterInformationDict => _characterInformationDict;
 
     private async void Start()
     {
@@ -96,7 +96,7 @@ public sealed class CharacterPickController : MonoBehaviour
     {
         foreach(var character in _characterDataList.DataList)
         {
-            if(character.ID == id)
+            if(character.CharacterID == id)
             {
                 _selectCharacterData = character;
                 Sprite characterSprite = _characterInformationDict[character].GetCharacterSprite(SpriteType.OverAllView);
@@ -122,7 +122,7 @@ public sealed class CharacterPickController : MonoBehaviour
         else Debug.Log("キャラクターが選ばれていません");
     }
 
-    private void RegisterTrainingCharacter(CharacterData character)
+    private void RegisterTrainingCharacter(CharacterBaseData character)
     {
         _trainingDataHolder.SetCharacterData(character);
     }
@@ -138,7 +138,7 @@ public sealed class CharacterPickController : MonoBehaviour
         {
             foreach(var resource in _characterResource)
             {
-                if(data.ID == resource.CharacterID && data.IsGetting == true)
+                if(data.CharacterID == resource.CharacterID && data.IsGetting == true)
                 {
                     _characterInformationDict.Add(data, resource);
                 }
@@ -155,8 +155,8 @@ public sealed class CharacterPickController : MonoBehaviour
 
             if (iconSprite != null)
             {
-                characterSelectButton = CharacterSelectButtonInstantiate(dictData.Key.ID, iconSprite);
-                characterSelectButton.onClick.AddListener(() => SelectTrainingCharacter(dictData.Key.ID));
+                characterSelectButton = CharacterSelectButtonInstantiate(dictData.Key.CharacterID, iconSprite);
+                characterSelectButton.onClick.AddListener(() => SelectTrainingCharacter(dictData.Key.CharacterID));
             }
         }
     }
@@ -172,30 +172,30 @@ public sealed class CharacterPickController : MonoBehaviour
         return buttonObj.GetComponent<Button>();
     }
 
-    private void ViewSelectCharacter(CharacterData characterData)
+    private void ViewSelectCharacter(CharacterBaseData characterData)
     {
         foreach (var textData in _characterPickUIHolder.CharacterStatusTexts)
         {
             switch(textData.StatusType)
             {
                 case ParameterType.Power:
-                    textData.SetStatusText(characterData.Power.ToString());
-                    _characterPickUIHolder.GetSliderData(ParameterType.Power).SetSlider(_maxSliderValue, characterData.Power);
+                    textData.SetStatusText(characterData.BasePower.ToString());
+                    _characterPickUIHolder.GetSliderData(ParameterType.Power).SetSlider(_maxSliderValue, characterData.BasePower);
                     break;
                 case ParameterType.Physical:
-                    textData.SetStatusText(characterData.Physical.ToString());
-                    _characterPickUIHolder.GetSliderData(ParameterType.Physical).SetSlider(_maxSliderValue, characterData.Physical);
+                    textData.SetStatusText(characterData.BasePhysical.ToString());
+                    _characterPickUIHolder.GetSliderData(ParameterType.Physical).SetSlider(_maxSliderValue, characterData.BasePhysical);
                     break;
                 case ParameterType.Intelligence:
-                    textData.SetStatusText(characterData.Intelligence.ToString());
-                    _characterPickUIHolder.GetSliderData(ParameterType.Intelligence).SetSlider(_maxSliderValue, characterData.Intelligence);
+                    textData.SetStatusText(characterData.BaseIntelligence.ToString());
+                    _characterPickUIHolder.GetSliderData(ParameterType.Intelligence).SetSlider(_maxSliderValue, characterData.BaseIntelligence);
                     break;
                 case ParameterType.Speed:
-                    textData.SetStatusText(characterData.Speed.ToString());
-                    _characterPickUIHolder.GetSliderData(ParameterType.Speed).SetSlider(_maxSliderValue, characterData.Speed);
+                    textData.SetStatusText(characterData.BaseSpeed.ToString());
+                    _characterPickUIHolder.GetSliderData(ParameterType.Speed).SetSlider(_maxSliderValue, characterData.BaseSpeed);
                     break;
                 case ParameterType.ID:
-                    textData.SetStatusText(characterData.ID.ToString());
+                    textData.SetStatusText(characterData.CharacterID.ToString());
                     break;
                 case ParameterType.Name:
                     textData.SetStatusText(characterData.CharacterName);

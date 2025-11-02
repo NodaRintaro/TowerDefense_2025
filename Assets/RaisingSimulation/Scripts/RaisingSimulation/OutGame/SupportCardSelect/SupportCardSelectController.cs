@@ -22,7 +22,7 @@ public class SupportCardSelectController : MonoBehaviour
     private SceneChanger _sceneChanger;
     private CharacterPickController _characterPickController;
     private TrainingDataSelectLifeTimeScope _trainingDataSelectLifeTimeScope;
-    private TrainingCharacterSaveDataManager _trainingCharacterSaveDataManager;
+    private TrainingDataManager _trainingCharacterSaveDataManager;
 
     public SupportCardSelectUIHolder SupportCardSelectUIHolder => _supportCardSelectUIHolder;
 
@@ -35,7 +35,7 @@ public class SupportCardSelectController : MonoBehaviour
         _screenChanger = _trainingDataSelectLifeTimeScope.Container.Resolve<CharacterSelectScreenChanger>();
         _sceneChanger = _trainingDataSelectLifeTimeScope.Container.Resolve<SceneChanger>();
         _trainingDataHolder = _trainingDataSelectLifeTimeScope.Container.Resolve<TrainingDataHolder>();
-        _trainingCharacterSaveDataManager = _trainingDataSelectLifeTimeScope.Container.Resolve<TrainingCharacterSaveDataManager>();
+        _trainingCharacterSaveDataManager = _trainingDataSelectLifeTimeScope.Container.Resolve<TrainingDataManager>();
 
         await _supportCardDataBase.CardDataLoad();
         CreateCardSelectButtons();

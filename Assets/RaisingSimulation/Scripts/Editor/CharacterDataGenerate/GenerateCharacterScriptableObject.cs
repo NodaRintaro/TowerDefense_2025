@@ -197,7 +197,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
         {
-            CharacterData characterData = new();
+            CharacterBaseData characterData = new();
 
             characterData.InitData(
                 parseCsvData[columnCount, 0],

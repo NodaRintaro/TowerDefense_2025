@@ -11,8 +11,8 @@ public sealed class TrainingDataSelectLifeTimeScope : LifetimeScope
 
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.Register<TrainingCharacterSaveDataManager>(Lifetime.Singleton);
         builder.Register<TrainingDataHolder>(Lifetime.Singleton);
+        builder.Register<TrainingDataManager>(Lifetime.Singleton);
         builder.Register<SupportCardDataBase>(Lifetime.Singleton);
         builder.Register<SceneChanger>(Lifetime.Singleton);
         builder.RegisterComponentInHierarchy<CharacterPickController>();

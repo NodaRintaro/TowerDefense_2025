@@ -437,17 +437,17 @@ MonoBehaviour:
     _startRaisingSiomulationButton: {fileID: 1133943395}
     _statusText:
     - _statusText: {fileID: 1521522199}
-      _statusType: 1
-    - _statusText: {fileID: 1386730247}
-      _statusType: 2
-    - _statusText: {fileID: 1812529600}
-      _statusType: 3
-    - _statusText: {fileID: 1087890423}
-      _statusType: 4
-    - _statusText: {fileID: 480357359}
       _statusType: 5
-    - _statusText: {fileID: 1039227072}
+    - _statusText: {fileID: 1386730247}
       _statusType: 6
+    - _statusText: {fileID: 1812529600}
+      _statusType: 2
+    - _statusText: {fileID: 1087890423}
+      _statusType: 1
+    - _statusText: {fileID: 480357359}
+      _statusType: 3
+    - _statusText: {fileID: 1039227072}
+      _statusType: 4
     _statusSliders:
     - _slider: {fileID: 1206059645}
       _statusType: 2

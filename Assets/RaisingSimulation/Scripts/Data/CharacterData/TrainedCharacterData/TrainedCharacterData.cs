@@ -2,48 +2,43 @@
 
 /// <summary> トレーニング済みのキャラクターデータ </summary>
 [System.Serializable]
-public class TrainedCharacterData
+public class TrainedCharacterData : CharacterBaseData
 {
     [SerializeField, Header("トレーニング後のキャラクターID")]
-    private string _id;
-
-    [SerializeField, Header("ベースとなるキャラクターのデータ")]
-    private CharacterData _baseCharacter;
+    private string _trainiedID;
 
     [SerializeField, Header("体力増加値")]
-    private uint _physical;
+    private uint _addPhysical;
     [SerializeField, Header("筋力増加値")]
-    private uint _power;
+    private uint _addPower;
     [SerializeField, Header("知力増加値")]
-    private uint _intelligence;
+    private uint _addIntelligence;
     [SerializeField, Header("素早さ増加値")]
-    private uint _speed;
+    private uint _addSpeed;
 
     /// <summary> トレーニング後のキャラクターデータID </summary>
-    public string TrainedCharacterID => _id;
+    public string TrainedCharacterID => _trainiedID;
 
     #region 増加値の参照用プロパティ
-    public CharacterData BaseCharacter => _baseCharacter;
-    public uint Physical => _physical;
-    public uint Power => _power;
-    public uint Intelligence => _intelligence;
-    public uint Speed => _speed;
+    public uint AddPhysical => _addPhysical;
+    public uint AddPower => _addPower;
+    public uint AddIntelligence => _addIntelligence;
+    public uint AddSpeed => _addSpeed;
     #endregion
 
     #region 合計値の参照プロパティ
-    public uint TotalPhysical => _physical + _baseCharacter.Physical;
-    public uint TotalPower => _power + _baseCharacter.Power;
-    public uint TotalIntelligence => _intelligence + _baseCharacter.Intelligence;
-    public uint TotalSpeed => _speed + _baseCharacter.Speed;
+    public uint TotalPhysical => _addPhysical + _basePhysical;
+    public uint TotalPower => _addPower + _basePower;
+    public uint TotalIntelligence => _baseIntelligence;
+    public uint TotalSpeed => _addSpeed + _baseSpeed;
     #endregion
 
-    public void SetCharacterTrainedData(CharacterData setChara, string newID, uint setPhysi, uint setPow, uint setInt, uint setSp)
+    public void SetCharacterTrainedData(string newID, uint setPhysi, uint setPow, uint setInt, uint setSp)
     {
-        _id = newID;
-        _baseCharacter = setChara;
-        _physical = setPhysi;
-        _power = setPow;
-        _intelligence = setInt;
-        _speed = setSp;
+        _trainiedID = newID;
+        _addPhysical = setPhysi;
+        _addPower = setPow;
+        _addIntelligence = setInt;
+        _addSpeed = setSp;
     }
 }

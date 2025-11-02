@@ -84,18 +84,6 @@ public class SupportCardSelectUIHolder
     }
 }
 
-public enum ParameterType
-{
-    None,
-    Power,
-    Physical,
-    Intelligence,
-    Speed,
-    ID,
-    Name,
-    RoleType
-}
-
 [Serializable]
 public class CardSelectButton
 {
@@ -112,7 +100,7 @@ public class CardSelectButton
     public void SetButtonData(Button button, Image image, uint id)
     {
         _button = button;
-        _image = image; 
+        _image = image;
     }
 }
 

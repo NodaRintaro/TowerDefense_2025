@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IntelligenceMaxParameter
       objectReference: {fileID: 0}
+    - target: {fileID: 3002743527462346703, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Name
+      value: CharacterData
+      objectReference: {fileID: 0}
     - target: {fileID: 3034264228404509239, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
       propertyPath: m_Type
       value: 3
@@ -317,6 +321,30 @@ PrefabInstance:
     - target: {fileID: 3308512112345609112, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
       propertyPath: m_Type
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897250098256011496, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897250098256011496, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d898d94641304534bb0c6b294b384dad, type: 3}
+    - target: {fileID: 3897250098256011496, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897250098256011496, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897250098256011496, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897250098256011496, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4079444378559448721, guid: 56867e9b91bf6c14cac8beec47bad259, type: 3}
       propertyPath: m_AnchorMax.x
@@ -586,39 +614,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1971773982}
-  - component: {fileID: 1971773981}
+  - component: {fileID: 1971773983}
   m_Layer: 0
-  m_Name: ControllerManager
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1971773981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1971773980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c5d7b78f5893a4a901982a9466cb49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trainingMenuController:
-    _paramRankUpNum: 100
-    _trainingMenuUIHolder:
-      _viewCanvas: {fileID: 0}
-      _backScreenImage: {fileID: 0}
-      _characterImage: {fileID: 0}
-      _trainingButtons: []
-      _trainingStartButton: {fileID: 0}
-      _statusText: []
-      _paramTextArr: []
-      _raidEventGUI: {fileID: 0}
-      _staminaGage: {fileID: 0}
-      _homeButton: {fileID: 0}
 --- !u!4 &1971773982
 Transform:
   m_ObjectHideFlags: 0
@@ -634,6 +637,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1971773983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971773980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839fc1da6ba1571449645a031dacd4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterController: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

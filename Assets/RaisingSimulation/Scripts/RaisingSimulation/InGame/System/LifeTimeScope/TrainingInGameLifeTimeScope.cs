@@ -8,6 +8,7 @@ public class TrainingInGameLifeTimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.Register<TrainingCharacterSaveDataManager>(Lifetime.Singleton);
+        builder.Register<TrainingDataHolder>(Lifetime.Singleton);
+        builder.Register<TrainingDataManager>(Lifetime.Singleton);
     }
 }

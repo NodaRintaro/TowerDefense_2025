@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,23 +12,23 @@ public class PlayerUnitData : UnitData
     
     public PlayerUnitData(TrainedCharacterData trainedCharacterData)
     {
-        _roleType = trainedCharacterData.BaseCharacter.RoleType;
+        _roleType = trainedCharacterData.RoleType;
         _group = GroupType.Player;
-        _id = trainedCharacterData.BaseCharacter.ID;
-        _name = trainedCharacterData.BaseCharacter.CharacterName;
+        _id = trainedCharacterData.CharacterID;
+        _name = trainedCharacterData.CharacterName;
         //_cost = trainedCharacterData.Cost;
         _cost = 2f;
         //_rePlaceInterval = trainedCharacterData.RePlaceInterval;
         _rePlaceInterval = 5f;
-        _maxHp = trainedCharacterData.Physical;
-        _attack = trainedCharacterData.BaseCharacter.Power;
-        _magicPower = trainedCharacterData.BaseCharacter.Intelligence;
+        _maxHp = trainedCharacterData.AddPhysical;
+        _attack = trainedCharacterData.BasePower;
+        _magicPower = trainedCharacterData.BaseIntelligence;
         //_defense = trainedCharacterData.Defense;
         _defence = 0f;
         //_searchEnemyDistance = trainedCharacterData.SearchEnemyDistance;
         _attackRange = 1f;
         //_actionInterval = trainedCharacterData.ActionInterval;
-        _actionInterval = trainedCharacterData.Speed;
+        _actionInterval = trainedCharacterData.AddSpeed;
         _currentHp = 0f;
     }
     public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }

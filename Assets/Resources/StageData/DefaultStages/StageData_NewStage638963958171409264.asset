@@ -132,9 +132,9 @@ MonoBehaviour:
   - aiRoute:
       points:
       - {x: 0, y: 0, z: 0}
-      - {x: 6, y: 0, z: -4}
+      - {x: 7, y: 0, z: 0}
     enemyGenerateDatas:
     - enemyData: {fileID: 11400000, guid: 3b2d2a8c3b00b1c4daf471c295e3b9ee, type: 2}
-      spawnTime: 0
+      spawnTime: 0.5
     - enemyData: {fileID: 11400000, guid: afd5fa2d7f62c2e469a5a772c90c7018, type: 2}
-      spawnTime: 0
+      spawnTime: 5

@@ -291,8 +291,6 @@ public class CreateStageEditor : UnityEditor.Editor
             // 変更されたら反映する
             if (EditorGUI.EndChangeCheck())
             {
-                // Undo.RecordObject(aiRoute, "Edit Destination");
-                // EditorUtility.SetDirty(aiRoute);
                 Undo.RecordObject(_instance, "Edit Destination");
                 EditorUtility.SetDirty(_instance);
             }
@@ -332,9 +330,10 @@ public class CreateStageEditor : UnityEditor.Editor
     }
     private void CreateGrid()
     {
+        _parent = GameObject.Find("StageIditObj");
         if (_parent == null)
         {
-            _parent = new GameObject("Grid");
+            _parent = new GameObject("StageIditObj");
         }
 
         _grid = new GameObject[_instance.width * _instance.height];

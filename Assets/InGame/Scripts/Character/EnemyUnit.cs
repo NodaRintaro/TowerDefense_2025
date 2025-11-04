@@ -3,10 +3,16 @@ using UnityEngine;
 public class EnemyUnit : UnitBase
 {
     [HideInInspector]public Vector3 targetPosition; // 目標地点
-    private AIRoute _route; 　　　//ルート管理クラス
-    public float moveSpeed;        // 移動速度
-    private int _routeIndex = 1;   // ルートのインデックス
+    EnemyUnitData EnemyUnitData => (EnemyUnitData)UnitData;
+    private AIRoute _route => EnemyUnitData.AiRoute; 　　　     //ルート管理クラス
+    public float moveSpeed;             // 移動速度
+    private int _routeIndex = 1;        // ルートのインデックス
 
+    protected override void Initialize()
+    {
+        targetPosition = _route.points[1];
+        OnRemovedEvent += Destroy;
+    }
     public override void UpdateUnit(float deltaTime)
     {
         //ユニットの行動を記述する
@@ -17,7 +23,7 @@ public class EnemyUnit : UnitBase
         else
         {   // 交戦相手がいないとき一番近い敵を探す
             UnitBase enemy = InGameManager.Instance.FindNearestEnemy(this);
-            if(enemy != null && Distance(enemy) <= UnitData.AttackRange)
+            if(enemy != null && Distance(enemy) <= EnemyUnitData.AttackRange)
             {   // 一番近い敵が索敵範囲内なら交戦に入る
                 BattleTarget = enemy;
             }
@@ -27,6 +33,12 @@ public class EnemyUnit : UnitBase
             }
         }
     }
+
+    private void Destroy()
+    {
+        // 敵の死亡処理
+        Destroy(gameObject);
+    }
     //移動処理
     private void MoveAction(float deltaTime)
     {
@@ -34,18 +46,22 @@ public class EnemyUnit : UnitBase
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * deltaTime);
         if (transform.position == targetPosition)
         {
-            GetTargetPosition(this);
+            ArriveTargetPosition();
         }
     }
 
-    private void GetTargetPosition(UnitBase unit)
+    /// <summary>
+    /// 目標としている地点に到着したときの処理
+    /// </summary>
+    private void ArriveTargetPosition()
     {
+        Debug.Log($"{(_route == null ? "null" : "not null")}");
+        if (_route.points.Length >= _routeIndex + 1)
+        {
+            InGameManager.Instance.EnemyArriveGoal(this);
+            return;
+        }
         _routeIndex++;
-        //targetPosition = InGameManager.Instance.GetTargetRoutePosition(unit, _routeIndex);
-    }
-
-    public void SetAIroute(ref AIRoute route)
-    {
-        _route = route;
+        targetPosition = _route.points[_routeIndex];
     }
 }

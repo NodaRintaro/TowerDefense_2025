@@ -27,19 +27,6 @@ public class StageData : ScriptableObject
         this.waveDatas = new WaveData[0];
     }
 
-    public void UpdateTime(float time)
-    {
-        for (int i = 0; i < waveDatas.Length; i++)
-        {
-            WaveData waveData = waveDatas[i];
-            if (waveData.IsOverGenerateTime(time))
-            {
-                EnemyUnit enemyUnit = new EnemyUnit();
-                enemyUnit.UnitData = new UnitData(waveData.GetEnemyData());
-            }
-        }
-    }
-
     #endregion
 }
 

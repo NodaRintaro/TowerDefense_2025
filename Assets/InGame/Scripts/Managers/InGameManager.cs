@@ -1,30 +1,32 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class InGameManager : MonoBehaviour
 {
     private static InGameManager _instance;
     public static InGameManager Instance => _instance;
-    
+
     [SerializeField] private GameObject _characterIconPrefab;
     [SerializeField] private GameObject _characterBasePrefab;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _cellPrefab;
-    [SerializeField] private GameObject _enemyTowerPrefab;      //敵の基地
-    [SerializeField] private GameObject _playerTowerPrefab;     //プレイヤーの基地
-    [SerializeField] private DebugDataManager _debugDataManager;//デバッグ用のデータ格納庫
-    [SerializeField] public StageData stageData;                       //ステージのデータ
-    private int _waveCount = 0;                                 //敵の出現回数(敵の出現パターンのIndex)
-    private float _ingameTimer = 0;                             //ゲーム内時間
-    private bool _isPaused = false;                             //ポーズ中かどうか
-    private float _timeSpeed = 1;                               //ゲーム内の時間の速さ
-    private List<UnitBase> _unitList = new List<UnitBase>();                 //ユニットのリスト
-    private UnitDeck _unitDeck;                       //キャラクターの編成
-    private Cell _selectedCell;                                 //選択中のセル
-    private GameObject _selectedCharacterObj;                   //選択中のキャラクターObject
-    private int _selectedCharacterID;                           //選択中のキャラクターID
-    private playerState _playerState = playerState.Idle;        //プレイヤーの状態
-    public UnitDeck UnitDeck => _unitDeck;
+    [SerializeField] private GameObject _enemyTowerPrefab;          //敵の基地
+    [SerializeField] private GameObject _playerTowerPrefab;         //プレイヤーの基地
+    [SerializeField] private DebugDataManager _debugDataManager;    //デバッグ用のデータ格納庫
+    [SerializeField] public StageData stageData;                    //ステージのデータ
+    private float _ingameTimer = 0;                                 //ゲーム内時間
+    private bool _isPaused = false;                                 //ポーズ中かどうか
+    private float _timeSpeed = 1;                                   //ゲーム内の時間の速さ
+    private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
+    private UnitDeck _unitDeck;                                     //キャラクターの編成
+    private Cell _selectedCell;                                     //選択中のセル
+    private GameObject _selectedCharacterObj;                       //選択中のキャラクターObject
+    private int _selectedCharacterID;                               //選択中のキャラクターID
+    private int[] _waveEnemyIndex;                                  //WaveData内の敵データのインデックス
+    private playerState _playerState = playerState.Idle;            //プレイヤーの状態
+
+    #region Properties
 
     private float IngameTimer
     {
@@ -35,20 +37,28 @@ public class InGameManager : MonoBehaviour
             OnTimeUpdated?.Invoke(value);
         }
     }
+
+    #endregion
+
     #region Events
+
     public event Action OnDropCharacter;
     public event Action OnSelectCharacter;
+
     /// <summary>
     /// ゲーム開始からの経過時間が更新された時に呼び出される
     /// </summary>
     public event Action<float> OnTimeUpdated;
+
     /// <summary>
     /// 前フレームからの経過時間が更新された時に呼び出される
     /// </summary>
     public event Action<float> OnPreviousTimeUpdated;
+
     #endregion
 
     #region UnityFunctions
+
     private void Awake()
     {
         if (_instance == null)
@@ -66,7 +76,8 @@ public class InGameManager : MonoBehaviour
         //Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
         //Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
         CreateStageObjects(stageData);
-        
+        _waveEnemyIndex = new int[stageData.waveDatas.Length];
+
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
         OnPreviousTimeUpdated += _unitDeck.UpdateTime;
@@ -78,41 +89,43 @@ public class InGameManager : MonoBehaviour
         switch (_playerState)
         {
             case playerState.Idle:
-            {
-                if (Input.GetButtonDown("Fire2"))
                 {
-                    Debug.Log("Fire2");
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit))
+                    if (Input.GetButtonDown("Fire2"))
                     {
-                        Debug.Log($"Hit: {hit.transform.gameObject.name}");
-                        if (hit.transform.gameObject.CompareTag("PlayerUnit"))
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit hit;
+                        if (Physics.Raycast(ray, out hit))
                         {
-                            RemoveUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                            if (hit.transform.gameObject.CompareTag("PlayerUnit"))
+                            {
+                                RemovePlayerUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                            }
                         }
                     }
+
+                    break;
                 }
-                break;
-            }
             case playerState.DraggingCharacter:
-            {
-                DraggingCharacter();
-                break;
-            }
+                {
+                    DraggingCharacter();
+                    break;
+                }
         }
-        
+
         float ingameDeltaTime = _timeSpeed * Time.deltaTime;
         IngameTimer += ingameDeltaTime;
         OnPreviousTimeUpdated?.Invoke(ingameDeltaTime);
     }
+
     private void OnDestroy()
     {
         _instance = null;
     }
+
     #endregion
-    
+
     #region UI Functions
+
     //アイコンを押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
@@ -133,13 +146,13 @@ public class InGameManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             _selectedCharacterObj.transform.position = hit.point;
-            
-            if(Input.GetButtonUp("Fire1"))
+
+            if (Input.GetButtonUp("Fire1"))
             {
                 DropCharacter();
                 return;
             }
-            
+
             if (hit.transform.gameObject.CompareTag("Cell"))
             {
                 Cell cell = hit.transform.GetComponent<Cell>();
@@ -161,8 +174,10 @@ public class InGameManager : MonoBehaviour
         {
             Destroy(_selectedCharacterObj);
             return;
-        };
-        
+        }
+
+        ;
+
         PlaceCharacter();
         OnExitCell();
     }
@@ -172,16 +187,16 @@ public class InGameManager : MonoBehaviour
         UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
         unit.UnitData = _unitDeck.GetCharacterData(_selectedCharacterID);
         unit.Init();
-        
+
         _selectedCell.SetCharacter(_selectedCharacterObj);
         _selectedCharacterObj = null;
-        _unitDeck.SetCanPlaceCharacter(_selectedCharacterID,false);
+        _unitDeck.SetCanPlaceCharacter(_selectedCharacterID, false);
     }
 
     //マウスポインターがセルに入った時の処理
     private void OnEnterCell(Cell cell)
     {
-        if(_selectedCell == cell) return;
+        if (_selectedCell == cell) return;
         OnExitCell();
         _selectedCell = cell;
         _selectedCell.OnPointerEnter();
@@ -194,7 +209,7 @@ public class InGameManager : MonoBehaviour
         _selectedCell.OnPointerExit();
         _selectedCell = null;
     }
-    
+
     //キャラクターアイコンを生成
     private void InstantiateCharacterIcons()
     {
@@ -203,39 +218,45 @@ public class InGameManager : MonoBehaviour
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
         for (int i = 0; i < _unitDeck.Count; i++)
         {
-            CharacterIcon characterIcon = Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform).GetComponent<CharacterIcon>();
+            CharacterIcon characterIcon =
+                Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform)
+                    .GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
             characterIcon.SetID(i);
         }
     }
+
     #endregion
 
     #region Battle Functions
+
     private void UpdateUnits(float timeSpeed)
     {
         //ポーズ中ならば更新しない
         if (_isPaused) return;
-        
-        for(int i = 0; i < _unitList.Count; i++)
+
+        for (int i = 0; i < _unitList.Count; i++)
         {
             UnitBase unit = _unitList[i];
             if (unit.IsDead)
             {
-                RemoveUnit(unit);
+                RemovePlayerUnit(unit);
             }
             else
             {
-                unit.UpdateUnit(timeSpeed);   
+                unit.UpdateUnit(timeSpeed);
             }
         }
     }
+
     //ユニットを追加するメソッド
     public void AddUnit(UnitBase unit)
     {
         _unitList.Add(unit);
     }
+
     //ユニットを削除するメソッド
-    private void RemoveUnit(UnitBase unit)
+    private void RemovePlayerUnit(UnitBase unit)
     {
         unit.Remove();
         _unitList.Remove(unit);
@@ -243,36 +264,39 @@ public class InGameManager : MonoBehaviour
         Destroy(unit.gameObject);
     }
 
-    // 敵のユニットを出現するメソッド
+    private void RemoveEnemyUnit(EnemyUnit unit)
+    {
+        unit.Remove();
+        _unitList.Remove(unit);
+        Destroy(unit.gameObject);
+    }
+
+    //敵のユニットを出現するメソッド
     public void GenerateEnemyUnit(float time)
     {
-        // // 敵の出現パターンのIndexを更新する  
-        // if (waveData.IsOverGenerateTime(_ingameTimer, _waveCount))
-        // {
-        //     // 駒を生成する
-        //     //GameObject enemyObj = Instantiate(_enemyPrefab, aiRoute.Points[0], Quaternion.identity);
-        //     // プレイヤーの基地から出発
-        //     //enemyObj.transform.position = aiRoute.Points[0];
-        //     // ユニットの目標を設定する
-        //     //EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
-        //     //unit.SetTargetPosition(aiRoute.Points[1]);
-        //     // ユニットのデータを設定する
-        //     //unit.UnitData = new EnemyUnitData(_debugDataManager.enemyDatas[0]);
-        //     //unit.Init();
-        //     
-        //     // 敵の出現パターンのIndexを更新する
-        //     _waveCount++;
-        //     if (_waveCount >= waveData.Count)
-        //     {
-        //         // 出現パターンのIndexが最大値を超えたら終了
-        //         OnTimeUpdated -= GenerateEnemyUnit;
-        //         return;
-        //     }
-        //     //生成し終えたらカウントを増やし出撃するタイミングが同じ場合も考慮し、もう一度GenerateEnemyUnit関数を呼ぶ
-        //     GenerateEnemyUnit(time);
-        // }
+        for (int i = 0; i < stageData.waveDatas.Length; i++)
+        {
+            WaveData waveData = stageData.waveDatas[i];
+            while (waveData.IsOverGenerateTime(time, _waveEnemyIndex[i]))
+            {
+                // 駒を生成する
+                GameObject enemyObj = Instantiate(_enemyPrefab, waveData.aiRoute.points[0], Quaternion.identity);
+                // プレイヤーの基地から出発
+                enemyObj.transform.position = waveData.aiRoute.points[0];
+                // ユニットにデータを設定して初期化
+                EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
+                unit.UnitData = waveData.GetEnemyUnitData(_waveEnemyIndex[i]);
+                unit.Init();
+                _waveEnemyIndex[i]++;
+                if (waveData.IsWaveEnd(_waveEnemyIndex[i]))
+                {
+                    break;
+                }
+                Debug.Log("敵の生成");
+            }
+        }
     }
-    
+
     //最寄りの敵対ユニットを返す
     public UnitBase FindNearestEnemy(UnitBase unit)
     {
@@ -282,40 +306,35 @@ public class InGameManager : MonoBehaviour
         foreach (UnitBase enemy in _unitList)
         {
             if (enemy.IsDead || !unit.IsEnemy(enemy))
-            {   // 死んでいる敵は無視する
+            {
+                // 死んでいる敵は無視する
                 continue;
             }
 
             float distance = unit.Distance(enemy);
             if (distance < nearestDistance)
-            {   // 一番近い敵を覚えておく
+            {
+                // 一番近い敵を覚えておく
                 nearestEnemy = enemy;
                 nearestDistance = distance;
             }
         }
+
         // 一番近い敵を返す
         return nearestEnemy;
     }
-    //敵の次の目標地点を返す
-    // public Vector3 GetTargetRoutePosition(UnitBase unit, int index)
-    // {
-    //     if (index >= aiRoute.Count)
-    //     {
-    //         RemoveUnit(unit);
-    //         GetEnemyOnGoal();
-    //         return new Vector3(0,0,0);
-    //     }
-    //     return aiRoute.Points[index];
-    // }
-    public void GetEnemyOnGoal()
+    public void EnemyArriveGoal(EnemyUnit unit)
     {
         Debug.Log("敵が防衛ラインを突破！！");
+        RemoveEnemyUnit(unit);
     }
+
     //時間の速さを変更する
     public void ChangeTimeSpeed(float timeSpeed)
     {
         _timeSpeed = timeSpeed;
     }
+
     #endregion
 
     private void CreateStageObjects(StageData data)
@@ -329,18 +348,31 @@ public class InGameManager : MonoBehaviour
             {
                 CellData cellData = data.cellDatas[i + j * data.width];
                 Vector3 position = new Vector3();
+                // if (cellData.cellType == CellType.Flat)
+                // {
+                //     position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
+                // }
+                // else if (cellData.cellType == CellType.High)
+                // {
+                //     position = new Vector3(i - data.width / 2, 0.5f, j - data.height / 2);
+                // }
+                // else
+                // {
+                //     position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
+                // }
                 if (cellData.cellType == CellType.Flat)
                 {
-                    position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
+                    position = new Vector3(i, 0, -j);
                 }
                 else if (cellData.cellType == CellType.High)
                 {
-                    position = new Vector3(i - data.width / 2, 0.5f, j - data.height / 2);
+                    position = new Vector3(i, 0.5f, -j);
                 }
                 else
                 {
-                    position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
+                    position = new Vector3(i, 0, -j);
                 }
+
                 Instantiate(_cellPrefab, position, Quaternion.identity, parent.transform);
             }
         }

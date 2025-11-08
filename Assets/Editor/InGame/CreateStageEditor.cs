@@ -74,7 +74,6 @@ public class CreateStageEditor : UnityEditor.Editor
                 gridObj.GetComponent<Renderer>().material = mat;
 
                 Handles.color = _stageWireColor;
-                //Handles.DrawWireCube(gridObj.transform.position, Vector3.one);
                 Vector3[] vecs = new Vector3[4]
                 {
                     new Vector3(0.5f, 0.5f, 0.5f) + gridObj.transform.position,
@@ -109,7 +108,9 @@ public class CreateStageEditor : UnityEditor.Editor
     {
         GUILayout.Space(10);
         CellGUI();
-        GUILayout.Space(10);
+        GUILayout.Space(10); 
+        GUILayout.Label("タワーの耐久地");
+        EditorGUILayout.IntField(_instance.towerHealth, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();
         WaveDataGUI();
         GUILayout.Space(10);
@@ -172,7 +173,7 @@ public class CreateStageEditor : UnityEditor.Editor
     {
         using (new EditorGUILayout.HorizontalScope())
         {
-            GUILayout.Label("WaveData", GUILayout.ExpandWidth(false));
+            GUILayout.Label("WaveData", GUILayout.ExpandWidth(false),GUILayout.Width(100f));
             if (GUILayout.Button("Add Wave", GUILayout.Width(100f)))
             {
                 AddWaveData();
@@ -183,7 +184,7 @@ public class CreateStageEditor : UnityEditor.Editor
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                GUILayout.Label($"Wave{i}", GUILayout.ExpandWidth(false));
+                GUILayout.Label($"Wave{i}", GUILayout.ExpandWidth(false),GUILayout.Width(100f));
                 if (GUILayout.Button("Remove Wave", GUILayout.Width(100f)))
                 {
                     RemoveWaveData(i);

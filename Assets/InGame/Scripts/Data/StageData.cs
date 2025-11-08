@@ -4,6 +4,7 @@ using UnityEngine;
 public class StageData : ScriptableObject
 {
     public string stageName;
+    public int towerHealth;
     public int width;
     public int height;
     public CellData[] cellDatas;
@@ -13,20 +14,21 @@ public class StageData : ScriptableObject
     public StageData()
     {
         this.stageName = "New Stage";
+        this.towerHealth = 10;
         this.width = 5;
         this.height = 5;
         this.cellDatas = new CellData[5 * 5];
         this.waveDatas = new WaveData[0];
     }
-    public StageData(string stageName, int  width, int height, CellData[] cellDatas)
+    public StageData(string stageName, int towerHealth, int  width, int height, CellData[] cellDatas)
     {
         this.stageName = stageName;
+        this.towerHealth = towerHealth;
         this.width = width;
         this.height = height;
         this.cellDatas = cellDatas;
         this.waveDatas = new WaveData[0];
     }
-
     #endregion
 }
 
@@ -35,11 +37,7 @@ public class CellData
 {
     public CellType cellType;
     public Material material;
-    public CellData()
-    {
-        this.cellType = CellType.Flat;
-    }
-    
+    public CellData() { this.cellType = CellType.Flat; }
     public CellData(Material material) { this.material = material; }
     public CellData(CellType cellType) {this.cellType = cellType;}
 }

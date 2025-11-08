@@ -13,7 +13,7 @@ public class CreateStageEditor : UnityEditor.Editor
 
     //スクロールしている場所の位置
     private Vector2 _scrollPos;
-    private int _scrollHeight = 500;
+    private int _scrollHeight = 250;
 
     //空白の大きさ
     private int _spaceSize = 10;
@@ -221,11 +221,11 @@ public class CreateStageEditor : UnityEditor.Editor
                 //要素を横にする
                 using (new EditorGUILayout.HorizontalScope(GUILayout.ExpandWidth(false)))
                 {
-                    GUILayout.Label($"敵データ[{_instance.waveDatas[i].enemyGenerateDatas[j].enemyData.enemyName}]");
+                    GUILayout.Label($"敵データ[{_instance.waveDatas[i].enemyGenerateDatas[j].enemyData.enemyName}]",GUILayout.ExpandWidth(false),GUILayout.Width(100f));
 
                     _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime = EditorGUILayout.FloatField("SpawnTime",
                         _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime, GUILayout.ExpandWidth(false));
-                    if (GUILayout.Button("Remove EnemyData"))
+                    if (GUILayout.Button("Remove Enemy",GUILayout.Width(100f)))
                     {
                         RemoveEnemyGenerateData(i, j);
                     }

@@ -55,7 +55,6 @@ public class EnemyUnit : UnitBase
     /// </summary>
     private void ArriveTargetPosition()
     {
-        Debug.Log($"{(_route == null ? "null" : "not null")}");
         if (_route.points.Length >= _routeIndex + 1)
         {
             InGameManager.Instance.EnemyArriveGoal(this);

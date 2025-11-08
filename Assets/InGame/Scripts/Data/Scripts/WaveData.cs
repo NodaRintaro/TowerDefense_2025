@@ -14,7 +14,6 @@ public class WaveData
     /// <returns></returns>
     public bool IsOverGenerateTime(float time, int index)
     {
-        Debug.Log($"Length: {enemyGenerateDatas.Length}, index: {index}, time: {time}");
         if (index >= enemyGenerateDatas.Length || enemyGenerateDatas[index].spawnTime > time) return false;
         return true;
     }
@@ -38,7 +37,6 @@ public class WaveData
 
     public bool IsWaveEnd(int index)
     {
-        Debug.Log($"IsWaveEnd, index: {index} length: {enemyGenerateDatas.Length}");
         return index >= enemyGenerateDatas.Length;
     }
 }

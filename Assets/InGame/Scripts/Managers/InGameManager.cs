@@ -292,7 +292,6 @@ public class InGameManager : MonoBehaviour
                 {
                     break;
                 }
-                Debug.Log("敵の生成");
             }
         }
     }
@@ -325,7 +324,6 @@ public class InGameManager : MonoBehaviour
     }
     public void EnemyArriveGoal(EnemyUnit unit)
     {
-        Debug.Log("敵が防衛ラインを突破！！");
         RemoveEnemyUnit(unit);
     }
 
@@ -347,19 +345,7 @@ public class InGameManager : MonoBehaviour
             for (int j = 0; j < data.height; j++)
             {
                 CellData cellData = data.cellDatas[i + j * data.width];
-                Vector3 position = new Vector3();
-                // if (cellData.cellType == CellType.Flat)
-                // {
-                //     position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
-                // }
-                // else if (cellData.cellType == CellType.High)
-                // {
-                //     position = new Vector3(i - data.width / 2, 0.5f, j - data.height / 2);
-                // }
-                // else
-                // {
-                //     position = new Vector3(i - data.width / 2, 0, j - data.height / 2);
-                // }
+                Vector3 position;
                 if (cellData.cellType == CellType.Flat)
                 {
                     position = new Vector3(i, 0, -j);

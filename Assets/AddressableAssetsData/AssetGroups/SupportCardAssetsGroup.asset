@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SupportCardAssetsGroup
+  m_EditorClassIdentifier: 
+  m_GroupName: SupportCardAssetsGroup
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 44fccdaa31f8b484c9c9ea61b09f6336
+  m_SerializeEntries:
+  - m_GUID: 5084d0f33b4a9f048a6caf9e05200c4f
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestTwo.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6830b1a5f9faf1b4db7bdc5c03eefe0f
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestFour.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79fca4f6e956bd94b85b3a3cf64b8554
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestOne.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a6f4aa7b88eee54188fb5d9c5afc1ef
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestFive.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80e6ffa400479ee4695edb6193f0cb17
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardData/SupportCardDataList.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a2d0262a9a9de44facd9ad952e3e1b5
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardData/SupportCardDataListCSV.csv
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa75a7f51ae12ff41a1fed88d9f91cfd
+    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestThree.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: cff88db595d389b45936822864d701d9, type: 2}
+    - {fileID: 11400000, guid: 7179a9c1636d6bb49bcc18f429cc980f, type: 2}

@@ -4,7 +4,8 @@ public class EnemyUnit : UnitBase
 {
     [HideInInspector]public Vector3 targetPosition; // 目標地点
     EnemyUnitData EnemyUnitData => (EnemyUnitData)UnitData;
-    private AIRoute _route => EnemyUnitData.AiRoute; 　　　     //ルート管理クラス
+    //private AIRoute _route => EnemyUnitData.AiRoute; 　　　     //ルート管理クラス
+    private AIRoute _route;
     public float moveSpeed;             // 移動速度
     private int _routeIndex = 1;        // ルートのインデックス
 
@@ -55,12 +56,17 @@ public class EnemyUnit : UnitBase
     /// </summary>
     private void ArriveTargetPosition()
     {
-        if (_route.points.Length >= _routeIndex + 1)
+        if (_route.points.Length <= _routeIndex+ 1)
         {
             InGameManager.Instance.EnemyArriveGoal(this);
             return;
         }
         _routeIndex++;
         targetPosition = _route.points[_routeIndex];
+    }
+
+    public void SetRoute(ref AIRoute route)
+    {
+        _route = route;
     }
 }

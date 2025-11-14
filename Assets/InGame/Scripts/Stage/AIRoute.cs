@@ -2,15 +2,9 @@ using System;
 using UnityEngine;
 
 [Serializable]
-// [CreateAssetMenu(fileName = "AIRoute", menuName = "InGame/WayPoints", order = 1)]
 public class AIRoute// : ScriptableObject
 {
     [field: SerializeField]
-    // public List<Vector3> Points
-    // {
-    //     get;
-    //     private set;
-    // } = new List<Vector3>();
     public Vector3[] points = new Vector3[]{};
     public int Length => points.Length;
     public void AddPoint(Vector3 point)

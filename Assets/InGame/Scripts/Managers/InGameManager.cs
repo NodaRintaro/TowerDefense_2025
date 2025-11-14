@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -13,6 +15,8 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _cellPrefab;
     [SerializeField] private GameObject _enemyTowerPrefab;          //敵の基地
     [SerializeField] private GameObject _playerTowerPrefab;         //プレイヤーの基地
+    [SerializeField] private TextMeshProUGUI _towerHealthText;      //タワーの耐久値のText
+    [SerializeField] private TextMeshProUGUI _timeSpeedText;        //タワーの名前のText
     [SerializeField] private DebugDataManager _debugDataManager;    //デバッグ用のデータ格納庫
     [SerializeField] public StageData stageData;                    //ステージのデータ
     private float _ingameTimer = 0;                                 //ゲーム内時間
@@ -25,6 +29,7 @@ public class InGameManager : MonoBehaviour
     private int _selectedCharacterID;                               //選択中のキャラクターID
     private int[] _waveEnemyIndex;                                  //WaveData内の敵データのインデックス
     private playerState _playerState = playerState.Idle;            //プレイヤーの状態
+    private int _towerHealth = 0;
 
     #region Properties
 
@@ -35,6 +40,16 @@ public class InGameManager : MonoBehaviour
         {
             _ingameTimer = value;
             OnTimeUpdated?.Invoke(value);
+        }
+    }
+
+    private int TowerHealth
+    {
+        get => _towerHealth;
+        set
+        {
+            _towerHealth = value;
+            UpdateTowerHealthText(value);
         }
     }
 
@@ -77,6 +92,7 @@ public class InGameManager : MonoBehaviour
         //Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
         CreateStageObjects(stageData);
         _waveEnemyIndex = new int[stageData.waveDatas.Length];
+        TowerHealth = stageData.towerHealth;
 
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
@@ -175,9 +191,6 @@ public class InGameManager : MonoBehaviour
             Destroy(_selectedCharacterObj);
             return;
         }
-
-        ;
-
         PlaceCharacter();
         OnExitCell();
     }
@@ -224,6 +237,11 @@ public class InGameManager : MonoBehaviour
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
             characterIcon.SetID(i);
         }
+    }
+
+    private void UpdateTowerHealthText(int health)
+    {
+        _towerHealthText.text = $"Tower Health:{health.ToString()}";
     }
 
     #endregion
@@ -286,6 +304,7 @@ public class InGameManager : MonoBehaviour
                 // ユニットにデータを設定して初期化
                 EnemyUnit unit = enemyObj.GetComponent<EnemyUnit>();
                 unit.UnitData = waveData.GetEnemyUnitData(_waveEnemyIndex[i]);
+                unit.SetRoute(ref waveData.aiRoute);
                 unit.Init();
                 _waveEnemyIndex[i]++;
                 if (waveData.IsWaveEnd(_waveEnemyIndex[i]))
@@ -322,22 +341,29 @@ public class InGameManager : MonoBehaviour
         // 一番近い敵を返す
         return nearestEnemy;
     }
+    //敵がタワーに到着したときに呼ばれる
     public void EnemyArriveGoal(EnemyUnit unit)
     {
+        Debug.Log("敵がタワーに到着");
         RemoveEnemyUnit(unit);
+        TowerDagame(1);
     }
 
     //時間の速さを変更する
     public void ChangeTimeSpeed(float timeSpeed)
     {
         _timeSpeed = timeSpeed;
+        _timeSpeedText.text = $"TimeSpeed: {_timeSpeed.ToString()}";
     }
-
-    #endregion
-
+    
+    //タワーへのダメージ
+    private void TowerDagame(int damage)
+    {
+        TowerHealth -= damage;
+    }
     private void CreateStageObjects(StageData data)
     {
-        GameObject parent = new GameObject("StageObjects");
+        GameObject parent = new GameObject("Stage");
         // ステージのオブジェクトを生成する
         // 敵の基地とプレイヤーの基地の生成
         for (int i = 0; i < data.width; i++)
@@ -363,6 +389,8 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }
 
 public enum playerState

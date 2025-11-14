@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class WaveData
@@ -25,7 +24,7 @@ public class WaveData
     public EnemyUnitData GetEnemyUnitData(int index)
     {
         EnemyUnitData enemyUnitData = new EnemyUnitData(enemyGenerateDatas[index].enemyData);
-        enemyUnitData.AiRoute = aiRoute;
+        //enemyUnitData.AiRoute = aiRoute;
         return enemyUnitData;
     }
 

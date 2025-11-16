@@ -41,7 +41,7 @@ public class UnitBase : MonoBehaviour
         OnHealthChangedEvent += _hpBar.UpdateHp;
     }
 
-    public virtual void Initialize() { }
+    protected virtual void Initialize() { }
     
     // ユニットの状態を更新する
     public virtual void UpdateUnit(float deltaTime) { }
@@ -50,6 +50,7 @@ public class UnitBase : MonoBehaviour
     {
         OnRemovedEvent?.Invoke();
     }
+
     //敵陣営か判定
     public bool IsEnemy(UnitBase targetUnit)
     {

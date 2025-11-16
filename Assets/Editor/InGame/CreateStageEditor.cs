@@ -13,7 +13,7 @@ public class CreateStageEditor : UnityEditor.Editor
 
     //スクロールしている場所の位置
     private Vector2 _scrollPos;
-    private int _scrollHeight = 500;
+    private int _scrollHeight = 250;
 
     //空白の大きさ
     private int _spaceSize = 10;
@@ -36,7 +36,7 @@ public class CreateStageEditor : UnityEditor.Editor
     }
 
     // 選択が解除されたとき
-    private void OnDisable()
+    private void OnClosed()
     {
         SortGenerateData();
         _instance = null;
@@ -74,7 +74,6 @@ public class CreateStageEditor : UnityEditor.Editor
                 gridObj.GetComponent<Renderer>().material = mat;
 
                 Handles.color = _stageWireColor;
-                //Handles.DrawWireCube(gridObj.transform.position, Vector3.one);
                 Vector3[] vecs = new Vector3[4]
                 {
                     new Vector3(0.5f, 0.5f, 0.5f) + gridObj.transform.position,
@@ -109,10 +108,13 @@ public class CreateStageEditor : UnityEditor.Editor
     {
         GUILayout.Space(10);
         CellGUI();
-        GUILayout.Space(10);
+        GUILayout.Space(10); 
+        GUILayout.Label("タワーの耐久地");
+        EditorGUILayout.IntField(_instance.towerHealth, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();
         WaveDataGUI();
         GUILayout.Space(10);
+        if(GUILayout.Button("ステージの編集を終える")) OnClosed();
     }
 
     private void CellGUI()
@@ -172,7 +174,7 @@ public class CreateStageEditor : UnityEditor.Editor
     {
         using (new EditorGUILayout.HorizontalScope())
         {
-            GUILayout.Label("WaveData", GUILayout.ExpandWidth(false));
+            GUILayout.Label("WaveData", GUILayout.ExpandWidth(false),GUILayout.Width(100f));
             if (GUILayout.Button("Add Wave", GUILayout.Width(100f)))
             {
                 AddWaveData();
@@ -183,7 +185,7 @@ public class CreateStageEditor : UnityEditor.Editor
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                GUILayout.Label($"Wave{i}", GUILayout.ExpandWidth(false));
+                GUILayout.Label($"Wave{i}", GUILayout.ExpandWidth(false),GUILayout.Width(100f));
                 if (GUILayout.Button("Remove Wave", GUILayout.Width(100f)))
                 {
                     RemoveWaveData(i);
@@ -220,11 +222,11 @@ public class CreateStageEditor : UnityEditor.Editor
                 //要素を横にする
                 using (new EditorGUILayout.HorizontalScope(GUILayout.ExpandWidth(false)))
                 {
-                    GUILayout.Label($"敵データ[{_instance.waveDatas[i].enemyGenerateDatas[j].enemyData.enemyName}]");
+                    GUILayout.Label($"敵データ[{_instance.waveDatas[i].enemyGenerateDatas[j].enemyData.enemyName}]",GUILayout.ExpandWidth(false),GUILayout.Width(100f));
 
                     _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime = EditorGUILayout.FloatField("SpawnTime",
                         _instance.waveDatas[i].enemyGenerateDatas[j].spawnTime, GUILayout.ExpandWidth(false));
-                    if (GUILayout.Button("Remove EnemyData"))
+                    if (GUILayout.Button("Remove Enemy",GUILayout.Width(100f)))
                     {
                         RemoveEnemyGenerateData(i, j);
                     }
@@ -291,8 +293,6 @@ public class CreateStageEditor : UnityEditor.Editor
             // 変更されたら反映する
             if (EditorGUI.EndChangeCheck())
             {
-                // Undo.RecordObject(aiRoute, "Edit Destination");
-                // EditorUtility.SetDirty(aiRoute);
                 Undo.RecordObject(_instance, "Edit Destination");
                 EditorUtility.SetDirty(_instance);
             }
@@ -332,9 +332,10 @@ public class CreateStageEditor : UnityEditor.Editor
     }
     private void CreateGrid()
     {
+        _parent = GameObject.Find("StageIditObj");
         if (_parent == null)
         {
-            _parent = new GameObject("Grid");
+            _parent = new GameObject("StageIditObj");
         }
 
         _grid = new GameObject[_instance.width * _instance.height];

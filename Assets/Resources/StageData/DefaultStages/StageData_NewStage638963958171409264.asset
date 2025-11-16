@@ -16,6 +16,30 @@ MonoBehaviour:
   width: 8
   height: 7
   cellDatas:
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
   - cellType: 0
@@ -42,37 +66,17 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
   - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -96,23 +100,19 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
     material: {fileID: 0}
-  - cellType: 0
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
     material: {fileID: 0}
   - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
   - cellType: 1
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 0
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -131,10 +131,20 @@ MonoBehaviour:
   waveDatas:
   - aiRoute:
       points:
-      - {x: 0, y: 0, z: 0}
-      - {x: 6, y: 0, z: -4}
+      - {x: 0, y: 0, z: -1}
+      - {x: 7, y: 0, z: -1}
+      - {x: 7, y: 0, z: -6}
+      - {x: 1, y: 0, z: -6}
+      - {x: 1, y: 0, z: -4}
+      - {x: 5, y: 0, z: -4}
     enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 0
     - enemyData: {fileID: 11400000, guid: 3b2d2a8c3b00b1c4daf471c295e3b9ee, type: 2}
-      spawnTime: 0
+      spawnTime: 0.5
     - enemyData: {fileID: 11400000, guid: afd5fa2d7f62c2e469a5a772c90c7018, type: 2}
-      spawnTime: 0
+      spawnTime: 5
+    - enemyData: {fileID: 11400000, guid: afd5fa2d7f62c2e469a5a772c90c7018, type: 2}
+      spawnTime: 7.26
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 10.68

@@ -16,42 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 44fccdaa31f8b484c9c9ea61b09f6336
-  m_SerializeEntries:
-  - m_GUID: 5084d0f33b4a9f048a6caf9e05200c4f
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestTwo.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6830b1a5f9faf1b4db7bdc5c03eefe0f
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestFour.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 79fca4f6e956bd94b85b3a3cf64b8554
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestOne.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7a6f4aa7b88eee54188fb5d9c5afc1ef
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestFive.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 80e6ffa400479ee4695edb6193f0cb17
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardData/SupportCardDataList.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9a2d0262a9a9de44facd9ad952e3e1b5
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardData/SupportCardDataListCSV.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: aa75a7f51ae12ff41a1fed88d9f91cfd
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/TestThree.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
   m_SchemaSet:

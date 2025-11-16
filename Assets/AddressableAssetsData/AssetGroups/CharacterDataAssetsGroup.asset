@@ -16,21 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: eb8f9c23a2a1a004382aecd0d4bb0be3
-  m_SerializeEntries:
-  - m_GUID: 7c57f57e032e535448b31eea58539cd7
-    m_Address: Assets/Resources_moved/CharacterResource/CharacterData/CharacterDataListCSV.csv
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - CSV
-    - Character
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: df8750b9c14eb1f4b8143d39ee75d66d
-    m_Address: Assets/Resources_moved/CharacterResource/CharacterData/CharacterDataList.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Character
-    - Data
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
   m_SchemaSet:

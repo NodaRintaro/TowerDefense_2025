@@ -29,11 +29,6 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
     async void OnGUI()
     {
-        // TextFieldでGASのURLを入力
-        EditorGUILayout.Space(_spaceSize);
-        EditorGUILayout.LabelField("欲しいDataのGASのURL");
-        _gasUrl = EditorGUILayout.TextField("gasUrl", _gasUrl);
-
         //TextFieldで自動生成するScriptableObjectの名前を入力
         EditorGUILayout.Space(_spaceSize);
         EditorGUILayout.LabelField("自動生成するScriptableObjectの名前");
@@ -51,14 +46,15 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
 
         //生成したScriptableObjectの保存先のPath
-        _scriptableObjectFilePath = "Assets/Resources/" + _dataSaveFilePath + "/" + _scriptableObjectName + " .asset";
+        _scriptableObjectFilePath = _dataSaveFilePath + "/" + _scriptableObjectName + ".asset";
 
         // GASから取得したCSVデータを保存するファイル名のパスを設定
-        _outPutCsvFilePath = Application.dataPath + "/Resources/" + _dataSaveFilePath + "/" + _scriptableObjectName + "CSV" + ".csv";
+        _outPutCsvFilePath = _dataSaveFilePath + "/" + _scriptableObjectName + "CSV" + ".csv";
 
         EditorGUILayout.Space(_spaceSize);
         if (GUILayout.Button("GenerateScriptableObject") && NullCheckData())
         {
+            SetDataPath(_dataType);
             await GenerateScriptableObject();
         }
     }
@@ -72,9 +68,6 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 break;
             case DataType.SupportCard:
                 _gasUrl = "https://script.google.com/macros/s/AKfycbyBrmGAo-1ROKoMhnQLAMdp2M7p3pGK__x8JRxviTcR1GGA5mb9s9WZUWDnM5rECu4B/exec";
-                break;
-            case DataType.RankData:
-                _gasUrl = "";
                 break;
             case DataType.EnemyData:
                 Debug.Log("まだデータがありません");

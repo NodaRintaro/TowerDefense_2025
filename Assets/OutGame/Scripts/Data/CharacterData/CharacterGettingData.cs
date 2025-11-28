@@ -6,18 +6,17 @@ using UnityEngine;
 [Serializable]
 public class CharacterGettingData
 {
-    [SerializeField]
-    private bool[] _gettingCharacterData = null;
+    private Dictionary<uint, bool> _characterGettingDict = new();
 
-    public void SetCharacterDataLangth(int length)
+    public Dictionary<uint, bool> CharacterGettingDict => _characterGettingDict;
+
+    public bool IsGettingCharacter(uint characterId)
     {
-        _gettingCharacterData = new bool[length];
-
-
+        return _characterGettingDict[characterId];
     }
 
-    public void OpenCharacter()
+    public void CharacetrGetting(uint characterId)
     {
-
+        _characterGettingDict[characterId] = true;
     }
 }

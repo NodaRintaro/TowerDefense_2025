@@ -33,6 +33,13 @@ public class CreateStageEditor : UnityEditor.Editor
         if (_instance.waveDatas == null) _instance.waveDatas = new WaveData[0];
         SceneView.duringSceneGui += OnSceneGUI;
         CreateGrid();
+        
+        //nullの場合Dataを初期化
+        if (_instance.cellDatas == null)
+        {
+            _instance.cellDatas = new CellData[_instance.width * _instance.height];
+            EditorUtility.SetDirty(_instance);
+        }
     }
 
     // 選択が解除されたとき
@@ -106,6 +113,7 @@ public class CreateStageEditor : UnityEditor.Editor
 
     public override void OnInspectorGUI()
     {
+        if (_instance == null) return;
         GUILayout.Space(10);
         CellGUI();
         GUILayout.Space(10); 
@@ -122,11 +130,11 @@ public class CreateStageEditor : UnityEditor.Editor
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, GUILayout.Height(_scrollHeight));
 
         //nullの場合Dataを初期化
-        if (_instance.cellDatas == null)
-        {
-            _instance.cellDatas = new CellData[_instance.width * _instance.height];
-            EditorUtility.SetDirty(_instance);
-        }
+        // if (_instance.cellDatas == null)
+        // {
+        //     _instance.cellDatas = new CellData[_instance.width * _instance.height];
+        //     EditorUtility.SetDirty(_instance);
+        // }
 
         EditorGUILayout.LabelField("横のステージの長さ:" + _instance.width);
         EditorGUILayout.LabelField("縦のステージの長さ:" + _instance.height);

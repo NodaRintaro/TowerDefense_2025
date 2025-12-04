@@ -21,7 +21,8 @@ public class CharacterBaseData
     protected uint _baseSpeed;
     [SerializeField, Header("戦闘スタイル")]
     protected RoleType _roleType;
-
+    [SerializeField, Header("コスト")]
+    protected uint _cost;
     public uint CharacterID => _characterID;
     public string CharacterName => _characterName;
     public uint BasePhysical => _basePhysical;
@@ -29,6 +30,7 @@ public class CharacterBaseData
     public uint BaseIntelligence => _baseIntelligence;
     public uint BaseSpeed => _baseSpeed;
     public RoleType RoleType => _roleType;
+    public uint Cost => _cost;
 
     /// <summary>
     /// パラメータのセッター
@@ -39,7 +41,7 @@ public class CharacterBaseData
     /// <param name="pow">筋力</param>
     /// <param name="intelli">知力</param>
     /// <param name="sp">素早さ</param>
-    public void InitData(uint id, string charaName, uint physi, uint pow, uint intelli, uint sp, string role)
+    public void InitData(uint id, string charaName, uint physi, uint pow, uint intelli, uint sp, string role, uint cost)
     {
         _characterID = id;
         _characterName = charaName;
@@ -48,6 +50,7 @@ public class CharacterBaseData
         _baseIntelligence = intelli;
         _baseSpeed = sp;
         SetCharacterRole(role);
+        _cost = cost;
     }
 
     private void SetCharacterRole(string roleType)

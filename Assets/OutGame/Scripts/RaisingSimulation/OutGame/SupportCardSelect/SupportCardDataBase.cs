@@ -10,14 +10,14 @@ public class SupportCardDataBase
     private SupportCardDataHolder _supportCardDataHolder;
 
     [SerializeField, Header("サポートカードのSpriteの保存先")]
-    private SupportCardResource[] _supportCardResourceHolder;
+    private SupportCardSprite[] _supportCardResourceHolder;
 
     //サポートカードのデータの保存先のパス
     private const string _supportCardDataPath = "SupportCard/SupportCardData/SupportCardDataList";
     private const string _supportCardResourcePath = "SupportCard/SupportCardSprite";
 
     public SupportCardDataHolder SupportCardDataHolder => _supportCardDataHolder;
-    public SupportCardResource[] SupportCardResources => _supportCardResourceHolder;
+    public SupportCardSprite[] SupportCardResources => _supportCardResourceHolder;
 
     [Inject]
     public SupportCardDataBase(){}
@@ -35,18 +35,18 @@ public class SupportCardDataBase
         return resource.asset as SupportCardDataHolder;
     }
 
-    private async UniTask<SupportCardResource[]> CharacterResourceLoad(string path)
+    private async UniTask<SupportCardSprite[]> CharacterResourceLoad(string path)
     {
         // パス配下のすべてのアセットを取得
-        Object[] loadResource = Resources.LoadAll(path, typeof(SupportCardResource));
-        SupportCardResource[] result = new SupportCardResource[loadResource.Length];
+        Object[] loadResource = Resources.LoadAll(path, typeof(SupportCardSprite));
+        SupportCardSprite[] result = new SupportCardSprite[loadResource.Length];
 
         for (int i = 0; i < loadResource.Length; i++)
         {
             // ちょっとずつ非同期的に処理する（実際の読み込みは同期だが負荷を分散）
             await UniTask.Yield();
 
-            result[i] = loadResource[i] as SupportCardResource;
+            result[i] = loadResource[i] as SupportCardSprite;
         }
 
         return result;
@@ -65,7 +65,7 @@ public class SupportCardDataBase
         return null;
     }
 
-    public SupportCardResource GetCardResource(uint id)
+    public SupportCardSprite GetCardResource(uint id)
     {
         foreach (var data in _supportCardResourceHolder)
         {

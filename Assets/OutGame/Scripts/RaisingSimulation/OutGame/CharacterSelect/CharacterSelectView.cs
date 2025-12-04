@@ -6,115 +6,112 @@ using UnityEngine.UI;
 
 namespace CharacterSelectView
 {
-    public struct ViewData
+    /// <summary> CharacterSelect画面のView </summary>
+    [Serializable]
+    public class ViewData : IViewData
     {
+        [SerializeField, Header("キャンバスのオブジェクト")] private GameObject _canvasObj;
+
+        [SerializeField, Header("次のサポートカードセレクトの画面へ進むボタン")] private Button _nextScreenButton;
+
+        [SerializeField, Header("ホーム画面へ進むボタン")] private Button _homeButton;
+
+        [SerializeField, Header("キャラクターの情報を表示するUI")] private CharacterInformationView _characterInfoView;
+
+        [SerializeField, Header("キャラクター選択を行うUIのまとめクラス")] private CharacterSelectButtonHolder _characterSelectButtonHolder;
+
+        /// <summary> キャンバスのオブジェクト </summary> </summary>
+        public GameObject CanvasObj => _canvasObj;
+
         /// <summary> 次のサポートカードセレクトの画面へ進むボタン </summary>
-        public readonly Button NextScreenButton;
+        public Button NextScreenButton => _nextScreenButton;
 
         /// <summary> ホーム画面へ進むボタン </summary>
-        public readonly Button HomeButton;
+        public Button HomeButton => _homeButton;
 
         /// <summary> キャラクターの情報を表示するUI </summary>
-        public readonly CharacterInformationView CharacterInformation;
+        public CharacterInformationView CharacterInformation => _characterInfoView;
 
         /// <summary> キャラクター選択を行うUIのまとめクラス </summary>
-        public readonly CharacterSelectMenuView CharacterSelectMenu;
+        public CharacterSelectButtonHolder CharacterSelectButtonHolder => _characterSelectButtonHolder;
     }
 
     #region CharacterInformation
+    /// <summary> キャラクターのデータを表示するUIをまとめるクラス </summary>
     [Serializable]
     public class CharacterInformationView
     {
-        [SerializeField] private readonly Image _characterImage;
+        [SerializeField] private Image _characterImage;
 
-        [SerializeField] private readonly TMP_Text _nameText = null;
+        [SerializeField] private TMP_Text _nameText = null;
 
-        [SerializeField] private readonly TMP_Text _idText = null;
+        [SerializeField] private TMP_Text _idText = null;
 
-        [SerializeField] private readonly TMP_Text _roleTypeText = null;
+        [SerializeField] private TMP_Text _roleTypeText = null;
 
-        [SerializeField] private readonly GridLayoutGroup _paramGrid = null;
+        [SerializeField] private GridLayoutGroup _paramGrid = null;
 
         [SerializeField] private CharacterParameterUI[] _parameterUIArray= null;
 
-        /// <summary>
-        /// キャラクターの情報を表示するUIDataをまとめるクラス
-        /// </summary>
-        /// <param name="characterImage">キャラクターの立ち絵</param>
-        /// <param name="nameText">名前</param>
-        /// <param name="idText">ID</param>
-        /// <param name="roleTypeText">役職</param>
-        /// <param name="_paramGrid">パラメータをまとめるGridLayoutGroup</param>
-        /// <param name="rankDataHolder">各種ランクのデータ</param>
-        public CharacterInformationView(Image characterImage, TMP_Text nameText, TMP_Text idText, TMP_Text roleTypeText, GridLayoutGroup paramGrid, RankSpriteDataHolder rankDataHolder, CharacterParameterUI[] parameters)
+        #region プロパティ一覧
+        public Image CharacterImage => _characterImage;
+        public TMP_Text NameText => _nameText;
+        public TMP_Text IdText => _idText;
+        public TMP_Text RoleTypeText => _roleTypeText;
+        public GridLayoutGroup ParamGrid => _paramGrid;
+        public CharacterParameterUI[] ParameterUIArray => _parameterUIArray;
+        #endregion
+
+        /// <summary> パラメータのViewへの反映を行う関数 </summary>
+        public void SetParameter(ParameterType type, RankSpriteData paramRankSprite, uint paramNum, uint maxParamNum)
         {
-            //UIの情報を保存
-            _characterImage = characterImage;
-            _nameText = nameText;
-            _idText = idText;
-            _roleTypeText = roleTypeText;
-            _paramGrid = paramGrid;
-            _parameterUIArray = parameters;
+            CharacterParameterUI paramUI = GetParamUI(type);
+            paramUI.ParamRankImage.sprite = paramRankSprite.RankSprite;
+            paramUI.ParamText.text = paramNum.ToString() + "\n /" + maxParamNum.ToString();
         }
 
-        public void SetCharacterInformation(CharacterBaseData characterBaseData, Sprite characterSprite)
+        /// <summary> パラメータUIの取得関数 </summary>
+        public CharacterParameterUI GetParamUI(ParameterType type)
         {
-            _characterImage.sprite = characterSprite;
-            _nameText.text = characterBaseData.CharacterName;
-            _idText.text = characterBaseData.CharacterID.ToString();
-            _roleTypeText.text = characterBaseData.RoleType.ToString();
-
-            foreach(var paramUI in _parameterUIArray)
+            foreach(var param in ParameterUIArray)
             {
-                switch (paramUI.ParamType)
+                if(param.ParamType == type)
                 {
-                    case ParameterType.Physical:
-                        SetParameter(characterBaseData.BasePhysical, paramUI);
-                        break;
-                    case ParameterType.Power:
-                        SetParameter(characterBaseData.BasePower, paramUI);
-                        break;
-                    case ParameterType.Intelligence:
-                        SetParameter(characterBaseData.BaseIntelligence, paramUI);
-                        break;
-                    case ParameterType.Speed:
-                        SetParameter(characterBaseData.BaseSpeed, paramUI);
-                        break;
+                    return param;
                 }
             }
+
+            return default(CharacterParameterUI);
         }
 
-        private void SetParameter(uint characterParam, CharacterParameterUI paramUI)
-        {
-            
-        }
-
+        /// <summary> パラメータUIのまとめクラス </summary>
+        [Serializable]
         public struct CharacterParameterUI
         {
+            [Header("ParameterのGameObject")]
+            public GameObject ParamObject;
+
+            [Header("ParameterType")]
             public ParameterType ParamType;
+
             public Slider ParamGage;
             public TMP_Text ParamText;
-            public TMP_Text NextRankParamNum;
             public Image ParamRankImage;
         }
     }
     #endregion
 
     #region CharacterSelectMenu
-    public class CharacterSelectMenuView
+    /// <summary> キャラクター選択ボタンをまとめるクラス </summary>
+    [Serializable]
+    public class CharacterSelectButtonHolder
     {
         [SerializeField, Header("キャラクターの選択ボタンをまとめるGridLayoutGroup")]
         private GridLayoutGroup _characterSelectButtonGLG = null;
 
-        private Transform _gridLayoutGroupObjectTransform;
+        private Transform _gridLayoutGroupObjectTransform => _characterSelectButtonGLG.transform;
 
         public GridLayoutGroup CharacterSelectButtonGLG => _characterSelectButtonGLG;
-
-        public CharacterSelectMenuView(GridLayoutGroup selectButtonGroup)
-        {
-            _characterSelectButtonGLG = selectButtonGroup;
-            _gridLayoutGroupObjectTransform = selectButtonGroup.gameObject.transform;
-        }
 
         public void AddSelectButton(Button button)
         {

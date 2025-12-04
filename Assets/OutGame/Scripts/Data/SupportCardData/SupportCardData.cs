@@ -22,10 +22,6 @@ public class SupportCardData
     [SerializeField, Header("発生するイベントのID")]
     private uint[] _eventIDArray;
 
-    //所持済みの判定
-    [SerializeField, Header("所持済みかどうかの判定")]
-    private bool _isGetting = false;
-
     public uint ID => _id;
     public string CardName => _cardName;
     public uint Rarity => _rarity;
@@ -34,7 +30,6 @@ public class SupportCardData
     public uint Intelligence => _intelligence;
     public uint Speed => _speed;
     public uint[] EventIDArray => _eventIDArray;
-    public bool IsGetting => _isGetting;
 
     /// <summary>
     /// パラメータの初期化
@@ -63,6 +58,4 @@ public class SupportCardData
             _eventIDArray[i] = uint.Parse(events[i]);
         }
     }
-
-    public void GetCharacter() => _isGetting = true;
 }

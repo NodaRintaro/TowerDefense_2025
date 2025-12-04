@@ -119,6 +119,9 @@ public class CreateStageEditor : UnityEditor.Editor
         GUILayout.Space(10); 
         GUILayout.Label("タワーの耐久地");
         EditorGUILayout.IntField(_instance.towerHealth, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
+        GUILayout.Space(10); 
+        GUILayout.Label("一秒間に生成するコインの数");
+        EditorGUILayout.FloatField(_instance.generateCoinSpeed, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();
         WaveDataGUI();
         GUILayout.Space(10);

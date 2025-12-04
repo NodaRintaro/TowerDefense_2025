@@ -5,6 +5,7 @@ public class StageData : ScriptableObject
 {
     public string stageName;
     public int towerHealth;
+    public float generateCoinSpeed; // 一秒間にコインを生成する数
     public int width;
     public int height;
     public CellData[] cellDatas;
@@ -15,6 +16,7 @@ public class StageData : ScriptableObject
     {
         this.stageName = "New Stage";
         this.towerHealth = 10;
+        this.generateCoinSpeed = 1f;
         this.width = 5;
         this.height = 5;
         this.cellDatas = new CellData[5 * 5];

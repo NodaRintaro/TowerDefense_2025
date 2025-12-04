@@ -18,6 +18,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _playerTowerPrefab;         //プレイヤーの基地
     [SerializeField] private TextMeshProUGUI _towerHealthText;      //タワーの耐久値のText
     [SerializeField] private TextMeshProUGUI _timeSpeedText;        //タワーの名前のText
+    [SerializeField] private TextMeshProUGUI _remainingEnemyText;   //残りの敵の数のText
     [SerializeField] private DebugDataManager _debugDataManager;    //デバッグ用のデータ格納庫
     [SerializeField] public StageData stageData;                    //ステージのデータ
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
@@ -28,9 +29,12 @@ public class InGameManager : MonoBehaviour
     private float _timeSpeed = 0;                                   //ゲーム内の時間の速さ
     private int _selectedCharacterID;                               //選択中のキャラクターID
     private int[] _waveEnemyIndex;                                  //WaveData内の敵データのインデックス
-    private playerState _playerState = playerState.Loading;            //プレイヤーの状態
-    private int _towerHealth = 0;
-    private int _enemyNums = 0;
+    private playerState _playerState = playerState.Loading;         //プレイヤーの状態
+    private int _towerHealth = 0;                                   //タワーの耐久値
+    private int _remainingEnemyNums = 0;                            //残りの敵の数
+    private int _maxEnemyNums = 0;                                  //敵の数
+    private float _coinTimer = 0;
+    private int coins = 0;
 
     #region Properties
 
@@ -51,6 +55,16 @@ public class InGameManager : MonoBehaviour
         {
             _towerHealth = value;
             UpdateTowerHealthText(value);
+        }
+    }
+
+    private int RemainingEnemyNums
+    {
+        get => _remainingEnemyNums;
+        set
+        {
+            _remainingEnemyNums = value;
+            UpdateRemainingEnemyText(value);
         }
     }
 
@@ -265,6 +279,11 @@ public class InGameManager : MonoBehaviour
         _towerHealthText.text = $"Tower Health:{health.ToString()}";
     }
 
+    private void UpdateRemainingEnemyText(int remainingEnemyNums)
+    {
+        _remainingEnemyText.text = $"Remaining Enemy:{remainingEnemyNums}/{_maxEnemyNums}";
+    }
+
     #endregion
 
     #region Battle Functions
@@ -328,6 +347,8 @@ public class InGameManager : MonoBehaviour
                 unit.SetRoute(ref waveData.aiRoute);
                 unit.Init();
                 _waveEnemyIndex[i]++;
+                RemainingEnemyNums--;
+                // 敵の数が0になったらWaveの終了
                 if (waveData.IsWaveEnd(_waveEnemyIndex[i]))
                 {
                     break;
@@ -417,16 +438,31 @@ public class InGameManager : MonoBehaviour
     {
         _waveEnemyIndex = new int[stageData.waveDatas.Length];
         TowerHealth = stageData.towerHealth;
+        
         foreach (var variable in stageData.waveDatas)
         {
-            _enemyNums += variable.EnemyNumsInWave;
+            RemainingEnemyNums += variable.EnemyNumsInWave;
+            _maxEnemyNums += variable.EnemyNumsInWave;
         }
+        
         await CreateStageObjects(stageData);
         _playerState = playerState.Idle;
         _timeSpeed = 1;
     }
+    void UpdateCoins(float deltaTime)
+    {
+        _coinTimer += deltaTime;
+        while (_coinTimer >= stageData.generateCoinSpeed)
+        {
+            _coinTimer -= stageData.generateCoinSpeed;
+            Generate(1);
+        }
+    }
+    public void Generate(int count)
+    {
+        coins += count;
+    }
 }
-
 public enum playerState
 {
     Idle,

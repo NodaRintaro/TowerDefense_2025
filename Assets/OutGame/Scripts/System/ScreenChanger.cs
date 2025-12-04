@@ -9,7 +9,10 @@ public class ScreenChanger
     public List<GameObject> ScreenCanvaList => _screenCanvasList;
 
     [Inject]
-    public ScreenChanger() { }
+    public ScreenChanger(IEnumerable<IController> controllers)
+    {
+        
+    }
 
     /// <summary> 表示画面の切り替え </summary>
     public void ScreenChange(string screenName)
@@ -25,5 +28,10 @@ public class ScreenChanger
                 canvas.SetActive(false);
             }
         }
+    }
+
+    public void AddScreen()
+    {
+
     }
 }

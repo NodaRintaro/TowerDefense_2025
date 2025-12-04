@@ -11,13 +11,16 @@ public class TrainingCharacterData : CharacterBaseData
     public TrainingCharacterData(CharacterBaseData data)
     {
         InitData(
-            data.CharacterID, 
-            data.CharacterName, 
-            data.BasePhysical, 
-            data.BasePower, 
+            data.CharacterID,
+            data.CharacterName,
+            data.BasePhysical,
+            data.BasePower,
             data.BaseIntelligence,
-            data.BaseSpeed, 
-            data.RoleType.ToString());
+            data.BaseSpeed,
+            data.RoleType.ToString(),
+            data.Cost
+            );
+
     }
 
     //各種パラメータの増加値

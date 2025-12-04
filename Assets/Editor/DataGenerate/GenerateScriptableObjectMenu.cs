@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using CharacterAssets;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -21,7 +20,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
     private int _spaceSize = 10;
 
-    [MenuItem("Tools/GenerateScriptableObjectMenu")]
+    [MenuItem("Tools/GenerateScriptableObject")]
     public static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(GenerateScriptableObjectMenu));
@@ -219,7 +218,8 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 uint.Parse(parseCsvData[columnCount, 3]),
                 uint.Parse(parseCsvData[columnCount, 4]),
                 uint.Parse(parseCsvData[columnCount, 5]),
-                parseCsvData[columnCount, 6]
+                parseCsvData[columnCount, 6],
+                uint.Parse(parseCsvData[columnCount, 7])
                 );
 
             characterDataList.AddData(characterData);
@@ -263,15 +263,6 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         //AssetDataBaseの内容を更新
         AssetDatabase.Refresh();
-    }
-
-    public enum DataType
-    {
-        None,
-        CharacterData,
-        SupportCard,
-        RankData,
-        EnemyData
     }
 }
 #endif

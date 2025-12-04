@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +18,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _towerHealthText;      //タワーの耐久値のText
     [SerializeField] private TextMeshProUGUI _timeSpeedText;        //タワーの名前のText
     [SerializeField] private TextMeshProUGUI _remainingEnemyText;   //残りの敵の数のText
+    [SerializeField] private TextMeshProUGUI _coinText;              //コインのText
     [SerializeField] private DebugDataManager _debugDataManager;    //デバッグ用のデータ格納庫
     [SerializeField] public StageData stageData;                    //ステージのデータ
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
@@ -35,6 +35,7 @@ public class InGameManager : MonoBehaviour
     private int _maxEnemyNums = 0;                                  //敵の数
     private float _coinTimer = 0;
     private int coins = 0;
+    private float _coinInterval = 1;
 
     #region Properties
 
@@ -111,6 +112,7 @@ public class InGameManager : MonoBehaviour
         OnPreviousTimeUpdated += UpdateUnits;
         OnPreviousTimeUpdated += _unitDeck.UpdateTime;
         OnTimeUpdated += GenerateEnemyUnit;
+        OnPreviousTimeUpdated += UpdateCoins;
     }
 
     private void Update()
@@ -438,6 +440,7 @@ public class InGameManager : MonoBehaviour
     {
         _waveEnemyIndex = new int[stageData.waveDatas.Length];
         TowerHealth = stageData.towerHealth;
+        _coinInterval = stageData.generateCoinSpeed;
         
         foreach (var variable in stageData.waveDatas)
         {
@@ -449,18 +452,19 @@ public class InGameManager : MonoBehaviour
         _playerState = playerState.Idle;
         _timeSpeed = 1;
     }
-    void UpdateCoins(float deltaTime)
+    private void UpdateCoins(float deltaTime)
     {
         _coinTimer += deltaTime;
-        while (_coinTimer >= stageData.generateCoinSpeed)
+        if (_coinTimer >= _coinInterval)
         {
-            _coinTimer -= stageData.generateCoinSpeed;
-            Generate(1);
+            _coinTimer -= _coinInterval;
+            GenerateCoin(1);
         }
     }
-    public void Generate(int count)
+    public void GenerateCoin(int count)
     {
         coins += count;
+        _coinText.text = $"Coins: {coins}";
     }
 }
 public enum playerState

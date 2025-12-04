@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17077dbb4a82972439f1076b36897888, type: 3}
+  m_Name: RankSpriteData
+  m_EditorClassIdentifier: 
+  _rankSpriteDataList:
+  - _rankSprite: {fileID: 21300000, guid: 111f7900857d9324f8f3e33cc34198f4, type: 3}
+    _rankType: 1
+  - _rankSprite: {fileID: 21300000, guid: dffd5d904f7a8584d9ca33fa6ef8f8ec, type: 3}
+    _rankType: 2
+  - _rankSprite: {fileID: 21300000, guid: 5b9a081dd9706d74e93ad1bc8787a42d, type: 3}
+    _rankType: 3
+  - _rankSprite: {fileID: 21300000, guid: 68d6061cf93bf00418e12791cc615072, type: 3}
+    _rankType: 4
+  - _rankSprite: {fileID: 21300000, guid: a6b6c826ac0065a4092b8e87e5ea799e, type: 3}
+    _rankType: 5
+  - _rankSprite: {fileID: 21300000, guid: b2f5a7dbdccd9ed43bd3f6276e924dad, type: 3}
+    _rankType: 6
+  - _rankSprite: {fileID: 21300000, guid: 86aee255191223146a3a949d37aa502a, type: 3}
+    _rankType: 7
+  - _rankSprite: {fileID: 21300000, guid: 9455437def415d34a9f5a4341d4228ba, type: 3}
+    _rankType: 8
+  - _rankSprite: {fileID: 21300000, guid: 451287ffc9732864fa626d6fc1cba231, type: 3}
+    _rankType: 9

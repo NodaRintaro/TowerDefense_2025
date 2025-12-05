@@ -1,6 +1,6 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -17,19 +17,25 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private GameObject _playerTowerPrefab;         //プレイヤーの基地
     [SerializeField] private TextMeshProUGUI _towerHealthText;      //タワーの耐久値のText
     [SerializeField] private TextMeshProUGUI _timeSpeedText;        //タワーの名前のText
+    [SerializeField] private TextMeshProUGUI _remainingEnemyText;   //残りの敵の数のText
+    [SerializeField] private TextMeshProUGUI _coinText;              //コインのText
     [SerializeField] private DebugDataManager _debugDataManager;    //デバッグ用のデータ格納庫
     [SerializeField] public StageData stageData;                    //ステージのデータ
-    private float _ingameTimer = 0;                                 //ゲーム内時間
-    private bool _isPaused = false;                                 //ポーズ中かどうか
-    private float _timeSpeed = 1;                                   //ゲーム内の時間の速さ
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
     private Cell _selectedCell;                                     //選択中のセル
     private GameObject _selectedCharacterObj;                       //選択中のキャラクターObject
+    private float _ingameTimer = 0;                                 //ゲーム内時間
+    private float _timeSpeed = 0;                                   //ゲーム内の時間の速さ
     private int _selectedCharacterID;                               //選択中のキャラクターID
     private int[] _waveEnemyIndex;                                  //WaveData内の敵データのインデックス
-    private playerState _playerState = playerState.Idle;            //プレイヤーの状態
-    private int _towerHealth = 0;
+    private playerState _playerState = playerState.Loading;         //プレイヤーの状態
+    private int _towerHealth = 0;                                   //タワーの耐久値
+    private int _remainingEnemyNums = 0;                            //残りの敵の数
+    private int _maxEnemyNums = 0;                                  //敵の数
+    private float _coinTimer = 0;
+    private int coins = 0;
+    private float _coinInterval = 1;
 
     #region Properties
 
@@ -50,6 +56,16 @@ public class InGameManager : MonoBehaviour
         {
             _towerHealth = value;
             UpdateTowerHealthText(value);
+        }
+    }
+
+    private int RemainingEnemyNums
+    {
+        get => _remainingEnemyNums;
+        set
+        {
+            _remainingEnemyNums = value;
+            UpdateRemainingEnemyText(value);
         }
     }
 
@@ -88,22 +104,25 @@ public class InGameManager : MonoBehaviour
         //アイコンの生成
         InstantiateCharacterIcons();
         //敵の基地とプレイヤーの基地の生成
-        //Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
-        //Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
-        CreateStageObjects(stageData);
-        _waveEnemyIndex = new int[stageData.waveDatas.Length];
-        TowerHealth = stageData.towerHealth;
+        // Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
+        // Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
+        _ = StageInitialize();
 
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
         OnPreviousTimeUpdated += _unitDeck.UpdateTime;
         OnTimeUpdated += GenerateEnemyUnit;
+        OnPreviousTimeUpdated += UpdateCoins;
     }
 
     private void Update()
     {
         switch (_playerState)
         {
+            case playerState.Loading:
+                {
+                    break;
+                }
             case playerState.Idle:
                 {
                     if (Input.GetButtonDown("Fire2"))
@@ -119,11 +138,29 @@ public class InGameManager : MonoBehaviour
                         }
                     }
 
+                    if (Input.GetButton("Cancel"))
+                    {
+                        _timeSpeed = 0;
+                        _playerState = playerState.Paused;
+                    }
                     break;
                 }
             case playerState.DraggingCharacter:
                 {
                     DraggingCharacter();
+                    break;
+                }
+            case playerState.Paused:
+                {
+                    if (Input.GetButton("Cancel"))
+                    {
+                        _timeSpeed = 1;
+                        _playerState = playerState.Idle;
+                    }
+                    break;
+                }
+            case playerState.GameOver:
+                {
                     break;
                 }
         }
@@ -244,6 +281,11 @@ public class InGameManager : MonoBehaviour
         _towerHealthText.text = $"Tower Health:{health.ToString()}";
     }
 
+    private void UpdateRemainingEnemyText(int remainingEnemyNums)
+    {
+        _remainingEnemyText.text = $"Remaining Enemy:{remainingEnemyNums}/{_maxEnemyNums}";
+    }
+
     #endregion
 
     #region Battle Functions
@@ -251,7 +293,7 @@ public class InGameManager : MonoBehaviour
     private void UpdateUnits(float timeSpeed)
     {
         //ポーズ中ならば更新しない
-        if (_isPaused) return;
+        if (_playerState == playerState.Paused) return;
 
         for (int i = 0; i < _unitList.Count; i++)
         {
@@ -307,6 +349,8 @@ public class InGameManager : MonoBehaviour
                 unit.SetRoute(ref waveData.aiRoute);
                 unit.Init();
                 _waveEnemyIndex[i]++;
+                RemainingEnemyNums--;
+                // 敵の数が0になったらWaveの終了
                 if (waveData.IsWaveEnd(_waveEnemyIndex[i]))
                 {
                     break;
@@ -353,7 +397,7 @@ public class InGameManager : MonoBehaviour
     public void ChangeTimeSpeed(float timeSpeed)
     {
         _timeSpeed = timeSpeed;
-        _timeSpeedText.text = $"TimeSpeed: {_timeSpeed.ToString()}";
+        _timeSpeedText.text = $"TimeSpeed: {_timeSpeed}";
     }
     
     //タワーへのダメージ
@@ -361,7 +405,7 @@ public class InGameManager : MonoBehaviour
     {
         TowerHealth -= damage;
     }
-    private void CreateStageObjects(StageData data)
+    private async UniTask CreateStageObjects(StageData data)
     {
         GameObject parent = new GameObject("Stage");
         // ステージのオブジェクトを生成する
@@ -391,10 +435,43 @@ public class InGameManager : MonoBehaviour
     }
 
     #endregion
-}
 
+    private async UniTask StageInitialize()
+    {
+        _waveEnemyIndex = new int[stageData.waveDatas.Length];
+        TowerHealth = stageData.towerHealth;
+        _coinInterval = stageData.generateCoinSpeed;
+        
+        foreach (var variable in stageData.waveDatas)
+        {
+            RemainingEnemyNums += variable.EnemyNumsInWave;
+            _maxEnemyNums += variable.EnemyNumsInWave;
+        }
+        
+        await CreateStageObjects(stageData);
+        _playerState = playerState.Idle;
+        _timeSpeed = 1;
+    }
+    private void UpdateCoins(float deltaTime)
+    {
+        _coinTimer += deltaTime;
+        if (_coinTimer >= _coinInterval)
+        {
+            _coinTimer -= _coinInterval;
+            GenerateCoin(1);
+        }
+    }
+    public void GenerateCoin(int count)
+    {
+        coins += count;
+        _coinText.text = $"Coins: {coins}";
+    }
+}
 public enum playerState
 {
     Idle,
     DraggingCharacter,
+    Paused,
+    GameOver,
+    Loading,
 }

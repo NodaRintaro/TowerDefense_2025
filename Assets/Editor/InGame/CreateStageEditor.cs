@@ -33,6 +33,13 @@ public class CreateStageEditor : UnityEditor.Editor
         if (_instance.waveDatas == null) _instance.waveDatas = new WaveData[0];
         SceneView.duringSceneGui += OnSceneGUI;
         CreateGrid();
+        
+        //nullの場合Dataを初期化
+        if (_instance.cellDatas == null)
+        {
+            _instance.cellDatas = new CellData[_instance.width * _instance.height];
+            EditorUtility.SetDirty(_instance);
+        }
     }
 
     // 選択が解除されたとき
@@ -106,11 +113,15 @@ public class CreateStageEditor : UnityEditor.Editor
 
     public override void OnInspectorGUI()
     {
+        if (_instance == null) return;
         GUILayout.Space(10);
         CellGUI();
         GUILayout.Space(10); 
         GUILayout.Label("タワーの耐久地");
         EditorGUILayout.IntField(_instance.towerHealth, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
+        GUILayout.Space(10); 
+        GUILayout.Label("一秒間に生成するコインの数");
+        EditorGUILayout.FloatField(_instance.generateCoinSpeed, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();
         WaveDataGUI();
         GUILayout.Space(10);
@@ -122,11 +133,11 @@ public class CreateStageEditor : UnityEditor.Editor
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, GUILayout.Height(_scrollHeight));
 
         //nullの場合Dataを初期化
-        if (_instance.cellDatas == null)
-        {
-            _instance.cellDatas = new CellData[_instance.width * _instance.height];
-            EditorUtility.SetDirty(_instance);
-        }
+        // if (_instance.cellDatas == null)
+        // {
+        //     _instance.cellDatas = new CellData[_instance.width * _instance.height];
+        //     EditorUtility.SetDirty(_instance);
+        // }
 
         EditorGUILayout.LabelField("横のステージの長さ:" + _instance.width);
         EditorGUILayout.LabelField("縦のステージの長さ:" + _instance.height);

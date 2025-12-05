@@ -5,7 +5,7 @@ public class WaveData
 {
     public AIRoute aiRoute;
     public EnemyGenerateData[] enemyGenerateDatas;
-    public int Count => enemyGenerateDatas.Length;
+    public int EnemyNumsInWave => enemyGenerateDatas.Length;
     /// <summary>
     /// 渡された時間が敵の生成時間を超えたかどうかを判定
     /// </summary>

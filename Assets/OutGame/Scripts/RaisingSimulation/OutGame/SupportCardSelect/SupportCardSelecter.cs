@@ -2,12 +2,13 @@
 using VContainer;
 using System;
 using System.Linq;
+using SupportCardData;
 
 [Serializable]
 public class SupportCardSelecter
 {
     [SerializeField, Header("選んだサポートカードのデータの保存先")]
-    private SupportCardData[] _supportCardDeckData = new SupportCardData[_supportCardDatasNum];
+    private CardData[] _supportCardDeckData = new CardData[_supportCardDatasNum];
 
     //現在選択中デッキの枠の番号
     private int _selectCardDeckNum = default;
@@ -18,10 +19,10 @@ public class SupportCardSelecter
     private SupportCardSelectController _controller;
 
     public int SelectCardDeckNum => _selectCardDeckNum;
-    public SupportCardData[] SupportCardDeckData => _supportCardDeckData;
+    public CardData[] SupportCardDeckData => _supportCardDeckData;
 
     [Inject]
-    public SupportCardSelecter(SupportCardSelectController controller, SupportCardDataBase supportCardDataLoder)
+    public SupportCardSelecter(SupportCardSelectController controller, SupportCardTrainingDeckData supportCardDataLoder)
     {
         this._controller = controller;
     }
@@ -30,7 +31,7 @@ public class SupportCardSelecter
     /// デッキに入れたいカードを選択する処理
     /// </summary>
     /// <param name="cardID"></param>
-    public void SelectSupportCard(SupportCardData supportCardData)
+    public void SelectSupportCard(CardData supportCardData)
     {
         int selectCardDeckIndex = _selectCardDeckNum - 1;
         _supportCardDeckData[selectCardDeckIndex] = supportCardData;
@@ -44,7 +45,7 @@ public class SupportCardSelecter
         _selectCardDeckNum = (int)deckNum;
     }
 
-    public bool IsSelectedCard(SupportCardData supportCardData)
+    public bool IsSelectedCard(CardData supportCardData)
     {
         if (_supportCardDeckData.Contains(supportCardData))
         {

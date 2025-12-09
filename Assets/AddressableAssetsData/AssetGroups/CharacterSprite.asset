@@ -16,17 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: ff6cedaf37b270646a290fb7e6e97651
-  m_SerializeEntries:
-  - m_GUID: 81ff145783ccbc94ca52740fd1447fd4
-    m_Address: Assets/Resources_moved/CharacterData/SpriteData/Archer.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 962d0991b7cbf2c4fa6c464e8c3cce56
-    m_Address: Assets/Resources_moved/CharacterData/SpriteData/Wizard.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
   m_SchemaSet:

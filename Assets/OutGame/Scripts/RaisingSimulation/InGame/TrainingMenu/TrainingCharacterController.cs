@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using VContainer;
+using TrainingData;
+using RankData;
 
 /// <summary>
 /// TrainingCharacterのデータをゲームのUIに反映させるクラス

@@ -16,27 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 2adb4f354dccbeb4f920db8f1c3c2a5d
-  m_SerializeEntries:
-  - m_GUID: 34353b1fa8cea7045bfdf5a64df352e8
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/ID_4.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3a73a8fce319c2b43a49245664a983aa
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/ID_2.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 49472e1f8887d7546a6a49ee7124df31
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/ID_3.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6294b44e65fd7364c85950ee45499e80
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardSprite/ID_1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
   m_SchemaSet:

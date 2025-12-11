@@ -1,5 +1,6 @@
 ﻿using VContainer.Unity;
 using VContainer;
+using TrainingData;
 
 public class RaisingSimulationInGameLifeTimeScope : LifetimeScope
 {

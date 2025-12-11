@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using VContainer;
 using VContainer.Unity;
 using CharacterSelectView;
+using Cysharp.Threading.Tasks;
+using CharacterData;
+using TrainingData;
+using GettingData;
+
 public class CharacterSelectMenuController : MonoBehaviour, IController
 {
     [SerializeField,Header("ViewClass")] 
@@ -31,7 +36,7 @@ public class CharacterSelectMenuController : MonoBehaviour, IController
     private CharacterDataHolder _characterData = null;
 
     //キャラクターの画像データ
-    private List<CharacterSpriteData> characterSpriteDataList = null;
+    private List<CharacterSpriteData> _characterSpriteDataList = null;
     #endregion
 
     public IViewData View => _view;
@@ -61,7 +66,7 @@ public class CharacterSelectMenuController : MonoBehaviour, IController
 
     }
 
-    public void LoadAssets()
+    public async UniTask LoadAssets()
     {
         
     }
@@ -94,7 +99,7 @@ public class CharacterSelectMenuController : MonoBehaviour, IController
         charaInfo.CharacterImage.sprite = characterSprite;
         charaInfo.NameText.text = characterBaseData.CharacterName;
         charaInfo.IdText.text = characterBaseData.CharacterID.ToString();
-        charaInfo.RoleTypeText.text = characterBaseData.RoleType.ToString();
+        charaInfo.RoleTypeText.text = characterBaseData.CharacterRole.ToString();
 
         foreach (var paramUI in charaInfo.ParameterUIArray)
         {

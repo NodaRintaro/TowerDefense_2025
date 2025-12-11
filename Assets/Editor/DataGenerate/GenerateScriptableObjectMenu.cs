@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using CharacterData;
+using SupportCardData;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -236,7 +238,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
         {
-            SupportCardData cardData = new();
+            CardData cardData = new();
 
             cardData.InitData(
                 parseCsvData[columnCount, 0],

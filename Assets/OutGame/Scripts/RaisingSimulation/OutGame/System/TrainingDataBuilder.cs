@@ -1,4 +1,7 @@
 ﻿using VContainer;
+using TrainingData;
+using CharacterData;
+using SupportCardData;
 
 /// <summary>
 /// トレーニングで使用するデータを構築し保存するクラス
@@ -7,7 +10,7 @@ public class TrainingDataBuilder
 {
     private TrainingDataHolder _trainingData = null;
 
-    private readonly SupportCardData[] _selectedSupportCardData = null;
+    private readonly CardData[] _selectedSupportCardData = null;
 
     private const int _supportCardDeckNum = 4;
 
@@ -16,7 +19,7 @@ public class TrainingDataBuilder
     [Inject]
     public TrainingDataBuilder()
     {
-        _selectedSupportCardData = new SupportCardData[_supportCardDeckNum];
+        _selectedSupportCardData = new CardData[_supportCardDeckNum];
     }
 
     /// <summary> トレーニングするキャラクターの選択 </summary>
@@ -26,7 +29,7 @@ public class TrainingDataBuilder
     }
 
     /// <summary> トレーニングで使用するサポートカードをセット </summary>
-    public void SetSupportCard(int cardDeckNum, SupportCardData supportCardData)
+    public void SetSupportCard(int cardDeckNum, CardData supportCardData)
     {
         _selectedSupportCardData[cardDeckNum] = supportCardData;
     }

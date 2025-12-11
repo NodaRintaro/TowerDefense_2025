@@ -6,8 +6,7 @@ using VContainer;
 
 public class EventOrderMachine
 {
-    private Queue<EventBase> _eventList = new();
-
+    
     [Inject]
     public EventOrderMachine()
     { 

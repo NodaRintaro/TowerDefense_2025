@@ -1,4 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
+using TrainedData;
+
 public class UnitDeck
 {
     private PlayerUnitData[] _unitDatas;

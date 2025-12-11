@@ -272,7 +272,7 @@ public class InGameManager : MonoBehaviour
                 Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform)
                     .GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
-            characterIcon.SetID(i);
+            characterIcon.Init(i);
         }
     }
 

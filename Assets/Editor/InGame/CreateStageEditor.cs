@@ -119,7 +119,8 @@ public class CreateStageEditor : UnityEditor.Editor
         GUILayout.Space(10); 
         GUILayout.Label("タワーの耐久地");
         EditorGUILayout.IntField(_instance.towerHealth, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
-        GUILayout.Space(10); 
+        GUILayout.Label("コインの初期値");
+        EditorGUILayout.IntField(_instance.initialCoinNum, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         GUILayout.Label("一秒間に生成するコインの数");
         EditorGUILayout.FloatField(_instance.generateCoinSpeed, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();
@@ -131,13 +132,6 @@ public class CreateStageEditor : UnityEditor.Editor
     private void CellGUI()
     {
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, GUILayout.Height(_scrollHeight));
-
-        //nullの場合Dataを初期化
-        // if (_instance.cellDatas == null)
-        // {
-        //     _instance.cellDatas = new CellData[_instance.width * _instance.height];
-        //     EditorUtility.SetDirty(_instance);
-        // }
 
         EditorGUILayout.LabelField("横のステージの長さ:" + _instance.width);
         EditorGUILayout.LabelField("縦のステージの長さ:" + _instance.height);

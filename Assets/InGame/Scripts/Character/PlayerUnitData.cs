@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using CharacterData;
 
 public class PlayerUnitData : UnitData
 {
@@ -12,7 +10,7 @@ public class PlayerUnitData : UnitData
     
     public PlayerUnitData(TrainedCharacterData trainedCharacterData)
     {
-        _roleType = trainedCharacterData.RoleType;
+        _roleType = trainedCharacterData.CharacterRole;
         _group = GroupType.Player;
         _id = trainedCharacterData.CharacterID;
         _name = trainedCharacterData.CharacterName;

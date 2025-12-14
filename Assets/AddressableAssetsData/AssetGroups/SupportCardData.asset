@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 44fccdaa31f8b484c9c9ea61b09f6336
   m_SerializeEntries:
-  - m_GUID: 80e6ffa400479ee4695edb6193f0cb17
-    m_Address: Assets/Resources_moved/SupportCard/SupportCardDataList.asset
+  - m_GUID: b29beea487b3b6a45a13aa282cf5f017
+    m_Address: Assets/Resources_moved/SupportCard/SupportCard.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

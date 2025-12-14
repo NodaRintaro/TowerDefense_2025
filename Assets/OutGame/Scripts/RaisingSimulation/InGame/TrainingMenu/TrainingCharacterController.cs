@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using VContainer;
+using CharacterData;
+using SpriteData;
+
 
 /// <summary>
 /// TrainingCharacterのデータをゲームのUIに反映させるクラス
@@ -22,7 +25,7 @@ public class TrainingCharacterController : MonoBehaviour
     private RaisingSimulationInGameLifeTimeScope _trainingCharacterLifeTimeScope;
 
     //トレーニングデータ関係
-    private TrainingDataHolder _trainingDataManager = null;
+    private TrainingSaveData _trainingDataManager = null;
 
     private void Start()
     {
@@ -35,7 +38,7 @@ public class TrainingCharacterController : MonoBehaviour
     private void ResolveContainerObject()
     {
         _trainingCharacterData = _trainingCharacterLifeTimeScope.Container.Resolve<TrainingCharacterData>();
-        _trainingDataManager = _trainingCharacterLifeTimeScope.Container.Resolve<TrainingDataHolder>();
+        _trainingDataManager = _trainingCharacterLifeTimeScope.Container.Resolve<TrainingSaveData>();
     }
 
     public void FirstSetParameter()
@@ -46,7 +49,7 @@ public class TrainingCharacterController : MonoBehaviour
         SetParameterGUI(ParameterType.Speed, _trainingCharacterData.TotalSpeed, _trainingCharacterData.ParameterRankDict[ParameterType.Speed]);
     }
 
-    public void SetParameterGUI(ParameterType parameterType, uint totalParam, RankSpriteData rankData)
+    public void SetParameterGUI(ParameterType parameterType, uint totalParam, RankSprite rankData)
     {
         //_parameterView.SetParameter(parameterType, totalParam, rankData);
     }

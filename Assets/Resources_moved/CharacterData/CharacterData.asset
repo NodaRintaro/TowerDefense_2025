@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61422346a6682d14c909ee553e7371dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 536522d1b5c68534f87affec87700baa, type: 3}
   m_Name: CharacterData
   m_EditorClassIdentifier: 
-  _dataList:
+  _dataHolder:
   - _characterID: 1
     _characterName: FallenAngelNishinoGodOneWingTUBASAPeace
+    _baseRarity: 5
     _basePhysical: 999
     _basePower: 999
     _baseIntelligence: 999
@@ -23,6 +24,7 @@ MonoBehaviour:
     _cost: 0
   - _characterID: 2
     _characterName: "\u30BF\u30F3\u30AB\u30FC"
+    _baseRarity: 3
     _basePhysical: 90
     _basePower: 90
     _baseIntelligence: 35
@@ -31,6 +33,7 @@ MonoBehaviour:
     _cost: 10
   - _characterID: 3
     _characterName: "\u30DE\u30B8\u30B7\u30E3\u30F3"
+    _baseRarity: 3
     _basePhysical: 60
     _basePower: 10
     _baseIntelligence: 70
@@ -39,6 +42,7 @@ MonoBehaviour:
     _cost: 7
   - _characterID: 4
     _characterName: "\u72D9\u6483\u624B"
+    _baseRarity: 3
     _basePhysical: 63
     _basePower: 50
     _baseIntelligence: 50
@@ -47,6 +51,7 @@ MonoBehaviour:
     _cost: 6
   - _characterID: 5
     _characterName: "\u5263\u58EB"
+    _baseRarity: 3
     _basePhysical: 40
     _basePower: 70
     _baseIntelligence: 50
@@ -55,6 +60,7 @@ MonoBehaviour:
     _cost: 5
   - _characterID: 6
     _characterName: "\u795E\u5B98"
+    _baseRarity: 3
     _basePhysical: 70
     _basePower: 10
     _baseIntelligence: 60
@@ -63,6 +69,7 @@ MonoBehaviour:
     _cost: 7
   - _characterID: 7
     _characterName: "\u30B5\u30DD\u30FC\u30BF\u30FC"
+    _baseRarity: 3
     _basePhysical: 50
     _basePower: 30
     _baseIntelligence: 50

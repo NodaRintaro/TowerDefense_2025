@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using CharacterData;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -35,7 +36,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         //ほぞんさきのPathを指定
         EditorGUILayout.Space(_spaceSize);
-        EditorGUILayout.LabelField("ほぞんさきのPath");
+        EditorGUILayout.LabelField("保存先のPath");
         _dataSaveFilePath = EditorGUILayout.TextField("dataSaveFilePath", _dataSaveFilePath);
 
         //生成するDataを選択
@@ -205,9 +206,13 @@ public class GenerateScriptableObjectMenu : EditorWindow
     /// <param name="parseCsvData"> 2次元配列に格納されたキャラクターのCSVデータ </param>
     private void GenerateCharacterData(string[,] parseCsvData)
     {
-        CharacterDataHolder characterDataList = CreateInstance<CharacterDataHolder>();
+        const int firstColumnCountNum = 2;
+        int csvDataLength = parseCsvData.GetLength(0);
+        CharacterBaseDataRegistry characterDataList = CreateInstance<CharacterBaseDataRegistry>();
 
-        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        CharacterBaseData[] characterBaseDataArray = new CharacterBaseData[csvDataLength - firstColumnCountNum];
+
+        for (int columnCount = firstColumnCountNum; columnCount < csvDataLength; columnCount++)
         {
             CharacterBaseData characterData = new();
 
@@ -218,13 +223,15 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 uint.Parse(parseCsvData[columnCount, 3]),
                 uint.Parse(parseCsvData[columnCount, 4]),
                 uint.Parse(parseCsvData[columnCount, 5]),
-                parseCsvData[columnCount, 6],
-                uint.Parse(parseCsvData[columnCount, 7])
+                uint.Parse(parseCsvData[columnCount, 6]),
+                parseCsvData[columnCount, 7],
+                uint.Parse(parseCsvData[columnCount, 8])
                 );
 
-            characterDataList.AddData(characterData);
+            characterBaseDataArray[columnCount - firstColumnCountNum] = characterData;
         }
 
+        characterDataList.InitData(characterBaseDataArray);
         AssetDataCreate(characterDataList);
     }
 
@@ -232,7 +239,12 @@ public class GenerateScriptableObjectMenu : EditorWindow
     /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
     private void GenerateSupportCardData(string[,] parseCsvData)
     {
-        SupportCardDataHolder supportCardDataHolder = CreateInstance<SupportCardDataHolder>();
+        const int firstColumnCountNum = 2;
+        int csvDataLength = parseCsvData.GetLength(0);
+        SupportCardDataRegistry supportCardDataRegistry = CreateInstance<SupportCardDataRegistry>();
+
+        SupportCardData[] supportCardDataArray = new SupportCardData[csvDataLength - firstColumnCountNum];
+
 
         for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
         {
@@ -249,10 +261,11 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 parseCsvData[columnCount, 7]
                 );
 
-            supportCardDataHolder.AddData(cardData);
+            supportCardDataArray[columnCount - firstColumnCountNum] = cardData;
         }
 
-        AssetDataCreate(supportCardDataHolder);
+        supportCardDataRegistry.InitData(supportCardDataArray);
+        AssetDataCreate(supportCardDataRegistry);
     }
 
     private void AssetDataCreate(UnityEngine.Object data)

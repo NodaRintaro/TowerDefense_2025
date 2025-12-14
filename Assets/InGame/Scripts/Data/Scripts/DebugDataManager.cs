@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using TrainedData;
+using CharacterData;
 
 [CreateAssetMenu(menuName = "InGame/DebugDataManager"),Serializable]
 public class DebugDataManager : ScriptableObject

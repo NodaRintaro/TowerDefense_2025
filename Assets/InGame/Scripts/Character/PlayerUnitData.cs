@@ -1,4 +1,4 @@
-﻿using TrainedData;
+﻿using CharacterData;
 
 public class PlayerUnitData : UnitData
 {

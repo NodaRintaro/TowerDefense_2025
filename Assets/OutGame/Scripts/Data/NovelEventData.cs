@@ -6,14 +6,6 @@ using UnityEngine;
 namespace NovelEventData
 {
     [Serializable]
-    public class NovelEventDataHolder
-    {
-        private EventData[] _eventHolder;
-
-        public EventData[] EventDataHolder => _eventHolder;
-    }
-
-    [Serializable]
     public class EventData
     {
         [SerializeField] private uint _eventID;

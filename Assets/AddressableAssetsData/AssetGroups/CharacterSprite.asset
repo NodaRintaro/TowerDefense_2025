@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CharacterSprite
+  m_EditorClassIdentifier: 
+  m_GroupName: CharacterSprite
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a90eab4d3e867de4d87356c51bff7782
+  m_SerializeEntries:
+  - m_GUID: 15ef6af478039ed4a9dfd6a437ac1edf
+    m_Address: Assets/Sprites/CharacterImage/CHARACTER_Yellow.Bow_real.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d298dfd2f1085bc4e84f3ae2847c2d18
+    m_Address: Assets/Sprites/CharacterImage/CHARACTER_Purple.Wizard_real.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e967dbf02c77e7344a6a8ec634f1c775, type: 2}
+    - {fileID: 11400000, guid: 815c2af609153bc4887971824e69e36e, type: 2}

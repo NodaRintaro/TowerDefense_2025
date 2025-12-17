@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SupportCardSprite
+  m_EditorClassIdentifier: 
+  m_GroupName: SupportCardSprite
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 919f3b80be2535d40be83f50e4b292bd
+  m_SerializeEntries:
+  - m_GUID: 09ae51a8ad320d343b1ff662c6642b77
+    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32c9c4cad11167c499f200279d38617b
+    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard4.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4830f9ece131deb4ead2c955560d7dde
+    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd909107c16357649893be1622c5fa0e
+    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ae36ec89cea7b374babfcfae768c39b3, type: 2}
+    - {fileID: 11400000, guid: a308b84c8d3c74843b2b71adeff187de, type: 2}

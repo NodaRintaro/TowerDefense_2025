@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: JobSprite
+  m_EditorClassIdentifier: 
+  m_GroupName: JobSprite
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 7b80e8450af07474296925c38e0d0284
+  m_SerializeEntries:
+  - m_GUID: 0087f887d64b1fc49a09accf5ad98672
+    m_Address: Assets/Sprites/Job/JobIcon_Archer.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5900838e41d03174993b7df42625a19e
+    m_Address: Assets/Sprites/Job/JobIcon_Savor.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8648026ab6fe2104e85b1ada99b9bf80
+    m_Address: Assets/Sprites/Job/JobIcon_Wizard.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1bd22699ca2df6439225c4ba758c80b
+    m_Address: Assets/Sprites/Job/JobIcon_Knight.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f42c8c2596b6c9744bd97c425f3d3487
+    m_Address: Assets/Sprites/Job/JobIcon_Healer.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b0a50ad8d0bc98449a94c5fe3e245584, type: 2}
+    - {fileID: 11400000, guid: 343156d179de326499e70519ae7ecd1f, type: 2}

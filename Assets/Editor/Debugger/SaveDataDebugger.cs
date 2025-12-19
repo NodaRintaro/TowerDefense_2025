@@ -64,8 +64,8 @@ public class SaveDataDebugger : EditorWindow
         CharacterCollectionData characterCollectionData = new CharacterCollectionData();
         SupportCardCollectionData supportCardCollectionData = new SupportCardCollectionData();
         AAGSupportCardData supportCardDataPath = new AAGSupportCardData();
-        string charaPath = AAGCharacterData.kAssets_Resources_moved_CharacterData_CharacterData;
-        string supportCardPath = AAGSupportCardData.kAssets_Resources_moved_SupportCard_SupportCard;
+        string charaPath = AAGCharacterData.kAssets_MasterData_CharacterData_CharacterData;
+        string supportCardPath = AAGSupportCardData.kAssets_MasterData_SupportCard_SupportCard;
 
         CharacterBaseDataRegistry characterBaseDataRegistry = await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(charaPath);
         SupportCardDataRegistry supportCardDataRegistry = await AssetsLoader.LoadAssetAsync<SupportCardDataRegistry>(supportCardPath);

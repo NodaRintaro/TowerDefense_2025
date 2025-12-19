@@ -6,8 +6,10 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.Register<TrainingCharacterData>(Lifetime.Singleton);
-        builder.Register<TrainingSaveData>(Lifetime.Singleton);
+        builder.Register<TrainingTargetSaveData>(Lifetime.Singleton);
 
+        builder.Register<RaisingSimulationScreenPresenter>(Lifetime.Singleton);
+
+        builder.RegisterComponentInHierarchy<TrainingCharacterSelectionPresenter>();
     }
 }

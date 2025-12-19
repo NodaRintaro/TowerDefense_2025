@@ -7,7 +7,7 @@ using UnityEngine;
 /// キャラクターのデータをまとめて管理するScriptableObjectClass
 /// </summary>
 [CreateAssetMenu(fileName = "CharacterDataList", menuName = "ScriptableObject/CharacterDataList")]
-public class CharacterBaseDataRegistry : DataRegistryBase<CharacterBaseData>
+public class CharacterBaseDataRegistry : MasterDataBase<CharacterBaseData>
 {
     public CharacterBaseData GetData(uint id)
     {

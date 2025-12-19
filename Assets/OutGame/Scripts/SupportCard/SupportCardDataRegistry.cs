@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SupportCardDataHolder", menuName = "ScriptableObject/SupportCardDataHolder")]
-public class SupportCardDataRegistry : DataRegistryBase<SupportCardData>
+public class SupportCardDataRegistry : MasterDataBase<SupportCardData>
 {
     public SupportCardData GetData(uint id)
     {

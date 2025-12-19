@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable, CreateAssetMenu(fileName = "TrainedCharacterRegistry", menuName = "ScriptableObject/TrainedCharacterRegistry")]
-public class TrainedCharacterDataRegistry : DataRegistryBase<TrainedCharacterData>
+public class TrainedCharacterDataRegistry : MasterDataBase<TrainedCharacterData>
 {
     public TrainedCharacterData GetData(uint id)
     {

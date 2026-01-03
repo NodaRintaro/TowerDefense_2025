@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: bf4ec15d3d2768e488e44dbe8392ac66
   m_SerializeEntries:
-  - m_GUID: b2f5a7dbdccd9ed43bd3f6276e924dad
-    m_Address: Assets/Sprites/Rank/Grade_A.png
+  - m_GUID: 4a8ea95eacc6f1143918d90eea0bbb50
+    m_Address: Assets/MasterData/ImageData/RankImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

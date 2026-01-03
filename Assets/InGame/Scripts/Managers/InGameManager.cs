@@ -1,9 +1,10 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
-
+using TowerDefenseDeckData;
 public class InGameManager : MonoBehaviour
 {
     private static InGameManager _instance;
@@ -18,9 +19,9 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _towerHealthText;      //タワーの耐久値のText
     [SerializeField] private TextMeshProUGUI _timeSpeedText;        //タワーの名前のText
     [SerializeField] private TextMeshProUGUI _remainingEnemyText;   //残りの敵の数のText
-    [SerializeField] private TextMeshProUGUI _coinText;              //コインのText
-    [SerializeField] private DebugDataManager _debugDataManager;    //デバッグ用のデータ格納庫
+    [SerializeField] private TextMeshProUGUI _coinText;             //コインのText
     [SerializeField] public StageData stageData;                    //ステージのデータ
+    public CharacterDeckData _deckData;                             //キャラクターの編成データ
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
     private Cell _selectedCell;                                     //選択中のセル
@@ -36,6 +37,7 @@ public class InGameManager : MonoBehaviour
     private float _coinTimer = 0;
     private int coins = 0;
     private float _coinInterval = 1;
+    private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
     #region Properties
 
@@ -100,7 +102,7 @@ public class InGameManager : MonoBehaviour
 
     private void Start()
     {
-        _unitDeck = new UnitDeck(_debugDataManager.characterDatas);
+        //_unitDeck = new UnitDeck(_deckData);
         //アイコンの生成
         InstantiateCharacterIcons();
         //敵の基地とプレイヤーの基地の生成
@@ -173,6 +175,8 @@ public class InGameManager : MonoBehaviour
     private void OnDestroy()
     {
         _instance = null;
+        _tokenSource?.Cancel();
+        _tokenSource?.Dispose();
     }
 
     #endregion
@@ -272,7 +276,7 @@ public class InGameManager : MonoBehaviour
                 Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform)
                     .GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
-            characterIcon.SetID(i);
+            characterIcon.Init(i);
         }
     }
 

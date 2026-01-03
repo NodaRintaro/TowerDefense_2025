@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using CharacterData;
 
 public class UnitDeck
 {
@@ -27,7 +26,7 @@ public class UnitDeck
         _canPlaceCharacter = new bool[unitDatas.Length];
         for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
     }
-    public UnitDeck(CharacterData.TrainedCharacterData[] trainedCharacterDatas)
+    public UnitDeck(TrainedCharacterData[] trainedCharacterDatas)
     {
         _unitDatas = new PlayerUnitData[trainedCharacterDatas.Length];
         for (int i = 0; i < trainedCharacterDatas.Length; i++)

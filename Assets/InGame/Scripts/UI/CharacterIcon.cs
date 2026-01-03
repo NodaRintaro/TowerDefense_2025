@@ -7,7 +7,7 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     private int id;
     [SerializeField] private Text _costText;
     [SerializeField] private Image _icon;
-    public void SetID(int ID)
+    public void Init(int ID)
     {
         id = ID;
         //UnitData unitData = InGameManager.Instance.CharacterDeck.GetCharacterData(id);

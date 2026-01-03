@@ -17,28 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 7b80e8450af07474296925c38e0d0284
   m_SerializeEntries:
-  - m_GUID: 0087f887d64b1fc49a09accf5ad98672
-    m_Address: Assets/Sprites/Job/JobIcon_Archer.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5900838e41d03174993b7df42625a19e
-    m_Address: Assets/Sprites/Job/JobIcon_Savor.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8648026ab6fe2104e85b1ada99b9bf80
-    m_Address: Assets/Sprites/Job/JobIcon_Wizard.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c1bd22699ca2df6439225c4ba758c80b
-    m_Address: Assets/Sprites/Job/JobIcon_Knight.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f42c8c2596b6c9744bd97c425f3d3487
-    m_Address: Assets/Sprites/Job/JobIcon_Healer.png
+  - m_GUID: 736ad97e4943bb148ac0c5d7856f08e4
+    m_Address: Assets/MasterData/ImageData/CharacterJobImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

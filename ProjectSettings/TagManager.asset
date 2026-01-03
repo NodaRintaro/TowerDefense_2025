@@ -9,6 +9,7 @@ TagManager:
   - PlayerUnit
   - ScreenUI
   - CanvasHolder
+  - Screen
   layers:
   - Default
   - TransparentFX

@@ -1,12 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
-using CharacterData;
 
 #if UNITY_EDITOR
 public class SaveDataDebugger : EditorWindow
@@ -17,13 +10,14 @@ public class SaveDataDebugger : EditorWindow
     [MenuItem("Tools/SaveDataDebugger")]
     public static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(SaveDataDebugger));
+        GetWindow(typeof(SaveDataDebugger));
     }
 
-    void OnEnable()
+    async void OnEnable()
     {
         CharacterCollectionData characterCollectionData = new CharacterCollectionData();
-        if (JsonDataSaveSystem.DataLoad<CharacterCollectionData>("SaveData_" + "CharacterCollectionData") == default)
+        if (await JsonDataSaveSystem.DataLoadAsync<CharacterCollectionData>(JsonCharacterCollectionDataRepository.SaveDataName) == default &&
+            await JsonDataSaveSystem.DataLoadAsync<SupportCardCollectionData>(JsonSupportCardCollectionDataRepository.SaveDataName) == default)
         {
             _isDebug = false;
         }
@@ -63,24 +57,35 @@ public class SaveDataDebugger : EditorWindow
     {
         CharacterCollectionData characterCollectionData = new CharacterCollectionData();
         SupportCardCollectionData supportCardCollectionData = new SupportCardCollectionData();
-        AAGSupportCardData supportCardDataPath = new AAGSupportCardData();
-        string charaPath = AAGCharacterData.kAssets_MasterData_CharacterData_CharacterData;
-        string supportCardPath = AAGSupportCardData.kAssets_MasterData_SupportCard_SupportCard;
 
-        CharacterBaseDataRegistry characterBaseDataRegistry = await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(charaPath);
-        SupportCardDataRegistry supportCardDataRegistry = await AssetsLoader.LoadAssetAsync<SupportCardDataRegistry>(supportCardPath);
+        CharacterBaseDataRegistry characterBaseDataRegistry = 
+            await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(AAGCharacterData.kAssets_MasterData_CharacterData_CharacterDataRegistry);
+        SupportCardDataRegistry supportCardDataRegistry = 
+            await AssetsLoader.LoadAssetAsync<SupportCardDataRegistry>(AAGSupportCardData.kAssets_MasterData_SupportCard_SupportCardDataRegistry);
 
-        foreach(var characterData in characterBaseDataRegistry.DataHolder)
+        if(characterBaseDataRegistry != null)
         {
-            characterCollectionData.AddCollection(characterData.CharacterID);
-        }
-        foreach(var supportCard in supportCardDataRegistry.DataHolder)
-        {
-            supportCardCollectionData.AddCollection(supportCard.ID);
+            foreach (var characterData in characterBaseDataRegistry.DataHolder)
+            {
+                characterCollectionData.AddCollection(characterData.CharacterID);
+            }
+
+            await JsonDataSaveSystem.DataSave(characterCollectionData, JsonCharacterCollectionDataRepository.SaveDataName);
+            Debug.Log("データの生成に成功しました");
         }
 
-        characterCollectionData.DataSave();
-        supportCardCollectionData.DataSave();
+        if (supportCardDataRegistry != null)
+        {
+            foreach (var supportCard in supportCardDataRegistry.DataHolder)
+            {
+                supportCardCollectionData.AddCollection(supportCard.ID);
+            }
+
+            await JsonDataSaveSystem.DataSave(supportCardCollectionData, JsonSupportCardCollectionDataRepository.SaveDataName);
+            Debug.Log("データの生成に成功しました");
+        }
+
+        
     }
 
     private void DebugEnd()
@@ -88,8 +93,8 @@ public class SaveDataDebugger : EditorWindow
         CharacterCollectionData characterCollectionData = new CharacterCollectionData();
         SupportCardCollectionData supportCardCollectionData = new SupportCardCollectionData();
 
-        characterCollectionData.DataDelete();
-        supportCardCollectionData.DataDelete();
+        JsonDataSaveSystem.DataDelete(JsonCharacterCollectionDataRepository.SaveDataName);
+        JsonDataSaveSystem.DataDelete(JsonSupportCardCollectionDataRepository.SaveDataName);
     }
 }
 #endif

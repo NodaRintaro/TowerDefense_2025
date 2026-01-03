@@ -17,23 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 919f3b80be2535d40be83f50e4b292bd
   m_SerializeEntries:
-  - m_GUID: 09ae51a8ad320d343b1ff662c6642b77
-    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard2.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 32c9c4cad11167c499f200279d38617b
-    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard4.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4830f9ece131deb4ead2c955560d7dde
-    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard3.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fd909107c16357649893be1622c5fa0e
-    m_Address: Assets/OutGame/TestSprite/SupportCard/TestCard1.png
+  - m_GUID: f6bf39b46c666d448846e795d133c3bd
+    m_Address: Assets/MasterData/ImageData/SupportCardImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

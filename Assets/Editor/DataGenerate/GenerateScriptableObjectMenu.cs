@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using CharacterData;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow

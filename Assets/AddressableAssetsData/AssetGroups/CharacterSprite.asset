@@ -17,28 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: a90eab4d3e867de4d87356c51bff7782
   m_SerializeEntries:
-  - m_GUID: 15ef6af478039ed4a9dfd6a437ac1edf
-    m_Address: Assets/Sprites/CharacterImage/CHARACTER_Yellow.Bow_real.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3d934cbf7f259994d9958e9da715b18a
-    m_Address: Assets/Sprites/Character/ID_5/CHARACTER_SwordFighter_real.PNG
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 557f900f0bb8fd64dbbba321e8bbd361
-    m_Address: Assets/Sprites/Character/ID_6/CHARACTER_Priest_real.PNG
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7d7205c5d86552343b50a6511d8dd5ea
-    m_Address: Assets/Sprites/Character/ID_2/CHARACTER_Knight_real.PNG
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d298dfd2f1085bc4e84f3ae2847c2d18
-    m_Address: Assets/Sprites/CharacterImage/CHARACTER_Purple.Wizard_real.png
+  - m_GUID: a309ff4c0990f9046a09cf5a50cc8f18
+    m_Address: Assets/MasterData/ImageData/CharacterImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

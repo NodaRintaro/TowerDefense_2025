@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536522d1b5c68534f87affec87700baa, type: 3}
+  m_Name: CharacterDataRegistry
+  m_EditorClassIdentifier: 
+  _dataHolder:
+  - _characterID: 1
+    _characterName: "\u5263\u58EB"
+    _baseRarity: 3
+    _basePhysical: 40
+    _basePower: 70
+    _baseIntelligence: 50
+    _baseSpeed: 70
+    _roleType: 1
+    _cost: 5
+  - _characterID: 2
+    _characterName: "\u30BF\u30F3\u30AB\u30FC"
+    _baseRarity: 3
+    _basePhysical: 90
+    _basePower: 90
+    _baseIntelligence: 35
+    _baseSpeed: 40
+    _roleType: 2
+    _cost: 10
+  - _characterID: 3
+    _characterName: "\u30DE\u30B8\u30B7\u30E3\u30F3"
+    _baseRarity: 3
+    _basePhysical: 60
+    _basePower: 10
+    _baseIntelligence: 70
+    _baseSpeed: 50
+    _roleType: 3
+    _cost: 7
+  - _characterID: 4
+    _characterName: "\u72D9\u6483\u624B"
+    _baseRarity: 3
+    _basePhysical: 63
+    _basePower: 50
+    _baseIntelligence: 50
+    _baseSpeed: 48
+    _roleType: 4
+    _cost: 6
+  - _characterID: 5
+    _characterName: "\u795E\u5B98"
+    _baseRarity: 3
+    _basePhysical: 70
+    _basePower: 10
+    _baseIntelligence: 60
+    _baseSpeed: 45
+    _roleType: 5
+    _cost: 7

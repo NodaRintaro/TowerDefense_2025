@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: eb8f9c23a2a1a004382aecd0d4bb0be3
   m_SerializeEntries:
-  - m_GUID: 7f927786f9373f54c828885fb5608b62
-    m_Address: Assets/Resources_moved/CharacterData/CharacterData.asset
+  - m_GUID: ff47ebc4b3e979d4484c993480ea5125
+    m_Address: Assets/MasterData/CharacterData/CharacterDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

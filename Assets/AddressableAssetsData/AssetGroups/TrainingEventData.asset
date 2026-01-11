@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: TrainingEventData
+  m_EditorClassIdentifier: 
+  m_GroupName: TrainingEventData
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f8ea1054e14d37842881905a2ed05ea9
+  m_SerializeEntries:
+  - m_GUID: df90e1641deaf534897bf56a4719a49f
+    m_Address: Assets/MasterData/TrainingEventData/TrainingEventData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: be3124055c4acf541a69a8151c77416e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: eb6a377369a16604bbdc51594f5683b3, type: 2}
+    - {fileID: 11400000, guid: ee35e3bda84cc4e44a1dd2c535c09456, type: 2}

@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using NovelData;
 using System;
 using System.IO;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -68,8 +70,11 @@ public class GenerateScriptableObjectMenu : EditorWindow
             case DataType.SupportCard:
                 _gasUrl = "https://script.google.com/macros/s/AKfycbyBrmGAo-1ROKoMhnQLAMdp2M7p3pGK__x8JRxviTcR1GGA5mb9s9WZUWDnM5rECu4B/exec";
                 break;
-            case DataType.EnemyData:
-                Debug.Log("まだデータがありません");
+            case DataType.TrainingEventData:
+                _gasUrl = "https://script.google.com/macros/s/AKfycbwowVMLaudNyg7BIdwHOFc7fUNVM6RRcOaFjhAq2nhNQlj_sfUExpbwFQ2JTUL_domk/exec";
+                break;
+            case DataType.NovelData:
+                _gasUrl = "https://script.google.com/macros/s/AKfycbxYBJsVTBvYTYR_XfYykn6JlKYWI7pPg_JNKuPHFA23n7Fo27hNqc8ALBOnep3rdEGK/exec";
                 break;
         }
     }
@@ -198,6 +203,12 @@ public class GenerateScriptableObjectMenu : EditorWindow
             case DataType.SupportCard:
                 GenerateSupportCardData(parseCsvData);
                 break;
+            case DataType.TrainingEventData:
+                GenerateTrainingEventData(parseCsvData);
+                break;
+            case DataType.NovelData:
+                GenerateNovelEventData(parseCsvData);
+                break;
         }
     }
 
@@ -265,6 +276,96 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         supportCardDataRegistry.InitData(supportCardDataArray);
         AssetDataCreate(supportCardDataRegistry);
+    }
+
+    /// <summary> トレーニングイベントのスクリプタブルオブジェクトを生成 </summary>
+    /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
+    private void GenerateTrainingEventData(string[,] parseCsvData)
+    {
+        const int firstColumnCountNum = 2;
+        int csvDataLength = parseCsvData.GetLength(0);
+        TrainingEventDataRegistry eventDataRegistry = CreateInstance<TrainingEventDataRegistry>();
+
+        TrainingEventData[] eventDataArray = new TrainingEventData[csvDataLength - firstColumnCountNum];
+
+
+        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            TrainingEventData eventData = new();
+
+            eventData.InitData(
+                uint.Parse(parseCsvData[columnCount, 0]),
+                parseCsvData[columnCount, 1],
+                uint.Parse(parseCsvData[columnCount, 2]),
+                int.Parse(parseCsvData[columnCount, 3]),
+                int.Parse(parseCsvData[columnCount, 4]),
+                int.Parse(parseCsvData[columnCount, 5]),
+                int.Parse(parseCsvData[columnCount, 6]),
+                int.Parse(parseCsvData[columnCount, 7]),
+                uint.Parse(parseCsvData[columnCount, 8]),
+                uint.Parse(parseCsvData[columnCount, 9])
+                );
+
+            eventDataArray[columnCount - firstColumnCountNum] = eventData;
+        }
+
+        eventDataRegistry.InitData(eventDataArray);
+        AssetDataCreate(eventDataRegistry);
+    }
+
+    /// <summary> ノベルイベントのスクリプタブルオブジェクトを生成 </summary>
+    /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
+    private void GenerateNovelEventData(string[,] parseCsvData)
+    {
+        int csvDataLength = parseCsvData.GetLength(0);
+        NovelEventDataRegistry eventDataRegistry = CreateInstance<NovelEventDataRegistry>();
+
+        List<NovelEventData> eventDataArray = new();
+        NovelEventData eventData = null;
+        List<NovelData.NovelData> novelScreenDataList = null;
+
+        for (int columnCount = 1; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            NovelData.NovelData novelData;
+
+            if(string.IsNullOrWhiteSpace(parseCsvData[columnCount, 0]))
+            {
+                novelData = new NovelData.NovelData
+                {
+                    TalkCharacterName = parseCsvData[columnCount, 1],
+                    ScenarioData = parseCsvData[columnCount, 2]
+                };
+                novelScreenDataList.Add(novelData);
+            }
+            else
+            {
+                if(novelScreenDataList != null && eventData != null)
+                {
+                    eventData.SetNovelData(novelScreenDataList.ToArray());
+                    eventDataArray.Add(eventData);
+                }
+
+                novelScreenDataList = new();
+                eventData = new();
+                eventData.SetID(uint.Parse(parseCsvData[columnCount, 0]));
+
+                novelData = new NovelData.NovelData
+                {
+                    TalkCharacterName = parseCsvData[columnCount, 1],
+                    ScenarioData = parseCsvData[columnCount, 2]
+                };
+                novelScreenDataList.Add(novelData);
+            }
+
+            if (columnCount == parseCsvData.GetLength(0) - 1)
+            {
+                eventData.SetNovelData(novelScreenDataList.ToArray());
+                eventDataArray.Add(eventData);
+            }
+        }
+
+        eventDataRegistry.InitData(eventDataArray.ToArray());
+        AssetDataCreate(eventDataRegistry);
     }
 
     private void AssetDataCreate(UnityEngine.Object data)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -120,7 +120,7 @@ public class CreateStageEditor : UnityEditor.Editor
         GUILayout.Label("タワーの耐久地");
         EditorGUILayout.IntField(_instance.towerHealth, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         GUILayout.Label("コインの初期値");
-        EditorGUILayout.IntField(_instance.initialCoinNum, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
+        //EditorGUILayout.IntField(_instance.initialCoinNum, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         GUILayout.Label("一秒間に生成するコインの数");
         EditorGUILayout.FloatField(_instance.generateCoinSpeed, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();

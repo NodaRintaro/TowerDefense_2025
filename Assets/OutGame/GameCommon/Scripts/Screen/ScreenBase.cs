@@ -1,10 +1,16 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class ScreenBase : MonoBehaviour
 {
-    [SerializeField] protected GameObject _canvas;
+    protected GameObject _canvas;
+
+    public void Awake()
+    {
+        _canvas = this.gameObject;
+    }
 
     public virtual UniTask Init()
     {

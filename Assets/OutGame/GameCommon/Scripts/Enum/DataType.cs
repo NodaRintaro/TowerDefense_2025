@@ -8,5 +8,7 @@ public enum DataType
     CharacterData,
     SupportCard,
     RankData,
-    EnemyData
+    EnemyData,
+    TrainingEventData,
+    NovelData
 }

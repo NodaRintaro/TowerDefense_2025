@@ -4,19 +4,14 @@ using VContainer.Unity;
 using System.Threading;
 using UnityEngine;
 
-public class JsonCharacterCollectionDataRepository : RepositoryBase<CharacterCollectionData>, IAsyncStartable
+public class JsonCharacterCollectionDataRepository : RepositoryBase<CharacterCollectionData>
 {
     [Inject]
     public JsonCharacterCollectionDataRepository() { }
 
     public const string SaveDataName = "JsonCharacterCollection";
 
-    public async UniTask StartAsync(CancellationToken cancellation)
-    {
-        await DataLoadAsync();
-    }
-
-    public override async UniTask DataLoadAsync()
+    public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await JsonDataSaveSystem.DataLoadAsync<CharacterCollectionData>(SaveDataName);
     }

@@ -8,38 +8,55 @@ using UnityEngine.UI;
 [Serializable]
 public class CharacterParameterUI
 {
-    [SerializeField] private ParameterUI[] _parameterUIHolder;
+    [SerializeField] private ParameterUI _parameterUI;
 
-    [SerializeField] private int _currentParamTextSize = 150;
-    [SerializeField] private int _maxParamTextSize = 100;
+    private int _currentParamTextSize = 50;
+    private int _maxParamTextSize = 50;
 
-    public ParameterUI[] ParameterUIHolder => _parameterUIHolder;
-
-    public void SetRankImage(ref Image paramRank, Sprite rankSprite)
+    public void Init()
     {
-        paramRank.sprite = rankSprite;
+        _parameterUI.ParamText.text = " ";
+
+        var image = _parameterUI.ParamRankImage;
+        var color = image.color;
+        color.a = 0;
+        image.color = color;
+
+        SetParameterSlider(0, 0);
     }
 
-    public void SetParameterSlider(ref Slider slider, uint currentParam, uint nextRankValue)
+    public void SetRankImage(Sprite rankSprite)
+    {
+        //アルファ値が1でなければ1にする
+        if (_parameterUI.ParamRankImage.color.a != 1)
+        {
+            var color = _parameterUI.ParamRankImage.color;
+            color.a = 1;
+            _parameterUI.ParamRankImage.color = color;
+        }
+
+        _parameterUI.ParamRankImage.sprite = rankSprite;
+    }
+
+    public void SetParameterSlider(uint currentParam, uint nextRankValue)
     {
         uint currentRankMinValue = RankCalculator.GetCurrentRankMinNum(currentParam, CharacterParameterRankRateData.RankRateDict);
 
-        slider.maxValue = nextRankValue - currentRankMinValue;
-        slider.value = currentParam - currentRankMinValue;
+        _parameterUI.ParameterGage.maxValue = nextRankValue - currentRankMinValue;
+        _parameterUI.ParameterGage.value = currentParam - currentRankMinValue;
     }
 
-    public void SetParameterText(ref TMP_Text text, uint currentParam, uint nextRankValue)
+    public void SetParameterText(uint currentParam, uint nextRankValue)
     {
-        text.text =
-            $"<size={_currentParamTextSize}>{currentParam.ToString()}</size>\n /" +
-            $"<size={_currentParamTextSize}>{nextRankValue.ToString()}</size>";
+        _parameterUI.ParamText.text =
+            $"<size={_currentParamTextSize}>{currentParam.ToString()}</size>\n" +
+            $"<size={_currentParamTextSize}>{"/" + nextRankValue.ToString()}</size>";
     }
 
     [Serializable]
     public struct ParameterUI
     {
-        public ParameterType ParamType;
-        public Slider Slider;
+        public Slider ParameterGage;
         public Image ParamRankImage;
         public TMP_Text ParamText;
     }

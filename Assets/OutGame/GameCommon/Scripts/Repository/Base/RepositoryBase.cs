@@ -8,7 +8,7 @@ using VContainer.Unity;
 /// データ管理用RepositoryのBaseクラス
 /// </summary>
 /// <typeparam name="TData"></typeparam>
-public abstract class RepositoryBase<TData>
+public abstract class RepositoryBase<TData> : IAsyncDataLoader
 {
     protected TData _repositoryData;
 
@@ -20,5 +20,5 @@ public abstract class RepositoryBase<TData>
     }
 
     /// <summary> 対象のデータをロードする </summary>
-    public abstract UniTask DataLoadAsync();
+    public abstract UniTask DataLoadAsync(CancellationToken cancellation);
 }

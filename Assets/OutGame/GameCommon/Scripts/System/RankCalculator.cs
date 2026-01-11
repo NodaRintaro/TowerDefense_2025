@@ -17,6 +17,8 @@ public class RankCalculator
 
         foreach (RankType value in Enum.GetValues(typeof(RankType)))
         {
+            if(value == RankType.None) continue;
+
             if (rateData[value] > targetNum)
             {
                 return currntRank;
@@ -32,6 +34,8 @@ public class RankCalculator
     {
         foreach (RankType value in Enum.GetValues(typeof(RankType)))
         {
+            if (value == RankType.None) continue;
+
             if (rateData[value] > targetNum)
             {
                 return rateData[value];
@@ -45,6 +49,8 @@ public class RankCalculator
         uint saveNum = 0;
         foreach (RankType value in Enum.GetValues(typeof(RankType)))
         {
+            if (value == RankType.None) continue;
+
             if (rateData[value] > targetNum)
             {
                 return saveNum;

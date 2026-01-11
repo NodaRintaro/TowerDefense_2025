@@ -7,7 +7,7 @@ using System.Threading;
 /// <summary>
 /// キャラクターのデータを取得・保持するクラス
 /// </summary>
-public class AddressableCharacterDataRepository : RepositoryBase<CharacterBaseDataRegistry>, IAddressableDataRepository, IAsyncStartable
+public class AddressableCharacterDataRepository : RepositoryBase<CharacterBaseDataRegistry>, IAddressableDataRepository
 {
     [Inject]
     public AddressableCharacterDataRepository() { }
@@ -17,17 +17,7 @@ public class AddressableCharacterDataRepository : RepositoryBase<CharacterBaseDa
         return _repositoryData.GetData(id);
     }
 
-    public async UniTask StartAsync(CancellationToken cancellation)
-    {
-        await DataLoadAsync();
-
-        if (RepositoryData != null)
-            Debug.Log(typeof(CharacterBaseDataRegistry).Name + "のデータのロードに成功しました");
-        else
-            Debug.Log(typeof(CharacterBaseDataRegistry).Name + "データのロードに失敗しました");
-    }
-
-    public override async UniTask DataLoadAsync()
+    public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(AAGCharacterData.kAssets_MasterData_CharacterData_CharacterDataRegistry);
         DataRelease();

@@ -7,7 +7,7 @@ using System.Threading;
 /// <summary>
 /// キャラクターの職種データを取得・保持するクラス
 /// </summary>
-public class AddressableCharacterJobImageDataRepository : RepositoryBase<CharacterJobImageDataRegistry>, IAddressableDataRepository, IAsyncStartable
+public class AddressableCharacterJobImageDataRepository : RepositoryBase<CharacterJobImageDataRegistry>, IAddressableDataRepository
 {
     [Inject]
     public AddressableCharacterJobImageDataRepository() { }
@@ -17,17 +17,7 @@ public class AddressableCharacterJobImageDataRepository : RepositoryBase<Charact
         return _repositoryData.GetData(jobType);
     }
 
-    public async UniTask StartAsync(CancellationToken cancellation)
-    {
-        await DataLoadAsync();
-
-        if (RepositoryData != null)
-            Debug.Log(typeof(CharacterJobImageDataRegistry).Name + "のデータのロードに成功しました");
-        else
-            Debug.Log(typeof(CharacterJobImageDataRegistry).Name + "データのロードに失敗しました");
-    }
-
-    public override async UniTask DataLoadAsync()
+    public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterJobImageDataRegistry>(AAGJobSprite.kAssets_MasterData_ImageData_CharacterJobImageDataRegistry);
         DataRelease();

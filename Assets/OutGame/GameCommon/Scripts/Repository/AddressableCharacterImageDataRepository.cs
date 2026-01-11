@@ -4,7 +4,7 @@ using VContainer;
 using VContainer.Unity;
 using System.Threading;
 
-public class AddressableCharacterImageDataRepository : RepositoryBase<CharacterImageDataRegistry>, IAddressableDataRepository, IAsyncStartable
+public class AddressableCharacterImageDataRepository : RepositoryBase<CharacterImageDataRegistry>, IAddressableDataRepository
 {
     [Inject]
     public AddressableCharacterImageDataRepository() { }
@@ -19,17 +19,7 @@ public class AddressableCharacterImageDataRepository : RepositoryBase<CharacterI
         return _repositoryData.GetCharacterSprite(id, characterSpriteType);
     }
 
-    public async UniTask StartAsync(CancellationToken cancellation)
-    {
-        await DataLoadAsync();
-
-        if (RepositoryData != null)
-            Debug.Log(typeof(CharacterImageDataRegistry).Name + "のデータのロードに成功しました");
-        else
-            Debug.Log(typeof(CharacterImageDataRegistry).Name + "データのロードに失敗しました");
-    }
-
-    public override async UniTask DataLoadAsync()
+    public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterImageDataRegistry>(AAGCharacterSprite.kAssets_MasterData_ImageData_CharacterImageDataRegistry);
         DataRelease();

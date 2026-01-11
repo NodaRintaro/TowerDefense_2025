@@ -16,20 +16,40 @@ MonoBehaviour:
   - _spriteData:
     - _characterSprite: {fileID: 21300000, guid: 3d934cbf7f259994d9958e9da715b18a, type: 3}
       _spriteType: 1
+    - _characterSprite: {fileID: 21300000, guid: ece06ad9c7caf994cbcce93997cb34ab, type: 3}
+      _spriteType: 2
+    - _characterSprite: {fileID: 21300000, guid: a21d441f181b2414b8ddd7f5eaa5a6d1, type: 3}
+      _spriteType: 3
     _id: 1
   - _spriteData:
     - _characterSprite: {fileID: 21300000, guid: 7d7205c5d86552343b50a6511d8dd5ea, type: 3}
       _spriteType: 1
+    - _characterSprite: {fileID: 21300000, guid: 0a7cb5a432e46d6418df5c0d4cf262ce, type: 3}
+      _spriteType: 2
+    - _characterSprite: {fileID: 21300000, guid: 276b17bc7e963d346a7d4610c499dfb9, type: 3}
+      _spriteType: 3
     _id: 2
   - _spriteData:
     - _characterSprite: {fileID: 21300000, guid: d298dfd2f1085bc4e84f3ae2847c2d18, type: 3}
       _spriteType: 1
+    - _characterSprite: {fileID: 21300000, guid: 5f08f3f5e36775a4b9f27637e060a003, type: 3}
+      _spriteType: 2
+    - _characterSprite: {fileID: 21300000, guid: c6e2a218a6ccfc842b82f9629f50aba7, type: 3}
+      _spriteType: 3
     _id: 3
   - _spriteData:
     - _characterSprite: {fileID: 21300000, guid: 15ef6af478039ed4a9dfd6a437ac1edf, type: 3}
       _spriteType: 1
+    - _characterSprite: {fileID: 21300000, guid: b5cae5b9d598fbc44bdd095917aa4b42, type: 3}
+      _spriteType: 2
+    - _characterSprite: {fileID: 21300000, guid: c18117e6a81754b409e16510f7a70e9e, type: 3}
+      _spriteType: 3
     _id: 4
   - _spriteData:
     - _characterSprite: {fileID: 21300000, guid: 557f900f0bb8fd64dbbba321e8bbd361, type: 3}
       _spriteType: 1
+    - _characterSprite: {fileID: 21300000, guid: 333e1d76399af804c8e22658abdb48f8, type: 3}
+      _spriteType: 2
+    - _characterSprite: {fileID: 21300000, guid: 4ea793d5d6d5a0d45a4293875543e093, type: 3}
+      _spriteType: 3
     _id: 5

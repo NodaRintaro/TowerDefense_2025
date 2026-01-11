@@ -1,22 +1,22 @@
-﻿using System.Collections;
+﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 
-public interface IState
+public abstract class State<TStateType>
 {
-    public void OnEnter();
-    public void OnExit();
+    protected StateMachine<TStateType> _stateMachine;
+
+    public abstract UniTask OnEnter();
+    public abstract UniTask OnExit();
 }
 
 
-public abstract class StateMachine<TState> : MonoBehaviour
+public abstract class StateMachine<TStateType> : MonoBehaviour
 {
-    protected IState _currentState;
+    protected State<TStateType> _currentState;
 
-    protected Dictionary<TState, IState> _stateDict = new Dictionary<TState, IState>();
+    protected Dictionary<TStateType, State<TStateType>> _stateDict = new Dictionary<TStateType, State<TStateType>>();
 
     /// <summary> 現在のステートの処理を終了し、次のステートへ移行する </summary>
-    /// <param name="stateType"></param>
-    public abstract void ChangeState(TState stateType);
+    public abstract UniTask ChangeState(TStateType stateType);
 }

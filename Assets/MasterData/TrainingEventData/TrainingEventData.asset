@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a71436586405834a825e60dcf8a9801, type: 3}
+  m_Name: TrainingEventData
+  m_EditorClassIdentifier: 
+  _dataHolder:
+  - _trainingEventID: 1
+    _eventName: "\u30C6\u30B9\u30C8\u30A4\u30D9\u30F3\u30C8"
+    _novelEventID: 0
+    _powerBaseBuff: 10
+    _intelligenceBaseBuff: 10
+    _physicalBaseBuff: 10
+    _speedBaseBuff: 10
+    _staminaBaseBuff: 10
+    _skillID: 0
+    _itemID: 0
+  - _trainingEventID: 2
+    _eventName: "\u6A21\u64EC\u6226"
+    _novelEventID: 1
+    _powerBaseBuff: 5
+    _intelligenceBaseBuff: 10
+    _physicalBaseBuff: 0
+    _speedBaseBuff: 0
+    _staminaBaseBuff: -30
+    _skillID: 0
+    _itemID: 0
+  - _trainingEventID: 3
+    _eventName: "\u8AAD\u66F8"
+    _novelEventID: 2
+    _powerBaseBuff: 0
+    _intelligenceBaseBuff: 0
+    _physicalBaseBuff: 10
+    _speedBaseBuff: 0
+    _staminaBaseBuff: -30
+    _skillID: 0
+    _itemID: 0
+  - _trainingEventID: 4
+    _eventName: "\u30DE\u30E9\u30BD\u30F3"
+    _novelEventID: 3
+    _powerBaseBuff: 0
+    _intelligenceBaseBuff: 5
+    _physicalBaseBuff: 0
+    _speedBaseBuff: 10
+    _staminaBaseBuff: -30
+    _skillID: 0
+    _itemID: 0
+  - _trainingEventID: 5
+    _eventName: "\u72E9\u731F"
+    _novelEventID: 4
+    _powerBaseBuff: 10
+    _intelligenceBaseBuff: 5
+    _physicalBaseBuff: 0
+    _speedBaseBuff: 0
+    _staminaBaseBuff: -30
+    _skillID: 0
+    _itemID: 0
+  - _trainingEventID: 6
+    _eventName: "\u4F11\u61A9"
+    _novelEventID: 5
+    _powerBaseBuff: 0
+    _intelligenceBaseBuff: 0
+    _physicalBaseBuff: 0
+    _speedBaseBuff: 0
+    _staminaBaseBuff: 50
+    _skillID: 0
+    _itemID: 0

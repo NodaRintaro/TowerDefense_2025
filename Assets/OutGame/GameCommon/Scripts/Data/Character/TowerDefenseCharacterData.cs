@@ -2,13 +2,9 @@
 using UnityEngine;
 
 /// <summary> トレーニング済みのキャラクターデータ </summary>
-#region TrainedCharacterData
 [Serializable]
-public class TrainedCharacterData : CharacterBaseData
+public class TowerDefenseCharacterData : CharacterBaseData
 {
-    [SerializeField, Header("トレーニング後のキャラクターID")]
-    private int _trainiedID;
-
     [SerializeField, Header("トレーニング後のキャラクターランク")]
     private RankType _rankType;
 
@@ -20,9 +16,6 @@ public class TrainedCharacterData : CharacterBaseData
     private uint _addIntelligence;
     [SerializeField, Header("素早さ増加値")]
     private uint _addSpeed;
-
-    /// <summary> トレーニング後のキャラクターデータID </summary>
-    public int TrainedCharacterID => _trainiedID;
 
     #region 増加値の参照用プロパティ
     public uint AddPhysical => _addPhysical;
@@ -38,9 +31,8 @@ public class TrainedCharacterData : CharacterBaseData
     public override uint TotalSpeed => _addSpeed + _baseSpeed;
     #endregion
 
-    public void SetCharacterTrainedParameterData(int newID, uint setPhysi, uint setPow, uint setInt, uint setSp)
+    public void SetCharacterTrainedParameterData(uint setPhysi, uint setPow, uint setInt, uint setSp)
     {
-        _trainiedID = newID;
         _addPhysical = setPhysi;
         _addPower = setPow;
         _addIntelligence = setInt;
@@ -52,4 +44,3 @@ public class TrainedCharacterData : CharacterBaseData
         _rankType = rankType;
     }
 }
-#endregion

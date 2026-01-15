@@ -6,7 +6,7 @@ public class UnitDeck
     private bool[] _canPlaceCharacter;
     public int Count { get { return _unitDatas.Length; } }
     private int _deckIndex = 1; //ゲームで使用するデッキのインデックス 
-    public UnitDeck(TrainedCharacterData[] trainedCharacterDatas)
+    public UnitDeck(TowerDefenseCharacterData[] trainedCharacterDatas)
     {
         _unitDatas = new PlayerUnitData[trainedCharacterDatas.Length];
         for (int i = 0; i < trainedCharacterDatas.Length; i++)

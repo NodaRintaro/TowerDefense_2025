@@ -17,7 +17,6 @@ public class AddressableSupportCardDataRepository : RepositoryBase<SupportCardDa
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<SupportCardDataRegistry>(AAGSupportCardData.kAssets_MasterData_SupportCard_SupportCardDataRegistry);
-        DataRelease();
     }
 
     public void DataRelease()

@@ -17,10 +17,14 @@ public class AddressableCharacterDataRepository : RepositoryBase<CharacterBaseDa
         return _repositoryData.GetData(id);
     }
 
+    public uint GetCharacterID(string characterName)
+    {
+        return _repositoryData.GetID(characterName);
+    }
+
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(AAGCharacterData.kAssets_MasterData_CharacterData_CharacterDataRegistry);
-        DataRelease();
     }
 
     public void DataRelease()

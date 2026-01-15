@@ -14,42 +14,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataHolder:
   - _id: 1
-    _cardName: "\u7B4B\u30C8\u30EC\u3092\u3057\u3088\u3046"
+    _cardName: "\u30D1\u30EF\u30FC\u30A2\u30BF\u30C3\u30AF"
     _rarity: 2
-    _physical: 5
-    _power: 20
-    _intelligence: 0
-    _speed: 5
+    _coolTime: 15
+    _addPhysical: 0
+    _addPower: 20
+    _addIntelligence: 0
+    _addSpeed: 0
+    _physicalPercentage: 20
+    _powerPercentage: 0
+    _intelligencePercentage: 0
+    _speedPercentage: 0
     _eventIDArray: 0100000002000000
   - _id: 2
-    _cardName: "\u8D70\u308A\u8FBC\u307F\u306E\u6975\u610F"
+    _cardName: "\u30D1\u30EF\u30FC\u30AC\u30FC\u30C9"
     _rarity: 2
-    _physical: 10
-    _power: 5
-    _intelligence: 0
-    _speed: 20
+    _coolTime: 20
+    _addPhysical: 20
+    _addPower: 0
+    _addIntelligence: 0
+    _addSpeed: 0
+    _physicalPercentage: 0
+    _powerPercentage: 20
+    _intelligencePercentage: 0
+    _speedPercentage: 0
     _eventIDArray: 0100000003000000
   - _id: 3
-    _cardName: "\u5263\u3068\u306F\u3053\u3046\u6271\u3046\u306E\u3060\u3088"
-    _rarity: 3
-    _physical: 10
-    _power: 20
-    _intelligence: 10
-    _speed: 10
+    _cardName: "\u7CBE\u5BC6\u653B\u6483"
+    _rarity: 2
+    _coolTime: 15
+    _addPhysical: 0
+    _addPower: 0
+    _addIntelligence: 0
+    _addSpeed: 20
+    _physicalPercentage: 20
+    _powerPercentage: 0
+    _intelligencePercentage: 0
+    _speedPercentage: 0
     _eventIDArray: 010000000500000006000000
   - _id: 4
-    _cardName: "\u7948\u308A\u306E\u679C\u3066"
-    _rarity: 3
-    _physical: 20
-    _power: 0
-    _intelligence: 20
-    _speed: 0
+    _cardName: "\u30B9\u30D4\u30FC\u30C9\u30AD\u30E3\u30B9\u30C8"
+    _rarity: 2
+    _coolTime: 20
+    _addPhysical: 0
+    _addPower: 0
+    _addIntelligence: 20
+    _addSpeed: 0
+    _physicalPercentage: 0
+    _powerPercentage: 0
+    _intelligencePercentage: 0
+    _speedPercentage: 20
     _eventIDArray: 040000000700000008000000
   - _id: 5
-    _cardName: "\u9B54\u8853\u306E\u57FA\u790E"
-    _rarity: 1
-    _physical: 0
-    _power: 0
-    _intelligence: 20
-    _speed: 0
+    _cardName: "\u30CF\u30A4\u30D2\u30FC\u30EB"
+    _rarity: 2
+    _coolTime: 20
+    _addPhysical: 0
+    _addPower: 0
+    _addIntelligence: 0
+    _addSpeed: 20
+    _physicalPercentage: 0
+    _powerPercentage: 0
+    _intelligencePercentage: 20
+    _speedPercentage: 0
     _eventIDArray: 07000000

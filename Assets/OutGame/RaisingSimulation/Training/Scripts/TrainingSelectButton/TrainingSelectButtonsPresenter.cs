@@ -13,14 +13,14 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
     [SerializeField] private TrainingCharacterView _trainingCharacterView;
     [SerializeField] private StaminaSlider _staminaSlider;
 
-    [SerializeField, Header("模擬戦ID")] private uint _powerTrainingEventID;
-    [SerializeField, Header("読書ID")] private uint _intelligenceTrainingEventID;
-    [SerializeField, Header("マラソンID")] private uint _physicalTrainingEventID;
-    [SerializeField, Header("狩猟ID")] private uint _speedTrainingEventID;
-    [SerializeField, Header("休憩ID")] private uint _takeBreakTrainingEventID;
+    [SerializeField, Header("模擬戦ID")] private int _powerTrainingEventID;
+    [SerializeField, Header("読書ID")] private int _intelligenceTrainingEventID;
+    [SerializeField, Header("マラソンID")] private int _physicalTrainingEventID;
+    [SerializeField, Header("狩猟ID")] private int _speedTrainingEventID;
+    [SerializeField, Header("休憩ID")] private int _takeBreakTrainingEventID;
 
     //現在選択中のトレーニング
-    private uint _currentSelectedTrainingEventID;
+    private int _currentSelectedTrainingEventID;
 
     private TrainingEventPool _trainingEventPool;
     private GameFlowStateMachine _gameFlowStateMachine;
@@ -28,6 +28,7 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
     private RaisingSimulationLifeTimeScope _lifeTimeScope;
     private JsonTrainingSaveDataRepository _trainingDataRepository;
     private AddressableTrainingEventDataRepository _trainingEventDataRepository;
+    private AddressableBranchTrainingEventDataRepository _branchTrainingEventDataRepository;
 
     public void Awake()
     {
@@ -36,6 +37,12 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         _trainingDataRepository = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
         _trainingEventPool = _lifeTimeScope.Container.Resolve<TrainingEventPool>();
         _trainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingEventDataRepository>();
+        _branchTrainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableBranchTrainingEventDataRepository>();
+    }
+
+    public void OnEnable()
+    {
+        _buttonView.TrainingStartButton.interactable = false;
     }
 
     public void Start()
@@ -44,11 +51,13 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         SetOnclickTrainingStartButtonEvent();
     }
 
+    /// <summary> トレーニング開始ボタンのイベントを設定 </summary>
     public void SetOnclickTrainingStartButtonEvent()
     {
         _buttonView.TrainingStartButton.onClick.AddListener(async () => await OnclickTrainingStartEvent());
     }
 
+    /// <summary> トレーニング選択ボタンのイベントを設定 </summary>
     public void SetOnclickTrainingSelectButtonEvents()
     {
         _buttonView.PowerTrainingButton.onClick.AddListener(() => OnclickTrainingSelectEvent(_powerTrainingEventID));
@@ -58,23 +67,48 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         _buttonView.TakeBreakButton.onClick.AddListener(() => OnclickTrainingSelectEvent(_takeBreakTrainingEventID));
     }
 
+    /// <summary> トレーニング開始ボタンのイベント </summary>
     public async UniTask OnclickTrainingStartEvent()
     {
-        _trainingEventPool.EnqueueData(_currentSelectedTrainingEventID);
+        //_trainingEventPool.EnqueueData((uint)_currentSelectedTrainingEventID);
 
         await _gameFlowStateMachine.ChangeState(ScreenType.TrainingEvent);
     }
 
-    public void OnclickTrainingSelectEvent(uint id)
+    /// <summary> トレーニング選択ボタンのイベント </summary>
+    public void OnclickTrainingSelectEvent(int id)
     {
-        TrainingEventData eventData = _trainingEventDataRepository.RepositoryData.GetData(id);
+        ITrainingEventData eventData = null;
+
+        if (_trainingEventDataRepository.RepositoryData.GetData(id).IsBranch)
+            eventData = FindSuccessTrainingBranchEvent((uint)id);
+        else
+            eventData = _trainingEventDataRepository.RepositoryData.GetData(id);
 
         if (eventData.StaminaBaseBuff > 0)
             _staminaSlider.ShowIncreasePrediction((uint)eventData.StaminaBaseBuff);
         else if (eventData.StaminaBaseBuff < 0)
             _staminaSlider.ShowDecreasePrediction((uint)Mathf.Abs(eventData.StaminaBaseBuff));
 
-            _trainingCharacterView.SetParameterBuffText(eventData.PowerBaseBuff, eventData.IntelligenceBaseBuff, eventData.PhysicalBaseBuff, eventData.SpeedBaseBuff);
+        _trainingCharacterView.SetParameterBuffText(eventData.PowerBaseBuff, eventData.IntelligenceBaseBuff, eventData.PhysicalBaseBuff, eventData.SpeedBaseBuff);
         _currentSelectedTrainingEventID = id;
+        _buttonView.TrainingStartButton.interactable = true;
+    }
+
+    /// <summary> トレーニングイベントの成功時のデータを返す </summary>
+    private ITrainingEventData FindSuccessTrainingBranchEvent(uint id)
+    {
+        TrainingEventData trainingEventData = _trainingEventDataRepository.RepositoryData.GetData((int)id);
+
+        if (trainingEventData.IsBranch)
+        {
+            List<BranchTrainingEventData> branchTrainingEventDataList = _branchTrainingEventDataRepository.RepositoryData.GetBranchEvents(id);
+
+            foreach(var branchEvent in  branchTrainingEventDataList)
+                if(branchEvent.TrainingEventBranchType == EventBranchType.TrainingSuccess)
+                    return branchEvent;
+        }
+
+        return trainingEventData;
     }
 }

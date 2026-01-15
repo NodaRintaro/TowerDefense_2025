@@ -46,7 +46,6 @@ namespace RaisingSimulationGameFlowStateMachine
         [SerializeField, Header("シーン遷移してすぐのフェードアウト中の画面")]
         private GameObject _fadeScreen;
 
-
         private DataLoadCompleteNotifier _loadingNotifier;
         private ScreenType _currentScreen;
 
@@ -60,8 +59,12 @@ namespace RaisingSimulationGameFlowStateMachine
 
             //DataLoadが済んだタイミングでゲームを動かし始める
             _fadeScreen.SetActive(true);
-            _loadingNotifier = GetComponent<DataLoadCompleteNotifier>();
+            _loadingNotifier = _lifeTimeScope.Container.Resolve<DataLoadCompleteNotifier>();
             _loadingNotifier.OnDataLoadComplete += StartGameFlow;
+            if (_loadingNotifier.IsLoadCompleted)
+            {
+                StartGameFlow();
+            }
         }
 
         public void OnDisable()

@@ -12,14 +12,24 @@ public class SupportCardData
     private string _cardName;
     [SerializeField, Header("レアリティ")]
     private uint _rarity;
-    [SerializeField, Header("体力")]
-    private uint _physical;
-    [SerializeField, Header("筋力")]
-    private uint _power;
-    [SerializeField, Header("知力")]
-    private uint _intelligence;
-    [SerializeField, Header("素早さ")]
-    private uint _speed;
+    [SerializeField, Header("クールタイム")]
+    private float _coolTime;
+    [SerializeField, Header("体力の基礎強化")]
+    private int _addPhysical;
+    [SerializeField, Header("筋力の基礎強化")]
+    private int _addPower;
+    [SerializeField, Header("知力の基礎強化")]
+    private int _addIntelligence;
+    [SerializeField, Header("素早さの基礎強化")]
+    private int _addSpeed;
+    [SerializeField, Header("体力の強化率")]
+    private uint _physicalPercentage;
+    [SerializeField, Header("筋力の強化率")]
+    private uint _powerPercentage;
+    [SerializeField, Header("知力の強化率")]
+    private uint _intelligencePercentage;
+    [SerializeField, Header("素早さの強化率")]
+    private uint _speedPercentage;
 
     [SerializeField, Header("発生するイベントのID")]
     private uint[] _eventIDArray;
@@ -27,10 +37,15 @@ public class SupportCardData
     public uint ID => _id;
     public string CardName => _cardName;
     public uint Rarity => _rarity;
-    public uint Physical => _physical;
-    public uint Power => _power;
-    public uint Intelligence => _intelligence;
-    public uint Speed => _speed;
+    public float CoolTime => _coolTime;
+    public int AddPhysical => _addPhysical;
+    public int AddPower => _addPower;
+    public int AddIntelligence => _addIntelligence;
+    public int AddSpeed => _addSpeed;
+    public uint PhysicalPercentage => _physicalPercentage;
+    public uint PowerPercentage => _powerPercentage;
+    public uint IntelligencePercentage => _intelligencePercentage;
+    public uint SpeedPercentage => _speedPercentage;
     public uint[] EventIDArray => _eventIDArray;
 
     /// <summary>
@@ -42,14 +57,19 @@ public class SupportCardData
     /// <param name="pow">筋力の強化倍率</param>
     /// <param name="intelli">知力の強化倍率</param>
     /// <param name="sp">素早さの強化倍率</param>
-    public void InitData(string id, string charaName, string physi, string pow, string intelli, string sp, string eventID, string rarity)
+    public void InitData(string id, string charaName, string coolTime, string addPhysi, string addPow, string addIntelli, string addSp, string physiPercentage, string powPercentage, string intelliPercentage, string spPercentage, string eventID, string rarity)
     {
         _id = uint.Parse(id);
         _cardName = charaName;
-        _physical = uint.Parse(physi);
-        _power = uint.Parse(pow);
-        _intelligence = uint.Parse(intelli);
-        _speed = uint.Parse(sp);
+        _coolTime = int.Parse(coolTime);
+        _addPhysical = int.Parse(addPhysi);
+        _addPower = int.Parse(addPow);
+        _addIntelligence = int.Parse(addIntelli);
+        _addSpeed = int.Parse(addSp);
+        _physicalPercentage = uint.Parse(physiPercentage);
+        _powerPercentage = uint.Parse(powPercentage);
+        _intelligencePercentage = uint.Parse(intelliPercentage);
+        _speedPercentage = uint.Parse(spPercentage);
         _rarity = uint.Parse(rarity);
 
         var events = eventID.Split('|');

@@ -1,13 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
 using NovelData;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -40,10 +40,16 @@ public class GenerateScriptableObjectMenu : EditorWindow
         EditorGUILayout.LabelField("保存先のPath");
         _dataSaveFilePath = EditorGUILayout.TextField("dataSaveFilePath", _dataSaveFilePath);
 
+
         //生成するDataを選択
         EditorGUILayout.Space(_spaceSize);
-        EditorGUILayout.LabelField("生成するDataのタイプを選択");
-        _dataType = (DataType)EditorGUILayout.EnumPopup("GenerateDataType", _dataType);
+        EditorGUILayout.LabelField("生成するDataのGASURL");
+        _dataType = (DataType)EditorGUILayout.EnumPopup("DataType", _dataType);
+
+        //生成するDataを選択
+        EditorGUILayout.Space(_spaceSize);
+        EditorGUILayout.LabelField("生成するDataのGASURL");
+        _gasUrl = EditorGUILayout.TextField("GASURL", _gasUrl);
 
 
         //生成したScriptableObjectの保存先のPath
@@ -55,27 +61,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
         EditorGUILayout.Space(_spaceSize);
         if (GUILayout.Button("GenerateScriptableObject") && NullCheckData())
         {
-            SetDataPath(_dataType);
             await GenerateScriptableObject();
-        }
-    }
-
-    private void SetDataPath(DataType dataType)
-    {
-        switch(dataType)
-        {
-            case DataType.CharacterData:
-                _gasUrl = "https://script.google.com/macros/s/AKfycbzb7FruTOZaNcvxrKhOIXUFfpXSaqavkhW2T-5G87b9jMOjP1tgwnzxR2NtapJHWcEb/exec";
-                break;
-            case DataType.SupportCard:
-                _gasUrl = "https://script.google.com/macros/s/AKfycbyBrmGAo-1ROKoMhnQLAMdp2M7p3pGK__x8JRxviTcR1GGA5mb9s9WZUWDnM5rECu4B/exec";
-                break;
-            case DataType.TrainingEventData:
-                _gasUrl = "https://script.google.com/macros/s/AKfycbwowVMLaudNyg7BIdwHOFc7fUNVM6RRcOaFjhAq2nhNQlj_sfUExpbwFQ2JTUL_domk/exec";
-                break;
-            case DataType.NovelData:
-                _gasUrl = "https://script.google.com/macros/s/AKfycbxYBJsVTBvYTYR_XfYykn6JlKYWI7pPg_JNKuPHFA23n7Fo27hNqc8ALBOnep3rdEGK/exec";
-                break;
         }
     }
 
@@ -209,6 +195,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
             case DataType.NovelData:
                 GenerateNovelEventData(parseCsvData);
                 break;
+            case DataType.BranchTrainingEventData:
+                GenerateBranchTrainingEventData(parseCsvData);
+                break;
         }
     }
 
@@ -268,7 +257,12 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 parseCsvData[columnCount, 4],
                 parseCsvData[columnCount, 5],
                 parseCsvData[columnCount, 6],
-                parseCsvData[columnCount, 7]
+                parseCsvData[columnCount, 7],
+                parseCsvData[columnCount, 8],
+                parseCsvData[columnCount, 9],
+                parseCsvData[columnCount, 10],
+                parseCsvData[columnCount, 11],
+                parseCsvData[columnCount, 12]
                 );
 
             supportCardDataArray[columnCount - firstColumnCountNum] = cardData;
@@ -293,18 +287,117 @@ public class GenerateScriptableObjectMenu : EditorWindow
         {
             TrainingEventData eventData = new();
 
-            eventData.InitData(
-                uint.Parse(parseCsvData[columnCount, 0]),
-                parseCsvData[columnCount, 1],
-                uint.Parse(parseCsvData[columnCount, 2]),
-                int.Parse(parseCsvData[columnCount, 3]),
-                int.Parse(parseCsvData[columnCount, 4]),
-                int.Parse(parseCsvData[columnCount, 5]),
-                int.Parse(parseCsvData[columnCount, 6]),
-                int.Parse(parseCsvData[columnCount, 7]),
-                uint.Parse(parseCsvData[columnCount, 8]),
-                uint.Parse(parseCsvData[columnCount, 9])
-                );
+            eventData.SetEventID(uint.Parse(parseCsvData[columnCount, 0]));
+            eventData.SetEventName(parseCsvData[columnCount, 1]);
+            eventData.SetNovelEventID(uint.Parse(parseCsvData[columnCount, 2]));
+            eventData.SetIsBranch(bool.Parse(parseCsvData[columnCount, 3]));
+
+            eventData.SetBranchType(
+                (EventBranchWay)Enum.Parse(typeof(EventBranchWay), 
+                parseCsvData[columnCount, 4]));
+
+            eventData.SetBuffType(
+                (TrainingEventBuffType)Enum.Parse(typeof(TrainingEventBuffType),
+                parseCsvData[columnCount, 5]));
+
+            eventData.SetPhysicalBuff(int.Parse(parseCsvData[columnCount, 6]));
+            eventData.SetPowerBuff(int.Parse(parseCsvData[columnCount, 7]));
+            eventData.SetIntelligenceBuff(int.Parse(parseCsvData[columnCount, 8]));
+            eventData.SetSpeedBuff(int.Parse(parseCsvData[columnCount, 9]));
+            eventData.SetStaminaBuff(int.Parse(parseCsvData[columnCount, 10]));
+            eventData.SetSkillID(uint.Parse(parseCsvData[columnCount, 11]));
+            eventData.SetItemID(uint.Parse(parseCsvData[columnCount, 12]));
+
+            eventDataArray[columnCount - firstColumnCountNum] = eventData;
+        }
+
+        eventDataRegistry.InitData(eventDataArray);
+        AssetDataCreate(eventDataRegistry);
+    }
+
+    /// <summary> トレーニングイベントのスクリプタブルオブジェクトを生成 </summary>
+    /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
+    private void GenerateCharacterEventData(string[,] parseCsvData)
+    {
+        const int firstColumnCountNum = 2;
+        int csvDataLength = parseCsvData.GetLength(0);
+        TrainingEventDataRegistry eventDataRegistry = CreateInstance<TrainingEventDataRegistry>();
+
+        TrainingEventData[] eventDataArray = new TrainingEventData[csvDataLength - firstColumnCountNum];
+
+
+        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            TrainingEventData eventData = new();
+
+            eventData.SetEventID(uint.Parse(parseCsvData[columnCount, 0]));
+            eventData.SetEventName(parseCsvData[columnCount, 1]);
+            eventData.SetNovelEventID(uint.Parse(parseCsvData[columnCount, 2]));
+            eventData.SetIsBranch(bool.Parse(parseCsvData[columnCount, 3]));
+
+            eventData.SetBranchType(
+                (EventBranchWay)Enum.Parse(typeof(EventBranchWay),
+                parseCsvData[columnCount, 4]));
+
+            eventData.SetBuffType(
+                (TrainingEventBuffType)Enum.Parse(typeof(TrainingEventBuffType),
+                parseCsvData[columnCount, 5]));
+
+            eventData.SetPhysicalBuff(int.Parse(parseCsvData[columnCount, 6]));
+            eventData.SetPowerBuff(int.Parse(parseCsvData[columnCount, 7]));
+            eventData.SetIntelligenceBuff(int.Parse(parseCsvData[columnCount, 8]));
+            eventData.SetSpeedBuff(int.Parse(parseCsvData[columnCount, 9]));
+            eventData.SetStaminaBuff(int.Parse(parseCsvData[columnCount, 10]));
+            eventData.SetSkillID(uint.Parse(parseCsvData[columnCount, 11]));
+            eventData.SetItemID(uint.Parse(parseCsvData[columnCount, 12]));
+
+            eventDataArray[columnCount - firstColumnCountNum] = eventData;
+        }
+
+        eventDataRegistry.InitData(eventDataArray);
+        AssetDataCreate(eventDataRegistry);
+    }
+
+    /// <summary> トレーニングイベントのスクリプタブルオブジェクトを生成 </summary>
+    /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
+    private void GenerateBranchTrainingEventData(string[,] parseCsvData)
+    {
+        const int firstColumnCountNum = 2;
+        int csvDataLength = parseCsvData.GetLength(0);
+        BranchTrainingEventDataRegistry eventDataRegistry = CreateInstance<BranchTrainingEventDataRegistry>();
+
+        BranchTrainingEventData[] eventDataArray = new BranchTrainingEventData[csvDataLength - firstColumnCountNum];
+
+
+        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            BranchTrainingEventData eventData = new();
+
+            eventData.SetEventID(uint.Parse(parseCsvData[columnCount, 0]));
+            eventData.SetEventName(parseCsvData[columnCount, 1]);
+            eventData.SetNovelEventID(uint.Parse(parseCsvData[columnCount, 2]));
+
+            eventData.SetTrainingEventBranchType(
+                (EventBranchType)Enum.Parse(typeof(EventBranchType),
+                parseCsvData[columnCount, 3]));
+
+            eventData.SetIsBranch(bool.Parse(parseCsvData[columnCount, 4]));
+
+            eventData.SetBranchType(
+                (EventBranchWay)Enum.Parse(typeof(EventBranchWay),
+                parseCsvData[columnCount, 5]));
+
+            eventData.SetBuffType(
+                (TrainingEventBuffType)Enum.Parse(typeof(TrainingEventBuffType),
+                parseCsvData[columnCount, 6]));
+
+            eventData.SetPhysicalBuff(int.Parse(parseCsvData[columnCount, 7]));
+            eventData.SetPowerBuff(int.Parse(parseCsvData[columnCount, 8]));
+            eventData.SetIntelligenceBuff(int.Parse(parseCsvData[columnCount, 9]));
+            eventData.SetSpeedBuff(int.Parse(parseCsvData[columnCount, 10]));
+            eventData.SetStaminaBuff(int.Parse(parseCsvData[columnCount, 11]));
+            eventData.SetSkillID(uint.Parse(parseCsvData[columnCount, 12]));
+            eventData.SetItemID(uint.Parse(parseCsvData[columnCount, 13]));
 
             eventDataArray[columnCount - firstColumnCountNum] = eventData;
         }
@@ -321,49 +414,49 @@ public class GenerateScriptableObjectMenu : EditorWindow
         NovelEventDataRegistry eventDataRegistry = CreateInstance<NovelEventDataRegistry>();
 
         List<NovelEventData> eventDataArray = new();
+
         NovelEventData eventData = null;
-        List<NovelData.NovelData> novelScreenDataList = null;
+        List<NovelData.NovelPageData> novelScreenDataList = null;
 
         for (int columnCount = 1; columnCount < parseCsvData.GetLength(0); columnCount++)
         {
-            NovelData.NovelData novelData;
+            NovelData.NovelPageData novelData = new();
+            bool isNewScenario = false;
 
-            if(string.IsNullOrWhiteSpace(parseCsvData[columnCount, 0]))
+            //新しいシナリオかのチェック
+            if (!string.IsNullOrWhiteSpace(parseCsvData[columnCount, 0]))
             {
-                novelData = new NovelData.NovelData
-                {
-                    TalkCharacterName = parseCsvData[columnCount, 1],
-                    ScenarioData = parseCsvData[columnCount, 2]
-                };
-                novelScreenDataList.Add(novelData);
-            }
-            else
-            {
-                if(novelScreenDataList != null && eventData != null)
+                if (novelScreenDataList != null && eventData != null)
                 {
                     eventData.SetNovelData(novelScreenDataList.ToArray());
                     eventDataArray.Add(eventData);
                 }
 
+                isNewScenario = true;
                 novelScreenDataList = new();
                 eventData = new();
+
                 eventData.SetID(uint.Parse(parseCsvData[columnCount, 0]));
-
-                novelData = new NovelData.NovelData
-                {
-                    TalkCharacterName = parseCsvData[columnCount, 1],
-                    ScenarioData = parseCsvData[columnCount, 2]
-                };
-                novelScreenDataList.Add(novelData);
             }
 
-            if (columnCount == parseCsvData.GetLength(0) - 1)
+            novelData = new NovelPageData
             {
-                eventData.SetNovelData(novelScreenDataList.ToArray());
-                eventDataArray.Add(eventData);
-            }
+                TalkCharacterName = parseCsvData[columnCount, 1],
+                ScenarioData = parseCsvData[columnCount, 2],
+                CharacterCenter = parseCsvData[columnCount, 3],
+                CharacterLeftBottom = parseCsvData[columnCount, 4],
+                CharacterRightBottom = parseCsvData[columnCount, 5],
+                CharacterLeftTop = parseCsvData[columnCount, 6],
+            };
+
+            novelScreenDataList.Add(novelData);
         }
 
+        //ループを抜けた際に残った最後のNovelDataを追加する
+        eventData.SetNovelData(novelScreenDataList.ToArray());
+        eventDataArray.Add(eventData);
+
+        //データの生成
         eventDataRegistry.InitData(eventDataArray.ToArray());
         AssetDataCreate(eventDataRegistry);
     }

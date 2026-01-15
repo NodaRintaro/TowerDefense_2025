@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: SupportCardImageDataRegistry
   m_EditorClassIdentifier: 
   _dataHolder:
-  - _spriteData: {fileID: 21300000, guid: fd909107c16357649893be1622c5fa0e, type: 3}
+  - _spriteData: {fileID: 21300000, guid: 8be63d63fc73ba84ca5a167f8d005e84, type: 3}
     _id: 1
-  - _spriteData: {fileID: 21300000, guid: 09ae51a8ad320d343b1ff662c6642b77, type: 3}
+  - _spriteData: {fileID: 21300000, guid: 69258d61ef3012045aa1cb3ec5589167, type: 3}
     _id: 2
-  - _spriteData: {fileID: 21300000, guid: 4830f9ece131deb4ead2c955560d7dde, type: 3}
+  - _spriteData: {fileID: 21300000, guid: bb57062322496bb47adde23e56e76974, type: 3}
     _id: 3
-  - _spriteData: {fileID: 21300000, guid: 32c9c4cad11167c499f200279d38617b, type: 3}
+  - _spriteData: {fileID: 21300000, guid: fe1db0ed4d05d2a449918f79d67de42e, type: 3}
     _id: 4
+  - _spriteData: {fileID: 21300000, guid: cff657afbcc50f341b23762af9c97703, type: 3}
+    _id: 5

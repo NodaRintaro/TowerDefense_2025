@@ -9,7 +9,7 @@ using UnityEngine;
 [Serializable]
 public class SupportCardImageData
 {
-    [SerializeField, SpritePreview]
+    [SerializeField]
     private Sprite _spriteData;
 
     [SerializeField]

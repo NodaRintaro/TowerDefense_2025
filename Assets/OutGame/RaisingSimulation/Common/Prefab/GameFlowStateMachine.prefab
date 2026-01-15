@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7399382352394849609}
   - component: {fileID: 6725159554326134788}
-  - component: {fileID: 3224887503983929997}
   m_Layer: 0
   m_Name: GameFlowStateMachine
   m_TagString: Untagged
@@ -51,15 +50,3 @@ MonoBehaviour:
   _trainingEventScreen: {fileID: 0}
   _resultScreen: {fileID: 0}
   _fadeScreen: {fileID: 0}
---- !u!114 &3224887503983929997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3065014820476788765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12087b20d4b14c641b9eba343d7db3a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

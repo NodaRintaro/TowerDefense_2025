@@ -11,9 +11,10 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     private PageView _pageView;
 
     private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
+    private GameFlowStateMachine _gameFlowStateMachine;
+    private TrainingEventPool _trainingEventPool;
 
     #region DataClass
-    private GameFlowStateMachine _gameflowStateMachine;
     private JsonTrainingSaveDataRepository _trainingTargetSaveDataRepository;
     private AddressableSupportCardDataRepository _addressableSupportCardDataRepository;
     private AddressableSupportCardImageDataRepository _addressableSupportCardImageDataRepository;
@@ -24,7 +25,8 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     {
         _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
 
-        _gameflowStateMachine = _lifeTimeScope.Container.Resolve<GameFlowStateMachine>();
+        _gameFlowStateMachine = _lifeTimeScope.Container.Resolve<GameFlowStateMachine>();
+        _trainingEventPool = _lifeTimeScope.Container.Resolve<TrainingEventPool>();
         _trainingTargetSaveDataRepository = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
         _addressableSupportCardDataRepository = _lifeTimeScope.Container.Resolve<AddressableSupportCardDataRepository>();
         _addressableSupportCardImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableSupportCardImageDataRepository>();
@@ -55,7 +57,7 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     public async UniTask GameStart()
     {
         await _trainingTargetSaveDataRepository.DataSave();
-        _gameflowStateMachine.ChangeState(ScreenType.TrainingSelectMenu);
+        await _gameFlowStateMachine.ChangeState(ScreenType.TrainingEvent);
     }
 
     /// <summary> 現在のページからほかのページへ移行するイベントをボタンに登録する処理 </summary>

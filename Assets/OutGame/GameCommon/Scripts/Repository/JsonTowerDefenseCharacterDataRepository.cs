@@ -1,0 +1,29 @@
+﻿using Cysharp.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using VContainer;
+
+public class JsonTowerDefenseCharacterDataRepository : RepositoryBase<TowerDefenseCharacterDataBase>
+{
+    [Inject]
+    public JsonTowerDefenseCharacterDataRepository() { }
+
+    public const string SaveDataName = "JsonTowerDefenseCharacterData";
+
+    public async UniTask DataSave()
+    {
+        await JsonDataSaveSystem.DataSave(_repositoryData, SaveDataName);
+    }
+
+    public override async UniTask DataLoadAsync(CancellationToken cancellation)
+    {
+        _repositoryData = await JsonDataSaveSystem.DataLoadAsync<TowerDefenseCharacterDataBase>(SaveDataName);
+
+        if (_repositoryData == null)
+        {
+            _repositoryData = new TowerDefenseCharacterDataBase();
+        }
+    }
+
+}

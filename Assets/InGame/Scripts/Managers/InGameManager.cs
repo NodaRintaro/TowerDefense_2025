@@ -238,6 +238,7 @@ public class InGameManager : MonoBehaviour
 
     private void PlaceCharacter()
     {
+        //if () return;
         UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
         unit.UnitData = _unitDeck.GetCharacterData(_selectedCharacterID);
         unit.Init();

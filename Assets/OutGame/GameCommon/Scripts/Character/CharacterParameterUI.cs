@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,47 +10,98 @@ public class CharacterParameterUI
 {
     [SerializeField] private ParameterUI _parameterUI;
 
-    private int _currentParamTextSize = 50;
-    private int _maxParamTextSize = 50;
+    [SerializeField] private int _currentParamTextSize = 50;
+
+    private uint _currentParamValue; // 現在の値を保持する変数
+
+    private const float _duration = 0.5f;
 
     public void Init()
     {
         _parameterUI.ParamText.text = " ";
+        _parameterUI.ParameterGage.value = 0;
+        _currentParamValue = 0;
 
         var image = _parameterUI.ParamRankImage;
         var color = image.color;
         color.a = 0;
         image.color = color;
-
-        SetParameterSlider(0, 0);
     }
 
-    public void SetRankImage(Sprite rankSprite)
+    /// <summary>
+    /// パラメータを設定し、UIをアニメーションさせる
+    /// </summary>
+    public async UniTask SetParameter(uint newParam, uint currentRankMinValue, uint nextRankValue, Sprite rankSprite)
     {
-        //アルファ値が1でなければ1にする
-        if (_parameterUI.ParamRankImage.color.a != 1)
+        await UpdateRankImage(rankSprite);
+
+        // スライダーのアニメーション
+        _parameterUI.ParameterGage.maxValue = nextRankValue - currentRankMinValue;
+        var sliderCompletionSource = new UniTaskCompletionSource();
+        _parameterUI.ParameterGage.DOValue(newParam - currentRankMinValue, _duration)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => sliderCompletionSource.TrySetResult());
+        var sliderTask = sliderCompletionSource.Task;
+
+        // テキストのカウントアップアニメーション
+        var textAnimationCompletionSource = new UniTaskCompletionSource();
+        DOTween.To(() => _currentParamValue, x => _currentParamValue = x, newParam, _duration)
+            .OnUpdate(() =>
+            {
+                _parameterUI.ParamText.text =
+                    $"<size={_currentParamTextSize}>{_currentParamValue.ToString()}</size>\n" +
+                    $"<size={_currentParamTextSize}>{"/" + nextRankValue.ToString()}</size>";
+            })
+            .OnComplete(() => textAnimationCompletionSource.TrySetResult());
+        var textAnimationTask = textAnimationCompletionSource.Task;
+
+        // テキストの強調アニメーション
+        var textScaleCompletionSource = new UniTaskCompletionSource();
+        _parameterUI.ParamText.transform.DOScale(1.2f, 0.1f)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() => textScaleCompletionSource.TrySetResult());
+        var textScaleTask = textScaleCompletionSource.Task;
+
+        // すべてのアニメーションタスクを待機
+        await UniTask.WhenAll(sliderTask, textAnimationTask, textScaleTask);
+
+        _currentParamValue = newParam; // 最終的な値を設定
+    }
+
+    private async UniTask UpdateRankImage(Sprite newRankSprite)
+    {
+        if(_parameterUI.ParamRankImage.color.a == 0)
         {
-            var color = _parameterUI.ParamRankImage.color;
-            color.a = 1;
+            Color color = _parameterUI.ParamRankImage.color;
+            color.a = 255;
             _parameterUI.ParamRankImage.color = color;
         }
 
-        _parameterUI.ParamRankImage.sprite = rankSprite;
-    }
+        if(_parameterUI.ParamRankImage.sprite != newRankSprite)
+        {
+            Sequence seq = DOTween.Sequence();
+            bool isComplete = false;
+            Vector3 originalPosition = _parameterUI.ParamRankImage.transform.localPosition;
 
-    public void SetParameterSlider(uint currentParam, uint nextRankValue)
-    {
-        uint currentRankMinValue = RankCalculator.GetCurrentRankMinNum(currentParam, CharacterParameterRankRateData.RankRateDict);
+            // 1. はがす動き（左上に持ち上がりながら消える）
+            seq.Append(_parameterUI.ParamRankImage.transform.DOLocalMove(new Vector3(-50, 50, 0), 0.3f).SetRelative());
+            seq.Join(_parameterUI.ParamRankImage.transform.DOLocalRotate(new Vector3(0, 0, 15), 0.3f));
+            seq.Append(_parameterUI.ParamRankImage.transform.DOScale(0, 0.2f));
 
-        _parameterUI.ParameterGage.maxValue = nextRankValue - currentRankMinValue;
-        _parameterUI.ParameterGage.value = currentParam - currentRankMinValue;
-    }
+            // 2. Spriteの切り替え
+            seq.AppendCallback(() => {
+                _parameterUI.ParamRankImage.sprite = newRankSprite;
+                // 貼り付け位置の少し上にセット
+                _parameterUI.ParamRankImage.transform.localPosition = originalPosition + new Vector3(0, 20, 0);
+            });
 
-    public void SetParameterText(uint currentParam, uint nextRankValue)
-    {
-        _parameterUI.ParamText.text =
-            $"<size={_currentParamTextSize}>{currentParam.ToString()}</size>\n" +
-            $"<size={_currentParamTextSize}>{"/" + nextRankValue.ToString()}</size>";
+            // 3. 貼り直す動き（バウンドさせる）
+            seq.Append(_parameterUI.ParamRankImage.transform.DOScale(1.0f, 0.3f));
+            seq.Join(_parameterUI.ParamRankImage.transform.DOLocalMove(originalPosition, 0.3f).SetEase(Ease.OutBounce));
+            seq.Join(_parameterUI.ParamRankImage.transform.DOLocalRotate(Vector3.zero, 0.3f)).OnComplete(() => isComplete = true);
+
+            await UniTask.WaitUntil(() => isComplete);
+        }
     }
 
     [Serializable]

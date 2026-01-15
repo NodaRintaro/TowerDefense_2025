@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class CharacterSprite
 {
-    [SpritePreview, SerializeField]
+    [SerializeField]
     private Sprite _characterSprite;
 
     [SerializeField]

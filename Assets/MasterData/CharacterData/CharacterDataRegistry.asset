@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataHolder:
   - _characterID: 1
-    _characterName: "\u5263\u58EB"
+    _characterName: "\u30EA\u30CA\u30EA\u30A2"
     _baseRarity: 3
     _basePhysical: 40
     _basePower: 70

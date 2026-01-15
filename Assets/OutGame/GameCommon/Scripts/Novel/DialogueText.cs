@@ -14,6 +14,11 @@ public class DialogueText : MonoBehaviour
     private bool _isSkipping = false;
     private Tweener _fadeTween;
 
+    public void Init()
+    {
+        _textUI.text = " ";
+    }
+
     public async UniTask ShowTextAsync(string message, CancellationToken ct = default)
     {
         CancelCurrentAnimation();

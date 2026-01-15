@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class RankImageData
 {
-    [SerializeField, SpritePreview] 
+    [SerializeField] 
     private Sprite _spriteData;
 
     [SerializeField]

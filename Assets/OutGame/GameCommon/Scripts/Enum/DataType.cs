@@ -10,5 +10,12 @@ public enum DataType
     RankData,
     EnemyData,
     TrainingEventData,
-    NovelData
+    BranchTrainingEventData,
+    NovelData,
+    CharacterEventData,
+    CharacterBranchEventData,
+    CharacterNovelData,
+    SupportCardEventData,
+    SupportCardBranchEventData,
+    SupportCardNovelData
 }

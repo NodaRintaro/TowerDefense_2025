@@ -661,6 +661,7 @@ PlayerSettings:
     PS4: DOTWEEN
     PS5: DOTWEEN
     QNX: DOTWEEN
+    Server: UNITASK_DOTWEEN_SUPPORT
     Stadia: DOTWEEN
     Standalone: DOTWEEN
     VisionOS: DOTWEEN
@@ -669,7 +670,9 @@ PlayerSettings:
     XboxOne: DOTWEEN
     iPhone: DOTWEEN
     tvOS: DOTWEEN
-  additionalCompilerArguments: {}
+  additionalCompilerArguments:
+    Server:
+    - 
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

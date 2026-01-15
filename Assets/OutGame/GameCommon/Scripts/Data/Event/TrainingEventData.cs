@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class TrainingEventData
+public class TrainingEventData : ITrainingEventData
 {
     [Header("トレーニングイベントのID")]
     [SerializeField] private uint _trainingEventID = 0;
@@ -13,6 +13,15 @@ public class TrainingEventData
 
     [Header("ノベルイベントのID")]
     [SerializeField] private uint _novelEventID = 0;
+
+    [Header("シナリオの分岐")]
+    [SerializeField] private bool _isBrunchScenario = false;
+
+    [Header("シナリオの分岐方法")]
+    [SerializeField] private EventBranchWay _branchType = EventBranchWay.None;
+
+    [Header("Buffの種類")]
+    [SerializeField] private TrainingEventBuffType _buffType = TrainingEventBuffType.None;
 
     [Header("各種パラメータの強化値")]
     [SerializeField] private int _powerBaseBuff = 0;
@@ -29,9 +38,12 @@ public class TrainingEventData
     [Header("獲得するアイテムのID")]
     [SerializeField] private uint _itemID = 0;
 
-    public uint TrainingEventID => _trainingEventID;
+    public uint EventID => _trainingEventID;
     public string EventName => _eventName;
     public uint NovelEventID => _novelEventID;
+    public bool IsBranch => _isBrunchScenario;
+    public EventBranchWay BranchType => _branchType;
+    public TrainingEventBuffType BuffType => _buffType;
     public int PowerBaseBuff => _powerBaseBuff;
     public int IntelligenceBaseBuff => _intelligenceBaseBuff;
     public int PhysicalBaseBuff => _physicalBaseBuff;
@@ -40,17 +52,19 @@ public class TrainingEventData
     public uint SkillID => _skillID;
     public uint ItemID => _itemID;
 
-    public void InitData(uint trainingEventID, string eventName, uint eventID, int powerBuff, int intelligenceBuff, int physicalBuff, int speedBuff, int staminaBuff, uint skillID, uint itemID)
-    {
-        _trainingEventID = trainingEventID;
-        _eventName = eventName;
-         _novelEventID = eventID;
-        _powerBaseBuff = powerBuff;
-        _intelligenceBaseBuff = intelligenceBuff;
-        _physicalBaseBuff = physicalBuff;
-        _speedBaseBuff = speedBuff;
-        _staminaBaseBuff = staminaBuff;
-        _skillID = skillID;
-        _itemID = itemID;
-    }
+    #if UNITY_EDITOR
+    public void SetEventID(uint id) { _trainingEventID = id; }
+    public void SetEventName(string eventName) { _eventName = eventName; }
+    public void SetNovelEventID(uint id) { _novelEventID = id; }
+    public void SetIsBranch(bool isBranch) { _isBrunchScenario = isBranch; }
+    public void SetBranchType(EventBranchWay type) { _branchType = type; }
+    public void SetBuffType(TrainingEventBuffType trainingEventBuffType) {  _buffType = trainingEventBuffType; }
+    public void SetPowerBuff(int buff) { _powerBaseBuff = buff; }
+    public void SetIntelligenceBuff(int buff) { _intelligenceBaseBuff = buff; }
+    public void SetPhysicalBuff(int buff) { _physicalBaseBuff = buff; }
+    public void SetSpeedBuff(int buff) { _speedBaseBuff = buff; }
+    public void SetStaminaBuff(int buff) { _staminaBaseBuff = buff; }
+    public void SetSkillID(uint id) { _skillID = id; }
+    public void SetItemID(uint id) {_itemID = id; }
+    #endif
 }

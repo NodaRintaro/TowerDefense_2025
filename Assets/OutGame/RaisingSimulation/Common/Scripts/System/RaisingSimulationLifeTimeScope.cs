@@ -14,16 +14,19 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
         builder.Register<RepositoryDataLoader>(Lifetime.Singleton).AsSelf().As<IAsyncStartable>();
 
         //全てのデータリポジトリのロードが完了したことを通知するクラス
-        builder.RegisterComponentInHierarchy<DataLoadCompleteNotifier>();
+        builder.RegisterComponentOnNewGameObject<DataLoadCompleteNotifier>(Lifetime.Singleton);
 
         //育成ゲームのゲーム全体の進行管理役のステートマシン
         builder.RegisterComponentInHierarchy<GameFlowStateMachine>();
 
-        //育成ゲームのイベントを登録用Pool
+        //育成ゲームのイベント登録用Pool
         builder.Register<TrainingEventPool>(Lifetime.Singleton);
 
         //育成イベントのキャラクターへのバフ計算Class
-        builder.Register<TrainingCharacterParameterTotalBuffCalculator>(Lifetime.Singleton);
+        builder.Register<ParameterBuffCalculator>(Lifetime.Singleton);
+
+        //育成イベントの進行クラス
+        builder.Register<TrainingEventFlowController>(Lifetime.Singleton);
     }
 
     /// <summary> RepositoryClassをContainer登録する </summary>
@@ -61,5 +64,8 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
 
         //トレーニングイベントデータのRepository
         builder.Register<AddressableTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //分岐先のイベントデータのRepository
+        builder.Register<AddressableBranchTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

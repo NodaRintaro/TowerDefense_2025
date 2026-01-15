@@ -9,7 +9,7 @@ using UnityEngine;
 [Serializable]
 public class JobImageData
 {
-    [SerializeField, SpritePreview]
+    [SerializeField]
     private Sprite _spriteData;
 
     [SerializeField]

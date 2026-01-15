@@ -17,4 +17,16 @@ public class CharacterBaseDataRegistry : DataRegistryBase<CharacterBaseData>
         }
         return null;
     }
+
+    public uint GetID(string name)
+    {
+        foreach (var item in _dataHolder)
+        {
+            if (item.CharacterName == name)
+            {
+                return item.CharacterID;
+            }
+        }
+        return 0;
+    }
 }

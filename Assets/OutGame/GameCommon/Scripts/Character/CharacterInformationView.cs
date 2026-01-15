@@ -1,4 +1,6 @@
 ﻿
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -91,19 +93,14 @@ public class CharacterInformationView : MonoBehaviour
     }
 
     /// <summary> パラメータのUIに現在のパラメータを反映する処理 </summary>
-    private void SetParameterUI(CharacterParameterUI parameterUI, uint currentParam)
+    private async void SetParameterUI(CharacterParameterUI parameterUI, uint currentParam)
     {
         RankType currentRank = RankCalculator.GetCurrentRank(currentParam, CharacterParameterRankRateData.RankRateDict);
+        uint currentRankMinValue = RankCalculator.GetCurrentRankMinNum(currentParam, CharacterParameterRankRateData.RankRateDict);
         uint nextRankValue = RankCalculator.GetNextRankNum(currentParam, CharacterParameterRankRateData.RankRateDict);
 
-        //現在のパラメータのRankを反映
-        parameterUI.SetRankImage(_addressableRankImageDataRepository.GetSprite(currentRank));
-
         //スライダーゲージに現在のパラメータを反映
-        parameterUI.SetParameterSlider(currentParam, nextRankValue);
-
-        //テキストに現在のパラメータを入力
-        parameterUI.SetParameterText(currentParam, nextRankValue);
+        await parameterUI.SetParameter(currentParam, currentRankMinValue, nextRankValue, _addressableRankImageDataRepository.GetSprite(currentRank));
     }
 
     private void ChangeImageAlpha(Image image, float alphaNum)

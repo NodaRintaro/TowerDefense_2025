@@ -1,7 +1,7 @@
 ﻿
 public class PlayerUnitData : UnitData
 {
-    protected JobType _roleType;             // ユニットのタイプ
+    protected JobType _jobType;             // ユニットのタイプ
     protected uint _id;                       // ユニットID
     protected float _cost;                    // ユニットを出すのに必要なコスト
     protected float _rePlaceInterval;         // 再出撃に必要な時間
@@ -9,27 +9,24 @@ public class PlayerUnitData : UnitData
     
     public PlayerUnitData(TrainedCharacterData trainedCharacterData)
     {
-        _roleType = trainedCharacterData.CharacterRole;
+        _jobType = trainedCharacterData.CharacterRole;
         _group = GroupType.Player;
         _id = trainedCharacterData.CharacterID;
         _name = trainedCharacterData.CharacterName;
-        //_cost = trainedCharacterData.Cost;
-        _cost = 2f;
+        _cost = trainedCharacterData.Cost;
         //_rePlaceInterval = trainedCharacterData.RePlaceInterval;
         _rePlaceInterval = 5f;
-        _maxHp = trainedCharacterData.AddPhysical;
-        _attack = trainedCharacterData.BasePower;
-        _magicPower = trainedCharacterData.BaseIntelligence;
-        //_defense = trainedCharacterData.Defense;
-        _defence = 0f;
+        _maxHp = trainedCharacterData.TotalPhysical;
+        _attack = trainedCharacterData.TotalPower;
+        _magicPower = trainedCharacterData.TotalIntelligence;
+        _actionInterval = trainedCharacterData.TotalSpeed;
         //_searchEnemyDistance = trainedCharacterData.SearchEnemyDistance;
         _attackRange = 1f;
         //_actionInterval = trainedCharacterData.ActionInterval;
-        _actionInterval = trainedCharacterData.AddSpeed;
         _currentHp = 0f;
     }
     public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }
-    public JobType RoleType { get => _roleType; set => _roleType = value; }
+    public JobType JobType { get => _jobType; set => _jobType = value; }
     public float Cost { get => _cost; set => _cost = value; }
     public float RePlaceInterval { get => _rePlaceInterval; set => _rePlaceInterval = value; }
     public uint ID { get => _id; set => _id = value; }

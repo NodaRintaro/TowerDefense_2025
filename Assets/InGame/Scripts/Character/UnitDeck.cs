@@ -1,11 +1,21 @@
 ﻿using UnityEngine;
-
+using TowerDefenseDeckData;
 public class UnitDeck
 {
     private PlayerUnitData[] _unitDatas;
     private bool[] _canPlaceCharacter;
     public int Count { get { return _unitDatas.Length; } }
-
+    private int _deckIndex = 1; //ゲームで使用するデッキのインデックス 
+    public UnitDeck(TrainedCharacterData[] trainedCharacterDatas)
+    {
+        _unitDatas = new PlayerUnitData[trainedCharacterDatas.Length];
+        for (int i = 0; i < trainedCharacterDatas.Length; i++)
+        {
+            _unitDatas[i] = new PlayerUnitData(trainedCharacterDatas[i]);
+        }
+        _canPlaceCharacter = new bool[trainedCharacterDatas.Length];
+        for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
+    }
     public void UpdateTime(float time)
     {
         for (int i = 0; i < _unitDatas.Length; i++)
@@ -20,21 +30,11 @@ public class UnitDeck
             }
         }
     }
-    public UnitDeck(PlayerUnitData[] unitDatas)
+
+    void LoadDeckDataByMasterData(int deckIndex)
     {
-        _unitDatas = unitDatas;
-        _canPlaceCharacter = new bool[unitDatas.Length];
-        for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
-    }
-    public UnitDeck(TrainedCharacterData[] trainedCharacterDatas)
-    {
-        _unitDatas = new PlayerUnitData[trainedCharacterDatas.Length];
-        for (int i = 0; i < trainedCharacterDatas.Length; i++)
-        {
-            _unitDatas[i] = new PlayerUnitData(trainedCharacterDatas[i]);
-        }
-        _canPlaceCharacter = new bool[trainedCharacterDatas.Length];
-        for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
+        CharacterDeckDataRegistry registry;
+        
     }
     public UnitData GetCharacterData(int index)
     {

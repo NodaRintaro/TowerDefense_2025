@@ -20,7 +20,6 @@ public class AddressableRankImageDataRepository : RepositoryBase<RankImageDataRe
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<RankImageDataRegistry>(AAGRankSprite.kAssets_MasterData_ImageData_RankImageDataRegistry);
-        DataRelease();
     }
 
     public void DataRelease()

@@ -22,7 +22,6 @@ public class AddressableCharacterImageDataRepository : RepositoryBase<CharacterI
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterImageDataRegistry>(AAGCharacterSprite.kAssets_MasterData_ImageData_CharacterImageDataRegistry);
-        DataRelease();
     }
 
     public void DataRelease()

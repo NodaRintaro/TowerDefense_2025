@@ -13,7 +13,6 @@ public class AddressableNovelEventDataRepository : RepositoryBase<NovelEventData
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<NovelEventDataRegistry>(AAGNovelData.kAssets_MasterData_NovelData_NovelEventData);
-        DataRelease();
     }
 
     public void DataRelease()

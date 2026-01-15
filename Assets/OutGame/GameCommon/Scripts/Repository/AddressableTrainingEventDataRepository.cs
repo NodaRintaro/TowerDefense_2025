@@ -10,7 +10,6 @@ public class AddressableTrainingEventDataRepository : RepositoryBase<TrainingEve
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<TrainingEventDataRegistry>(AAGTrainingEventData.kAssets_MasterData_TrainingEventData_TrainingEventData);
-        DataRelease();
     }
 
     public void DataRelease()

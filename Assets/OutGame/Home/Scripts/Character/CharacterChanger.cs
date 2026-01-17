@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -13,10 +14,24 @@ public class CharacterChanger : MonoBehaviour
     private AddressableCharacterImageDataRepository _addressableCharacterImageDataRepository;
     private JsonCharacterCollectionDataRepository _jsonCharacterCollectionDataRepository;
 
-    private void Awake()
+    private int _nowCharacterImageId = 0;
+
+    private int _maxCharacterImageId = 1;
+
+    private async void Awake()
     {
         _homeMenuLifeTimeScope = FindFirstObjectByType<HomeMenuLifeTimeScope>();
         _loadingNotifier = _homeMenuLifeTimeScope.Container.Resolve<DataLoadCompleteNotifier>();
+
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        _jsonCharacterCollectionDataRepository =
+            _homeMenuLifeTimeScope.Container.Resolve<JsonCharacterCollectionDataRepository>();
+        _addressableCharacterImageDataRepository =
+            _homeMenuLifeTimeScope.Container.Resolve<AddressableCharacterImageDataRepository>();
+
+        await _jsonCharacterCollectionDataRepository.DataLoadAsync(cancellationTokenSource.Token);
+        await _addressableCharacterImageDataRepository.DataLoadAsync(cancellationTokenSource.Token);
+        _maxCharacterImageId = _jsonCharacterCollectionDataRepository.RepositoryData.CollectionList.Count;
     }
 
     private void OnEnable()
@@ -33,8 +48,18 @@ public class CharacterChanger : MonoBehaviour
         _loadingNotifier.OnDataLoadComplete -= RandomCharacterPickUpView;
     }
 
-    public void RandomCharacterPickUpView()
+    // キャラクターを順番に表示する
+    public async void RandomCharacterPickUpView()
     {
+        _nowCharacterImageId++;
+        while (!_jsonCharacterCollectionDataRepository.RepositoryData.TryGetCollection(
+                   (uint)(_nowCharacterImageId % _maxCharacterImageId)))
+        {
+            _nowCharacterImageId++;
+        }
 
+        _characterImage.sprite =
+            _addressableCharacterImageDataRepository.GetSprite((uint)(_nowCharacterImageId % _maxCharacterImageId),
+                CharacterSpriteType.OverAllView);
     }
 }

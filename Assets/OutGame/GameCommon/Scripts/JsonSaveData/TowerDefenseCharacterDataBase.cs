@@ -6,16 +6,16 @@ using UnityEngine;
 public class TowerDefenseCharacterDataBase : IJsonSaveData
 {
     /// <summary> key = BaseCharacterID, Value = 同じベースキャラクターの配列 </summary>
-    private Dictionary<uint, TowerDefenseCharacterData[]> _towerDefenseCharacterDataDict = new();
+    public readonly Dictionary<uint, TowerDefenseCharacterData[]> TowerDefenseCharacterDataDict = new Dictionary<uint, TowerDefenseCharacterData[]>();
 
     private const uint _maxCharacterNum = 20;
 
     /// <summary> 育成したキャラクターデータを保存する処理 </summary>
     public bool TryAddCharacterDict(uint baseCharacterID, TowerDefenseCharacterData addData)
     {
-        if(_towerDefenseCharacterDataDict.ContainsKey(baseCharacterID))
+        if(TowerDefenseCharacterDataDict.ContainsKey(baseCharacterID))
         {
-            TowerDefenseCharacterData[] towerDefenseCharacterData = _towerDefenseCharacterDataDict[baseCharacterID];
+            TowerDefenseCharacterData[] towerDefenseCharacterData = TowerDefenseCharacterDataDict[baseCharacterID];
 
             for(int i = 0; i < _maxCharacterNum; i++)
             {
@@ -31,7 +31,7 @@ public class TowerDefenseCharacterDataBase : IJsonSaveData
         else
         {
             TowerDefenseCharacterData[] towerDefenseCharacterData = new TowerDefenseCharacterData[_maxCharacterNum];
-            _towerDefenseCharacterDataDict.Add(baseCharacterID, towerDefenseCharacterData);
+            TowerDefenseCharacterDataDict.Add(baseCharacterID, towerDefenseCharacterData);
             towerDefenseCharacterData[0] = addData;
             return true;
         }
@@ -41,9 +41,9 @@ public class TowerDefenseCharacterDataBase : IJsonSaveData
     public bool TryGetCharacterDict(out TowerDefenseCharacterData getData, uint baseCharacterID, uint arrIndex)
     {
         getData = null;
-        if (_towerDefenseCharacterDataDict.ContainsKey(baseCharacterID))
+        if (TowerDefenseCharacterDataDict.ContainsKey(baseCharacterID))
         {
-            TowerDefenseCharacterData[] towerDefenseCharacterData = _towerDefenseCharacterDataDict[baseCharacterID];
+            TowerDefenseCharacterData[] towerDefenseCharacterData = TowerDefenseCharacterDataDict[baseCharacterID];
 
             if (towerDefenseCharacterData[arrIndex] == null)
             {

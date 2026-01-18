@@ -17,17 +17,4 @@ public class TrainingEventDataRegistry : DataRegistryBase<TrainingEventData>
         }
         return null;
     }
-
-    public List<TrainingEventData> GetBranchEvents(int id)
-    {
-        List<TrainingEventData> eventList = new List<TrainingEventData>();
-        foreach (var item in _dataHolder)
-        {
-            if (item.EventID == id)
-            {
-                eventList.Add(item);
-            }
-        }
-        return eventList;
-    }
 }

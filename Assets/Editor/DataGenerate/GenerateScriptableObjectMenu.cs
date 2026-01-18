@@ -30,17 +30,6 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
     async void OnGUI()
     {
-        //TextFieldで自動生成するScriptableObjectの名前を入力
-        EditorGUILayout.Space(_spaceSize);
-        EditorGUILayout.LabelField("自動生成するScriptableObjectの名前");
-        _scriptableObjectName = EditorGUILayout.TextField("scriptableObjectName", _scriptableObjectName);
-
-        //ほぞんさきのPathを指定
-        EditorGUILayout.Space(_spaceSize);
-        EditorGUILayout.LabelField("保存先のPath");
-        _dataSaveFilePath = EditorGUILayout.TextField("dataSaveFilePath", _dataSaveFilePath);
-
-
         //生成するDataを選択
         EditorGUILayout.Space(_spaceSize);
         EditorGUILayout.LabelField("生成するDataのGASURL");
@@ -184,21 +173,59 @@ public class GenerateScriptableObjectMenu : EditorWindow
         switch(dataType)
         {
             case DataType.CharacterData:
+                _scriptableObjectName = "CharacterDataRegistry";
+                _dataSaveFilePath = "Assets/MasterData/CharacterData";
                 GenerateCharacterData(parseCsvData);
                 break;
             case DataType.SupportCard:
+                _scriptableObjectName = "SupportCardDataRegistry";
+                _dataSaveFilePath = "Assets/MasterData/SupportCard";
                 GenerateSupportCardData(parseCsvData);
                 break;
             case DataType.TrainingEventData:
+                _scriptableObjectName = "TrainingEventData";
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 GenerateTrainingEventData(parseCsvData);
                 break;
-            case DataType.NovelData:
+            case DataType.TrainingNovelData:
+                _scriptableObjectName = "NovelEventData";
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
                 GenerateNovelEventData(parseCsvData);
                 break;
             case DataType.BranchTrainingEventData:
+                _scriptableObjectName = "BranchTrainingEventData";
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 GenerateBranchTrainingEventData(parseCsvData);
                 break;
-        }
+            case DataType.CharacterEventData:
+                _scriptableObjectName = "CharacterEventData";
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                break;
+            case DataType.CharacterBranchEventData:
+                _scriptableObjectName = "CharacterBranchEventData";
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                break;
+            case DataType.CharacterNovelData:
+                _scriptableObjectName = "CharacterNovelData";
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
+                break;
+            case DataType.SupportCardEventData:
+                _scriptableObjectName = "SupportCardEventData";
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                break;
+            case DataType.SupportCardBranchEventData:
+                _scriptableObjectName = "SupportCardBranchEventData";
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                break;
+            case DataType.SupportCardNovelData:
+                _scriptableObjectName = "SupportCardNovelData";
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
+                break;
+            case DataType.CharacterTrainingEventMap:
+                _scriptableObjectName = "CharacterTrainingEventMap";
+                _dataSaveFilePath = "Assets/MasterData/CharacterEventMap";
+                break;
+        } 
     }
 
     /// <summary> キャラクターのスクリプタブルオブジェクトを生成 </summary>

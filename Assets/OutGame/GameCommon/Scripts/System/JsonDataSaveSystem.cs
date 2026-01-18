@@ -59,14 +59,11 @@ public static class JsonDataSaveSystem
 
         if (File.Exists(streamingFilePath))
         {
-            Debug.Log("UNKO");
             // 非同期でバイト配列を読み込む
             byte[] encodeJson = await File.ReadAllBytesAsync(streamingFilePath);
 
             // 非同期でバイト配列を書き込む
             await File.WriteAllBytesAsync(persistentFilePath, encodeJson);
-
-            
         }
     }
 

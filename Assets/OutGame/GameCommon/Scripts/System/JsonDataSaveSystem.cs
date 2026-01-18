@@ -86,7 +86,7 @@ public static class JsonDataSaveSystem
         {
             // 非同期でバイト配列を読み込む
             byte[] encodeJson = await File.ReadAllBytesAsync(filePath);
-            string json = JsonDataSaveSystem.DecodeBytes(encodeJson);
+            string json = DecodeBytes(encodeJson);
             T loaded = JsonConvert.DeserializeObject<T>(json);
             return loaded;
         }

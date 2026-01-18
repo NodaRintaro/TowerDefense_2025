@@ -51,6 +51,7 @@ public class CharacterChanger : MonoBehaviour
     // キャラクターを順番に表示する
     public async void RandomCharacterPickUpView()
     {
+        if(_maxCharacterImageId == 0) return;
         _nowCharacterImageId++;
         while (!_jsonCharacterCollectionDataRepository.RepositoryData.TryGetCollection(
                    (uint)(_nowCharacterImageId % _maxCharacterImageId)))

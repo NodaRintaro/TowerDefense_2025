@@ -32,8 +32,7 @@ public class TowerDefenseJsonDataCreator : EditorWindow
     private async void OnEnable()
     {
         _dataBase = await JsonDataSaveSystem.DataLoadAsyncStreamingAssets<TowerDefenseCharacterDataBase>(JsonTowerDefenseCharacterDataRepository.SaveDataName);
-        if (_dataBase == default)
-            _dataBase = new TowerDefenseCharacterDataBase();
+        if (_dataBase == default) _dataBase = new TowerDefenseCharacterDataBase();
 
         _towerDefenseCharacterData = new TowerDefenseCharacterData();
 

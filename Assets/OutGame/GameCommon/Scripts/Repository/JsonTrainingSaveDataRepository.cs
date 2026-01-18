@@ -25,5 +25,4 @@ public class JsonTrainingSaveDataRepository : RepositoryBase<TrainingData>
             _repositoryData = new TrainingData();
         }
     }
-
 }

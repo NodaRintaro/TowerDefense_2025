@@ -663,7 +663,7 @@ PlayerSettings:
     QNX: DOTWEEN
     Server: UNITASK_DOTWEEN_SUPPORT
     Stadia: DOTWEEN
-    Standalone: DOTWEEN
+    Standalone: UNITASK_DOTWEEN_SUPPORT
     VisionOS: DOTWEEN
     WebGL: DOTWEEN
     Windows Store Apps: DOTWEEN

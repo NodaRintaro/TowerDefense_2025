@@ -7,7 +7,7 @@ public class PlayerUnitData : UnitData
     protected float _rePlaceInterval;         // 再出撃に必要な時間
     protected float _rePlaceTimer;            // 再出撃用タイマー
     
-    public PlayerUnitData(TrainedCharacterData trainedCharacterData)
+    public PlayerUnitData(TowerDefenseCharacterData trainedCharacterData)
     {
         _jobType = trainedCharacterData.CharacterRole;
         _group = GroupType.Player;

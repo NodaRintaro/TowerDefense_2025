@@ -15,5 +15,6 @@ public class DataInitializer : MonoBehaviour
         await JsonDataSaveSystem.DataInitialize(JsonCharacterCollectionDataRepository.SaveDataName);
         await JsonDataSaveSystem.DataInitialize(JsonSupportCardCollectionDataRepository.SaveDataName);
         await JsonDataSaveSystem.DataInitialize(JsonTowerDefenseCharacterDataRepository.SaveDataName);
+        await JsonDataSaveSystem.DataInitialize(JsonCharacterDeckDataRepository.SaveDataName);
     }
 }

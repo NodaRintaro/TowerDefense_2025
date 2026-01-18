@@ -1,10 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using TowerDefenseDeckData;
 using VContainer;
-using VContainer.Unity;
 using System.Threading;
-using UnityEngine;
-using System.Threading.Tasks;
 
 public class JsonCharacterDeckDataRepository : RepositoryBase<CharacterDeckDataRegistry>
 {

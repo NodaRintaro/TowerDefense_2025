@@ -38,7 +38,7 @@ public class UnitDeck
 
     void LoadDeckDataByMasterData(int deckIndex)
     {
-        CharacterDeckDataRegistry registry;
+        CharacterDeckDataBase registry;
         
     }
     public PlayerUnitData GetCharacterData(int index)

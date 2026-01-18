@@ -4,13 +4,11 @@ using TowerDefenseDeckData;
 using UnityEngine;
 using VContainer;
 
-public class TowerDefenseCharacterDeckPresenter : MonoBehaviour
+public class TowerDefenseDeckSelectPresenter : MonoBehaviour
 {
-    [SerializeField] private CharacterDeckData _currentSelectDeckData;
+    [SerializeField] private GameObject[] _selectDeckUI;
 
     private CharacterTeamBuildLifeTimeScope _lifeTimeScope;
-
-
 
     private JsonCharacterDeckDataRepository _jsonCharacterDeckDataRepository;
     private AddressableCharacterImageDataRepository _addressableCharacterImageDataRepository;
@@ -23,13 +21,5 @@ public class TowerDefenseCharacterDeckPresenter : MonoBehaviour
         _addressableCharacterImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterImageDataRepository>();
     }
 
-    private void OnEnable()
-    {
-        
-    }
 
-    private void SetDeckData()
-    {
-
-    }
 }

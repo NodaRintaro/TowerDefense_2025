@@ -49,18 +49,28 @@ public class CharacterChanger : MonoBehaviour
     }
 
     // キャラクターを順番に表示する
-    public async void RandomCharacterPickUpView()
+    public void RandomCharacterPickUpView()
     {
-        if(_maxCharacterImageId == 0) return;
-        _nowCharacterImageId++;
+        if (_maxCharacterImageId == 0) return;
         while (!_jsonCharacterCollectionDataRepository.RepositoryData.TryGetCollection(
-                   (uint)(_nowCharacterImageId % _maxCharacterImageId)))
+                   (uint)((_nowCharacterImageId % _maxCharacterImageId) + 1)))
         {
             _nowCharacterImageId++;
         }
 
         _characterImage.sprite =
-            _addressableCharacterImageDataRepository.GetSprite((uint)(_nowCharacterImageId % _maxCharacterImageId),
+            _addressableCharacterImageDataRepository.GetSprite(
+                (uint)((_nowCharacterImageId % _maxCharacterImageId) + 1),
                 CharacterSpriteType.OverAllView);
+        
+        _characterImage.rectTransform.pivot = new Vector2(
+            _characterImage.sprite.pivot.x / _characterImage.sprite.rect.width,
+            _characterImage.sprite.pivot.y / _characterImage.sprite.rect.height);
+    }
+
+    public void OnClickNextCharacter()
+    {
+        _nowCharacterImageId++;
+        RandomCharacterPickUpView();
     }
 }

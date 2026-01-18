@@ -27,5 +27,17 @@ public class HomeMenuLifeTimeScope : LifetimeScope
 
         //キャラクターの画像データのRepository
         builder.Register<AddressableCharacterImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //現在のキャラクターデータベース
+        builder.Register<TowerDefenseCharacterDataBase>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        
+        //キャラクターベースデータのRegistry
+        builder.Register<AddressableCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        
+        //ランク画像データのRepository
+        builder.Register<AddressableRankImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        
+        //職業画像データのRepository
+        builder.Register<AddressableCharacterJobImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

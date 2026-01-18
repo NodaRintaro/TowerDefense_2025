@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using static UnityEditor.LightingExplorerTableColumn;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -64,8 +65,61 @@ public class GenerateScriptableObjectMenu : EditorWindow
         return true;
     }
 
+    #region データ生成
     private async UniTask GenerateScriptableObject()
     {
+        switch (_dataType)
+        {
+            case DataType.CharacterData:
+                _dataSaveFilePath = "Assets/MasterData/CharacterData";
+                _scriptableObjectName = "CharacterDataRegistry";
+                break;
+            case DataType.SupportCard:
+                _dataSaveFilePath = "Assets/MasterData/SupportCard";
+                _scriptableObjectName = "SupportCardDataRegistry";
+                break;
+            case DataType.TrainingEventData:
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                _scriptableObjectName = "TrainingEventData";
+                break;
+            case DataType.TrainingNovelData:
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
+                _scriptableObjectName = "NovelEventData";
+                break;
+            case DataType.BranchTrainingEventData:
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                _scriptableObjectName = "BranchTrainingEventData";
+                break;
+            case DataType.CharacterEventData:
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                _scriptableObjectName = "CharacterEventData";
+                break;
+            case DataType.CharacterBranchEventData:
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                _scriptableObjectName = "CharacterBranchEventData";
+                break;
+            case DataType.CharacterNovelData:
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
+                _scriptableObjectName = "CharacterNovelData";
+                break;
+            case DataType.SupportCardEventData:
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                _scriptableObjectName = "SupportCardEventData";
+                break;
+            case DataType.SupportCardBranchEventData:
+                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                _scriptableObjectName = "SupportCardBranchEventData";
+                break;
+            case DataType.SupportCardNovelData:
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
+                _scriptableObjectName = "SupportCardNovelData";
+                break;
+            case DataType.CharacterTrainingEventMap:
+                _dataSaveFilePath = "Assets/MasterData/NovelData";
+                _scriptableObjectName = "CharacterTrainingEventMap";
+                break;
+        }
+
         using (UnityWebRequest request = UnityWebRequest.Get(_gasUrl))
         {
             await request.SendWebRequest();
@@ -91,7 +145,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
             }
         }
     }
+    #endregion
 
+    #region CSVデータの生成
     // CSVファイルに保存する
     private void SaveCsvFile(string data)
     {
@@ -167,67 +223,60 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         return array;
     }
+    #endregion
 
+    #region スクリプタブルオブジェクト生成
     public void DataGenerate(DataType dataType, string[,] parseCsvData)
     {
         switch(dataType)
         {
             case DataType.CharacterData:
                 _scriptableObjectName = "CharacterDataRegistry";
-                _dataSaveFilePath = "Assets/MasterData/CharacterData";
                 GenerateCharacterData(parseCsvData);
                 break;
             case DataType.SupportCard:
                 _scriptableObjectName = "SupportCardDataRegistry";
-                _dataSaveFilePath = "Assets/MasterData/SupportCard";
                 GenerateSupportCardData(parseCsvData);
                 break;
             case DataType.TrainingEventData:
                 _scriptableObjectName = "TrainingEventData";
-                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 GenerateTrainingEventData(parseCsvData);
                 break;
             case DataType.TrainingNovelData:
                 _scriptableObjectName = "NovelEventData";
-                _dataSaveFilePath = "Assets/MasterData/NovelData";
                 GenerateNovelEventData(parseCsvData);
                 break;
             case DataType.BranchTrainingEventData:
                 _scriptableObjectName = "BranchTrainingEventData";
-                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 GenerateBranchTrainingEventData(parseCsvData);
                 break;
             case DataType.CharacterEventData:
                 _scriptableObjectName = "CharacterEventData";
-                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
+                GenerateCharacterEventData(parseCsvData);
                 break;
             case DataType.CharacterBranchEventData:
                 _scriptableObjectName = "CharacterBranchEventData";
-                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 break;
             case DataType.CharacterNovelData:
                 _scriptableObjectName = "CharacterNovelData";
-                _dataSaveFilePath = "Assets/MasterData/NovelData";
                 break;
             case DataType.SupportCardEventData:
                 _scriptableObjectName = "SupportCardEventData";
-                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 break;
             case DataType.SupportCardBranchEventData:
                 _scriptableObjectName = "SupportCardBranchEventData";
-                _dataSaveFilePath = "Assets/MasterData/TrainingEventData";
                 break;
             case DataType.SupportCardNovelData:
                 _scriptableObjectName = "SupportCardNovelData";
-                _dataSaveFilePath = "Assets/MasterData/NovelData";
                 break;
             case DataType.CharacterTrainingEventMap:
                 _scriptableObjectName = "CharacterTrainingEventMap";
-                _dataSaveFilePath = "Assets/MasterData/CharacterEventMap";
                 break;
         } 
     }
+    #endregion
 
+    #region キャラクターデータ生成
     /// <summary> キャラクターのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたキャラクターのCSVデータ </param>
     private void GenerateCharacterData(string[,] parseCsvData)
@@ -260,7 +309,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
         characterDataList.InitData(characterBaseDataArray);
         AssetDataCreate(characterDataList);
     }
+    #endregion
 
+    #region サポートカードデータ生成
     /// <summary> サポートカードのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
     private void GenerateSupportCardData(string[,] parseCsvData)
@@ -298,7 +349,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
         supportCardDataRegistry.InitData(supportCardDataArray);
         AssetDataCreate(supportCardDataRegistry);
     }
+    #endregion
 
+    #region トレーニングイベントデータ生成
     /// <summary> トレーニングイベントのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
     private void GenerateTrainingEventData(string[,] parseCsvData)
@@ -341,50 +394,78 @@ public class GenerateScriptableObjectMenu : EditorWindow
         eventDataRegistry.InitData(eventDataArray);
         AssetDataCreate(eventDataRegistry);
     }
+    #endregion
 
+    #region キャラクターのトレーニングイベントデータ生成
     /// <summary> トレーニングイベントのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
     private void GenerateCharacterEventData(string[,] parseCsvData)
     {
-        const int firstColumnCountNum = 2;
         int csvDataLength = parseCsvData.GetLength(0);
-        TrainingEventDataRegistry eventDataRegistry = CreateInstance<TrainingEventDataRegistry>();
+        CharacterEventDataRegistry eventDataRegistry = CreateInstance<CharacterEventDataRegistry>();
 
-        TrainingEventData[] eventDataArray = new TrainingEventData[csvDataLength - firstColumnCountNum];
+        CharacterEventDataBase[] eventDataArray = null;
 
-
-        for (int columnCount = 2; columnCount < parseCsvData.GetLength(0); columnCount++)
+        int arrCount = 0;
+        for (int i = 1; i < csvDataLength; i++)
         {
-            TrainingEventData eventData = new();
+            if(!string.IsNullOrWhiteSpace(parseCsvData[i, 0]))
+                arrCount++;
+        }
+        eventDataArray = new CharacterEventDataBase[arrCount];
 
-            eventData.SetEventID(uint.Parse(parseCsvData[columnCount, 0]));
-            eventData.SetEventName(parseCsvData[columnCount, 1]);
-            eventData.SetNovelEventID(uint.Parse(parseCsvData[columnCount, 2]));
-            eventData.SetIsBranch(bool.Parse(parseCsvData[columnCount, 3]));
+        List<TrainingEventData> trainingEventDataList = null;
+        arrCount = 0;
+        for (int columnCount = 1; columnCount < parseCsvData.GetLength(0); columnCount++)
+        {
+            if (!string.IsNullOrWhiteSpace(parseCsvData[columnCount, 0]))
+            {
+                if(trainingEventDataList != null)
+                {
+                    eventDataArray[arrCount].SetEventData(trainingEventDataList.ToArray());
+                }
 
-            eventData.SetBranchType(
-                (EventBranchWay)Enum.Parse(typeof(EventBranchWay),
-                parseCsvData[columnCount, 4]));
+                trainingEventDataList = new List<TrainingEventData>();
+                eventDataArray[arrCount] = new CharacterEventDataBase();
+                eventDataArray[arrCount].SetCharacterID(uint.Parse(parseCsvData[columnCount, 0]));
+                arrCount++;
+            }
+            else
+            {
+                TrainingEventData eventData = new();
 
-            eventData.SetBuffType(
-                (TrainingEventBuffType)Enum.Parse(typeof(TrainingEventBuffType),
-                parseCsvData[columnCount, 5]));
+                eventData.SetEventID(uint.Parse(parseCsvData[columnCount, 1]));
+                eventData.SetEventName(parseCsvData[columnCount, 2]);
+                eventData.SetNovelEventID(uint.Parse(parseCsvData[columnCount, 3]));
+                eventData.SetIsBranch(bool.Parse(parseCsvData[columnCount, 4]));
 
-            eventData.SetPhysicalBuff(int.Parse(parseCsvData[columnCount, 6]));
-            eventData.SetPowerBuff(int.Parse(parseCsvData[columnCount, 7]));
-            eventData.SetIntelligenceBuff(int.Parse(parseCsvData[columnCount, 8]));
-            eventData.SetSpeedBuff(int.Parse(parseCsvData[columnCount, 9]));
-            eventData.SetStaminaBuff(int.Parse(parseCsvData[columnCount, 10]));
-            eventData.SetSkillID(uint.Parse(parseCsvData[columnCount, 11]));
-            eventData.SetItemID(uint.Parse(parseCsvData[columnCount, 12]));
+                eventData.SetBranchType(
+                    (EventBranchWay)Enum.Parse(typeof(EventBranchWay),
+                    parseCsvData[columnCount, 5]));
 
-            eventDataArray[columnCount - firstColumnCountNum] = eventData;
+                eventData.SetBuffType(
+                    (TrainingEventBuffType)Enum.Parse(typeof(TrainingEventBuffType),
+                    parseCsvData[columnCount, 6]));
+
+                eventData.SetPhysicalBuff(int.Parse(parseCsvData[columnCount, 7]));
+                eventData.SetPowerBuff(int.Parse(parseCsvData[columnCount, 8]));
+                eventData.SetIntelligenceBuff(int.Parse(parseCsvData[columnCount, 9]));
+                eventData.SetSpeedBuff(int.Parse(parseCsvData[columnCount, 10]));
+                eventData.SetStaminaBuff(int.Parse(parseCsvData[columnCount, 11]));
+                eventData.SetSkillID(uint.Parse(parseCsvData[columnCount, 12]));
+                eventData.SetItemID(uint.Parse(parseCsvData[columnCount, 13]));
+
+                trainingEventDataList.Add(eventData);
+            }
         }
 
+        eventDataArray[arrCount].SetEventData(trainingEventDataList.ToArray());
         eventDataRegistry.InitData(eventDataArray);
         AssetDataCreate(eventDataRegistry);
     }
+    #endregion
 
+    #region 分岐イベント生成
     /// <summary> トレーニングイベントのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
     private void GenerateBranchTrainingEventData(string[,] parseCsvData)
@@ -432,7 +513,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
         eventDataRegistry.InitData(eventDataArray);
         AssetDataCreate(eventDataRegistry);
     }
+    #endregion
 
+    #region トレーニングイベントのシナリオデータ生成
     /// <summary> ノベルイベントのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたサポートカードのCSVデータ </param>
     private void GenerateNovelEventData(string[,] parseCsvData)
@@ -487,6 +570,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
         eventDataRegistry.InitData(eventDataArray.ToArray());
         AssetDataCreate(eventDataRegistry);
     }
+    #endregion
 
     private void AssetDataCreate(UnityEngine.Object data)
     {

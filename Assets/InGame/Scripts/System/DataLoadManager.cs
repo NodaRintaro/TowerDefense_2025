@@ -35,23 +35,11 @@ public class DataLoadManager : LifetimeScope
         //キャラクターの所有データのRepository
         builder.Register<JsonCharacterCollectionDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
-        //サポートカードの所有データのRepository
-        builder.Register<JsonSupportCardCollectionDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-
-        //トレーニング対象データのRepository
-        builder.Register<JsonTrainingSaveDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-
         //キャラクターデータのRepository
         builder.Register<AddressableCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
-        //サポートカードデータのRepository
-        builder.Register<AddressableSupportCardDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-
         //キャラクターの画像データのRepository
         builder.Register<AddressableCharacterImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-
-        //サポートカードの画像データのRepository
-        builder.Register<AddressableSupportCardImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //各ランクの画像データのRepository
         builder.Register<AddressableRankImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
@@ -67,5 +55,8 @@ public class DataLoadManager : LifetimeScope
 
         //分岐先のイベントデータのRepository
         builder.Register<AddressableBranchTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //
+        builder.Register<JsonTowerDefenseCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public static class JsonDataSaveSystem
 {
-    static readonly byte[] keys = { 0xfe, 0x80, 0xfe, 0x80 };
+    private static readonly byte[] keys = { 0xfe, 0x80, 0xfe, 0x80 };
 
     /// <summary> Pathを指定してDataを非同期でセーブする </summary>
     public static async UniTask DataSave<T>(T data, string saveDataName) where T : IJsonSaveData
@@ -51,6 +51,50 @@ public static class JsonDataSaveSystem
         return default(T);
     }
 
+    public static async UniTask DataInitialize(string dataName)
+    {
+        string streamingFilePath = Application.streamingAssetsPath + "/" + dataName + ".json";
+
+        string persistentFilePath = Application.persistentDataPath + "/" + dataName + ".json";
+
+        Debug.Log(streamingFilePath);
+        if (File.Exists(streamingFilePath) && !File.Exists(persistentFilePath))
+        {
+            Debug.Log("UNKO");
+            // 非同期でバイト配列を読み込む
+            byte[] encodeJson = await File.ReadAllBytesAsync(streamingFilePath);
+
+            // 非同期でバイト配列を書き込む
+            await File.WriteAllBytesAsync(persistentFilePath, encodeJson);
+        }
+    }
+
+    /// <summary> Pathを指定してDataを非同期でStreamingAssetsにセーブする </summary>
+    public static async UniTask DataSaveStreamingAssets<T>(T data, string saveDataName) where T : IJsonSaveData
+    {
+        string filePath = Application.streamingAssetsPath + "/" + saveDataName + ".json";
+        string json = JsonConvert.SerializeObject(data);
+        byte[] encodeJson = JsonDataSaveSystem.EncodeText(json);
+        // 非同期でバイト配列を書き込む
+        await File.WriteAllBytesAsync(filePath, encodeJson);
+    }
+
+    /// <summary> StreamingAssetsの保存先のパスからDataを非同期でLoadする</summary>
+    public static async UniTask<T> DataLoadAsyncStreamingAssets<T>(string saveDataName) where T : IJsonSaveData
+    {
+        string filePath = Application.streamingAssetsPath + "/" + saveDataName + ".json";
+
+        if (File.Exists(filePath))
+        {
+            // 非同期でバイト配列を読み込む
+            byte[] encodeJson = await File.ReadAllBytesAsync(filePath);
+            string json = JsonDataSaveSystem.DecodeBytes(encodeJson);
+            T loaded = JsonConvert.DeserializeObject<T>(json);
+            return loaded;
+        }
+        return default(T);
+    }
+
     public static void DataDelete(string saveDataName)
     {
         string filePath = Application.persistentDataPath + "/" + saveDataName + ".json";
@@ -72,7 +116,7 @@ public static class JsonDataSaveSystem
     }
 
     /// <summary> 難読化したテキストを復元 </summary>
-    private static string DecodeBytes(byte[] byteArray)
+    public static string DecodeBytes(byte[] byteArray)
     {
         DecodeEncode(ref byteArray);
         return Encoding.UTF8.GetString(byteArray);
@@ -86,4 +130,6 @@ public static class JsonDataSaveSystem
             byteArray[i] ^= keys[i % 4];
         }
     }
+
+
 }

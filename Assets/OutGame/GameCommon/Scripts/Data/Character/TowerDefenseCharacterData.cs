@@ -17,6 +17,8 @@ public class TowerDefenseCharacterData : CharacterBaseData
     [SerializeField, Header("素早さ増加値")]
     private uint _addSpeed;
 
+    //ToDo:Skill
+
     #region 増加値の参照用プロパティ
     public uint AddPhysical => _addPhysical;
     public uint AddPower => _addPower;
@@ -29,6 +31,7 @@ public class TowerDefenseCharacterData : CharacterBaseData
     public override uint TotalPower => _addPower + _basePower;
     public override uint TotalIntelligence => _baseIntelligence;
     public override uint TotalSpeed => _addSpeed + _baseSpeed;
+    public uint TotalParameter => TotalPhysical + TotalPower + TotalIntelligence + TotalSpeed;
     #endregion
 
     public void SetCharacterTrainedParameterData(uint setPhysi, uint setPow, uint setInt, uint setSp)

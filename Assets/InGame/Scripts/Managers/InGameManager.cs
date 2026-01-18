@@ -5,6 +5,9 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using TowerDefenseDeckData;
+using VContainer;
+using VContainer.Unity;
+
 public class InGameManager : MonoBehaviour
 {
     private static InGameManager _instance;
@@ -21,7 +24,9 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _remainingEnemyText;   //残りの敵の数のText
     [SerializeField] private TextMeshProUGUI _coinText;             //コインのText
     [SerializeField] public StageData stageData;                    //ステージのデータ
-    public CharacterDeckData _deckData;                             //キャラクターの編成データ
+    [SerializeField] private DataLoadManager _dataLoadManager;
+    private DeckDataLoader _deckDataLoader;                         //キャラクターの編成データの読み込みクラス
+    private DataLoadCompleteNotifier _loadingNotifier;
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
     private Cell _selectedCell;                                     //選択中のセル
@@ -35,7 +40,7 @@ public class InGameManager : MonoBehaviour
     private int _remainingEnemyNums = 0;                            //残りの敵の数
     private int _maxEnemyNums = 0;                                  //敵の数
     private float _coinTimer = 0;
-    private int coins = 0;
+    private int _coins = 0;
     private float _coinInterval = 1;
     private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
@@ -98,9 +103,15 @@ public class InGameManager : MonoBehaviour
             _instance = this;
         else
             Destroy(gameObject);
+        
+        _loadingNotifier = _dataLoadManager.Container.Resolve<DataLoadCompleteNotifier>();
+        _loadingNotifier.OnDataLoadComplete += StartGameFlow;
+        if (_loadingNotifier.IsLoadCompleted)
+        {
+            StartGameFlow();
+        }
     }
-
-    private void Start()
+    private void StartGameFlow()
     {
         //_unitDeck = new UnitDeck(_deckData);
         //アイコンの生成
@@ -110,6 +121,8 @@ public class InGameManager : MonoBehaviour
         // Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
         _ = StageInitialize();
 
+        
+        
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
         OnPreviousTimeUpdated += _unitDeck.UpdateTime;
@@ -181,6 +194,28 @@ public class InGameManager : MonoBehaviour
 
     #endregion
 
+    private void LoadDeckData()
+    {
+        CharacterDeckData deckData = DeckDataLoader.GetDeck();
+        TowerDefenseCharacterData[] trainedDatas = new TowerDefenseCharacterData[deckData.trainedCharacterDeck.Length];
+        for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
+        {
+            JsonCharacterDeckDataRepository data = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
+            if (data == null)
+            {
+                Debug.Log("JsonCharacterDeckDataRepository IS NULL");
+                return;
+            }
+            data.RepositoryData
+        }
+
+        for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
+        {
+            
+        }
+        _unitDeck = new UnitDeck(trainedDatas);
+    }
+
     #region UI Functions
 
     //アイコンを押下した時に呼び出される関数
@@ -232,15 +267,15 @@ public class InGameManager : MonoBehaviour
             Destroy(_selectedCharacterObj);
             return;
         }
-        PlaceCharacter();
+        PlaceCharacter(_unitDeck.GetCharacterData(1));
         OnExitCell();
     }
 
-    private void PlaceCharacter()
+    private void PlaceCharacter(PlayerUnitData unitData)
     {
-        //if () return;
+        if (unitData.Cost > _coins) return;
         UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
-        unit.UnitData = _unitDeck.GetCharacterData(_selectedCharacterID);
+        unit.UnitData = unitData;
         unit.Init();
 
         _selectedCell.SetCharacter(_selectedCharacterObj);
@@ -271,6 +306,11 @@ public class InGameManager : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
+        if (_unitDeck.Count == 0)
+        {
+            Debug.Log("Deckが設定されていません");
+            return;
+        }
         for (int i = 0; i < _unitDeck.Count; i++)
         {
             CharacterIcon characterIcon =
@@ -468,8 +508,8 @@ public class InGameManager : MonoBehaviour
     }
     public void GenerateCoin(int count)
     {
-        coins += count;
-        _coinText.text = $"Coins: {coins}";
+        _coins += count;
+        _coinText.text = $"Coins: {_coins}";
     }
 }
 public enum playerState

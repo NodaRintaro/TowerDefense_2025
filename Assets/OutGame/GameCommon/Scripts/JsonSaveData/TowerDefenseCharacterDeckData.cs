@@ -4,9 +4,11 @@ using UnityEngine;
 namespace TowerDefenseDeckData
 {
     [Serializable]
-    public class CharacterDeckDataRegistry : IJsonSaveData
+    public class CharacterDeckDataBase : IJsonSaveData
     {
         [SerializeField] private CharacterDeckData[] _characterDeckHolder = new CharacterDeckData[_deckMaxNum];
+
+        public const string SaveDataName = "CharacterDeckData";
 
         private int _currentDefaultDeckNum = 0;
 
@@ -22,7 +24,7 @@ namespace TowerDefenseDeckData
 
         public CharacterDeckData GetData(int deckNum)
         {
-            return _characterDeckHolder[_deckMaxNum];
+            return _characterDeckHolder[deckNum];
         }
 
         public void ChangeDefaultDeck(int deckNum)

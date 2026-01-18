@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class TowerDefenseCharacterDataBase : IJsonSaveData
 {
     /// <summary> key = BaseCharacterID, Value = 同じベースキャラクターの配列 </summary>

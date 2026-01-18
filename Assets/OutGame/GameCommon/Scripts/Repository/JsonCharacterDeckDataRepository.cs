@@ -3,7 +3,7 @@ using TowerDefenseDeckData;
 using VContainer;
 using System.Threading;
 
-public class JsonCharacterDeckDataRepository : RepositoryBase<CharacterDeckDataRegistry>
+public class JsonCharacterDeckDataRepository : RepositoryBase<CharacterDeckDataBase>
 {
     [Inject]
     public JsonCharacterDeckDataRepository() { }
@@ -17,6 +17,6 @@ public class JsonCharacterDeckDataRepository : RepositoryBase<CharacterDeckDataR
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
-        _repositoryData = await JsonDataSaveSystem.DataLoadAsync<CharacterDeckDataRegistry>(SaveDataName);
+        _repositoryData = await JsonDataSaveSystem.DataLoadAsync<CharacterDeckDataBase>(SaveDataName);
     }
 }

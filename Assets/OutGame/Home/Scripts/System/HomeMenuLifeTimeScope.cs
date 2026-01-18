@@ -39,5 +39,8 @@ public class HomeMenuLifeTimeScope : LifetimeScope
         
         //職業画像データのRepository
         builder.Register<AddressableCharacterJobImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        
+        //キャラクター編成データのRepository
+        builder.Register<JsonCharacterDeckDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

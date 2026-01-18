@@ -16,6 +16,11 @@ public class UnitDeck
         _canPlaceCharacter = new bool[trainedCharacterDatas.Length];
         for(int i = 0; i < _canPlaceCharacter.Length; i++){_canPlaceCharacter[i] = true;}
     }
+
+    public UnitDeck(CharacterDeckData deckData)
+    {
+        //deckData.trainedCharacterDeck
+    }
     public void UpdateTime(float time)
     {
         for (int i = 0; i < _unitDatas.Length; i++)
@@ -36,7 +41,7 @@ public class UnitDeck
         CharacterDeckDataRegistry registry;
         
     }
-    public UnitData GetCharacterData(int index)
+    public PlayerUnitData GetCharacterData(int index)
     {
         return _unitDatas[index];
     }

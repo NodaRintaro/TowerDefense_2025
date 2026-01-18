@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -198,15 +198,14 @@ public class InGameManager : MonoBehaviour
     {
         CharacterDeckData deckData = DeckDataLoader.GetDeck();
         TowerDefenseCharacterData[] trainedDatas = new TowerDefenseCharacterData[deckData.trainedCharacterDeck.Length];
+        JsonCharacterDeckDataRepository data = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
         for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
         {
-            JsonCharacterDeckDataRepository data = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
             if (data == null)
             {
                 Debug.Log("JsonCharacterDeckDataRepository IS NULL");
                 return;
             }
-            data.RepositoryData
         }
 
         for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)

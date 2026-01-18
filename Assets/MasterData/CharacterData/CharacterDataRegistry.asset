@@ -21,40 +21,40 @@ MonoBehaviour:
     _baseIntelligence: 50
     _baseSpeed: 70
     _roleType: 1
-    _cost: 5
+    _cost: 18
   - _characterID: 2
-    _characterName: "\u30BF\u30F3\u30AB\u30FC"
+    _characterName: "\u30C0\u30EA\u30EB"
     _baseRarity: 3
     _basePhysical: 90
     _basePower: 90
     _baseIntelligence: 35
     _baseSpeed: 40
     _roleType: 2
-    _cost: 10
+    _cost: 15
   - _characterID: 3
-    _characterName: "\u30DE\u30B8\u30B7\u30E3\u30F3"
+    _characterName: "\u30A2\u30EA\u30B5"
     _baseRarity: 3
     _basePhysical: 60
     _basePower: 10
     _baseIntelligence: 70
     _baseSpeed: 50
     _roleType: 3
-    _cost: 7
+    _cost: 25
   - _characterID: 4
-    _characterName: "\u72D9\u6483\u624B"
+    _characterName: "\u30E8\u30B7\u30E5\u30A2"
     _baseRarity: 3
     _basePhysical: 63
     _basePower: 50
     _baseIntelligence: 50
     _baseSpeed: 48
     _roleType: 4
-    _cost: 6
+    _cost: 22
   - _characterID: 5
-    _characterName: "\u795E\u5B98"
+    _characterName: "\u30E8\u30CF\u30F3"
     _baseRarity: 3
     _basePhysical: 70
     _basePower: 10
     _baseIntelligence: 60
     _baseSpeed: 45
     _roleType: 5
-    _cost: 7
+    _cost: 28

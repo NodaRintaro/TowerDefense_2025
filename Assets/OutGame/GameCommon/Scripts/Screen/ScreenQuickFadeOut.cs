@@ -17,7 +17,7 @@ public class ScreenQuickFadeOut : MonoBehaviour
         float screenWidth = Screen.width;
 
         // 次の画面をあらかじめ右側に待機させる
-        nextScreen.anchoredPosition = new Vector2(screenWidth, 0);
+        nextScreen.transform.position = new Vector2(screenWidth, 0);
 
         // 1. 現在の画面を左へ
         currentScreen.DOAnchorPos(new Vector2(-screenWidth, 0), 0.5f).SetEase(Ease.InCubic);

@@ -57,8 +57,7 @@ public static class JsonDataSaveSystem
 
         string persistentFilePath = Application.persistentDataPath + "/" + dataName + ".json";
 
-        Debug.Log(streamingFilePath);
-        if (File.Exists(streamingFilePath) && !File.Exists(persistentFilePath))
+        if (File.Exists(streamingFilePath))
         {
             Debug.Log("UNKO");
             // 非同期でバイト配列を読み込む
@@ -66,6 +65,8 @@ public static class JsonDataSaveSystem
 
             // 非同期でバイト配列を書き込む
             await File.WriteAllBytesAsync(persistentFilePath, encodeJson);
+
+            
         }
     }
 

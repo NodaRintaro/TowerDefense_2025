@@ -45,9 +45,9 @@ namespace TowerDefenseDeckData
     [Serializable]
     public class CharacterDeckData
     {
-        [SerializeField] private TowerDefenseCharacterData[] _trainedCharacterDeck = new TowerDefenseCharacterData[_deckLength];
+        [SerializeField] private TowerDefenseCharacterData[] _trainedCharacterDeck = new TowerDefenseCharacterData[DeckLength];
 
-        private const int _deckLength = 12;
+        public const int DeckLength = 12;
 
         public TowerDefenseCharacterData[] trainedCharacterDeck => _trainedCharacterDeck;
 

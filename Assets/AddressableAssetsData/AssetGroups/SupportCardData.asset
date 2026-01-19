@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 44fccdaa31f8b484c9c9ea61b09f6336
   m_SerializeEntries:
   - m_GUID: b13d321bb437c834caa2bce80fb138eb
-    m_Address: Assets/MasterData/SupportCard/SupportCardDataRegistry.asset
+    m_Address: Assets/MasterData/ScriptableObject/SupportCard/SupportCardDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

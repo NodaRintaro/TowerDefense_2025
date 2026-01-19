@@ -106,10 +106,6 @@ public class InGameManager : MonoBehaviour
         
         _loadingNotifier = _dataLoadManager.Container.Resolve<DataLoadCompleteNotifier>();
         _loadingNotifier.OnDataLoadComplete += StartGameFlow;
-        if (_loadingNotifier.IsLoadCompleted)
-        {
-            StartGameFlow();
-        }
     }
     private void StartGameFlow()
     {

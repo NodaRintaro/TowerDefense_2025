@@ -33,10 +33,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4768296052387762552}
-  - {fileID: 732549151431270976}
   - {fileID: 7055762329876568091}
   - {fileID: 3720153751847984251}
   - {fileID: 7346799372488739937}
+  - {fileID: 732549151431270976}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -139,10 +139,6 @@ PrefabInstance:
       propertyPath: _pageView
       value: 
       objectReference: {fileID: 8633212830617396916}
-    - target: {fileID: 8279735034167571267, guid: 7a8e8b14ae09d264d990f8be2e712585, type: 3}
-      propertyPath: _buttonGenerater
-      value: 
-      objectReference: {fileID: 1488531775866061191}
     - target: {fileID: 8279735034167571267, guid: 7a8e8b14ae09d264d990f8be2e712585, type: 3}
       propertyPath: _selectedCharacterView
       value: 
@@ -576,7 +572,8 @@ PrefabInstance:
       value: PageView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3107868415284526750, guid: 0320dd6b2c3f482458e4be31361934fc, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0320dd6b2c3f482458e4be31361934fc, type: 3}
@@ -585,17 +582,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2640132608953321116, guid: 0320dd6b2c3f482458e4be31361934fc, type: 3}
   m_PrefabInstance: {fileID: 3353258731365573852}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1488531775866061191 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4188761962012042587, guid: 0320dd6b2c3f482458e4be31361934fc, type: 3}
-  m_PrefabInstance: {fileID: 3353258731365573852}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4717ab2077ea7f46afd5e71ca65a0e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8633212830617396916 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6432968037997920872, guid: 0320dd6b2c3f482458e4be31361934fc, type: 3}
@@ -699,10 +685,6 @@ PrefabInstance:
       propertyPath: _pageView
       value: 
       objectReference: {fileID: 8633212830617396916}
-    - target: {fileID: 8605175589666352504, guid: 4d395320f82b8e24e857363eb24bae44, type: 3}
-      propertyPath: _buttonGenerater
-      value: 
-      objectReference: {fileID: 1488531775866061191}
     - target: {fileID: 8716703738023254070, guid: 4d395320f82b8e24e857363eb24bae44, type: 3}
       propertyPath: m_Name
       value: SupportCardSelectPage

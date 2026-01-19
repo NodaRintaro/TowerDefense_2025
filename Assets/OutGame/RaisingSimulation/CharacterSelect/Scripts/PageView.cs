@@ -10,8 +10,6 @@ public class PageView : MonoBehaviour
     [SerializeField, Header("ページを1つ進めるボタン")] private Button _nextPageButton;
     [SerializeField, Header("トレーニングを始めるボタン")] private Button _startTrainingButton;
 
-    [SerializeField, Header("PageUIの座標")] private RectTransform _pageBackPanel;
-
     [SerializeField, Header("キャラクター選択ページ")]
     private GameObject _characterSelectPageObj;
 
@@ -84,30 +82,20 @@ public class PageView : MonoBehaviour
     /// <summary> Pageの切り替え時のフェードアウトアニメーション </summary>
     private async UniTask PageFadeOutAnimation(RectTransform uiRectTransform)
     {
-        bool isCompleteAnim = false;
         Sequence seq = DOTween.Sequence();
 
         SetTurnPageButtonsInteractable(false, false);
-        seq.Join(uiRectTransform.DOAnchorPosX(_fadeOutPagePosX, _fadeDuration).SetEase(_pageFadeOutEase));
-
-        seq.OnComplete(() => isCompleteAnim = true);
-
-        await UniTask.WaitUntil(() => isCompleteAnim);
+        await seq.Join(uiRectTransform.DOAnchorPosX(_fadeOutPagePosX, _fadeDuration).SetEase(_pageFadeOutEase));
     }
 
     /// <summary> Pageの切り替え時のフェードインアニメーション </summary>
     private async UniTask PageFadeInAnimation(RectTransform uiRectTransform)
     {
-        bool isCompleteAnim = false;
         Vector2 startPos = new Vector2(_fadeOutPagePosX, uiRectTransform.anchoredPosition.y);
         Sequence seq = DOTween.Sequence();
 
         uiRectTransform.anchoredPosition = startPos;
-        seq.Join(uiRectTransform.DOAnchorPosX(0f, _fadeDuration).SetEase(_pageFadeInEase));
-
-        seq.OnComplete(() => isCompleteAnim = true);
-
-        await UniTask.WaitUntil(() => isCompleteAnim);
+        await seq.Join(uiRectTransform.DOAnchorPosX(0f, _fadeDuration).SetEase(_pageFadeInEase));
     }
 
     /// <summary> キャラクター選択画面のページ切り替えボタンのInteractableの状態を変更する関数 </summary>

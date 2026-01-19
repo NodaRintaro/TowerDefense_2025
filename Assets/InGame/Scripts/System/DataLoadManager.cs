@@ -48,13 +48,13 @@ public class DataLoadManager : LifetimeScope
         builder.Register<AddressableCharacterJobImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //ノベルデータのRepository
-        builder.Register<AddressableNovelEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableTrainingEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //トレーニングイベントデータのRepository
         builder.Register<AddressableTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //分岐先のイベントデータのRepository
-        builder.Register<AddressableBranchTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableTrainingBranchEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //
         builder.Register<JsonTowerDefenseCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();

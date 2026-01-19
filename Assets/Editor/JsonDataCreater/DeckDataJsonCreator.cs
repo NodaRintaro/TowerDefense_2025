@@ -29,6 +29,6 @@ public class DeckDataJsonCreator : EditorWindow
 
     private async UniTask CreateJsonData()
     {
-        await JsonDataSaveSystem.DataSaveStreamingAssets(_dataBase, CharacterDeckDataBase.SaveDataName);
+        await JsonDataSaveSystem.DataSaveStreamingAssets(_dataBase, JsonCharacterDeckDataRepository.SaveDataName);
     }
 }

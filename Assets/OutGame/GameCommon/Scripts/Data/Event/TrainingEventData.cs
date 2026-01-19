@@ -5,7 +5,7 @@ using System;
 [Serializable]
 public class TrainingEventData : ITrainingEventData
 {
-    [Header("トレーニングイベントのID")]
+    [Header("イベントのID")]
     [SerializeField] private uint _trainingEventID = 0;
 
     [Header("イベントの名前")]
@@ -19,6 +19,9 @@ public class TrainingEventData : ITrainingEventData
 
     [Header("シナリオの分岐方法")]
     [SerializeField] private EventBranchWay _branchType = EventBranchWay.None;
+
+    [Header("このイベントが分岐先のイベントの場合の分岐条件")]
+    [SerializeField] private EventBranchType _eventBranchType = EventBranchType.None;
 
     [Header("Buffの種類")]
     [SerializeField] private TrainingEventBuffType _buffType = TrainingEventBuffType.None;
@@ -43,6 +46,7 @@ public class TrainingEventData : ITrainingEventData
     public uint NovelEventID => _novelEventID;
     public bool IsBranch => _isBrunchScenario;
     public EventBranchWay BranchType => _branchType;
+    public EventBranchType EventBranchType => _eventBranchType;
     public TrainingEventBuffType BuffType => _buffType;
     public int PowerBaseBuff => _powerBaseBuff;
     public int IntelligenceBaseBuff => _intelligenceBaseBuff;
@@ -57,7 +61,8 @@ public class TrainingEventData : ITrainingEventData
     public void SetEventName(string eventName) { _eventName = eventName; }
     public void SetNovelEventID(uint id) { _novelEventID = id; }
     public void SetIsBranch(bool isBranch) { _isBrunchScenario = isBranch; }
-    public void SetBranchType(EventBranchWay type) { _branchType = type; }
+    public void SetBranchWay(EventBranchWay type) { _branchType = type; }
+    public void SetBranchType(EventBranchType eventBranchType) {  _eventBranchType = eventBranchType; }
     public void SetBuffType(TrainingEventBuffType trainingEventBuffType) {  _buffType = trainingEventBuffType; }
     public void SetPowerBuff(int buff) { _powerBaseBuff = buff; }
     public void SetIntelligenceBuff(int buff) { _intelligenceBaseBuff = buff; }

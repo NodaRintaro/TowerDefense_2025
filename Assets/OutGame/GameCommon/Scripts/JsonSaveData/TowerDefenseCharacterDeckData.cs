@@ -8,8 +8,6 @@ namespace TowerDefenseDeckData
     {
         [SerializeField] private CharacterDeckData[] _characterDeckHolder = new CharacterDeckData[_deckMaxNum];
 
-        public const string SaveDataName = "CharacterDeckData";
-
         private int _currentDefaultDeckNum = 0;
 
         private const int _deckMaxNum = 5;

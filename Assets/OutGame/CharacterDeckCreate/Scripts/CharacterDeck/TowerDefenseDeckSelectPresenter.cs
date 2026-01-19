@@ -21,5 +21,8 @@ public class TowerDefenseDeckSelectPresenter : MonoBehaviour
         _addressableCharacterImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterImageDataRepository>();
     }
 
-
+    public void SetDeckData()
+    {
+        
+    }
 }

@@ -59,9 +59,9 @@ public class SaveDataDebugger : EditorWindow
         SupportCardCollectionData supportCardCollectionData = new SupportCardCollectionData();
 
         CharacterBaseDataRegistry characterBaseDataRegistry = 
-            await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(AAGCharacterData.kAssets_MasterData_CharacterData_CharacterDataRegistry);
+            await AssetsLoader.LoadAssetAsync<CharacterBaseDataRegistry>(AAGCharacterData.kAssets_MasterData_ScriptableObject_CharacterData_CharacterDataRegistry);
         SupportCardDataRegistry supportCardDataRegistry = 
-            await AssetsLoader.LoadAssetAsync<SupportCardDataRegistry>(AAGSupportCardData.kAssets_MasterData_SupportCard_SupportCardDataRegistry);
+            await AssetsLoader.LoadAssetAsync<SupportCardDataRegistry>(AAGSupportCardData.kAssets_MasterData_ScriptableObject_SupportCard_SupportCardDataRegistry);
 
         if(characterBaseDataRegistry != null)
         {

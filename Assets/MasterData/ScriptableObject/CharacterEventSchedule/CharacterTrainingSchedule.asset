@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98e8e5708a1ff9418b4c036c2ae233d, type: 3}
+  m_Name: CharacterTrainingSchedule
+  m_EditorClassIdentifier: 
+  _dataHolder:
+  - _characterID: 1
+    _trainingEventSchedule:
+    - IsRaid: 0
+      FirstUniqueEvent: 1
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 2
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 3
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 1
+      FirstUniqueEvent: 4
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 5
+  - _characterID: 2
+    _trainingEventSchedule:
+    - IsRaid: 0
+      FirstUniqueEvent: 1
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 2
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 3
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 1
+      FirstUniqueEvent: 4
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 5

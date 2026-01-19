@@ -38,14 +38,14 @@ public class CharacterParameterUI
         // スライダーのアニメーション
         _parameterUI.ParameterGage.maxValue = nextRankValue - currentRankMinValue;
         var sliderCompletionSource = new UniTaskCompletionSource();
-        _parameterUI.ParameterGage.DOValue(newParam - currentRankMinValue, _duration)
+        await _parameterUI.ParameterGage.DOValue(newParam - currentRankMinValue, _duration)
             .SetEase(Ease.OutQuad)
             .OnComplete(() => sliderCompletionSource.TrySetResult());
         var sliderTask = sliderCompletionSource.Task;
 
         // テキストのカウントアップアニメーション
         var textAnimationCompletionSource = new UniTaskCompletionSource();
-        DOTween.To(() => _currentParamValue, x => _currentParamValue = x, newParam, _duration)
+        await DOTween.To(() => _currentParamValue, x => _currentParamValue = x, newParam, _duration)
             .OnUpdate(() =>
             {
                 _parameterUI.ParamText.text =
@@ -57,7 +57,7 @@ public class CharacterParameterUI
 
         // テキストの強調アニメーション
         var textScaleCompletionSource = new UniTaskCompletionSource();
-        _parameterUI.ParamText.transform.DOScale(1.2f, 0.1f)
+        await _parameterUI.ParamText.transform.DOScale(1.2f, 0.1f)
             .SetLoops(2, LoopType.Yoyo)
             .OnComplete(() => textScaleCompletionSource.TrySetResult());
         var textScaleTask = textScaleCompletionSource.Task;

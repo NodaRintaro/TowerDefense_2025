@@ -12,9 +12,6 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     [SerializeField, Header("選択したキャラクターのView")]
     private CharacterInformationView _selectedCharacterView;
 
-    [SerializeField, Header("キャラクターを選択するボタンの生成クラス")]
-    private ButtonGenerator _buttonGenerator;
-
     [SerializeField, Header("PageView")]
     private PageView _pageView;
 
@@ -22,6 +19,7 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     private Transform _characterSelectButtonParent;
 
     private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
+    private ButtonGenerator _buttonGenerator;
 
     #region DataClass
     private JsonCharacterCollectionDataRepository _characterCollectionDataRepository;
@@ -32,6 +30,7 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
 
     private void Awake()
     {
+        _buttonGenerator = FindFirstObjectByType<ButtonGenerator>();
         _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
 
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();

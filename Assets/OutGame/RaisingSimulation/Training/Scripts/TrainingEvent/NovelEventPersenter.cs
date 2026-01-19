@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using NovelData;
+using ScenarioData;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +25,7 @@ public class NovelEventPersenter : MonoBehaviour
 
     //現在のシナリオデータ
     private ITrainingEventData _currentTrainingEventData = null;
-    private NovelEventData _currentNovelEventData = null;
+    private ScenarioData.ScenarioData _currentNovelEventData = null;
 
     //現在のページ
     private uint _currentPage = 0;
@@ -40,8 +40,8 @@ public class NovelEventPersenter : MonoBehaviour
 
     private JsonTrainingSaveDataRepository _jsonTrainingSaveData;
     private AddressableTrainingEventDataRepository _addressableTrainingEventDataRepository;
-    private AddressableNovelEventDataRepository _addressableNovelEventDataRepository;
-    private AddressableBranchTrainingEventDataRepository _trainingBranchEventDataRepository;
+    private AddressableTrainingEventScenarioDataRepository _addressableNovelEventDataRepository;
+    private AddressableTrainingBranchEventDataRepository _trainingBranchEventDataRepository;
     private AddressableCharacterDataRepository _addressableCharacterDataRepository;
     private AddressableCharacterImageDataRepository _characterImageDataRepository;
 
@@ -52,8 +52,8 @@ public class NovelEventPersenter : MonoBehaviour
         _trainingCharacterParameterTotalBuffCalculator = _lifeTimeScope.Container.Resolve<ParameterBuffCalculator>();
         _jsonTrainingSaveData = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
         _addressableTrainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingEventDataRepository>();
-        _addressableNovelEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableNovelEventDataRepository>();
-        _trainingBranchEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableBranchTrainingEventDataRepository>();
+        _addressableNovelEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingEventScenarioDataRepository>();
+        _trainingBranchEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingBranchEventDataRepository>();
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
         _characterImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterImageDataRepository>();
 
@@ -70,7 +70,7 @@ public class NovelEventPersenter : MonoBehaviour
     public void SetNovelEvent(TrainingEventData trainingEventData)
     {
         _currentTrainingEventData = trainingEventData;
-        _currentNovelEventData = _addressableNovelEventDataRepository.RepositoryData.GetData(_currentTrainingEventData.NovelEventID);
+        //_currentNovelEventData = _addressableNovelEventDataRepository.RepositoryData.GetData(_currentTrainingEventData.NovelEventID);
         _currentPage = 0;
         _trainingEventPlayerAction = NovelEventPlayerAction.ReadScenario;
     }
@@ -177,17 +177,17 @@ public class NovelEventPersenter : MonoBehaviour
     private void BranchTrainingEvent()
     {
         EventBranchType trainingResult = _trainingSuccessDecider.TrySuccessTrainingEvent(_jsonTrainingSaveData.RepositoryData.CurrentStamina);
-        List<BranchTrainingEventData> branchTrainingEventDataList = _trainingBranchEventDataRepository.RepositoryData.GetBranchEvents(_currentTrainingEventData.EventID);
+        //List<TrainingEventData> branchTrainingEventDataList = _trainingBranchEventDataRepository.RepositoryData.GetBranchRouteEvent(_currentTrainingEventData.EventID);
 
-        StartBranchNovelEvent(FindBranchTrainingData(trainingResult, branchTrainingEventDataList));
+        //StartBranchNovelEvent(FindBranchTrainingData(trainingResult, branchTrainingEventDataList));
     }
 
     /// <summary> 分岐先のイベントを探す処理 </summary>
-    private BranchTrainingEventData FindBranchTrainingData(EventBranchType trainingBranch, List<BranchTrainingEventData> branchTrainingList)
+    private TrainingEventData FindBranchTrainingData(EventBranchType trainingBranch, List<TrainingEventData> branchTrainingList)
     {
         foreach (var trainingEvent in branchTrainingList)
         {
-            if (trainingEvent.TrainingEventBranchType == trainingBranch)
+            if (trainingEvent.EventBranchType == trainingBranch)
             {
                 return trainingEvent;
             }
@@ -198,12 +198,12 @@ public class NovelEventPersenter : MonoBehaviour
     /// <summary> 分岐選択ボタンの生成 </summary>
     private void BranchEventSelectButtonGenerate()
     {
-        List<BranchTrainingEventData> branchTrainingEventDataList = _trainingBranchEventDataRepository.RepositoryData.GetBranchEvents(_currentTrainingEventData.EventID);
-        foreach (var trainingEvent in branchTrainingEventDataList)
-        {
-            Button button = _branchEventSelectButtonView.GenerateSelectButton(trainingEvent.EventName);
-            button.onClick.AddListener(() => OnclickEventSelectButtonEvent(trainingEvent));
-        }
+        //List<TrainingEventData> branchTrainingEventDataList = _trainingBranchEventDataRepository.RepositoryData.GetBranchRouteEvent(_currentTrainingEventData.EventID);
+        //foreach (var trainingEvent in branchTrainingEventDataList)
+        //{
+        //    Button button = _branchEventSelectButtonView.GenerateSelectButton(trainingEvent.EventName);
+        //    button.onClick.AddListener(() => OnclickEventSelectButtonEvent(trainingEvent));
+        //}
     }
 
     /// <summary> 分岐選択ボタンを押した際の処理 </summary>
@@ -217,7 +217,7 @@ public class NovelEventPersenter : MonoBehaviour
     private void StartBranchNovelEvent(ITrainingEventData trainingEvent)
     {
         _currentTrainingEventData = trainingEvent;
-        _currentNovelEventData = _addressableNovelEventDataRepository.RepositoryData.GetData(_currentTrainingEventData.NovelEventID);
+        //_currentNovelEventData = _addressableNovelEventDataRepository.RepositoryData.GetData(_currentTrainingEventData.NovelEventID);
         _currentPage = 0;
     }
 

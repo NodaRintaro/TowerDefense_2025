@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class CharacterViewButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
 {
-    [SerializeField] Image _buttonImage;
-    [SerializeField] Color _normalColor;
-    [SerializeField] Color _highlightColor;
-    [SerializeField] Color _pressedColor;
-    [SerializeField] Color _selectedColor;
-    [SerializeField] Color _disabledColor;
+    [SerializeField] private Image _buttonImage;
+    [SerializeField] private Color _normalColor;
+    [SerializeField] private Color _highlightColor;
+    [SerializeField] private Color _pressedColor;
+    [SerializeField] private Color _selectedColor;
+    [SerializeField] private Color _disabledColor;
     
+    [SerializeField] private Image _numberImage;
     
     public event Action OnClick; 
     

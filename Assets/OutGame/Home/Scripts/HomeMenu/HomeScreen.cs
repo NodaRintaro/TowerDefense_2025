@@ -15,9 +15,13 @@ public class HomeScreen : ScreenBase
     [SerializeField] private ScreenQuickFadeOut _screenQuickFadeOut;
     [SerializeField] private GameObject _homeMenuUI;
     [SerializeField] private GameObject _characterListUI;
+    [SerializeField] private GameObject _teamBuildUI;
+    [SerializeField] private GameObject _selectCharacterUI;
     
     private RectTransform _homeMenuRectTransform;
     private RectTransform _characterListRectTransform;
+    private RectTransform _teamBuildUIRectTransform;
+    private RectTransform _selectCharacterUIRectTransform;
     private RectTransform _currentActiveUI;
 
     public async override UniTask FadeInScreen()
@@ -63,15 +67,33 @@ public class HomeScreen : ScreenBase
         _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _homeMenuRectTransform);
         _currentActiveUI = _homeMenuRectTransform;
     }
+    public void ChangeToTeamBuildScreen()
+    {
+        _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _teamBuildUIRectTransform);
+        _currentActiveUI = _teamBuildUIRectTransform;
+    }
+    
+    
+    public void ChangeToSelectCharacterScreen()
+    {
+        _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _selectCharacterUIRectTransform);
+        _currentActiveUI = _selectCharacterUIRectTransform;
+    }
 
     private void Start()
     {
         _homeMenuUI.SetActive(true);
         _characterListUI.SetActive(true);
+        _teamBuildUI.SetActive(true);
+        _selectCharacterUI.SetActive(true);
         _characterListUI.SetActive(false);
+        _teamBuildUI.SetActive(false);
+        _selectCharacterUI.SetActive(false);
         
         _homeMenuRectTransform = _homeMenuUI.GetComponent<RectTransform>();
         _characterListRectTransform = _characterListUI.GetComponent<RectTransform>();
+        _teamBuildUIRectTransform = _teamBuildUI.GetComponent<RectTransform>();
+        _selectCharacterUIRectTransform = _selectCharacterUI.GetComponent<RectTransform>();
         _currentActiveUI = _homeMenuRectTransform;
     }
 }

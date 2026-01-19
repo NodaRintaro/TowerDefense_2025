@@ -47,7 +47,9 @@ public class CharacterListManager : MonoBehaviour
     private AddressableRankImageDataRepository _rankImageDataRegistry;
     private AddressableCharacterJobImageDataRepository _characterJobImageDataRegistry;
     private AddressableCharacterDataRepository _characterBaseDataRegistry;
-    List<GameObject> _characterListView = new List<GameObject>();
+    private Dictionary<uint, GameObject> _characterListView = new Dictionary<uint, GameObject>();
+    
+    public Dictionary<uint, GameObject> CharacterListView => _characterListView;
 
     private async void Awake()
     {
@@ -65,11 +67,6 @@ public class CharacterListManager : MonoBehaviour
             _homeMenuLifeTimeScope.Container.Resolve<AddressableCharacterJobImageDataRepository>();
         _characterBaseDataRegistry =
             _homeMenuLifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
-
-        await _jsonCharacterCollectionDataRepository.DataLoadAsync(cancellationTokenSource.Token);
-        await _addressableCharacterImageDataRepository.DataLoadAsync(cancellationTokenSource.Token);
-        await _characterJobImageDataRegistry.DataLoadAsync(cancellationTokenSource.Token);
-        await _characterBaseDataRegistry.DataLoadAsync(cancellationTokenSource.Token);
         
     }
 
@@ -95,7 +92,8 @@ public class CharacterListManager : MonoBehaviour
             {
                 ViewDetail(characterID);
             };
-            _characterListView.Add(obj);
+            obj.GetComponent<SelectCharacterHaveData>().SetCharacterId(characterID);
+            _characterListView.Add(characterID, obj);
         }
         ViewDetail(1);
     }

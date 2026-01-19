@@ -15,11 +15,11 @@ public class AddressableSupportCardImageDataRepository : RepositoryBase<SupportC
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
-        _repositoryData = await AssetsLoader.LoadAssetAsync<SupportCardImageDataRegistry>(AAGSupportCardSprite.kAssets_MasterData_ScriptableObject_ImageData_SupportCardImageDataRegistry);
+        _repositoryData = await AssetsLoader.LoadAssetAsync<SupportCardImageDataRegistry>(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_SupportCardImageDataRegistry);
     }
 
     public void DataRelease()
     {
-        AssetsLoader.Release(AAGSupportCardSprite.kAssets_MasterData_ScriptableObject_ImageData_SupportCardImageDataRegistry);
+        AssetsLoader.Release(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_SupportCardImageDataRegistry);
     }
 }

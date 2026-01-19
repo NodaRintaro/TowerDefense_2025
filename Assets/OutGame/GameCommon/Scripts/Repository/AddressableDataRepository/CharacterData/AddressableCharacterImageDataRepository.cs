@@ -21,11 +21,11 @@ public class AddressableCharacterImageDataRepository : RepositoryBase<CharacterI
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
-        _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterImageDataRegistry>(AAGCharacterSprite.kAssets_MasterData_ScriptableObject_ImageData_CharacterImageDataRegistry);
+        _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterImageDataRegistry>(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_CharacterImageDataRegistry);
     }
 
     public void DataRelease()
     {
-        AssetsLoader.Release(AAGCharacterSprite.kAssets_MasterData_ScriptableObject_ImageData_CharacterImageDataRegistry);
+        AssetsLoader.Release(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_CharacterImageDataRegistry);
     }
 }

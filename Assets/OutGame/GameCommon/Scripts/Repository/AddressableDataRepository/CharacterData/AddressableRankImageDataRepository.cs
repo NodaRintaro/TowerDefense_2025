@@ -19,11 +19,11 @@ public class AddressableRankImageDataRepository : RepositoryBase<RankImageDataRe
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
-        _repositoryData = await AssetsLoader.LoadAssetAsync<RankImageDataRegistry>(AAGRankSprite.kAssets_MasterData_ScriptableObject_ImageData_RankImageDataRegistry);
+        _repositoryData = await AssetsLoader.LoadAssetAsync<RankImageDataRegistry>(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_RankImageDataRegistry);
     }
 
     public void DataRelease()
     {
-        AssetsLoader.Release(AAGRankSprite.kAssets_MasterData_ScriptableObject_ImageData_RankImageDataRegistry);
+        AssetsLoader.Release(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_RankImageDataRegistry);
     }
 }

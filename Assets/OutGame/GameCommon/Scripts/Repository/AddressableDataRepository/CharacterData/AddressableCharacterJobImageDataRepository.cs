@@ -19,11 +19,11 @@ public class AddressableCharacterJobImageDataRepository : RepositoryBase<Charact
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
-        _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterJobImageDataRegistry>(AAGJobSprite.kAssets_MasterData_ScriptableObject_ImageData_CharacterJobImageDataRegistry);
+        _repositoryData = await AssetsLoader.LoadAssetAsync<CharacterJobImageDataRegistry>(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_CharacterJobImageDataRegistry);
     }
 
     public void DataRelease()
     {
-        AssetsLoader.Release(AAGJobSprite.kAssets_MasterData_ScriptableObject_ImageData_CharacterJobImageDataRegistry);
+        AssetsLoader.Release(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_CharacterJobImageDataRegistry);
     }
 }

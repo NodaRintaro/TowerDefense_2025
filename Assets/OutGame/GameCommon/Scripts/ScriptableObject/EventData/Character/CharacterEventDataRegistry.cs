@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+/// <summary>
+/// キャラクターごとのイベントを保管するScriptableObject
+/// </summary>
 public class CharacterEventDataRegistry : DataRegistryBase<CharacterEventDataBase>
 {
     public CharacterEventDataBase GetData(int id)
@@ -21,6 +24,9 @@ public class CharacterEventDataRegistry : DataRegistryBase<CharacterEventDataBas
     }
 }
 
+/// <summary>
+/// キャラクター1種類分のイベントデータベース
+/// </summary>
 [Serializable]
 public class CharacterEventDataBase
 {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EventBranchType
 {
+    None,
     TrainingSuccess,
     TrainingFailed,
     Button,

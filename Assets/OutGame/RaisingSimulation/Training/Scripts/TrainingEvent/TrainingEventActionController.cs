@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using NovelData;
+using ScenarioData;
 using RaisingSimulationGameFlowStateMachine;
 using UnityEngine;
 using UnityEngine.EventSystems;

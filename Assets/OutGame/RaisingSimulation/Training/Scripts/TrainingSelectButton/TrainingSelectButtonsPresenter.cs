@@ -28,7 +28,7 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
     private RaisingSimulationLifeTimeScope _lifeTimeScope;
     private JsonTrainingSaveDataRepository _trainingDataRepository;
     private AddressableTrainingEventDataRepository _trainingEventDataRepository;
-    private AddressableBranchTrainingEventDataRepository _branchTrainingEventDataRepository;
+    private AddressableTrainingBranchEventDataRepository _branchTrainingEventDataRepository;
 
     public void Awake()
     {
@@ -37,7 +37,7 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         _trainingDataRepository = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
         _trainingEventPool = _lifeTimeScope.Container.Resolve<TrainingEventPool>();
         _trainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingEventDataRepository>();
-        _branchTrainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableBranchTrainingEventDataRepository>();
+        _branchTrainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingBranchEventDataRepository>();
     }
 
     public void OnEnable()
@@ -80,10 +80,10 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
     {
         ITrainingEventData eventData = null;
 
-        if (_trainingEventDataRepository.RepositoryData.GetData(id).IsBranch)
-            eventData = FindSuccessTrainingBranchEvent((uint)id);
-        else
-            eventData = _trainingEventDataRepository.RepositoryData.GetData(id);
+        //if (_trainingEventDataRepository.RepositoryData.GetData(id).IsBranch)
+        //    eventData = FindSuccessTrainingBranchEvent((uint)id);
+        //else
+        //    eventData = _trainingEventDataRepository.RepositoryData.GetData(id);
 
         if (eventData.StaminaBaseBuff > 0)
             _staminaSlider.ShowIncreasePrediction((uint)eventData.StaminaBaseBuff);
@@ -98,17 +98,19 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
     /// <summary> トレーニングイベントの成功時のデータを返す </summary>
     private ITrainingEventData FindSuccessTrainingBranchEvent(uint id)
     {
-        TrainingEventData trainingEventData = _trainingEventDataRepository.RepositoryData.GetData((int)id);
+        //TrainingEventData trainingEventData = _trainingEventDataRepository.RepositoryData.GetData((int)id);
 
-        if (trainingEventData.IsBranch)
-        {
-            List<BranchTrainingEventData> branchTrainingEventDataList = _branchTrainingEventDataRepository.RepositoryData.GetBranchEvents(id);
+        //if (trainingEventData.IsBranch)
+        //{
+        //    List<TrainingEventData> branchTrainingEventDataList = _branchTrainingEventDataRepository.RepositoryData.GetBranchRouteEvent(id);
 
-            foreach(var branchEvent in  branchTrainingEventDataList)
-                if(branchEvent.TrainingEventBranchType == EventBranchType.TrainingSuccess)
-                    return branchEvent;
-        }
+        //    foreach(var branchEvent in  branchTrainingEventDataList)
+        //        if(branchEvent.EventBranchType == EventBranchType.TrainingSuccess)
+        //            return branchEvent;
+        //}
 
-        return trainingEventData;
+        //return trainingEventData;
+
+        return null;
     }
 }

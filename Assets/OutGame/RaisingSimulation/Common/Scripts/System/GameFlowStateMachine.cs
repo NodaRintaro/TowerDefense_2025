@@ -61,10 +61,6 @@ namespace RaisingSimulationGameFlowStateMachine
             _fadeScreen.SetActive(true);
             _loadingNotifier = _lifeTimeScope.Container.Resolve<DataLoadCompleteNotifier>();
             _loadingNotifier.OnDataLoadComplete += StartGameFlow;
-            if (_loadingNotifier.IsLoadCompleted)
-            {
-                StartGameFlow();
-            }
         }
 
         public void OnDisable()
@@ -74,6 +70,7 @@ namespace RaisingSimulationGameFlowStateMachine
 
         public async void StartGameFlow()
         {
+            Debug.Log("ゲームスタート");
             _stateDict.Add(ScreenType.CharacterSelect, new CharacterSelectScreenState(_characterSelectScreen, this));
             _stateDict.Add(ScreenType.TrainingSelectMenu, new TrainingSelectScreenState(_trainingSelectScreen, this));
             _stateDict.Add(ScreenType.TrainingEvent, new TrainingEventScreenState(_trainingEventScreen, this));
@@ -82,17 +79,11 @@ namespace RaisingSimulationGameFlowStateMachine
             JsonTrainingSaveDataRepository tSaveData = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
 
             //セーブデータを確認してデータが残っていれば途中の画面からスタート
-            if (tSaveData.RepositoryData == default)
-            {
-                tSaveData.SetData(new TrainingData());
-                _currentScreen = ScreenType.CharacterSelect;
-                await ChangeState(ScreenType.CharacterSelect);
-            }
-            else
-            {
-                _currentScreen = tSaveData.RepositoryData.CurrentScreenType;
-                await ChangeState(_currentScreen);
-            }
+            tSaveData.SetData(new TrainingData());
+            _currentScreen = ScreenType.CharacterSelect;
+            await ChangeState(ScreenType.CharacterSelect);
+            Debug.Log(_currentScreen);
+
         }
 
         public override async UniTask ChangeState(ScreenType stateType)

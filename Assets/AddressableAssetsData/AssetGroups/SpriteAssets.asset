@@ -18,22 +18,22 @@ MonoBehaviour:
   m_GUID: a90eab4d3e867de4d87356c51bff7782
   m_SerializeEntries:
   - m_GUID: 4a8ea95eacc6f1143918d90eea0bbb50
-    m_Address: Assets/MasterData/ImageData/RankImageDataRegistry.asset
+    m_Address: Assets/MasterData/ScriptableObject/ImageData/RankImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 736ad97e4943bb148ac0c5d7856f08e4
-    m_Address: Assets/MasterData/ImageData/CharacterJobImageDataRegistry.asset
+    m_Address: Assets/MasterData/ScriptableObject/ImageData/CharacterJobImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a309ff4c0990f9046a09cf5a50cc8f18
-    m_Address: Assets/MasterData/ImageData/CharacterImageDataRegistry.asset
+    m_Address: Assets/MasterData/ScriptableObject/ImageData/CharacterImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6bf39b46c666d448846e795d133c3bd
-    m_Address: Assets/MasterData/ImageData/SupportCardImageDataRegistry.asset
+    m_Address: Assets/MasterData/ScriptableObject/ImageData/SupportCardImageDataRegistry.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

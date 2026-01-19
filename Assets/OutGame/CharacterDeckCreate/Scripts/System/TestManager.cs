@@ -16,8 +16,6 @@ public class TestManager : MonoBehaviour
          DataLoadCompleteNotifier notifier = _lifeTimeScope.Container.Resolve<DataLoadCompleteNotifier>();
 
         notifier.OnDataLoadComplete += ScreenUp;
-        if (notifier.IsLoadCompleted)
-            ScreenUp();
     }
 
     public void ScreenUp()

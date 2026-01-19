@@ -37,10 +37,6 @@ public class CharacterChanger : MonoBehaviour
     private void OnEnable()
     {
         _loadingNotifier.OnDataLoadComplete += RandomCharacterPickUpView;
-        if (_loadingNotifier.IsLoadCompleted)
-        {
-            RandomCharacterPickUpView();
-        }
     }
 
     private void OnDisable()

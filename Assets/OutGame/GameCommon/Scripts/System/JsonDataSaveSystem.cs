@@ -13,7 +13,7 @@ public static class JsonDataSaveSystem
     private static readonly byte[] keys = { 0xfe, 0x80, 0xfe, 0x80 };
 
     /// <summary> Pathを指定してDataを非同期でセーブする </summary>
-    public static async UniTask DataSave<T>(T data, string saveDataName) where T : IJsonSaveData
+    public static async UniTask DataSaveAsync<T>(T data, string saveDataName) where T : IJsonSaveData
     {
         string filePath = Application.persistentDataPath + "/" + saveDataName + ".json";
         string json = JsonConvert.SerializeObject(data);
@@ -68,7 +68,7 @@ public static class JsonDataSaveSystem
     }
 
     /// <summary> Pathを指定してDataを非同期でStreamingAssetsにセーブする </summary>
-    public static async UniTask DataSaveStreamingAssets<T>(T data, string saveDataName) where T : IJsonSaveData
+    public static async UniTask DataSaveStreamingAssetsAsync<T>(T data, string saveDataName) where T : IJsonSaveData
     {
         string filePath = Application.streamingAssetsPath + "/" + saveDataName + ".json";
         string json = JsonConvert.SerializeObject(data);
@@ -78,7 +78,7 @@ public static class JsonDataSaveSystem
     }
 
     /// <summary> StreamingAssetsの保存先のパスからDataを非同期でLoadする</summary>
-    public static async UniTask<T> DataLoadAsyncStreamingAssets<T>(string saveDataName) where T : IJsonSaveData
+    public static async UniTask<T> DataLoadAsyncStreamingAssetsAsync<T>(string saveDataName) where T : IJsonSaveData
     {
         string filePath = Application.streamingAssetsPath + "/" + saveDataName + ".json";
 

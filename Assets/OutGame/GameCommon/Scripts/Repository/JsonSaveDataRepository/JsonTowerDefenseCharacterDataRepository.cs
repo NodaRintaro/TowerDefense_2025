@@ -11,7 +11,7 @@ public class JsonTowerDefenseCharacterDataRepository : RepositoryBase<TowerDefen
 
     public async UniTask DataSave()
     {
-        await JsonDataSaveSystem.DataSave(_repositoryData, SaveDataName);
+        await JsonDataSaveSystem.DataSaveAsync(_repositoryData, SaveDataName);
     }
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)

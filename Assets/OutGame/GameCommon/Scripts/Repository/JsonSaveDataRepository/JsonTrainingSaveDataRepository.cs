@@ -13,7 +13,7 @@ public class JsonTrainingSaveDataRepository : RepositoryBase<TrainingData>
 
     public async UniTask DataSave()
     {
-        await JsonDataSaveSystem.DataSave(_repositoryData, SaveDataName);
+        await JsonDataSaveSystem.DataSaveAsync(_repositoryData, SaveDataName);
     }
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)

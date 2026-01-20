@@ -31,7 +31,7 @@ public class TowerDefenseJsonDataCreator : EditorWindow
 
     private async void OnEnable()
     {
-        _dataBase = await JsonDataSaveSystem.DataLoadAsyncStreamingAssets<TowerDefenseCharacterDataBase>(JsonTowerDefenseCharacterDataRepository.SaveDataName);
+        _dataBase = await JsonDataSaveSystem.DataLoadAsyncStreamingAssetsAsync<TowerDefenseCharacterDataBase>(JsonTowerDefenseCharacterDataRepository.SaveDataName);
         if (_dataBase == default) _dataBase = new TowerDefenseCharacterDataBase();
 
         _towerDefenseCharacterData = new TowerDefenseCharacterData();
@@ -95,6 +95,6 @@ public class TowerDefenseJsonDataCreator : EditorWindow
 
     private async UniTask CreateJsonData()
     {
-        await JsonDataSaveSystem.DataSaveStreamingAssets(_dataBase, JsonTowerDefenseCharacterDataRepository.SaveDataName);
+        await JsonDataSaveSystem.DataSaveStreamingAssetsAsync(_dataBase, JsonTowerDefenseCharacterDataRepository.SaveDataName);
     }
 }

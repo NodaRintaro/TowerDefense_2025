@@ -115,6 +115,12 @@ public class CreateStageEditor : UnityEditor.Editor
     {
         if (_instance == null) return;
         GUILayout.Space(10);
+        GUILayout.Label("ステージID");
+        _instance.stageID = EditorGUILayout.IntField(_instance.stageID, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
+        GUILayout.Space(10);
+        GUILayout.Label("ステージ名");
+        _instance.stageName = EditorGUILayout.TextField(_instance.stageName, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
+        GUILayout.Space(10);
         CellGUI();
         GUILayout.Space(10); 
         GUILayout.Label("タワーの耐久地");

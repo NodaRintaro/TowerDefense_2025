@@ -3,6 +3,7 @@ using UnityEngine;
 [Serializable]
 public class StageData : ScriptableObject
 {
+    public int stageID;
     public string stageName;
     public int towerHealth;
     public float generateCoinSpeed; // 一秒間にコインを生成する数

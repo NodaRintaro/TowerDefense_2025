@@ -17,12 +17,14 @@ public class HomeScreen : ScreenBase
     [SerializeField] private GameObject _characterListUI;
     [SerializeField] private GameObject _teamBuildUI;
     [SerializeField] private GameObject _selectCharacterUI;
-    
+    [SerializeField] private GameObject _stageSelectUI;
+
     private RectTransform _homeMenuRectTransform;
     private RectTransform _characterListRectTransform;
     private RectTransform _teamBuildUIRectTransform;
     private RectTransform _selectCharacterUIRectTransform;
-    private RectTransform _currentActiveUI;
+    private RectTransform _stageSelectRectTransform;
+    private RectTransform _currentActiveRectTransform;
 
     public async override UniTask FadeInScreen()
     {
@@ -31,7 +33,8 @@ public class HomeScreen : ScreenBase
 
         //フェードイン
         _fadeImage.DOFade(1f, 0f);
-        _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() => _fadeImage.gameObject.SetActive(false));
+        _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad)
+            .OnComplete(() => _fadeImage.gameObject.SetActive(false));
         await UniTask.WaitUntil(() => _fadeImage.gameObject.activeSelf);
     }
 
@@ -50,34 +53,41 @@ public class HomeScreen : ScreenBase
     {
         FadeInScreen();
     }
-    
+
     public void FadeOutScreenButton()
     {
         FadeOutScreen();
     }
-    
+
     public void ChangeToCharacterListScreen()
     {
-        _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _characterListRectTransform);
-        _currentActiveUI = _characterListRectTransform;
+        _screenQuickFadeOut.ChangeScreen(_currentActiveRectTransform, _characterListRectTransform);
+        _currentActiveRectTransform = _characterListRectTransform;
     }
-    
+
     public void ChangeToHomeMenuScreen()
     {
-        _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _homeMenuRectTransform);
-        _currentActiveUI = _homeMenuRectTransform;
+        _screenQuickFadeOut.ChangeScreen(_currentActiveRectTransform, _homeMenuRectTransform);
+        _currentActiveRectTransform = _homeMenuRectTransform;
     }
+
     public void ChangeToTeamBuildScreen()
     {
-        _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _teamBuildUIRectTransform);
-        _currentActiveUI = _teamBuildUIRectTransform;
+        _screenQuickFadeOut.ChangeScreen(_currentActiveRectTransform, _teamBuildUIRectTransform);
+        _currentActiveRectTransform = _teamBuildUIRectTransform;
     }
-    
-    
+
+
     public void ChangeToSelectCharacterScreen()
     {
-        _screenQuickFadeOut.ChangeScreen(_currentActiveUI, _selectCharacterUIRectTransform);
-        _currentActiveUI = _selectCharacterUIRectTransform;
+        _screenQuickFadeOut.ChangeScreen(_currentActiveRectTransform, _selectCharacterUIRectTransform);
+        _currentActiveRectTransform = _selectCharacterUIRectTransform;
+    }
+
+    public void ChangeToStageSelectScreen()
+    {
+        _screenQuickFadeOut.ChangeScreen(_currentActiveRectTransform, _stageSelectRectTransform);
+        _currentActiveRectTransform = _stageSelectRectTransform;
     }
 
     private void Start()
@@ -86,14 +96,17 @@ public class HomeScreen : ScreenBase
         _characterListUI.SetActive(true);
         _teamBuildUI.SetActive(true);
         _selectCharacterUI.SetActive(true);
+        _stageSelectUI.SetActive(true);
         _characterListUI.SetActive(false);
         _teamBuildUI.SetActive(false);
         _selectCharacterUI.SetActive(false);
-        
+        _stageSelectUI.SetActive(false);
+
         _homeMenuRectTransform = _homeMenuUI.GetComponent<RectTransform>();
         _characterListRectTransform = _characterListUI.GetComponent<RectTransform>();
         _teamBuildUIRectTransform = _teamBuildUI.GetComponent<RectTransform>();
         _selectCharacterUIRectTransform = _selectCharacterUI.GetComponent<RectTransform>();
-        _currentActiveUI = _homeMenuRectTransform;
+        _stageSelectRectTransform = _stageSelectUI.GetComponent<RectTransform>();
+        _currentActiveRectTransform = _homeMenuRectTransform;
     }
 }

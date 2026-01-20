@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using UnityEngine;
 
 namespace TowerDefenseDeckData
@@ -6,7 +7,7 @@ namespace TowerDefenseDeckData
     [Serializable]
     public class CharacterDeckDataBase : IJsonSaveData
     {
-        [SerializeField] private CharacterDeckData[] _characterDeckHolder = new CharacterDeckData[_deckMaxNum];
+        [SerializeField, JsonProperty] private CharacterDeckData[] _characterDeckHolder = new CharacterDeckData[_deckMaxNum];
 
         private int _currentDefaultDeckNum = 0;
 
@@ -45,7 +46,7 @@ namespace TowerDefenseDeckData
     [Serializable]
     public class CharacterDeckData
     {
-        [SerializeField] private TowerDefenseCharacterData[] _trainedCharacterDeck = new TowerDefenseCharacterData[DeckLength];
+        [SerializeField, JsonProperty] private TowerDefenseCharacterData[] _trainedCharacterDeck = new TowerDefenseCharacterData[DeckLength];
 
         public const int DeckLength = 12;
 

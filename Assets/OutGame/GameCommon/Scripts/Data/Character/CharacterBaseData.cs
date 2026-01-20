@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -10,23 +11,23 @@ using VContainer;
 public class CharacterBaseData
 {
     //ステータス
-    [SerializeField, Header("ID")]
+    [SerializeField, Header("ID"), JsonProperty]
     protected uint _characterID;
-    [SerializeField, Header("名前")]
+    [SerializeField, Header("名前"), JsonProperty]
     protected string _characterName;
-    [SerializeField, Header("レア度")]
+    [SerializeField, Header("レア度"), JsonProperty]
     protected uint _baseRarity;
-    [SerializeField, Header("体力")]
+    [SerializeField, Header("体力"), JsonProperty]
     protected uint _basePhysical;
-    [SerializeField, Header("筋力")]
+    [SerializeField, Header("筋力"), JsonProperty]
     protected uint _basePower;
-    [SerializeField, Header("知力")]
+    [SerializeField, Header("知力"), JsonProperty]
     protected uint _baseIntelligence;
-    [SerializeField, Header("素早さ")]
+    [SerializeField, Header("素早さ"), JsonProperty]
     protected uint _baseSpeed;
-    [SerializeField, Header("戦闘スタイル")]
+    [SerializeField, Header("戦闘スタイル"), JsonProperty]
     protected JobType _roleType;
-    [SerializeField, Header("コスト")]
+    [SerializeField, Header("コスト"), JsonProperty]
     protected uint _cost;
     public uint CharacterID => _characterID;
     public string CharacterName => _characterName;

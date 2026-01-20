@@ -26,7 +26,9 @@ public class InGameManager : MonoBehaviour
     [SerializeField] public StageData stageData;                    //ステージのデータ
     [SerializeField] private DataLoadManager _dataLoadManager;
     private DeckDataLoader _deckDataLoader;                         //キャラクターの編成データの読み込みクラス
+    //private TowerDefenseCharacterDataBase _characterDataBase;
     private DataLoadCompleteNotifier _loadingNotifier;
+    private TowerDefenseCharacterCard a;
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
     private Cell _selectedCell;                                     //選択中のセル
@@ -111,13 +113,13 @@ public class InGameManager : MonoBehaviour
     {
         //_unitDeck = new UnitDeck(_deckData);
         //アイコンの生成
+        _ = StageInitialize();
+        LoadDeckData();
         InstantiateCharacterIcons();
         //敵の基地とプレイヤーの基地の生成
         // Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
         // Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
-        _ = StageInitialize();
 
-        
         
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
@@ -192,23 +194,10 @@ public class InGameManager : MonoBehaviour
 
     private void LoadDeckData()
     {
-        CharacterDeckData deckData = DeckDataLoader.GetDeck();
-        TowerDefenseCharacterData[] trainedDatas = new TowerDefenseCharacterData[deckData.trainedCharacterDeck.Length];
-        JsonCharacterDeckDataRepository data = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
-        for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
-        {
-            if (data == null)
-            {
-                Debug.Log("JsonCharacterDeckDataRepository IS NULL");
-                return;
-            }
-        }
-
-        for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
-        {
-            
-        }
-        _unitDeck = new UnitDeck(trainedDatas);
+        JsonCharacterDeckDataRepository deckDataRepository = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
+        CharacterDeckData deckData =
+            deckDataRepository.RepositoryData.CharacterDeckHolder[deckDataRepository.RepositoryData.CurrentDefaultDeckNum];
+        _unitDeck = new UnitDeck(deckData.trainedCharacterDeck);
     }
 
     #region UI Functions
@@ -224,7 +213,6 @@ public class InGameManager : MonoBehaviour
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
     }
-
     //ドラッグ中の処理
     private void DraggingCharacter()
     {
@@ -251,7 +239,6 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-
     //ドラッグしたキャラクターをドロップ
     private void DropCharacter()
     {
@@ -265,7 +252,6 @@ public class InGameManager : MonoBehaviour
         PlaceCharacter(_unitDeck.GetCharacterData(1));
         OnExitCell();
     }
-
     private void PlaceCharacter(PlayerUnitData unitData)
     {
         if (unitData.Cost > _coins) return;
@@ -277,7 +263,6 @@ public class InGameManager : MonoBehaviour
         _selectedCharacterObj = null;
         _unitDeck.SetCanPlaceCharacter(_selectedCharacterID, false);
     }
-
     //マウスポインターがセルに入った時の処理
     private void OnEnterCell(Cell cell)
     {
@@ -286,7 +271,6 @@ public class InGameManager : MonoBehaviour
         _selectedCell = cell;
         _selectedCell.OnPointerEnter();
     }
-
     //マウスポインターがセルから出た時の処理
     private void OnExitCell()
     {
@@ -294,10 +278,10 @@ public class InGameManager : MonoBehaviour
         _selectedCell.OnPointerExit();
         _selectedCell = null;
     }
-
     //キャラクターアイコンを生成
     private void InstantiateCharacterIcons()
     {
+        Debug.Log();
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
@@ -315,7 +299,6 @@ public class InGameManager : MonoBehaviour
             characterIcon.Init(i);
         }
     }
-
     private void UpdateTowerHealthText(int health)
     {
         _towerHealthText.text = $"Tower Health:{health.ToString()}";

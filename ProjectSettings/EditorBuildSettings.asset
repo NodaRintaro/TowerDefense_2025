@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OutGame/Scenes/RaisingSimulation.unity
     guid: 5f9e1a84910f9eb4ab77e55ad68e4a66
+  - enabled: 1
+    path: Assets/InGame/Scenes/InGame.unity
+    guid: fa6a93e66cff1974a95b0dd905d2aec7
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1bd890b5a3864db4985bb8b30cdda8bc, type: 2}

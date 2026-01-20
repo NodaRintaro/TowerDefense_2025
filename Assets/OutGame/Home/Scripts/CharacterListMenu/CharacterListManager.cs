@@ -51,6 +51,7 @@ public class CharacterListManager : MonoBehaviour
     
     public Dictionary<uint, GameObject> CharacterListView => _characterListView;
 
+    public event Action OnInitialize;
     private async void Awake()
     {
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -97,6 +98,7 @@ public class CharacterListManager : MonoBehaviour
             _characterListView.Add(characterID, obj);
         }
         ViewDetail(1);
+        OnInitialize?.Invoke();
     }
 
     //キャラクターを選択した際、詳細を表示する

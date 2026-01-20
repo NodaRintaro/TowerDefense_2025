@@ -10,9 +10,9 @@ public class JsonCharacterDeckDataRepository : RepositoryBase<CharacterDeckDataB
 
     public const string SaveDataName = "JsonCharacterDeckData";
 
-    public async UniTask DataSave()
+    public async UniTask DataSaveAsync()
     {
-        await JsonDataSaveSystem.DataSave(_repositoryData, SaveDataName);
+        await JsonDataSaveSystem.DataSaveAsync(_repositoryData, SaveDataName);
     }
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)

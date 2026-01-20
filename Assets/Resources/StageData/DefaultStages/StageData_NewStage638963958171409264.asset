@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143b9c6fca9641a4b8866884deb95028, type: 3}
   m_Name: StageData_NewStage638963958171409264
   m_EditorClassIdentifier: 
-  stageName: NewStage
+  stageID: 1
+  stageName: FirstStage
+  towerHealth: 10
+  generateCoinSpeed: 1
   width: 8
   height: 7
   cellDatas:
@@ -136,7 +139,7 @@ MonoBehaviour:
       - {x: 7, y: 0, z: -6}
       - {x: 1, y: 0, z: -6}
       - {x: 1, y: 0, z: -4}
-      - {x: 5, y: 0, z: -4}
+      - {x: 454, y: 287, z: -4}
     enemyGenerateDatas:
     - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
       spawnTime: 0

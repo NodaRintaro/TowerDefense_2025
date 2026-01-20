@@ -97,6 +97,8 @@ public class TeamBuildManager : MonoBehaviour
         {
             _selectImageList[i].sprite = _emptySprite;
         }
+        
+        DeckDataLoader.SetDeck(_jsonCharacterDeckDataRepository.RepositoryData.GetData(_currentSelectDecIndex));
     }
 
     public void ChangeDeck(int num)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using UnityEngine;
 
 /// <summary> トレーニング済みのキャラクターデータ </summary>
@@ -8,13 +9,13 @@ public class TowerDefenseCharacterData : CharacterBaseData
     [SerializeField, Header("トレーニング後のキャラクターランク")]
     private RankType _rankType;
 
-    [SerializeField, Header("体力増加値")]
+    [SerializeField, Header("体力増加値"), JsonProperty]
     private uint _addPhysical;
-    [SerializeField, Header("筋力増加値")]
+    [SerializeField, Header("筋力増加値"),JsonProperty]
     private uint _addPower;
-    [SerializeField, Header("知力増加値")]
+    [SerializeField, Header("知力増加値"), JsonProperty]
     private uint _addIntelligence;
-    [SerializeField, Header("素早さ増加値")]
+    [SerializeField, Header("素早さ増加値"), JsonProperty]
     private uint _addSpeed;
 
     //ToDo:Skill

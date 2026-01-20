@@ -34,7 +34,7 @@ public class DeckDataJsonCreator : EditorWindow
             for (int j = 0; j < 12; j++)
             {
                 TowerDefenseCharacterData characterData = new TowerDefenseCharacterData();
-                characterData.InitData((uint)(j + 1), $"Character{j + 1}", 1, 1, 1, 1, 1, "Warrior", 1);
+                characterData.InitData((uint)999, $"Character{j + 1}", 1, 1, 1, 1, 1, "Warrior", 1);
                 deckData.SetData(j, characterData);
             }
 

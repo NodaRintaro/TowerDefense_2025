@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82569064e0d08e5458f1687da867008b, type: 3}
+  m_Name: SkillData
+  m_EditorClassIdentifier: 
+  _dataHolder:
+  - _skillID: 1
+    _skillName: demoD
+    _skillDescription: DurationDemo
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 1
+    _duration: 3
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 2
+    _skillName: demoI
+    _skillDescription: InstantDemo
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 2
+    _duration: 0
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 3
+    _skillName: demoE
+    _skillDescription: EndlessDemo
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 3
+    _duration: 99999
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 4
+    _skillName: demoP
+    _skillDescription: PassiveDemo
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 4
+    _duration: 99999
+    _coolTimeRecoveryType: 1
+    _coolTime: 0
+    _consumptionCost: 0
+  - _skillID: 5
+    _skillName: demoPD
+    _skillDescription: Passive&DurationDemo
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 4
+    _duration: 30
+    _coolTimeRecoveryType: 1
+    _coolTime: 0
+    _consumptionCost: 0
+  - _skillID: 6
+    _skillName: "\u30D1\u30EF\u30FC\u30A2\u30BF\u30C3\u30AF"
+    _skillDescription: "Power Attack \u7269\u7406\u653B\u6483\u529B2\u500D\u3067\u653B\u6483"
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 2
+    _duration: 0
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 7
+    _skillName: "\u30D1\u30EF\u30FC\u30AC\u30FC\u30C9"
+    _skillDescription: "Power Guard \u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u534A\u6E1B"
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 1
+    _duration: 10
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 8
+    _skillName: "\u7CBE\u5BC6\u653B\u6483"
+    _skillDescription: "Precision strike \u7269\u7406\u653B\u6483\u529B1.5\u500D\u3067\u653B\u6483\uFF0810\uFF5E20%\u306E\u78BA\u7387\u3067\u653B\u6483\u529B3\u500D\uFF09"
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 2
+    _duration: 0
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 9
+    _skillName: "\u30B9\u30D4\u30FC\u30C9\u30AD\u30E3\u30B9\u30C8"
+    _skillDescription: "Speedcast \u653B\u6483\u901F\u5EA6\u30921.5\u500D\u306B\u3059\u308B"
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 1
+    _duration: 10
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0
+  - _skillID: 10
+    _skillName: "\u30CF\u30A4\u30D2\u30FC\u30EB"
+    _skillDescription: "High Health \u56DE\u5FA9\u529B\u309230\uFF05\u5897\u52A0"
+    _skillIcon: {fileID: 0}
+    _skillPrefab: {fileID: 0}
+    _isUseAutomatic: 0
+    _durationType: 1
+    _duration: 10
+    _coolTimeRecoveryType: 1
+    _coolTime: 5
+    _consumptionCost: 0

@@ -5,7 +5,7 @@ public class StageData : ScriptableObject
 {
     public string stageName;
     public int towerHealth;
-    public float initialCoinNum = 0;// コインの初期値
+    public int initialCoinNum = 30;// コインの初期値
     public float generateCoinSpeed; // 一秒間にコインを生成する数
     public int width;
     public int height;

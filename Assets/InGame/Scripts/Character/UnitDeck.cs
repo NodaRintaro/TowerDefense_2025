@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using TowerDefenseDeckData;
 public class UnitDeck
 {
     private PlayerUnitData[] _unitDatas;
     private bool[] _canPlaceCharacter;
-    public int Count { get { return _unitDatas.Length; } }
     public PlayerUnitData[] UnitDatas => _unitDatas;
     public UnitDeck(TowerDefenseCharacterData[] trainedCharacterDatas)
     {

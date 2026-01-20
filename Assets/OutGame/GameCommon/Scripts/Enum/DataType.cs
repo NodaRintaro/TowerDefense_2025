@@ -18,5 +18,6 @@ public enum DataType
     SupportCardEventData,
     SupportCardBranchEventData,
     SupportCardNovelData,
-    CharacterTrainingEventMap
+    CharacterTrainingEventMap,
+    SkillData,
 }

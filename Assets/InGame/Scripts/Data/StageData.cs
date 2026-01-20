@@ -3,6 +3,7 @@ using UnityEngine;
 [Serializable]
 public class StageData : ScriptableObject
 {
+    public int stageID;
     public string stageName;
     public int towerHealth;
     public int initialCoinNum = 30;// コインの初期値

@@ -83,6 +83,7 @@ public class CharacterListManager : MonoBehaviour
     //所持キャラのリストを作成
     private void CreateCharacterListView()
     {
+        if(_loadingNotifier.IsDataLoadComplete == false) return;
         foreach (var characterID in _jsonCharacterCollectionDataRepository.RepositoryData.CollectionList)
         {
             GameObject obj = Instantiate(_characterView, _characterListParent.transform);

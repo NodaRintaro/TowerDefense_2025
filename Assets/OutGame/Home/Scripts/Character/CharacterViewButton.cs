@@ -14,26 +14,26 @@ public class CharacterViewButton : MonoBehaviour, IPointerClickHandler, IPointer
     
     [SerializeField] private Image _numberImage;
     
-    public event Action OnClick; 
+    public event Action OnClick;
     
     public void OnPointerClick(PointerEventData eventData)
     {
         OnClick?.Invoke();
-        _buttonImage.color = _pressedColor;
+        //_buttonImage.color = _pressedColor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _buttonImage.color = _selectedColor;
+        //_buttonImage.color = _selectedColor;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _buttonImage.color = _normalColor;
+        //_buttonImage.color = _normalColor;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _buttonImage.color = _normalColor;
+        //_buttonImage.color = _normalColor;
     }
 }

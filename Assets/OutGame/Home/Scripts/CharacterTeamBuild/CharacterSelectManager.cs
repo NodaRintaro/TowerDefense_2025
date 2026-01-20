@@ -91,7 +91,7 @@ public class CharacterSelectManager : MonoBehaviour
     }
 
     //デッキデータを上書き
-    public void SaveDeck()
+    public async void SaveDeck()
     {
         if(_loadingNotifier.IsDataLoadComplete == false) return;
         for (int i = 0;
@@ -127,6 +127,8 @@ public class CharacterSelectManager : MonoBehaviour
                 .CharacterDeckHolder[_teamBuildManager.CurrentSelectDecIndex].SetData(i, _noneData);
             
         }
+
+        await _jsonCharacterDeckDataRepository.DataSaveAsync();
     }
 
     // デッキにキャラクターが存在するか確認する

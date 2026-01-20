@@ -70,7 +70,7 @@ public class SaveDataDebugger : EditorWindow
                 characterCollectionData.AddCollection(characterData.CharacterID);
             }
 
-            await JsonDataSaveSystem.DataSave(characterCollectionData, JsonCharacterCollectionDataRepository.SaveDataName);
+            await JsonDataSaveSystem.DataSaveAsync(characterCollectionData, JsonCharacterCollectionDataRepository.SaveDataName);
             Debug.Log("データの生成に成功しました");
         }
 
@@ -81,7 +81,7 @@ public class SaveDataDebugger : EditorWindow
                 supportCardCollectionData.AddCollection(supportCard.ID);
             }
 
-            await JsonDataSaveSystem.DataSave(supportCardCollectionData, JsonSupportCardCollectionDataRepository.SaveDataName);
+            await JsonDataSaveSystem.DataSaveAsync(supportCardCollectionData, JsonSupportCardCollectionDataRepository.SaveDataName);
             Debug.Log("データの生成に成功しました");
         }
 

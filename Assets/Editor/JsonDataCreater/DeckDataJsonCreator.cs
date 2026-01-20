@@ -42,6 +42,6 @@ public class DeckDataJsonCreator : EditorWindow
             Debug.Log(_dataBase.GetData(i));
         }
 
-        await JsonDataSaveSystem.DataSaveStreamingAssets(_dataBase, JsonCharacterDeckDataRepository.SaveDataName);
+        await JsonDataSaveSystem.DataSaveStreamingAssetsAsync(_dataBase, JsonCharacterDeckDataRepository.SaveDataName);
     }
 }

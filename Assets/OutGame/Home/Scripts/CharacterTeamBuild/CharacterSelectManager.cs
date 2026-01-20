@@ -32,26 +32,24 @@ public class CharacterSelectManager : MonoBehaviour
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
         _noneBaseData.InitData(999, "None", 1, 1, 1, 1, 1, "", 1);
         _noneData.SetBaseData(_noneBaseData);
-
-        
     }
 
     private void OnEnable()
     {
-        _loadingNotifier.OnDataLoadComplete += Initialize;
-
+        _characterListManager.OnInitialize += Initialize;
         InitializeView();
     }
     
     private void OnDestroy()
     {
-        _loadingNotifier.OnDataLoadComplete -= Initialize;
+        _characterListManager.OnInitialize -= Initialize;
     }
 
     private void Initialize()
     {
         if(_loadingNotifier.IsDataLoadComplete == false) return;
         // キャラクターリストの各ボタンにクリックイベントを登録する
+        Debug.Log(_characterListManager.CharacterListView.Count);
         foreach (var key in _characterListManager.CharacterListView.Keys)
         {
             _characterListManager.CharacterListView[key].GetComponent<CharacterViewButton>().OnClick += () =>

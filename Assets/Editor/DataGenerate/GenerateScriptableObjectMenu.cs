@@ -8,6 +8,9 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -65,9 +68,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
     private bool NullCheckData()
     {
         if (_scriptableObjectFilePath == null) return false;
-        else if(_gasUrl  == null) return false;
-        else if(_scriptableObjectName == null) return false;
-        else if(_dataType == DataType.None) return false;
+        else if (_gasUrl == null) return false;
+        else if (_scriptableObjectName == null) return false;
+        else if (_dataType == DataType.None) return false;
 
         return true;
     }
@@ -125,6 +128,10 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 _dataSaveFilePath = "Assets/MasterData/ScriptableObject/CharacterEventSchedule";
                 _scriptableObjectName = "CharacterTrainingSchedule";
                 break;
+            case DataType.SkillData:
+                _dataSaveFilePath = "Assets/MasterData/ScriptableObject/SkillData";
+                _scriptableObjectName = "SkillData";
+                break;
         }
 
         using (UnityWebRequest request = UnityWebRequest.Get(_gasUrl))
@@ -150,7 +157,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 if (isGenerateScriptableObject)
                 {
                     // ScriptableObjectを生成
-                    DataGenerate(_dataType, parseCsvData);
+                    await DataGenerate(_dataType, parseCsvData);
                 }
             }
         }
@@ -161,6 +168,12 @@ public class GenerateScriptableObjectMenu : EditorWindow
     // CSVファイルに保存する
     private void SaveCsvFile(string data)
     {
+        // if (!Directory.Exists(_outPutCsvFilePath))
+        // {
+        //     Directory.CreateDirectory(_outPutCsvFilePath);
+        //     Debug.Log($"Created folder: {_outPutCsvFilePath}");
+        // }
+
         File.WriteAllText(_outPutCsvFilePath, data, Encoding.UTF8);
         AssetDatabase.Refresh();
     }
@@ -236,9 +249,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
     #endregion
 
     #region スクリプタブルオブジェクト生成
-    public void DataGenerate(DataType dataType, string[,] parseCsvData)
+    public async UniTask DataGenerate(DataType dataType, string[,] parseCsvData)
     {
-        switch(dataType)
+        switch (dataType)
         {
             case DataType.CharacterData:
                 _scriptableObjectName = "CharacterDataRegistry";
@@ -252,7 +265,11 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 _scriptableObjectName = "CharacterTrainingSchedule";
                 GenerateCharacterTrainingScheduleData(parseCsvData);
                 break;
-        } 
+            case DataType.SkillData:
+                _scriptableObjectName = "SkillDataRegistry";
+                await GenerateSkillData(parseCsvData);
+                break;
+        }
     }
     #endregion
 
@@ -352,11 +369,11 @@ public class GenerateScriptableObjectMenu : EditorWindow
         List<OneDayEvent> trainingSchedule = null;
         arrCount = 0;
 
-        for(int i = 2;i < parseCsvData.GetLength(0); i++)
+        for (int i = 2; i < parseCsvData.GetLength(0); i++)
         {
-            if(!string.IsNullOrWhiteSpace(parseCsvData[i, 0]))
+            if (!string.IsNullOrWhiteSpace(parseCsvData[i, 0]))
             {
-                if(trainingSchedule != null)
+                if (trainingSchedule != null)
                 {
                     characterTrainingEventMaps[arrCount].SetCharacterTrainingSchedule(trainingSchedule.ToArray());
                     arrCount++;
@@ -388,6 +405,44 @@ public class GenerateScriptableObjectMenu : EditorWindow
         characterTrainingEventMaps[arrCount].SetCharacterTrainingSchedule(trainingSchedule.ToArray());
         characterTrainingEventMapRegistry.InitData(characterTrainingEventMaps);
         AssetDataCreate(characterTrainingEventMapRegistry);
+    }
+    #endregion
+
+    #region スキルデータ生成
+    public async UniTask GenerateSkillData(string[,] parseCsvData)
+    {
+        const int firstColumnCountNum = 2;
+        int csvDataLength = parseCsvData.GetLength(0);
+        SkillDataRegistry skillDataRegistry = CreateInstance<SkillDataRegistry>();
+
+        SkillData[] skillArray = new SkillData[csvDataLength - firstColumnCountNum];
+
+        for (int columnCount = firstColumnCountNum; columnCount < csvDataLength; columnCount++)
+        {
+            SkillData skillData = new();
+
+            // Sprite icon = await AssetsLoader.LoadAssetAsync<Sprite>(parseCsvData[columnCount, 3]);
+            // GameObject prefab = await AssetsLoader.LoadAssetAsync<GameObject>(parseCsvData[columnCount, 4]);
+
+            skillData.InitData(
+                uint.Parse(parseCsvData[columnCount, 0]),
+                parseCsvData[columnCount, 1],
+                parseCsvData[columnCount, 2],
+                null,
+                null,
+                bool.Parse(parseCsvData[columnCount, 5]),
+                Enum.Parse<DurationType>(parseCsvData[columnCount, 6]),
+                float.Parse(parseCsvData[columnCount, 7]),
+                Enum.Parse<CoolTimeRecoveryType>(parseCsvData[columnCount, 8]),
+                float.Parse(parseCsvData[columnCount, 9]),
+                int.Parse(parseCsvData[columnCount, 10])
+                );
+
+            skillArray[columnCount - firstColumnCountNum] = skillData;
+        }
+
+        skillDataRegistry.InitData(skillArray);
+        AssetDataCreate(skillDataRegistry);
     }
     #endregion
 

@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using TowerDefenseDeckData;
 using VContainer;
-using VContainer.Unity;
 
 public class InGameManager : MonoBehaviour
 {
@@ -26,9 +25,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] public StageData stageData;                    //ステージのデータ
     [SerializeField] private DataLoadManager _dataLoadManager;
     private DeckDataLoader _deckDataLoader;                         //キャラクターの編成データの読み込みクラス
-    //private TowerDefenseCharacterDataBase _characterDataBase;
     private DataLoadCompleteNotifier _loadingNotifier;
-    private TowerDefenseCharacterCard a;
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
     private Cell _selectedCell;                                     //選択中のセル
@@ -78,6 +75,7 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    public UnitDeck UnitDeck => _unitDeck;
     #endregion
 
     #region Events
@@ -111,15 +109,17 @@ public class InGameManager : MonoBehaviour
     }
     private void StartGameFlow()
     {
-        //_unitDeck = new UnitDeck(_deckData);
         //アイコンの生成
         _ = StageInitialize();
         LoadDeckData();
         InstantiateCharacterIcons();
+        
         //敵の基地とプレイヤーの基地の生成
-        // Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
-        // Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
-
+        foreach (var waveData in stageData.waveDatas)
+        {
+            Instantiate(_enemyTowerPrefab, waveData.aiRoute.points[0], Quaternion.identity);
+            Instantiate(_playerTowerPrefab, waveData.aiRoute.points[waveData.aiRoute.Length - 1], Quaternion.identity);
+        }
         
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
@@ -196,7 +196,7 @@ public class InGameManager : MonoBehaviour
     {
         JsonCharacterDeckDataRepository deckDataRepository = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
         CharacterDeckData deckData =
-            deckDataRepository.RepositoryData.CharacterDeckHolder[deckDataRepository.RepositoryData.CurrentDefaultDeckNum];
+            deckDataRepository.RepositoryData.CharacterDeckHolder[0];
         _unitDeck = new UnitDeck(deckData.trainedCharacterDeck);
     }
 
@@ -281,17 +281,23 @@ public class InGameManager : MonoBehaviour
     //キャラクターアイコンを生成
     private void InstantiateCharacterIcons()
     {
-        Debug.Log();
+        Debug.Log(string.Join("\n", _unitDeck));
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
-        if (_unitDeck.Count == 0)
+        if (_unitDeck.UnitDatas.Length == 0)
         {
             Debug.Log("Deckが設定されていません");
             return;
         }
-        for (int i = 0; i < _unitDeck.Count; i++)
+        Debug.Log(_unitDeck.UnitDatas.Length);
+        for (int i = 0; i < _unitDeck.UnitDatas.Length; i++)
         {
+            Debug.Log(_unitDeck.UnitDatas[i].Name);
+            if (_unitDeck.UnitDatas[i].ID == 999)
+            {
+                return;
+            }
             CharacterIcon characterIcon =
                 Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform)
                     .GetComponent<CharacterIcon>();
@@ -417,10 +423,22 @@ public class InGameManager : MonoBehaviour
     }
 
     //時間の速さを変更する
-    public void ChangeTimeSpeed(float timeSpeed)
+    public void ChangeTimeSpeed()
     {
-        _timeSpeed = timeSpeed;
-        _timeSpeedText.text = $"TimeSpeed: {_timeSpeed}";
+        if (_timeSpeed == 0.5f)
+        {
+            _timeSpeed = 1f;
+        }
+        else if (_timeSpeed == 1f)
+        {
+            _timeSpeed = 2f;
+        }
+        else
+        {
+            _timeSpeed = 0.5f;
+        }
+
+        _timeSpeedText.text = $"{_timeSpeed}";
     }
     
     //タワーへのダメージ

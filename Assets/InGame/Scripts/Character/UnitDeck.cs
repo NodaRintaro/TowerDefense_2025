@@ -5,7 +5,7 @@ public class UnitDeck
     private PlayerUnitData[] _unitDatas;
     private bool[] _canPlaceCharacter;
     public int Count { get { return _unitDatas.Length; } }
-    private int _deckIndex = 1; //ゲームで使用するデッキのインデックス 
+    public PlayerUnitData[] UnitDatas => _unitDatas;
     public UnitDeck(TowerDefenseCharacterData[] trainedCharacterDatas)
     {
         _unitDatas = new PlayerUnitData[trainedCharacterDatas.Length];
@@ -30,12 +30,6 @@ public class UnitDeck
             }
         }
     }
-
-    void LoadDeckDataByMasterData(int deckIndex)
-    {
-        CharacterDeckDataBase registry;
-        
-    }
     public PlayerUnitData GetCharacterData(int index)
     {
         return _unitDatas[index];
@@ -59,8 +53,7 @@ public class UnitDeck
     
     public void CharacterRemoved(uint index)
     {
-        //SetRePlaceTimer(index, _characterDatas[index].);
-        SetRePlaceTimer(index, 1.0f);
+        SetRePlaceTimer(index, _unitDatas[index].RePlaceInterval);
         Debug.Log("要修正");
     }
 

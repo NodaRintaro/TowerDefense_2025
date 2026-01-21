@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: enemy2
   m_EditorClassIdentifier: 
   enemyName: aho
-  hp: 0
-  moveSpeed: 0
-  range: 0
-  attackRate: 0
-  attack: 0
-  defence: 0
+  hp: 12
+  moveSpeed: 1
+  range: 1
+  attackRate: 1
+  attack: 2
+  defence: 1

@@ -10,31 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 143b9c6fca9641a4b8866884deb95028, type: 3}
-  m_Name: StageData_NewStage638963958171409264
+  m_Name: StageData_NewStage639046311017457491
   m_EditorClassIdentifier: 
-  stageID: 1
-  stageName: FirstStage
+  stageID: 0
+  stageName: NewStage
   towerHealth: 10
   initialCoinNum: 30
   generateCoinSpeed: 1
-  width: 8
-  height: 7
+  width: 9
+  height: 5
   cellDatas:
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -46,35 +36,7 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
   - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 0
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
-    material: {fileID: 0}
-  - cellType: 1
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -94,11 +56,15 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
@@ -110,45 +76,38 @@ MonoBehaviour:
     material: {fileID: 0}
   - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  - cellType: 1
+  - cellType: 0
     material: {fileID: 0}
-  waveDatas:
-  - aiRoute:
-      points:
-      - {x: 0, y: 0, z: -1}
-      - {x: 7, y: 0, z: -1}
-      - {x: 7, y: 0, z: -6}
-      - {x: 1, y: 0, z: -6}
-      - {x: 1, y: 0, z: -4}
-      - {x: 454, y: 287, z: -4}
-    enemyGenerateDatas:
-    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
-      spawnTime: 0
-    - enemyData: {fileID: 11400000, guid: 3b2d2a8c3b00b1c4daf471c295e3b9ee, type: 2}
-      spawnTime: 0.5
-    - enemyData: {fileID: 11400000, guid: afd5fa2d7f62c2e469a5a772c90c7018, type: 2}
-      spawnTime: 5
-    - enemyData: {fileID: 11400000, guid: afd5fa2d7f62c2e469a5a772c90c7018, type: 2}
-      spawnTime: 7.26
-    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
-      spawnTime: 10.68
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  waveDatas: []

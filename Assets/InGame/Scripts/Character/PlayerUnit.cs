@@ -4,7 +4,7 @@ public class PlayerUnit : UnitBase
 {
     protected override void Initialize()
     {
-        GetComponent<CapsuleCollider>().enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
     }
     // ユニットの状態を更新する
     public override void UpdateUnit(float deltaTime)

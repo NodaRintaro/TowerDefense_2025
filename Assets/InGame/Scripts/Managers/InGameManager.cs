@@ -24,7 +24,6 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _coinText;             //コインのText
     [SerializeField] public StageData stageData;                    //ステージのデータ
     [SerializeField] private DataLoadManager _dataLoadManager;
-    private DeckDataLoader _deckDataLoader;                         //キャラクターの編成データの読み込みクラス
     private DataLoadCompleteNotifier _loadingNotifier;
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
@@ -107,6 +106,8 @@ public class InGameManager : MonoBehaviour
     }
     private void StartGameFlow()
     {
+
+        if (StageDataLoader.CurrentUseDeck != null) stageData = StageDataLoader.CurrentUseDeck;
         //アイコンの生成
         _ = StageInitialize();
         LoadDeckData();
@@ -138,13 +139,15 @@ public class InGameManager : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Fire2"))
                     {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        RaycastHit hit;
-                        if (Physics.Raycast(ray, out hit))
+                        if (Camera.main != null)
                         {
-                            if (hit.transform.gameObject.CompareTag("PlayerUnit"))
+                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            if (Physics.Raycast(ray, out RaycastHit hit))
                             {
-                                RemovePlayerUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                                if (hit.transform.gameObject.CompareTag("PlayerUnit"))
+                                {
+                                    RemovePlayerUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                                }
                             }
                         }
                     }
@@ -213,26 +216,28 @@ public class InGameManager : MonoBehaviour
     //ドラッグ中の処理
     private void DraggingCharacter()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Camera.main != null)
         {
-            _selectedCharacterObj.transform.position = hit.point;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                _selectedCharacterObj.transform.position = hit.point;
 
-            if (Input.GetButtonUp("Fire1"))
-            {
-                DropCharacter(_unitDeck.GetCharacterData(_selectedCharacterID));
-                return;
-            }
+                if (Input.GetButtonUp("Fire1"))
+                {
+                    DropCharacter(_unitDeck.GetCharacterData(_selectedCharacterID));
+                    return;
+                }
 
-            if (hit.transform.gameObject.CompareTag("Cell"))
-            {
-                Cell cell = hit.transform.GetComponent<Cell>();
-                OnEnterCell(cell);
-            }
-            else
-            {
-                OnExitCell();
+                if (hit.transform.gameObject.CompareTag("Cell"))
+                {
+                    Cell cell = hit.transform.GetComponent<Cell>();
+                    OnEnterCell(cell);
+                }
+                else
+                {
+                    OnExitCell();
+                }
             }
         }
     }
@@ -281,22 +286,17 @@ public class InGameManager : MonoBehaviour
     //キャラクターアイコンを生成
     private void InstantiateCharacterIcons()
     {
-        Debug.Log(string.Join("\n", _unitDeck));
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
         if (_unitDeck.UnitDatas.Length == 0)
         {
-            Debug.Log("Deckが設定されていません");
             return;
         }
-        Debug.Log(_unitDeck.UnitDatas.Length);
         for (int i = 0; i < _unitDeck.UnitDatas.Length; i++)
         {
-            Debug.Log(_unitDeck.UnitDatas[i].Name);
             if (_unitDeck.UnitDatas[i].ID == 999)
             {
-                Debug.Log($"{_unitDeck.UnitDatas[i].ID}\n{_unitDeck.UnitDatas[i].Name}");
                 return;
             }
             CharacterIcon characterIcon =
@@ -361,7 +361,7 @@ public class InGameManager : MonoBehaviour
         Destroy(unit.gameObject);
     }
     //敵のユニットを出現するメソッド
-    public void GenerateEnemyUnit(float time)
+    private void GenerateEnemyUnit(float time)
     {
         for (int i = 0; i < stageData.waveDatas.Length; i++)
         {
@@ -428,11 +428,11 @@ public class InGameManager : MonoBehaviour
         {
             _playerState = playerState.Idle;
         }
-        else if (_timeSpeed == 1f)
+        else if (Mathf.Approximately(_timeSpeed, 1.0f))
         {
             _timeSpeed = 2f;
         }
-        else if (_timeSpeed == 2f)
+        else if (Mathf.Approximately(_timeSpeed, 2.0f))
         {
             _timeSpeed = 0.5f;
         }

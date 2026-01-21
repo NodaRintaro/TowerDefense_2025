@@ -6,6 +6,7 @@ public class StageData : ScriptableObject
     public int stageID;
     public string stageName;
     public int towerHealth;
+    public int initialCoinNum = 30;// コインの初期値
     public float generateCoinSpeed; // 一秒間にコインを生成する数
     public int width;
     public int height;
@@ -17,6 +18,7 @@ public class StageData : ScriptableObject
     {
         this.stageName = "New Stage";
         this.towerHealth = 10;
+        this.initialCoinNum = 30;
         this.generateCoinSpeed = 1f;
         this.width = 5;
         this.height = 5;

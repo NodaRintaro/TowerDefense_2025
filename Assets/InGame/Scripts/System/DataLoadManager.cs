@@ -1,6 +1,6 @@
 ﻿using VContainer;
 using VContainer.Unity;
-
+using TowerDefenseDeckData;
 /// <summary>
 /// データのロードを行うLifeTimeScopeClass
 /// </summary>
@@ -58,5 +58,7 @@ public class DataLoadManager : LifetimeScope
 
         //
         builder.Register<JsonTowerDefenseCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        
+        builder.Register<JsonCharacterDeckDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

@@ -10,11 +10,8 @@ public class CharacterIcon : MonoBehaviour, IPointerDownHandler
     public void Init(int ID)
     {
         id = ID;
-        //UnitData unitData = InGameManager.Instance.CharacterDeck.GetCharacterData(id);
-        //_costText.text = unitData.Cost.ToString();
-        //Color color = unitData.color;
-        //color.a = 1.0f;
-        //_icon.color = color;
+        PlayerUnitData unitData = InGameManager.Instance.UnitDeck.UnitDatas[id];
+        _costText.text = unitData.Cost.ToString();
     }
     
     public void OnPointerDown(PointerEventData eventData)

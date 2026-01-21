@@ -9,21 +9,6 @@ public class DebugSystem : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            _inGameManager.ChangeTimeSpeed(2);   
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            _inGameManager.ChangeTimeSpeed(1);   
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            _inGameManager.ChangeTimeSpeed(0.5f);   
-        }
+        
     }
 }

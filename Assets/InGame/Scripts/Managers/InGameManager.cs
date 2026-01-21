@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using TowerDefenseDeckData;
 using VContainer;
-using VContainer.Unity;
 
 public class InGameManager : MonoBehaviour
 {
@@ -76,8 +75,8 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    public UnitDeck UnitDeck => _unitDeck;
     #endregion
-
     #region Events
 
     public event Action OnDropCharacter;
@@ -94,7 +93,6 @@ public class InGameManager : MonoBehaviour
     public event Action<float> OnPreviousTimeUpdated;
 
     #endregion
-
     #region UnityFunctions
 
     private void Awake()
@@ -109,23 +107,25 @@ public class InGameManager : MonoBehaviour
     }
     private void StartGameFlow()
     {
-        //_unitDeck = new UnitDeck(_deckData);
         //アイコンの生成
-        InstantiateCharacterIcons();
-        //敵の基地とプレイヤーの基地の生成
-        // Instantiate(_enemyTowerPrefab, aiRoute.Points[0], Quaternion.identity);
-        // Instantiate(_playerTowerPrefab, aiRoute.Points[aiRoute.Count-1], Quaternion.identity);
         _ = StageInitialize();
+        LoadDeckData();
+        InstantiateCharacterIcons();
+        
+        //敵の基地とプレイヤーの基地の生成
+        foreach (var waveData in stageData.waveDatas)
+        {
+            Instantiate(_enemyTowerPrefab, waveData.aiRoute.points[0], Quaternion.identity);
+            Instantiate(_playerTowerPrefab, waveData.aiRoute.points[waveData.aiRoute.Length - 1], Quaternion.identity);
+        }
 
-        
-        
+        _coins = stageData.initialCoinNum;
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
         OnPreviousTimeUpdated += _unitDeck.UpdateTime;
         OnTimeUpdated += GenerateEnemyUnit;
         OnPreviousTimeUpdated += UpdateCoins;
     }
-
     private void Update()
     {
         switch (_playerState)
@@ -180,7 +180,6 @@ public class InGameManager : MonoBehaviour
         IngameTimer += ingameDeltaTime;
         OnPreviousTimeUpdated?.Invoke(ingameDeltaTime);
     }
-
     private void OnDestroy()
     {
         _instance = null;
@@ -192,23 +191,10 @@ public class InGameManager : MonoBehaviour
 
     private void LoadDeckData()
     {
-        CharacterDeckData deckData = DeckDataLoader.GetDeck();
-        TowerDefenseCharacterData[] trainedDatas = new TowerDefenseCharacterData[deckData.trainedCharacterDeck.Length];
-        JsonCharacterDeckDataRepository data = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
-        for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
-        {
-            if (data == null)
-            {
-                Debug.Log("JsonCharacterDeckDataRepository IS NULL");
-                return;
-            }
-        }
-
-        for (int i = 0; i < deckData.trainedCharacterDeck.Length; i++)
-        {
-            
-        }
-        _unitDeck = new UnitDeck(trainedDatas);
+        JsonCharacterDeckDataRepository deckDataRepository = _dataLoadManager.Container.Resolve<JsonCharacterDeckDataRepository>();
+        CharacterDeckData deckData =
+            deckDataRepository.RepositoryData.CharacterDeckHolder[0];
+        _unitDeck = new UnitDeck(deckData.trainedCharacterDeck);
     }
 
     #region UI Functions
@@ -224,7 +210,6 @@ public class InGameManager : MonoBehaviour
         _playerState = playerState.DraggingCharacter;
         OnSelectCharacter?.Invoke();
     }
-
     //ドラッグ中の処理
     private void DraggingCharacter()
     {
@@ -236,7 +221,7 @@ public class InGameManager : MonoBehaviour
 
             if (Input.GetButtonUp("Fire1"))
             {
-                DropCharacter();
+                DropCharacter(_unitDeck.GetCharacterData(_selectedCharacterID));
                 return;
             }
 
@@ -251,24 +236,25 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-
     //ドラッグしたキャラクターをドロップ
-    private void DropCharacter()
+    private void DropCharacter(PlayerUnitData unitData)
     {
         _playerState = playerState.Idle;
         OnDropCharacter?.Invoke();
-        if (_selectedCell == null || !_selectedCell.CanPlaceCharacter())
+        if (_selectedCell == null || !_selectedCell.CanPlaceCharacter() || unitData.Cost > _coins)
         {
             Destroy(_selectedCharacterObj);
-            return;
         }
-        PlaceCharacter(_unitDeck.GetCharacterData(1));
+        else
+        {
+            PlaceCharacter(unitData);
+        }
         OnExitCell();
     }
-
     private void PlaceCharacter(PlayerUnitData unitData)
     {
-        if (unitData.Cost > _coins) return;
+        Debug.Log("キャラを配置");
+        _coins -= (int)unitData.Cost;
         UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
         unit.UnitData = unitData;
         unit.Init();
@@ -277,7 +263,6 @@ public class InGameManager : MonoBehaviour
         _selectedCharacterObj = null;
         _unitDeck.SetCanPlaceCharacter(_selectedCharacterID, false);
     }
-
     //マウスポインターがセルに入った時の処理
     private void OnEnterCell(Cell cell)
     {
@@ -286,7 +271,6 @@ public class InGameManager : MonoBehaviour
         _selectedCell = cell;
         _selectedCell.OnPointerEnter();
     }
-
     //マウスポインターがセルから出た時の処理
     private void OnExitCell()
     {
@@ -294,36 +278,40 @@ public class InGameManager : MonoBehaviour
         _selectedCell.OnPointerExit();
         _selectedCell = null;
     }
-
     //キャラクターアイコンを生成
     private void InstantiateCharacterIcons()
     {
+        Debug.Log(string.Join("\n", _unitDeck));
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
-        if (_unitDeck.Count == 0)
+        if (_unitDeck.UnitDatas.Length == 0)
         {
             Debug.Log("Deckが設定されていません");
             return;
         }
-        for (int i = 0; i < _unitDeck.Count; i++)
+        Debug.Log(_unitDeck.UnitDatas.Length);
+        for (int i = 0; i < _unitDeck.UnitDatas.Length; i++)
         {
+            Debug.Log(_unitDeck.UnitDatas[i].Name);
+            if (_unitDeck.UnitDatas[i].ID == 999)
+            {
+                Debug.Log($"{_unitDeck.UnitDatas[i].ID}\n{_unitDeck.UnitDatas[i].Name}");
+                return;
+            }
             CharacterIcon characterIcon =
-                Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform)
-                    .GetComponent<CharacterIcon>();
+                Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform).GetComponent<CharacterIcon>();
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
             characterIcon.Init(i);
         }
     }
-
     private void UpdateTowerHealthText(int health)
     {
-        _towerHealthText.text = $"Tower Health:{health.ToString()}";
+        _towerHealthText.text = $"{health.ToString()}";
     }
-
     private void UpdateRemainingEnemyText(int remainingEnemyNums)
     {
-        _remainingEnemyText.text = $"Remaining Enemy:{remainingEnemyNums}/{_maxEnemyNums}";
+        _remainingEnemyText.text = $"{remainingEnemyNums}/{_maxEnemyNums}";
     }
 
     #endregion
@@ -335,12 +323,15 @@ public class InGameManager : MonoBehaviour
         //ポーズ中ならば更新しない
         if (_playerState == playerState.Paused) return;
 
-        for (int i = 0; i < _unitList.Count; i++)
+        for (int i = _unitList.Count - 1; i >= 0; i--)
         {
             UnitBase unit = _unitList[i];
             if (unit.IsDead)
             {
-                RemovePlayerUnit(unit);
+                if(unit == unit as PlayerUnit)
+                    RemovePlayerUnit(unit);
+                else
+                    RemoveEnemyUnit(unit as EnemyUnit);
             }
             else
             {
@@ -363,14 +354,12 @@ public class InGameManager : MonoBehaviour
         _unitDeck.CharacterRemoved(unit.PlayerData.ID);
         Destroy(unit.gameObject);
     }
-
     private void RemoveEnemyUnit(EnemyUnit unit)
     {
         unit.Remove();
         _unitList.Remove(unit);
         Destroy(unit.gameObject);
     }
-
     //敵のユニットを出現するメソッド
     public void GenerateEnemyUnit(float time)
     {
@@ -398,7 +387,6 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-
     //最寄りの敵対ユニットを返す
     public UnitBase FindNearestEnemy(UnitBase unit)
     {
@@ -434,10 +422,31 @@ public class InGameManager : MonoBehaviour
     }
 
     //時間の速さを変更する
-    public void ChangeTimeSpeed(float timeSpeed)
+    public void ChangeTimeSpeed()
     {
-        _timeSpeed = timeSpeed;
-        _timeSpeedText.text = $"TimeSpeed: {_timeSpeed}";
+        if (_playerState == playerState.Paused)
+        {
+            _playerState = playerState.Idle;
+        }
+        else if (_timeSpeed == 1f)
+        {
+            _timeSpeed = 2f;
+        }
+        else if (_timeSpeed == 2f)
+        {
+            _timeSpeed = 0.5f;
+        }
+        else
+        {
+            _timeSpeed = 1f;
+        }
+
+        _timeSpeedText.text = $"{_timeSpeed}";
+    }
+
+    public void TimeStop()
+    {
+        _playerState = playerState.Paused;
     }
     
     //タワーへのダメージ
@@ -504,7 +513,7 @@ public class InGameManager : MonoBehaviour
     public void GenerateCoin(int count)
     {
         _coins += count;
-        _coinText.text = $"Coins: {_coins}";
+        _coinText.text = $"{_coins}";
     }
 }
 public enum playerState

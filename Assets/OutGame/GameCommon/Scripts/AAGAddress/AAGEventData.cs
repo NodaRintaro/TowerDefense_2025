@@ -11,6 +11,6 @@ public class AAGEventData
 
     public const string kAssets_MasterData_CSV_EventData_CharacterBranchEventDataCSV = "Assets/MasterData/CSV/EventData/CharacterBranchEventDataCSV.csv";
 
-    public const string kAssets_MasterData_CSV_EventData_TrainingEventDataCSV = "Assets/MasterData/CSV/EventData/TrainingEventDataCSV.csv";
+    public const string kAssets_MasterData_CSV_EventData_TrainingEventDataCSV = "Assets/MasterData/CSV/EventData/TrainingCommonEventDataCSV.csv";
 
 }

@@ -64,6 +64,9 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
 
         //トレーニングイベントデータのRepository
         builder.Register<AddressableTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        
+        //キャラクター固有トレーニングスケジュールデータのRepository
+        builder.Register<AddressableCharacterTrainingScheduleRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //キャラクター固有イベントデータのRepository
         builder.Register<AddressableCharacterEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();

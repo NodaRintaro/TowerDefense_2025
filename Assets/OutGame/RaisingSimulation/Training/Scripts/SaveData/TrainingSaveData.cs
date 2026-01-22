@@ -38,7 +38,12 @@ public class TrainingSaveData : IJsonSaveData
     #endregion
 
     /// <summary> トレーニング対象のキャラクターデータをセット </summary>
-    public void SetCharacterBaseData(CharacterBaseData characterData) => _characterData = new TrainingCharacterData(characterData);
+    public void SetCharacterBaseData(CharacterBaseData characterData)
+    {
+        TrainingCharacterData trainingCharacterData = new TrainingCharacterData();
+        trainingCharacterData.SetBaseData(characterData);
+        _characterData = trainingCharacterData;
+    }
 
     /// <summary> 開始からの日数を経過させる処理 </summary>
     public void AddElapsedDays() => _currentElapsedDays++;

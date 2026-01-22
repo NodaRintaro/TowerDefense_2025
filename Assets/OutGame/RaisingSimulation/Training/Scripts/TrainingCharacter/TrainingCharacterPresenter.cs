@@ -29,7 +29,7 @@ public class TrainingCharacterPresenter : MonoBehaviour
     }
 
     /// <summary> キャラクターの情報をViewに反映する処理 </summary>
-    public void SetCharacterView(TrainingData trainingData)
+    public void SetCharacterView(TrainingSaveData trainingData)
     {
         //キャラクターのイメージをViewに反映
         uint trainingCharacterID = trainingData.TrainingCharacterData.CharacterID;

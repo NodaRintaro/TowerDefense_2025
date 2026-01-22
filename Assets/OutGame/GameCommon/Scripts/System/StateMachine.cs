@@ -6,8 +6,14 @@ public abstract class State<TStateType>
 {
     protected StateMachine<TStateType> _stateMachine;
 
-    public abstract UniTask OnEnter();
-    public abstract UniTask OnExit();
+    public virtual UniTask OnEnter()
+    {
+        return UniTask.CompletedTask;
+    }
+    public virtual UniTask OnExit()
+    {
+        return UniTask.CompletedTask;
+    }
 }
 
 

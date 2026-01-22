@@ -5,6 +5,9 @@ using System;
 [Serializable]
 public class TrainingEventData : ITrainingEventData
 {
+    [Header("イベントの種類")]
+    [SerializeField] private TrainingEventType _trainingEventType;
+
     [Header("イベントのID")]
     [SerializeField] private uint _trainingEventID = 0;
 
@@ -18,10 +21,7 @@ public class TrainingEventData : ITrainingEventData
     [SerializeField] private bool _isBrunchScenario = false;
 
     [Header("シナリオの分岐方法")]
-    [SerializeField] private EventBranchWay _branchType = EventBranchWay.None;
-
-    [Header("このイベントが分岐先のイベントの場合の分岐条件")]
-    [SerializeField] private EventBranchType _eventBranchType = EventBranchType.None;
+    [SerializeField] private EventBranchType _branchType;
 
     [Header("Buffの種類")]
     [SerializeField] private TrainingEventBuffType _buffType = TrainingEventBuffType.None;
@@ -41,12 +41,12 @@ public class TrainingEventData : ITrainingEventData
     [Header("獲得するアイテムのID")]
     [SerializeField] private uint _itemID = 0;
 
+    public TrainingEventType TrainingEventType => _trainingEventType;
     public uint EventID => _trainingEventID;
     public string EventName => _eventName;
     public uint NovelEventID => _novelEventID;
     public bool IsBranch => _isBrunchScenario;
-    public EventBranchWay BranchType => _branchType;
-    public EventBranchType EventBranchType => _eventBranchType;
+    public EventBranchType BranchType => _branchType;
     public TrainingEventBuffType BuffType => _buffType;
     public int PowerBaseBuff => _powerBaseBuff;
     public int IntelligenceBaseBuff => _intelligenceBaseBuff;
@@ -56,13 +56,51 @@ public class TrainingEventData : ITrainingEventData
     public uint SkillID => _skillID;
     public uint ItemID => _itemID;
 
-    #if UNITY_EDITOR
+    public void Init(
+    string id,
+    string eventName,
+    string novelEventID,
+    string isBranch,
+    string branchWay,
+    string buffType,
+    string powerBuff,
+    string intelligenceBuff,
+    string physicalBuff,
+    string speedBuff,
+    string staminaBuff,
+    string skillID,
+    string itemID
+)
+    {
+        // uint への変換
+        uint.TryParse(id, out _trainingEventID);
+        uint.TryParse(novelEventID, out _novelEventID);
+        uint.TryParse(skillID, out _skillID);
+        uint.TryParse(itemID, out _itemID);
+
+        // string そのまま
+        _eventName = eventName;
+
+        // bool への変換 ("true" または "1" など)
+        bool.TryParse(isBranch, out _isBrunchScenario);
+
+        // Enum への変換
+        System.Enum.TryParse(branchWay, out _branchType);
+        System.Enum.TryParse(buffType, out _buffType);
+
+        // int への変換
+        int.TryParse(powerBuff, out _powerBaseBuff);
+        int.TryParse(intelligenceBuff, out _intelligenceBaseBuff);
+        int.TryParse(physicalBuff, out _physicalBaseBuff);
+        int.TryParse(speedBuff, out _speedBaseBuff);
+        int.TryParse(staminaBuff, out _staminaBaseBuff);
+    }
+
     public void SetEventID(uint id) { _trainingEventID = id; }
     public void SetEventName(string eventName) { _eventName = eventName; }
     public void SetNovelEventID(uint id) { _novelEventID = id; }
     public void SetIsBranch(bool isBranch) { _isBrunchScenario = isBranch; }
-    public void SetBranchWay(EventBranchWay type) { _branchType = type; }
-    public void SetBranchType(EventBranchType eventBranchType) {  _eventBranchType = eventBranchType; }
+    public void SetBranchWay(EventBranchType type) { _branchType = type; }
     public void SetBuffType(TrainingEventBuffType trainingEventBuffType) {  _buffType = trainingEventBuffType; }
     public void SetPowerBuff(int buff) { _powerBaseBuff = buff; }
     public void SetIntelligenceBuff(int buff) { _intelligenceBaseBuff = buff; }
@@ -71,5 +109,4 @@ public class TrainingEventData : ITrainingEventData
     public void SetStaminaBuff(int buff) { _staminaBaseBuff = buff; }
     public void SetSkillID(uint id) { _skillID = id; }
     public void SetItemID(uint id) {_itemID = id; }
-    #endif
 }

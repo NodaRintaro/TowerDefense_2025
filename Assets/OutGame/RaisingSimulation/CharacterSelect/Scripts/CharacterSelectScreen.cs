@@ -6,7 +6,7 @@ using UniRx;
 
 public class CharacterSelectScreen : ScreenBase
 {
-    [SerializeField] private PageView _pageView;
+    [SerializeField] private SelectPageView _pageView;
     [SerializeField] private GameObject _selectedCharacterObj;
 
     [SerializeField, Header("フェードインする際のImage")] 
@@ -22,7 +22,6 @@ public class CharacterSelectScreen : ScreenBase
 
         //フェードイン
         await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() => _fadeImage.gameObject.SetActive(false));
-        await UniTask.WaitUntil(() => _fadeImage.gameObject.activeSelf);
 
         //フェードイン後に若干の間を設ける
         int fadeInDelay = 1000;
@@ -33,12 +32,10 @@ public class CharacterSelectScreen : ScreenBase
 
     public async override UniTask FadeOutScreen()
     {
-        bool isCompleteFadeOut = false;
         _fadeImage.gameObject.SetActive(true);
 
         //フェードアウト
-        await _fadeImage.DOFade(1f, _fadeDuration).SetEase(Ease.InSine).OnComplete(() => isCompleteFadeOut = true);
-        await UniTask.WaitUntil(() => isCompleteFadeOut);
+        await _fadeImage.DOFade(1f, _fadeDuration).SetEase(Ease.InSine);
 
         _pageView.gameObject.SetActive(false);
         _selectedCharacterObj.SetActive(false);

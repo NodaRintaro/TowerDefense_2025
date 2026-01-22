@@ -25,7 +25,6 @@ MonoBehaviour:
     _powerPercentage: 0
     _intelligencePercentage: 0
     _speedPercentage: 0
-    _eventIDArray: 0100000002000000
   - _id: 2
     _cardName: "\u30D1\u30EF\u30FC\u30AC\u30FC\u30C9"
     _rarity: 2
@@ -38,7 +37,6 @@ MonoBehaviour:
     _powerPercentage: 20
     _intelligencePercentage: 0
     _speedPercentage: 0
-    _eventIDArray: 0100000003000000
   - _id: 3
     _cardName: "\u7CBE\u5BC6\u653B\u6483"
     _rarity: 2
@@ -51,7 +49,6 @@ MonoBehaviour:
     _powerPercentage: 0
     _intelligencePercentage: 0
     _speedPercentage: 0
-    _eventIDArray: 010000000500000006000000
   - _id: 4
     _cardName: "\u30B9\u30D4\u30FC\u30C9\u30AD\u30E3\u30B9\u30C8"
     _rarity: 2
@@ -64,7 +61,6 @@ MonoBehaviour:
     _powerPercentage: 0
     _intelligencePercentage: 0
     _speedPercentage: 20
-    _eventIDArray: 040000000700000008000000
   - _id: 5
     _cardName: "\u30CF\u30A4\u30D2\u30FC\u30EB"
     _rarity: 2
@@ -77,4 +73,3 @@ MonoBehaviour:
     _powerPercentage: 0
     _intelligencePercentage: 20
     _speedPercentage: 0
-    _eventIDArray: 07000000

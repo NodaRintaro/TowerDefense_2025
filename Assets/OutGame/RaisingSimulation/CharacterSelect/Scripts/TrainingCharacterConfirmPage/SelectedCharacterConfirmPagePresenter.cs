@@ -8,7 +8,7 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     [SerializeField] private SelectedSupportCardsConfirmView _selectedSupportCardsConfirmView;
 
     [SerializeField, Header("PageView")]
-    private PageView _pageView;
+    private SelectPageView _pageView;
 
     private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
     private GameFlowStateMachine _gameFlowStateMachine;
@@ -16,8 +16,9 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
 
     #region DataClass
     private JsonTrainingSaveDataRepository _trainingTargetSaveDataRepository;
-    private AddressableSupportCardDataRepository _addressableSupportCardDataRepository;
+    private AddressableCharacterTrainingScheduleRepository _trainingTargetCharacterTrainingScheduleRepository;
     private AddressableSupportCardImageDataRepository _addressableSupportCardImageDataRepository;
+    private AddressableCharacterTrainingScheduleRepository _addressableCharacterTrainingScheduleRepository;
     #endregion
 
 
@@ -25,11 +26,12 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     {
         _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
 
+        _trainingTargetCharacterTrainingScheduleRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterTrainingScheduleRepository>();
         _gameFlowStateMachine = _lifeTimeScope.Container.Resolve<GameFlowStateMachine>();
         _trainingEventPool = _lifeTimeScope.Container.Resolve<TrainingEventPool>();
         _trainingTargetSaveDataRepository = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
-        _addressableSupportCardDataRepository = _lifeTimeScope.Container.Resolve<AddressableSupportCardDataRepository>();
         _addressableSupportCardImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableSupportCardImageDataRepository>();
+        _addressableCharacterTrainingScheduleRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterTrainingScheduleRepository>();
     }
 
     public void OnEnable()
@@ -54,8 +56,9 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     }
 
     /// <summary> 育成ゲームへ移行する処理 </summary>
-    public async UniTask GameStart()
+    public async UniTask OnTrainingStart()
     {
+        _trainingTargetSaveDataRepository.RepositoryData.SetCharacterSchedule(_trainingTargetCharacterTrainingScheduleRepository.RepositoryData.GetData(_trainingTargetSaveDataRepository.RepositoryData.TrainingCharacterData.CharacterID));
         await _trainingTargetSaveDataRepository.DataSave();
         await _gameFlowStateMachine.ChangeState(ScreenType.TrainingEvent);
     }
@@ -63,17 +66,26 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     /// <summary> 現在のページからほかのページへ移行するイベントをボタンに登録する処理 </summary>
     public void SetOnClickTurnPageButtonEvent()
     {
-        _pageView.SetTurnPageButtonsInteractable(false, true);
         _pageView.BackPageButton.onClick.AddListener(async () => await _pageView.TurnPage(CharacterSelectPageType.SupportCardSelectPage));
 
         if(_trainingTargetSaveDataRepository.RepositoryData.TrainingCharacterData != null)
         {
-            _pageView.SetStartTrainingButtonInteractable(true);
-            _pageView.StartTrainingButton.onClick.AddListener(async () => await GameStart());
+            _pageView.SetTurnPageButtonsInteractable(true, true);
+            _pageView.NextButton.onClick.AddListener(async () => await OnTrainingStart());
         }
         else
         {
-            _pageView.SetStartTrainingButtonInteractable(false);
+            _pageView.SetTurnPageButtonsInteractable(false, true);
         }
+    }
+
+    /// <summary> トレーニング最初のイベントをあてはめる </summary>
+    public void SetTrainingFirstEvent()
+    {
+        //キャラクターの育成スケジュールを設定
+        CharacterTrainingSchedule characterTrainingSchedule = _addressableCharacterTrainingScheduleRepository.RepositoryData.GetData(_trainingTargetSaveDataRepository.RepositoryData.TrainingCharacterData.CharacterID);
+        _trainingTargetSaveDataRepository.RepositoryData.SetCharacterSchedule(characterTrainingSchedule);
+
+
     }
 }

@@ -4,7 +4,7 @@ using VContainer.Unity;
 using System.Threading;
 using UnityEngine;
 
-public class JsonTrainingSaveDataRepository : RepositoryBase<TrainingData>
+public class JsonTrainingSaveDataRepository : RepositoryBase<TrainingSaveData>
 {
     [Inject]
     public JsonTrainingSaveDataRepository() { }
@@ -18,11 +18,11 @@ public class JsonTrainingSaveDataRepository : RepositoryBase<TrainingData>
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
-        _repositoryData = await JsonDataSaveSystem.DataLoadAsync<TrainingData>(SaveDataName);
+        _repositoryData = await JsonDataSaveSystem.DataLoadAsync<TrainingSaveData>(SaveDataName);
 
         if(_repositoryData == null)
         {
-            _repositoryData = new TrainingData();
+            _repositoryData = new TrainingSaveData();
         }
     }
 }

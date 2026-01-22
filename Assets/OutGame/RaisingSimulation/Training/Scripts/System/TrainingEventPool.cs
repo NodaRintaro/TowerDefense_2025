@@ -4,28 +4,34 @@ using VContainer;
 /// <summary> 1ターンで行われるEventの登録先 </summary>
 public class TrainingEventPool
 {
-    private Queue<TrainingEventData> _eventList = new();
+    private Dictionary<TrainingEventType, Queue<uint>> _trainingEventPool = new Dictionary<TrainingEventType, Queue<uint>>();
 
     [Inject]
-    public TrainingEventPool() { }
-
-    public void EnqueueData(TrainingEventData eventID)
+    public TrainingEventPool()
     {
-        _eventList.Enqueue(eventID);
+        _trainingEventPool.Add(TrainingEventType.TrainingEvent, new Queue<uint>());
+        _trainingEventPool.Add(TrainingEventType.CharacterUniqueEvent, new Queue<uint>());
+        _trainingEventPool.Add(TrainingEventType.SupportCardEvent, new Queue<uint>());
     }
 
-    public TrainingEventData DequeueData()
+    public void EnqueueData(TrainingEventType trainingEventType, uint eventID)
     {
-        if(IsEventQueueEmpty())
+        _trainingEventPool[trainingEventType].Enqueue(eventID);
+    }
+
+    public uint DequeueData(TrainingEventType trainingEventType)
+    {
+        if(IsEventQueueEmpty(trainingEventType))
         {
-            return null;
+            return 0;
         }
-        return _eventList.Dequeue();
+
+        return _trainingEventPool[trainingEventType].Dequeue();
     }
 
-    public bool IsEventQueueEmpty()
+    public bool IsEventQueueEmpty(TrainingEventType trainingEventType)
     {
-        if(_eventList.Count > 0) 
+        if (_trainingEventPool[trainingEventType].Count > 0) 
             return false;
 
         return true;

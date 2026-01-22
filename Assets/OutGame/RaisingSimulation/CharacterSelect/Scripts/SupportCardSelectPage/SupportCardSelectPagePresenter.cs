@@ -13,7 +13,7 @@ public class SupportCardSelectPagePresenter : MonoBehaviour, IPagePresenter
     private SupportCardDeckView _deckView;
 
     [SerializeField, Header("PageView")]
-    private PageView _pageView;
+    private SelectPageView _pageView;
 
     [SerializeField, Header("サポートカード選択ボタンの親オブジェクト")]
     private Transform _supportCardSelectButtonParent;
@@ -132,10 +132,9 @@ public class SupportCardSelectPagePresenter : MonoBehaviour, IPagePresenter
 
     public void SetOnClickTurnPageButtonEvent()
     {
-        _pageView.SetStartTrainingButtonInteractable(false);
         _pageView.SetTurnPageButtonsInteractable(true, true);
 
         _pageView.BackPageButton.onClick.AddListener(async () => await _pageView.TurnPage(CharacterSelectPageType.CharacterSelectPage));
-        _pageView.NextPageButton.onClick.AddListener(async () => await _pageView.TurnPage(CharacterSelectPageType.SelectedCharacterConfirmPage));
+        _pageView.NextButton.onClick.AddListener(async () => await _pageView.TurnPage(CharacterSelectPageType.SelectedCharacterConfirmPage));
     }
 }

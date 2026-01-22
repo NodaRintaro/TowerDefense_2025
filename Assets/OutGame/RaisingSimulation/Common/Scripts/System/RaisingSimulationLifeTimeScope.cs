@@ -26,7 +26,7 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
         builder.Register<ParameterBuffCalculator>(Lifetime.Singleton);
 
         //育成イベントの進行クラス
-        builder.Register<TrainingEventFlowController>(Lifetime.Singleton);
+        builder.Register<TrainingEventController>(Lifetime.Singleton);
     }
 
     /// <summary> RepositoryClassをContainer登録する </summary>
@@ -59,13 +59,22 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
         //キャラクターの職種の画像データのRepository
         builder.Register<AddressableCharacterJobImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
-        //ノベルデータのRepository
+        //トレーニングイベントのノベルデータのRepository
         builder.Register<AddressableTrainingEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //トレーニングイベントデータのRepository
         builder.Register<AddressableTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
-        //分岐先のイベントデータのRepository
-        builder.Register<AddressableTrainingBranchEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        //キャラクター固有イベントデータのRepository
+        builder.Register<AddressableCharacterEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //キャラクター固有シナリオデータのRepository
+        builder.Register<AddressableCharacterEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //サポートカード固有イベントデータのRepository
+        builder.Register<AddressableSupportCardEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //サポートカードシナリオデータのRepository
+        builder.Register<AddressableSupportCardEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

@@ -3,57 +3,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ScenarioData
+
+[Serializable]
+public class ScenarioData
 {
-    [Serializable]
-    public class ScenarioData
+    [SerializeField] private Queue<NovelPageData> _novelData =new();
+
+    public Queue<NovelPageData> NovelData => _novelData;
+
+    public void EnQueuePageData(NovelPageData novelPageData)
     {
-        [SerializeField] private uint _eventID;
-
-        [SerializeField] private NovelPageData[] _novelData;
-
-        public uint EventID => _eventID;
-
-        public NovelPageData[] NovelData => _novelData;
-
-        public void SetID(uint id)
-        {
-            _eventID = id;
-        }
-
-        public void SetNovelData(NovelPageData[] novelData)
-        {
-            _novelData = novelData;
-        }
-
-        public bool TryGetPageData(out NovelPageData pageData, uint pageNum)
-        {
-            if(_novelData.Length <= pageNum)
-            {
-                pageData = default;
-                return false;
-            }
-
-            pageData = _novelData[pageNum];
-            return true;
-        }
+        _novelData.Enqueue(novelPageData);
     }
 
-    [Serializable]
-    public struct NovelPageData
+    public bool TryGetNextPage(out NovelPageData novelPageData)
     {
-        public string TalkCharacterName;
+        novelPageData = new();
 
-        public string ScenarioData;
-
-        public string CharacterCenter;
-
-        public string CharacterLeftBottom;
-
-        public string CharacterRightBottom;
-
-        public string CharacterLeftTop;
-
-        public string CharacterRightTop;
+        //ページが残っていなければFalseを返す
+        if(_novelData.Count == 0) return false;
+        
+        //残っていればページを渡す
+        novelPageData = _novelData.Dequeue();
+        return true;
     }
+}
+
+[Serializable]
+public struct NovelPageData
+{
+    public string TalkCharacterName;
+
+    public string ScenarioData;
+
+    public string CharacterCenter;
+
+    public string CharacterLeftBottom;
+
+    public string CharacterRightBottom;
+
+    public string CharacterLeftTop;
+
+    public string CharacterRightTop;
+
+    public string BackScreenName;
 }

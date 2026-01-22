@@ -4,7 +4,7 @@
     public string EventName {  get;  }
     public uint NovelEventID { get; }
     public bool IsBranch { get; }
-    public EventBranchWay BranchType { get; }
+    public EventBranchType BranchType { get; }
     public TrainingEventBuffType BuffType { get; }
     public int PowerBaseBuff { get; }
     public int IntelligenceBaseBuff { get; }

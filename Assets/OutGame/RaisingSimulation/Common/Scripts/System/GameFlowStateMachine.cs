@@ -79,7 +79,7 @@ namespace RaisingSimulationGameFlowStateMachine
             JsonTrainingSaveDataRepository tSaveData = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
 
             //セーブデータを確認してデータが残っていれば途中の画面からスタート
-            tSaveData.SetData(new TrainingData());
+            tSaveData.SetData(new TrainingSaveData());
             _currentScreen = ScreenType.CharacterSelect;
             await ChangeState(ScreenType.CharacterSelect);
             Debug.Log(_currentScreen);

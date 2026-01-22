@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using ScenarioData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +7,6 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 public class GenerateScriptableObjectMenu : EditorWindow
@@ -31,7 +27,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
         EditorWindow.GetWindow(typeof(GenerateScriptableObjectMenu));
     }
 
-    async void OnGUI()
+    void OnGUI()
     {
         //生成するDataを選択
         EditorGUILayout.Space(_spaceSize);
@@ -53,15 +49,17 @@ public class GenerateScriptableObjectMenu : EditorWindow
         EditorGUILayout.Space(_spaceSize);
 
         //スクリプタブルオブジェクトとCSVデータを両方生成する処理
-        if (GUILayout.Button("GenerateScriptableObject & CSV") && NullCheckData())
+        if (GUILayout.Button("GenerateScriptableObject & CSV"))
         {
-            await DataGenerate(true);
+            DataGenerate(true);
         }
 
+        EditorGUILayout.Space(_spaceSize);
+
         //CSVDataのみを生成する処理
-        if (GUILayout.Button("Generate OnlyCSVData") && NullCheckData())
+        if (GUILayout.Button("Generate OnlyCSVData"))
         {
-            await DataGenerate(false);
+            DataGenerate(false);
         }
     }
 
@@ -76,7 +74,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
     }
 
     #region データ生成
-    private async UniTask DataGenerate(bool isGenerateScriptableObject)
+    private async void DataGenerate(bool isGenerateScriptableObject)
     {
         switch (_dataType)
         {
@@ -276,7 +274,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
     #region キャラクターデータ生成
     /// <summary> キャラクターのスクリプタブルオブジェクトを生成 </summary>
     /// <param name="parseCsvData"> 2次元配列に格納されたキャラクターのCSVデータ </param>
-    private void GenerateCharacterData(string[,] parseCsvData)
+    private async UniTask GenerateCharacterData(string[,] parseCsvData)
     {
         const int firstColumnCountNum = 2;
         int csvDataLength = parseCsvData.GetLength(0);
@@ -284,9 +282,13 @@ public class GenerateScriptableObjectMenu : EditorWindow
 
         CharacterBaseData[] characterBaseDataArray = new CharacterBaseData[csvDataLength - firstColumnCountNum];
 
+        CharacterImageDataRegistry characterImageDataRegistry = await AssetsLoader.LoadAssetAsync<CharacterImageDataRegistry>(AAGSpriteAssets.kAssets_MasterData_ScriptableObject_ImageData_CharacterImageDataRegistry);
+
         for (int columnCount = firstColumnCountNum; columnCount < csvDataLength; columnCount++)
         {
             CharacterBaseData characterData = new();
+
+            CharacterImageData characterImageData = characterImageDataRegistry.GetImageData(uint.Parse(parseCsvData[columnCount, 0]));
 
             characterData.InitData(
                 uint.Parse(parseCsvData[columnCount, 0]),
@@ -297,7 +299,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 uint.Parse(parseCsvData[columnCount, 5]),
                 uint.Parse(parseCsvData[columnCount, 6]),
                 parseCsvData[columnCount, 7],
-                uint.Parse(parseCsvData[columnCount, 8])
+                uint.Parse(parseCsvData[columnCount, 8]),
+                uint.Parse(parseCsvData[columnCount, 9]),
+                characterImageData
                 );
 
             characterBaseDataArray[columnCount - firstColumnCountNum] = characterData;
@@ -336,8 +340,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
                 parseCsvData[columnCount, 8],
                 parseCsvData[columnCount, 9],
                 parseCsvData[columnCount, 10],
-                parseCsvData[columnCount, 11],
-                parseCsvData[columnCount, 12]
+                parseCsvData[columnCount, 11]
                 );
 
             supportCardDataArray[columnCount - firstColumnCountNum] = cardData;
@@ -356,7 +359,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
         int csvDataLength = parseCsvData.GetLength(0);
         CharacterTrainingScheduleRegistry characterTrainingEventMapRegistry = CreateInstance<CharacterTrainingScheduleRegistry>();
 
-        CharacterTrainingEventMap[] characterTrainingEventMaps = null;
+        CharacterTrainingSchedule[] characterTrainingEventMaps = null;
 
         int arrCount = 0;
         for (int i = 2; i < parseCsvData.GetLength(0); i++)
@@ -364,9 +367,9 @@ public class GenerateScriptableObjectMenu : EditorWindow
             if (!string.IsNullOrWhiteSpace(parseCsvData[i, 0]))
                 arrCount++;
         }
-        characterTrainingEventMaps = new CharacterTrainingEventMap[arrCount];
+        characterTrainingEventMaps = new CharacterTrainingSchedule[arrCount];
 
-        List<OneDayEvent> trainingSchedule = null;
+        List<OneDayEvents> trainingSchedule = null;
         arrCount = 0;
 
         for (int i = 2; i < parseCsvData.GetLength(0); i++)
@@ -385,7 +388,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
             }
             else
             {
-                OneDayEvent oneDayEvent = new OneDayEvent();
+                OneDayEvents oneDayEvent = new OneDayEvents();
 
                 oneDayEvent.IsRaid = bool.Parse(parseCsvData[i, 2]);
 

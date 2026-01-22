@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TowerDefenseDeckData;
 using UnityEngine;
@@ -30,7 +30,7 @@ public class CharacterSelectManager : MonoBehaviour
         _jsonCharacterDeckDataRepository = _lifeTimeScope.Container.Resolve<JsonCharacterDeckDataRepository>();
         _towerDefenseCharacterDataBase = _lifeTimeScope.Container.Resolve<TowerDefenseCharacterDataBase>();
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
-        _noneBaseData.InitData(999, "None", 1, 1, 1, 1, 1, "", 1);
+        _noneBaseData.InitData(999, "None", 1, 1, 1, 1, 1, "", 1, 1, new());
         _noneData.SetBaseData(_noneBaseData);
     }
 
@@ -102,7 +102,7 @@ public class CharacterSelectManager : MonoBehaviour
                         _teamBuildManager.SelectedCharacterIds[i], 0) == false)
                 {
                     //トレーニングデータがない場合、基本データを取得する
-                    var data = _addressableCharacterDataRepository.GetCharacterData(
+                    var data = _addressableCharacterDataRepository.GetCharacterDataByID(
                         _teamBuildManager.SelectedCharacterIds[i]);
                     currentCharacterData = new TowerDefenseCharacterData();
                     currentCharacterData.SetBaseData(data);

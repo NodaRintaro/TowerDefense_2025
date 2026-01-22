@@ -31,9 +31,6 @@ public class SupportCardData
     [SerializeField, Header("素早さの強化率")]
     private uint _speedPercentage;
 
-    [SerializeField, Header("発生するイベントのID")]
-    private uint[] _eventIDArray;
-
     public uint ID => _id;
     public string CardName => _cardName;
     public uint Rarity => _rarity;
@@ -46,7 +43,6 @@ public class SupportCardData
     public uint PowerPercentage => _powerPercentage;
     public uint IntelligencePercentage => _intelligencePercentage;
     public uint SpeedPercentage => _speedPercentage;
-    public uint[] EventIDArray => _eventIDArray;
 
     /// <summary>
     /// パラメータの初期化
@@ -57,7 +53,7 @@ public class SupportCardData
     /// <param name="pow">筋力の強化倍率</param>
     /// <param name="intelli">知力の強化倍率</param>
     /// <param name="sp">素早さの強化倍率</param>
-    public void InitData(string id, string charaName, string coolTime, string addPhysi, string addPow, string addIntelli, string addSp, string physiPercentage, string powPercentage, string intelliPercentage, string spPercentage, string eventID, string rarity)
+    public void InitData(string id, string charaName, string coolTime, string addPhysi, string addPow, string addIntelli, string addSp, string physiPercentage, string powPercentage, string intelliPercentage, string spPercentage, string rarity)
     {
         _id = uint.Parse(id);
         _cardName = charaName;
@@ -71,13 +67,5 @@ public class SupportCardData
         _intelligencePercentage = uint.Parse(intelliPercentage);
         _speedPercentage = uint.Parse(spPercentage);
         _rarity = uint.Parse(rarity);
-
-        var events = eventID.Split('|');
-        _eventIDArray = new uint[events.Length];
-
-        for (int i = 0; i < _eventIDArray.Length; i++)
-        {
-            _eventIDArray[i] = uint.Parse(events[i]);
-        }
     }
 }

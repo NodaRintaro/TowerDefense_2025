@@ -12,14 +12,18 @@ public class AddressableCharacterDataRepository : RepositoryBase<CharacterBaseDa
     [Inject]
     public AddressableCharacterDataRepository() { }
 
-    public CharacterBaseData GetCharacterData(uint id)
+    public CharacterBaseData GetCharacterDataByID(uint id)
     {
         return _repositoryData.GetData(id);
     }
 
-    public uint GetCharacterID(string characterName)
+    public CharacterBaseData GetCharacterDataByName(string characterName)
     {
-        return _repositoryData.GetID(characterName);
+        foreach(var data in _repositoryData.DataHolder)
+        {
+            if(data.CharacterName == characterName) return data;
+        }
+        return null;
     }
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)

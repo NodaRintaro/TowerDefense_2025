@@ -5,8 +5,9 @@ using UnityEngine;
 public enum EventBranchType
 {
     None,
-    TrainingSuccess,
-    TrainingFailed,
+    StaminaValue,
     Button,
-    ParameterReference
+    RaidResult,
+    TrainingSuccess,
+    TrainingFailed
 }

@@ -13,7 +13,7 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     private CharacterInformationView _selectedCharacterView;
 
     [SerializeField, Header("PageView")]
-    private PageView _pageView;
+    private SelectPageView _pageView;
 
     [SerializeField, Header("サポートカード選択ボタンの親オブジェクト")]
     private Transform _characterSelectButtonParent;
@@ -43,14 +43,13 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     {
         //セーブデータが残っていなければ新たに作る
         if(_trainingTargetSaveDataRepository.RepositoryData == null)
-            _trainingTargetSaveDataRepository.SetData(new TrainingData());
+            _trainingTargetSaveDataRepository.SetData(new TrainingSaveData());
 
         //キャラクター選択ボタンを生成
         _buttonGenerator.SetGenerateButtonParent(_characterSelectButtonParent);
         GenerateCharacterSelectButtons();
 
         //現在のキャラクター選択ページからほかのページに移るボタンの初期化
-        _pageView.SetStartTrainingButtonInteractable(false);
         _pageView.SetTurnPageButtonsInteractable(true, false);
         SetOnClickTurnPageButtonEvent();
     }
@@ -78,7 +77,7 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     {
         foreach(uint id in _characterCollectionDataRepository.RepositoryData.CollectionList)
         {
-            string buttonName = _addressableCharacterDataRepository.GetCharacterData(id).CharacterName;
+            string buttonName = _addressableCharacterDataRepository.GetCharacterDataByID(id).CharacterName;
             Sprite buttonSprite = _addressableCharacterImageDataRepository.GetSprite(id, CharacterSpriteType.MiniCard);
             Button selectButton = _buttonGenerator.GenerateButton(buttonName, buttonSprite);
 
@@ -93,6 +92,6 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
 
     public void SetOnClickTurnPageButtonEvent()
     {
-        _pageView.NextPageButton.onClick.AddListener(async () => await _pageView.TurnPage(CharacterSelectPageType.SupportCardSelectPage));
+        _pageView.NextButton.onClick.AddListener(async () => await _pageView.TurnPage(CharacterSelectPageType.SupportCardSelectPage));
     }
 }

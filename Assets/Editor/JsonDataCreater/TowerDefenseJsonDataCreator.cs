@@ -69,7 +69,7 @@ public class TowerDefenseJsonDataCreator : EditorWindow
         if (GUILayout.Button("新たなデータを追加"))
         {
             _towerDefenseCharacterData = new();
-            _towerDefenseCharacterData.SetBaseData(_addressableCharacterDataRepository.GetCharacterData(_characterId));
+            _towerDefenseCharacterData.SetBaseData(_addressableCharacterDataRepository.GetCharacterDataByID(_characterId));
             _towerDefenseCharacterData.SetCharacterTrainedParameterData(_addPhysicalParam, _addPowerParam, _addIntelligenceParam, _addSpeedParam);
             
             _towerDefenseCharacterData.SetCharacterRank(

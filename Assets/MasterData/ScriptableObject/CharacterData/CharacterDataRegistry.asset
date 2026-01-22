@@ -15,46 +15,106 @@ MonoBehaviour:
   _dataHolder:
   - _characterID: 1
     _characterName: "\u30EA\u30CA\u30EA\u30A2"
-    _baseRarity: 3
+    _baseRarity: 2
     _basePhysical: 40
     _basePower: 70
     _baseIntelligence: 50
     _baseSpeed: 70
     _roleType: 1
     _cost: 18
+    _skillID: 1
+    _imageData:
+      _spriteData:
+      - _characterSprite: {fileID: 21300000, guid: 3d934cbf7f259994d9958e9da715b18a, type: 3}
+        _spriteType: 1
+      - _characterSprite: {fileID: 21300000, guid: ece06ad9c7caf994cbcce93997cb34ab, type: 3}
+        _spriteType: 2
+      - _characterSprite: {fileID: 21300000, guid: a21d441f181b2414b8ddd7f5eaa5a6d1, type: 3}
+        _spriteType: 3
+      - _characterSprite: {fileID: 21300000, guid: 6ec6a3c005e95fb409175756b55d7fa8, type: 3}
+        _spriteType: 4
+      _id: 1
   - _characterID: 2
     _characterName: "\u30C0\u30EA\u30EB"
-    _baseRarity: 3
+    _baseRarity: 2
     _basePhysical: 90
     _basePower: 90
     _baseIntelligence: 35
     _baseSpeed: 40
     _roleType: 2
     _cost: 15
+    _skillID: 2
+    _imageData:
+      _spriteData:
+      - _characterSprite: {fileID: 21300000, guid: 7d7205c5d86552343b50a6511d8dd5ea, type: 3}
+        _spriteType: 1
+      - _characterSprite: {fileID: 21300000, guid: 0a7cb5a432e46d6418df5c0d4cf262ce, type: 3}
+        _spriteType: 2
+      - _characterSprite: {fileID: 21300000, guid: 276b17bc7e963d346a7d4610c499dfb9, type: 3}
+        _spriteType: 3
+      - _characterSprite: {fileID: 21300000, guid: 12ff9ad2d3f1e494aa8940d690d5ec56, type: 3}
+        _spriteType: 4
+      _id: 2
   - _characterID: 3
     _characterName: "\u30A2\u30EA\u30B5"
-    _baseRarity: 3
+    _baseRarity: 2
     _basePhysical: 60
     _basePower: 10
     _baseIntelligence: 70
     _baseSpeed: 50
     _roleType: 3
     _cost: 25
+    _skillID: 3
+    _imageData:
+      _spriteData:
+      - _characterSprite: {fileID: 21300000, guid: d298dfd2f1085bc4e84f3ae2847c2d18, type: 3}
+        _spriteType: 1
+      - _characterSprite: {fileID: 21300000, guid: 5f08f3f5e36775a4b9f27637e060a003, type: 3}
+        _spriteType: 2
+      - _characterSprite: {fileID: 21300000, guid: c6e2a218a6ccfc842b82f9629f50aba7, type: 3}
+        _spriteType: 3
+      - _characterSprite: {fileID: 21300000, guid: 7b609773a0beffa40a77eb3cebba5ccc, type: 3}
+        _spriteType: 4
+      _id: 3
   - _characterID: 4
     _characterName: "\u30E8\u30B7\u30E5\u30A2"
-    _baseRarity: 3
+    _baseRarity: 2
     _basePhysical: 63
     _basePower: 50
     _baseIntelligence: 50
     _baseSpeed: 48
     _roleType: 4
     _cost: 22
+    _skillID: 4
+    _imageData:
+      _spriteData:
+      - _characterSprite: {fileID: 21300000, guid: 15ef6af478039ed4a9dfd6a437ac1edf, type: 3}
+        _spriteType: 1
+      - _characterSprite: {fileID: 21300000, guid: b5cae5b9d598fbc44bdd095917aa4b42, type: 3}
+        _spriteType: 2
+      - _characterSprite: {fileID: 21300000, guid: c18117e6a81754b409e16510f7a70e9e, type: 3}
+        _spriteType: 3
+      - _characterSprite: {fileID: 21300000, guid: 860032c646d8c62459ff89a9221a9bbd, type: 3}
+        _spriteType: 4
+      _id: 4
   - _characterID: 5
     _characterName: "\u30E8\u30CF\u30F3"
-    _baseRarity: 3
+    _baseRarity: 2
     _basePhysical: 70
     _basePower: 10
     _baseIntelligence: 60
     _baseSpeed: 45
     _roleType: 5
     _cost: 28
+    _skillID: 5
+    _imageData:
+      _spriteData:
+      - _characterSprite: {fileID: 21300000, guid: 557f900f0bb8fd64dbbba321e8bbd361, type: 3}
+        _spriteType: 1
+      - _characterSprite: {fileID: 21300000, guid: 333e1d76399af804c8e22658abdb48f8, type: 3}
+        _spriteType: 2
+      - _characterSprite: {fileID: 21300000, guid: 4ea793d5d6d5a0d45a4293875543e093, type: 3}
+        _spriteType: 3
+      - _characterSprite: {fileID: 21300000, guid: 7d84badc7a096fb40aa1cd46c2c7ade4, type: 3}
+        _spriteType: 4
+      _id: 5

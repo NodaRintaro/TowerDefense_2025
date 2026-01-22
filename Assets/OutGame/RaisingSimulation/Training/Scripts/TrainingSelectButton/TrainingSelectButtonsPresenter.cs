@@ -28,7 +28,6 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
     private RaisingSimulationLifeTimeScope _lifeTimeScope;
     private JsonTrainingSaveDataRepository _trainingDataRepository;
     private AddressableTrainingEventDataRepository _trainingEventDataRepository;
-    private AddressableTrainingBranchEventDataRepository _branchTrainingEventDataRepository;
 
     public void Awake()
     {
@@ -37,7 +36,6 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         _trainingDataRepository = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
         _trainingEventPool = _lifeTimeScope.Container.Resolve<TrainingEventPool>();
         _trainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingEventDataRepository>();
-        _branchTrainingEventDataRepository = _lifeTimeScope.Container.Resolve<AddressableTrainingBranchEventDataRepository>();
     }
 
     public void OnEnable()

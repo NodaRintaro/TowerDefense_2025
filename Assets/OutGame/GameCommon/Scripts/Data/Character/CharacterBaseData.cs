@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using UniRx;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using VContainer;
 
 /// <summary> キャラクターのベースデータ </summary>
 #region CharacterBaseData
@@ -29,6 +27,10 @@ public class CharacterBaseData
     protected JobType _roleType;
     [SerializeField, Header("コスト"), JsonProperty]
     protected uint _cost;
+    [SerializeField, Header("スキルのID"), JsonProperty]
+    protected uint _skillID;
+    [SerializeField, Header("スキルのID"), JsonProperty]
+    protected CharacterImageData _imageData;
     public uint CharacterID => _characterID;
     public string CharacterName => _characterName;
     public uint BaseRarity => _baseRarity;
@@ -38,6 +40,8 @@ public class CharacterBaseData
     public uint BaseSpeed => _baseSpeed;
     public JobType CharacterRole => _roleType;
     public uint Cost => _cost;
+    public uint SkillID => _skillID;
+    public CharacterImageData CharacterImageData => _imageData;
 
     #region パラメータの合計値の参照プロパティ
     public virtual uint TotalPhysical => _basePhysical;
@@ -56,7 +60,7 @@ public class CharacterBaseData
     /// <param name="pow">筋力</param>
     /// <param name="intelli">知力</param>
     /// <param name="sp">素早さ</param>
-    public void InitData(uint id, string charaName, uint rarity, uint physi, uint pow, uint intelli, uint sp, string role, uint cost)
+    public void InitData(uint id, string charaName, uint rarity, uint physi, uint pow, uint intelli, uint sp, string role, uint cost, uint skillID, CharacterImageData characterImageData)
     {
         _characterID = id;
         _characterName = charaName;
@@ -67,6 +71,8 @@ public class CharacterBaseData
         _baseSpeed = sp;
         SetCharacterRole(role);
         _cost = cost;
+        _skillID = skillID;
+        _imageData = characterImageData;
     }
 
     /// <summary>

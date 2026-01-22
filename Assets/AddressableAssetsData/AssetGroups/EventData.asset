@@ -17,38 +17,18 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f8ea1054e14d37842881905a2ed05ea9
   m_SerializeEntries:
-  - m_GUID: 1ccbad12a416c7f41a6ce5f9f1b68671
-    m_Address: Assets/MasterData/CSV/EventData/TrainingCommonEventBranchEventDataCSV.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4b0940c37f386d24485ef4b607c83cba
-    m_Address: Assets/MasterData/CSV/EventData/SupportCardBranchEventDataCSV.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5bf12167f59100248a17714e5b00d035
     m_Address: Assets/MasterData/CSV/EventData/SupportCardEventDataCSV.csv
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7a0ab8de33151104b9a51a974b0b8f30
-    m_Address: Assets/MasterData/ScriptableObject/CharacterEventSchedule/CharacterTrainingSchedule.asset
+  - m_GUID: 7f8451688d239ac4d8a001773a74b75e
+    m_Address: Assets/MasterData/CSV/EventData/TrainingCommonEventDataCSV.csv
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9bd1c579f4444174ca056abfc4957708
     m_Address: Assets/MasterData/CSV/EventData/CharacterEventDataCSV.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d8351318ce864294987a74d86a757dfd
-    m_Address: Assets/MasterData/CSV/EventData/CharacterBranchEventDataCSV.csv
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e80853f054800ad44b1ba4c62b399c93
-    m_Address: Assets/MasterData/CSV/EventData/TrainingEventDataCSV.csv
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

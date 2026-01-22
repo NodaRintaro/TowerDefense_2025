@@ -8,11 +8,6 @@ using VContainer;
 [System.Serializable]
 public class TrainingCharacterData : CharacterBaseData
 {
-    [Inject]
-    public TrainingCharacterData(CharacterBaseData data)
-    {
-        SetBaseData(data);
-    }
 
     //各種パラメータの増加値
     [SerializeField, Header("体力の増加値")]

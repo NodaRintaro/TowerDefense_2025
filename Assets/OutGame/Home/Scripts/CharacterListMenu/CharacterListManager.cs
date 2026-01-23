@@ -68,7 +68,7 @@ public class CharacterListManager : MonoBehaviour
             _homeMenuLifeTimeScope.Container.Resolve<AddressableCharacterJobImageDataRepository>();
         _characterBaseDataRegistry =
             _homeMenuLifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
-        
+        CreateCharacterListView();
     }
 
     private void OnEnable()

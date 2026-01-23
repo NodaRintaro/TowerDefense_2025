@@ -14,10 +14,10 @@ public class ButtonGenerator : MonoBehaviour
     private Transform _generateButtonParent;
 
     //生成するボタンのBaseObject
-    private static GameObject _baseButtonObj = null;
+    private GameObject _baseButtonObj = null;
 
     //生成したボタンのオブジェクトプール
-    private static List<Button> _buttonPool = new List<Button>();
+    private List<Button> _buttonPool = new List<Button>();
 
     public void Awake()
     {

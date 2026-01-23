@@ -32,6 +32,7 @@ public class CharacterChanger : MonoBehaviour
         await _jsonCharacterCollectionDataRepository.DataLoadAsync(cancellationTokenSource.Token);
         await _addressableCharacterImageDataRepository.DataLoadAsync(cancellationTokenSource.Token);
         _maxCharacterImageId = _jsonCharacterCollectionDataRepository.RepositoryData.CollectionList.Count;
+        RandomCharacterPickUpView();
     }
 
     private void OnEnable()

@@ -48,6 +48,7 @@ public class TeamBuildManager : MonoBehaviour
         await _jsonCharacterDeckDataRepository.DataLoadAsync(cancellationTokenSource.Token);
         foreach (Transform selectButton in _selectButtonParent.transform)
         {
+            //Debug.Log("selectButton:" + selectButton.name);
             _selectImageList.Add(selectButton.GetComponent<Image>());
         }
 
@@ -55,11 +56,13 @@ public class TeamBuildManager : MonoBehaviour
         {
             _selectDeckImageList.Add(item.GetComponent<Image>());
         }
+
+        TeamBuildView();
     }
 
     private void OnEnable()
     {
-        _loadingNotifier.OnDataLoadComplete += TeamBuildView;
+        //_loadingNotifier.OnDataLoadComplete += TeamBuildView;
     }
 
 
@@ -83,9 +86,11 @@ public class TeamBuildManager : MonoBehaviour
     // チーム編成の表示
     public void TeamBuildView()
     {
-        Initialize();
         if (_loadingNotifier.IsDataLoadComplete == false) return;
+        Initialize();
         //編成キャラクターの表示
+        Debug.Log("_selectedCharacterIds.Count:" + _selectedCharacterIds.Count);
+        Debug.Log("_currentSelectDecIndex:" + _selectImageList.Count);
         for (int i = 0; i < _selectedCharacterIds.Count; i++)
         {
             _selectImageList[i].sprite =
@@ -121,6 +126,7 @@ public class TeamBuildManager : MonoBehaviour
 
     private void SelectDeckView()
     {
+        if (_loadingNotifier.IsDataLoadComplete == false) return;
         for (int i = 0; i < _maxDeckIndex; i++)
         {
             if (i == _currentSelectDecIndex)

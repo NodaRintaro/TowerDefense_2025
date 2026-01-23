@@ -32,13 +32,13 @@ MonoBehaviour:
       SecondUniqueEvent: 0
       LastUniqueEvent: 0
     - IsRaid: 0
-      FirstUniqueEvent: 0
+      FirstUniqueEvent: 4
       SecondUniqueEvent: 0
       LastUniqueEvent: 0
     - IsRaid: 1
-      FirstUniqueEvent: 4
+      FirstUniqueEvent: 5
       SecondUniqueEvent: 0
-      LastUniqueEvent: 5
+      LastUniqueEvent: 0
   - _characterID: 2
     _trainingEventSchedule:
     - IsRaid: 0

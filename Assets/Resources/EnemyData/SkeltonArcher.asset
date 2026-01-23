@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SkeltonArcher
   m_EditorClassIdentifier: 
   enemyName: SkeltonArcher
-  hp: 50
-  moveSpeed: 3
-  range: 2
+  hp: 100
+  moveSpeed: 1
+  range: 1.9
   attackRate: 3
   attack: 10
   defence: 4

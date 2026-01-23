@@ -130,6 +130,14 @@ public class InGameManager : MonoBehaviour
         }
 
         _coins = stageData.initialCoinNum;
+        int tmp = 0;
+        foreach (var VARIABLE in stageData.waveDatas)
+        {
+            tmp += VARIABLE.EnemyNumsInWave;
+        }
+
+        _maxEnemyNums = tmp;
+        UpdateRemainingEnemyText(_remainingEnemyNums);
         //イベント関数への登録
         OnPreviousTimeUpdated += UpdateUnits;
         OnPreviousTimeUpdated += _unitDeck.UpdateTime;

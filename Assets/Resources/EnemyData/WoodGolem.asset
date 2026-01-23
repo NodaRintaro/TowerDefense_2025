@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WoodGolem
   m_EditorClassIdentifier: 
   enemyName: WoodGolem
-  hp: 300
+  hp: 500
   moveSpeed: 0.28
   range: 1
   attackRate: 3

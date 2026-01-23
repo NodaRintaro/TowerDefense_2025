@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Demon
   m_EditorClassIdentifier: 
   enemyName: Demon
-  hp: 50
+  hp: 200
   moveSpeed: 1
   range: 1
   attackRate: 2
-  attack: 15
+  attack: 70
   defence: 0
   enemyImage: {fileID: 3676971076677257608, guid: f762bd6c3226e3044b13549e764cfd24, type: 3}

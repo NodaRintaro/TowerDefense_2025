@@ -16,6 +16,7 @@ MonoBehaviour:
   hp: 45000
   moveSpeed: 0.1
   range: 1
-  attackRate: 0.2
+  attackRate: 1
   attack: 1600
   defence: 500
+  enemyImage: {fileID: 0}

@@ -38,12 +38,14 @@ public class InGameManager : MonoBehaviour
     private playerState _playerState = playerState.Loading;         //プレイヤーの状態
     private int _towerHealth = 0;                                   //タワーの耐久値
     private int _remainingEnemyNums = 0;                            //残りの敵の数
+    private int _remainingEnemyNumOnField = 0;
     private int _maxEnemyNums = 0;                                  //敵の数
     private float _coinTimer = 0;
     private int _coins = 0;
     private float _coinInterval = 1;
     private CancellationTokenSource _tokenSource = new CancellationTokenSource();
     private AddressableCharacterImageDataRepository _addressableCharacterImageDataRepository;
+    private Camera _camera;
 
     #region Properties
 
@@ -108,8 +110,10 @@ public class InGameManager : MonoBehaviour
         _loadingNotifier = _dataLoadManager.Container.Resolve<DataLoadCompleteNotifier>();
         _loadingNotifier.OnDataLoadComplete += StartGameFlow;
     }
+
     private void StartGameFlow()
     {
+        _camera = Camera.main;
         if (StageDataLoader.CurrentUseDeck != null) stageData = StageDataLoader.CurrentUseDeck;
         //アイコンの生成
         _ = StageInitialize();
@@ -142,10 +146,9 @@ public class InGameManager : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Fire2"))
                     {
-                        Camera camera = Camera.main;
-                        if (camera != null)
+                        if (_camera != null)
                         {
-                            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                             if (Physics.Raycast(ray, out RaycastHit hit))
                             {
                                 if (hit.transform.gameObject.CompareTag("PlayerUnit"))
@@ -178,7 +181,7 @@ public class InGameManager : MonoBehaviour
                     }
                     break;
                 }
-            case playerState.GameOver:
+            case playerState.GameEnd:
                 {
                     break;
                 }
@@ -224,9 +227,9 @@ public class InGameManager : MonoBehaviour
     //ドラッグ中の処理
     private void DraggingCharacter()
     {
-        if (Camera.main != null)
+        if (_camera != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 _selectedCharacterObj.transform.position = hit.point;
@@ -377,6 +380,8 @@ public class InGameManager : MonoBehaviour
         unit.Remove();
         _unitList.Remove(unit);
         Destroy(unit.gameObject);
+        _remainingEnemyNumOnField--;
+        GameEndCheck(); //ゲームが終わったかを確認する
     }
     //敵のユニットを出現するメソッド
     private void GenerateEnemyUnit(float time)
@@ -397,6 +402,7 @@ public class InGameManager : MonoBehaviour
                 unit.Init();
                 _waveEnemyIndex[i]++;
                 RemainingEnemyNums--;
+                _remainingEnemyNumOnField++;
                 // 敵の数が0になったらWaveの終了
                 if (waveData.IsWaveEnd(_waveEnemyIndex[i]))
                 {
@@ -556,12 +562,20 @@ public class InGameManager : MonoBehaviour
         _coins += count;
         _coinText.text = $"{_coins}";
     }
+
+    private void GameEndCheck()
+    {
+        if (_towerHealth <= 0 || (_remainingEnemyNumOnField <= 0 && _remainingEnemyNums <= 0))
+        {
+            _playerState = playerState.GameEnd;
+        }
+    }
 }
 public enum playerState
 {
     Idle,
     DraggingCharacter,
     Paused,
-    GameOver,
+    GameEnd,
     Loading,
 }

@@ -18,6 +18,7 @@ public class EnemyUnit : UnitBase
         animator = _characterImageGameObject.GetComponent<Animator>();
         OnRemovedEvent += Destroy;
         RotateForTarget(targetPosition);
+        AnimatorTrigger(MoveTriggerCode);
     }
     public override void UpdateUnit(float deltaTime)
     {

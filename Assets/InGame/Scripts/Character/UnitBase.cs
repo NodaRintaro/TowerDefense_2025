@@ -10,6 +10,7 @@ public class UnitBase : MonoBehaviour
     private float _durationSeconds = 0.2f;
     
     protected static readonly int AttackTriggerCode = Animator.StringToHash("AttackTrigger");
+    protected static readonly int MoveTriggerCode = Animator.StringToHash("MoveTrigger");
     protected Animator animator;
     public PlayerUnitData PlayerData => UnitData as PlayerUnitData;   // プレイヤーユニットデータ
     public EnemyUnitData EnemyData => UnitData as EnemyUnitData;   // 敵ユニットデータ
@@ -41,7 +42,11 @@ public class UnitBase : MonoBehaviour
         set
         {
             _battleTarget = value;
-            if(value == null) RotateForTarget(Vector3.zero);
+            if (value == null)
+            {
+                RotateForTarget(Vector3.zero);
+                AnimatorTrigger(MoveTriggerCode);
+            }
             else RotateForTarget(value.transform.position);
         } 
     }       // 交戦相手
@@ -136,7 +141,7 @@ public class UnitBase : MonoBehaviour
         else
         {
             SpriteRenderer sprite = _characterImageGameObject.GetComponent<SpriteRenderer>();
-            var tween = sprite.DOColor(new Color(0.7f, 0f, 0f, 1f), _durationSeconds).SetEase(Ease.INTERNAL_Zero);
+            var tween = sprite.DOColor(new Color(0.5f, 0f, 0f, 1f), _durationSeconds).SetEase(Ease.INTERNAL_Zero);
             tween.onComplete = () => sprite.color = new Color(1,1,1,1);
         }
     }
@@ -156,7 +161,9 @@ public class UnitBase : MonoBehaviour
     {
         if (animator == null)
             return;
-        animator.SetTrigger("AttackTrigger");
+        animator.SetTrigger(trigger);//Animatorで設定してあるAttackTriggerというパラメーターを呼んでいる
+        //animator.
+        Debug.Log($"PlayAnim{trigger}");
     }
 
     protected virtual void RotateForTarget(Vector3 vec)//Targetの方向にユニットを向ける

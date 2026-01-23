@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: WoodGolem
   m_EditorClassIdentifier: 
   enemyName: WoodGolem
-  hp: 22
+  hp: 300
   moveSpeed: 0.28
   range: 1
   attackRate: 3
-  attack: 3
+  attack: 50
   defence: 1
   enemyImage: {fileID: 4907539015828445137, guid: 26d907fece6aa3c4a8c5913a3d729a9c, type: 3}

@@ -29,7 +29,7 @@ public class CharacterBaseData
     protected uint _cost;
     [SerializeField, Header("スキルのID"), JsonProperty]
     protected uint _skillID;
-    [SerializeField, Header("スキルのID"), JsonProperty]
+    [SerializeField, Header("キャラクターのイメージデータ"), JsonProperty]
     protected CharacterImageData _imageData;
     public uint CharacterID => _characterID;
     public string CharacterName => _characterName;

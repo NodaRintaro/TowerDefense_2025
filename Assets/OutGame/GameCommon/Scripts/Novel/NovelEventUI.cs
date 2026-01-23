@@ -25,6 +25,13 @@ public class NovelEventUI
 
     public DialogueText DialogueText => _dialogueText;
 
+    public void Init()
+    {
+        _dialogueText.Init();
+        SetNameText(" ");
+        SetCharacterImage(null, null, null, null, null);
+    }
+
     public void SetNameText(string name)
     {
         _speakerNameText.text = name;

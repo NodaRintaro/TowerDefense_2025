@@ -18,7 +18,7 @@ public class TrainingEventParameterView : MonoBehaviour
     [SerializeField, Header("素早さ")]
     private CharacterParameterUI _speedParameterUI = null;
 
-    private float _slideInCenterPos = 100f;
+    private float _slideInCenterPos = 180f;
     private float _slideInDuration = 0.5f;
 
     private RaisingSimulationLifeTimeScope _raisingSimulationLifeTimeScope = null;
@@ -42,12 +42,12 @@ public class TrainingEventParameterView : MonoBehaviour
     }
 
     /// <summary> 元居た場所に戻る処理 </summary>
-    public void SetOriginalTransform()
+    private void SetOriginalTransform()
     {
         _parameterObj.transform.position = _parameterObj.transform.position;
     }
 
-    public async UniTask TrainingBuffEvent(TrainingCharacterData trainingCharacterData)
+    public async UniTask TrainingBonusBuffEvent(TrainingCharacterData trainingCharacterData)
     {
         ParameterObj.SetActive(true);
         await SlideInAnimation.SlideInGameObject(ParameterObj, _slideInCenterPos, _slideInDuration);

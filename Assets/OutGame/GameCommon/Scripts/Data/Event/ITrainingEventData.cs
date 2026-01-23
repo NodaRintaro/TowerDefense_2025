@@ -2,7 +2,7 @@
 {
     public uint EventID { get; }
     public string EventName {  get;  }
-    public uint NovelEventID { get; }
+    public uint ScenarioID { get; }
     public bool IsBranch { get; }
     public EventBranchType BranchType { get; }
     public TrainingEventBuffType BuffType { get; }

@@ -16,13 +16,13 @@ public class TrainingNovelEventView : MonoBehaviour
     [Header("トレーニングイベントのControllerClass")]
     [SerializeField] private TrainingEventController _trainingEventController;
 
-    private NovelPageData _currentPageData;
-
     private ScenarioData _currentReadScenario;
     private NovelEventPlayerActions _currentAction;
 
     //この名前が出てきたらシナリオを読むのを中断し分岐イベントに移る
     private string _eventBranchName = "EventBranch";
+
+    private NovelPageData _currentPageData;
 
     //LifeTimeScope
     private RaisingSimulationLifeTimeScope _lifeTimeScope;
@@ -41,11 +41,15 @@ public class TrainingNovelEventView : MonoBehaviour
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
     }
 
+    public void OnEnable()
+    {
+        _novelUI.Init();
+    }
+
     /// <summary> シナリオデータをセットする </summary>
     public void SetScenario(ScenarioData scenarioData)
     {
         _currentReadScenario = scenarioData;
-        _currentReadScenario.TryGetNextPage(out _currentPageData);
     }
 
     /// <summary> 現在表示されているシナリオを読み進める処理 </summary>
@@ -54,44 +58,55 @@ public class TrainingNovelEventView : MonoBehaviour
         switch(_currentAction)
         {
             case NovelEventPlayerActions.ReadScenario:
-                bool isScenarioFinish = _currentReadScenario.TryGetNextPage(out _currentPageData);
+                if (_currentReadScenario == null) break;
 
-                if (isScenarioFinish || _currentPageData.TalkCharacterName == _eventBranchName)
+                bool isFinishScenarioReading = _currentReadScenario.TryGetNextPage(out _currentPageData);
+
+                if (!isFinishScenarioReading || _currentPageData.TalkCharacterName == _eventBranchName)
                 {
-                    _currentAction = NovelEventPlayerActions.FinishedRead;
+                    ChangeNovelEventPlayerActions(NovelEventPlayerActions.FinishedRead);
                     await OnScenarioReadingAction();
                     break;
                 }
 
-                await SetScenarioView();
+                await ReadNovel();
                 break;
             case NovelEventPlayerActions.SkipScenario:
                 _novelUI.DialogueText.SkipText();
                 break;
             case NovelEventPlayerActions.FinishedRead:
-                _trainingEventController.FinishedReadScenario();
+                ChangeNovelEventPlayerActions(NovelEventPlayerActions.Inactive);
+                await _trainingEventController.FinishedReadScenario();
                 break;
         }
     }
 
+    public void ChangeNovelEventPlayerActions(NovelEventPlayerActions novelEventPlayerActions)
+    {
+        _currentAction = novelEventPlayerActions;
+    }
+
     /// <summary> 送られてきたデータをもとに画面を整える処理 </summary>
-    public async UniTask SetScenarioView()
+    public async UniTask ReadNovel()
     {
         _novelUI.SetNameText(_currentPageData.TalkCharacterName);
 
+        CharacterBaseData centerCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterCenter));
+        CharacterBaseData leftBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterLeftBottom));
+        CharacterBaseData rightBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterRightBottom));
+        CharacterBaseData leftTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterLeftTop));
+        CharacterBaseData rightTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterRightTop));
+
+        Sprite centerSprite = null, leftBottomSprite = null, rightBottomSprite = null, leftTopSprite = null , rightTopSprite = null;
+
+        if (centerCharacter != null) centerSprite = centerCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (leftBottomCharacter != null) leftBottomSprite = leftBottomCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (rightBottomCharacter != null) rightBottomSprite = rightBottomCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (leftTopCharacter != null) leftTopSprite = leftTopCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (rightTopCharacter != null) rightTopSprite = rightTopCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+
         //キャラクター立ち絵をViewに反映
-        _novelUI.SetCharacterImage
-            (_addressableCharacterDataRepository.GetCharacterDataByName //真ん中のキャラクター
-            (_currentPageData.CharacterCenter).CharacterImageData.GetSprite(CharacterSpriteType.OverAllView),
-            _addressableCharacterDataRepository.GetCharacterDataByName //左下のキャラクター
-            (_currentPageData.CharacterLeftBottom).CharacterImageData.GetSprite(CharacterSpriteType.OverAllView),
-            _addressableCharacterDataRepository.GetCharacterDataByName //右下のキャラクター
-            (_currentPageData.CharacterRightBottom).CharacterImageData.GetSprite(CharacterSpriteType.OverAllView),
-            _addressableCharacterDataRepository.GetCharacterDataByName //左上のキャラクター
-            (_currentPageData.CharacterLeftTop).CharacterImageData.GetSprite(CharacterSpriteType.OverAllView),
-            _addressableCharacterDataRepository.GetCharacterDataByName //右上のキャラクター
-            (_currentPageData.CharacterRightTop).CharacterImageData.GetSprite(CharacterSpriteType.OverAllView)
-            );
+        _novelUI.SetCharacterImage(centerSprite, leftBottomSprite, rightBottomSprite, leftTopSprite, rightTopSprite);
 
         //テキストがフェードインしている間はアニメーションをいつでもスキップできるようにする
         _currentAction = NovelEventPlayerActions.SkipScenario;
@@ -102,9 +117,17 @@ public class TrainingNovelEventView : MonoBehaviour
             _currentAction = NovelEventPlayerActions.ReadScenario;
     }
 
+    private string ChangeName(string newName)
+    {
+        if(newName == "TrainingCharacter") 
+            return _jsonTrainingSaveData.RepositoryData.TrainingCharacterData.CharacterName;
+
+        return newName;
+    }
 
     public enum NovelEventPlayerActions
     {
+        Inactive = 0,
         FinishedRead,
         SkipScenario,
         ReadScenario,

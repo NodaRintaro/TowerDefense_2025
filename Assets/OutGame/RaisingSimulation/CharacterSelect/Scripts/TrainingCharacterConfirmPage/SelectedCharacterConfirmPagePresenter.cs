@@ -60,6 +60,9 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     {
         _trainingTargetSaveDataRepository.RepositoryData.SetCharacterSchedule(_trainingTargetCharacterTrainingScheduleRepository.RepositoryData.GetData(_trainingTargetSaveDataRepository.RepositoryData.TrainingCharacterData.CharacterID));
         await _trainingTargetSaveDataRepository.DataSave();
+
+        _lifeTimeScope.Container.Resolve<TrainingEventSelector>().SetCharacterUniqueEvent();
+
         await _gameFlowStateMachine.ChangeState(ScreenType.TrainingEvent);
     }
 

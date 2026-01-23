@@ -6,9 +6,9 @@ using VContainer;
 /// <summary>
 /// キャラクター固有イベントのシナリオのCSVデータのリポジトリ
 /// </summary>
-public class AddressableCharacterEventScenarioDataRepository : RepositoryBase<TextAsset>, IAddressableDataRepository, ICSVDataRepository
+public class AddressableCharacterEventScenarioDataRepository : RepositoryBase<TextAsset>, IAddressableDataRepository
 {
-    public string[,] CSVSplitRepositoryData => CSVLoader.LoadCsv(_repositoryData);
+    private string[,] _csvSplitRepositoryData;
 
     [Inject]
     public AddressableCharacterEventScenarioDataRepository() { }
@@ -19,12 +19,12 @@ public class AddressableCharacterEventScenarioDataRepository : RepositoryBase<Te
         bool isSearchCharacter = true;
         bool isSearchScenario = true;
 
-        for (int column = 0; column < CSVSplitRepositoryData.GetLength(0); column++)
+        for (int column = 1; column < _csvSplitRepositoryData.GetLength(0); column++)
         {
             if (isSearchCharacter)
             {
-                if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 0])) continue;
-                else if (uint.Parse(CSVSplitRepositoryData[column, 0]) == characterID)
+                if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 0])) continue;
+                else if (uint.Parse(_csvSplitRepositoryData[column, 0]) == characterID)
                 {
                     isSearchCharacter = false;
                     continue;
@@ -34,22 +34,22 @@ public class AddressableCharacterEventScenarioDataRepository : RepositoryBase<Te
             {
                 if(isSearchScenario)
                 {
-                    if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 1])) continue;
-                    else if (uint.Parse(CSVSplitRepositoryData[column, 1]) == eventID)
+                    if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 1])) continue;
+                    else if (uint.Parse(_csvSplitRepositoryData[column, 1]) == eventID)
                     {
                         isSearchScenario = false;
                         targetData = new ScenarioData();
 
                         NovelPageData novelPageData = new NovelPageData
                         {
-                            TalkCharacterName = CSVSplitRepositoryData[column, 2],
-                            ScenarioData = CSVSplitRepositoryData[column, 3],
-                            CharacterCenter = CSVSplitRepositoryData[column, 4],
-                            CharacterLeftBottom = CSVSplitRepositoryData[column, 5],
-                            CharacterRightBottom = CSVSplitRepositoryData[column, 6],
-                            CharacterLeftTop = CSVSplitRepositoryData[column, 7],
-                            CharacterRightTop = CSVSplitRepositoryData[column, 8],
-                            BackScreenName = CSVSplitRepositoryData[column, 9]
+                            TalkCharacterName = _csvSplitRepositoryData[column, 2],
+                            ScenarioData = _csvSplitRepositoryData[column, 3],
+                            CharacterCenter = _csvSplitRepositoryData[column, 4],
+                            CharacterLeftBottom = _csvSplitRepositoryData[column, 5],
+                            CharacterRightBottom = _csvSplitRepositoryData[column, 6],
+                            CharacterLeftTop = _csvSplitRepositoryData[column, 7],
+                            CharacterRightTop = _csvSplitRepositoryData[column, 8],
+                            BackScreenName = _csvSplitRepositoryData[column, 9]
                         };
 
                         targetData.EnQueuePageData(novelPageData);
@@ -58,18 +58,18 @@ public class AddressableCharacterEventScenarioDataRepository : RepositoryBase<Te
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 1]))
+                    if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 1]))
                     {
                         NovelPageData novelPageData = new NovelPageData
                         {
-                            TalkCharacterName = CSVSplitRepositoryData[column, 2],
-                            ScenarioData = CSVSplitRepositoryData[column, 3],
-                            CharacterCenter = CSVSplitRepositoryData[column, 4],
-                            CharacterLeftBottom = CSVSplitRepositoryData[column, 5],
-                            CharacterRightBottom = CSVSplitRepositoryData[column, 6],
-                            CharacterLeftTop = CSVSplitRepositoryData[column, 7],
-                            CharacterRightTop = CSVSplitRepositoryData[column, 8],
-                            BackScreenName = CSVSplitRepositoryData[column, 9]
+                            TalkCharacterName = _csvSplitRepositoryData[column, 2],
+                            ScenarioData = _csvSplitRepositoryData[column, 3],
+                            CharacterCenter = _csvSplitRepositoryData[column, 4],
+                            CharacterLeftBottom = _csvSplitRepositoryData[column, 5],
+                            CharacterRightBottom = _csvSplitRepositoryData[column, 6],
+                            CharacterLeftTop = _csvSplitRepositoryData[column, 7],
+                            CharacterRightTop = _csvSplitRepositoryData[column, 8],
+                            BackScreenName = _csvSplitRepositoryData[column, 9]
                         };
 
                         targetData.EnQueuePageData(novelPageData);
@@ -82,12 +82,20 @@ public class AddressableCharacterEventScenarioDataRepository : RepositoryBase<Te
             }
         }
 
+        Debug.Log("データが見つかりませんでした");
         return null;
     }
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<TextAsset>(AAGScenarioData.kAssets_MasterData_CSV_ScenarioData_CharacterEventScenarioDataCSV);
+        if (_repositoryData == null)
+        {
+            Debug.LogError("Failed to load TextAsset: " + AAGScenarioData.kAssets_MasterData_CSV_ScenarioData_CharacterEventScenarioDataCSV);
+            _csvSplitRepositoryData = new string[0, 0]; // Ensure it's not null
+            return;
+        }
+        _csvSplitRepositoryData = CSVLoader.LoadCsv(_repositoryData);
     }
 
     public void DataRelease()

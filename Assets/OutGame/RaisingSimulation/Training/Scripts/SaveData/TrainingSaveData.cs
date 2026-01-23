@@ -35,6 +35,7 @@ public class TrainingSaveData : IJsonSaveData
     public uint MaxStamina => _maxStamina;
     public uint CurrentStamina => _currentStamina;
     public ScreenType CurrentScreenType => _currentScreenType;
+    public CharacterTrainingSchedule CurrentCharacterSchedule => _currentCharacterSchedule;
     #endregion
 
     /// <summary> トレーニング対象のキャラクターデータをセット </summary>

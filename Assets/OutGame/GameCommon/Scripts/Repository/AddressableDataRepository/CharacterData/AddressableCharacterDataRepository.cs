@@ -10,7 +10,10 @@ using System.Threading;
 public class AddressableCharacterDataRepository : RepositoryBase<CharacterBaseDataRegistry>, IAddressableDataRepository
 {
     [Inject]
-    public AddressableCharacterDataRepository() { }
+    public AddressableCharacterDataRepository()
+    {
+
+    }
 
     public CharacterBaseData GetCharacterDataByID(uint id)
     {

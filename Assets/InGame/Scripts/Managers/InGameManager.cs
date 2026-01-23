@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using TowerDefenseDeckData;
+using UnityEngine.UI;
 using VContainer;
 
 public class InGameManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private DataLoadManager _dataLoadManager;
     private DataLoadCompleteNotifier _loadingNotifier;
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
+    private Dictionary<uint, CharacterIcon> _characterIconList = new Dictionary<uint,CharacterIcon>(); //キャラクターアイコンのリスト
     private UnitDeck _unitDeck;                                     //キャラクターの編成
     private Cell _selectedCell;                                     //選択中のセル
     private GameObject _selectedCharacterObj;                       //選択中のキャラクターObject
@@ -41,6 +43,7 @@ public class InGameManager : MonoBehaviour
     private int _coins = 0;
     private float _coinInterval = 1;
     private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+    private AddressableCharacterImageDataRepository _addressableCharacterImageDataRepository;
 
     #region Properties
 
@@ -75,6 +78,7 @@ public class InGameManager : MonoBehaviour
     }
 
     public UnitDeck UnitDeck => _unitDeck;
+    public float TimeSpeed => _timeSpeed;
     #endregion
     #region Events
 
@@ -208,6 +212,9 @@ public class InGameManager : MonoBehaviour
         if (!_unitDeck.CanPlaceCharacter(characterID)) return;
         _selectedCharacterID = characterID;
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
+        PlayerUnit playerUnit = _selectedCharacterObj.GetComponent<PlayerUnit>();
+        playerUnit.SetImage(_addressableCharacterImageDataRepository.GetSprite((uint)characterID+1, CharacterSpriteType.OverAllView));
+        
         //_selectedCharacterObj.transform.GetChild(0).GetComponent<Renderer>().material.color = _characterDeck.GetCharacterData(characterID).color;
         //_selectedCharacterObj.GetComponent<UnitBase>() = characterID;
         _playerState = playerState.DraggingCharacter;
@@ -286,6 +293,7 @@ public class InGameManager : MonoBehaviour
     //キャラクターアイコンを生成
     private void InstantiateCharacterIcons()
     {
+        _addressableCharacterImageDataRepository = _dataLoadManager.Container.Resolve<AddressableCharacterImageDataRepository>();
         GameObject canvas = GameObject.Find("Canvas");
         float x = _characterIconPrefab.GetComponent<RectTransform>().rect.width;
         float y = _characterIconPrefab.GetComponent<RectTransform>().rect.height / 2;
@@ -299,8 +307,12 @@ public class InGameManager : MonoBehaviour
             {
                 return;
             }
-            CharacterIcon characterIcon =
-                Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform).GetComponent<CharacterIcon>();
+            GameObject obj =
+                Instantiate(_characterIconPrefab, new Vector3(x, y, 0), Quaternion.identity, canvas.transform);
+            CharacterIcon characterIcon = obj.GetComponentInChildren<CharacterIcon>();
+            _characterIconList.Add(_unitDeck.UnitDatas[i].ID, characterIcon);
+            Image characterImage = characterIcon.GetComponent<Image>();
+            characterImage.sprite = _addressableCharacterImageDataRepository.GetSprite(_unitDeck.UnitDatas[i].ID, CharacterSpriteType.Icon);
             x += _characterIconPrefab.GetComponent<RectTransform>().rect.width;
             characterIcon.Init(i);
         }
@@ -353,6 +365,8 @@ public class InGameManager : MonoBehaviour
         _unitList.Remove(unit);
         _unitDeck.CharacterRemoved(unit.PlayerData.ID);
         Destroy(unit.gameObject);
+        
+        _characterIconList[unit.PlayerData.ID].UpdateSlider(_unitDeck.GetCharacterData((int)unit.PlayerData.ID).RePlaceInterval);
     }
     private void RemoveEnemyUnit(EnemyUnit unit)
     {

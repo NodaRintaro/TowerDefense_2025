@@ -39,6 +39,7 @@ public class UnitBase : MonoBehaviour
         Initialize();
         // HPバーを初期化
         _hpBar.Init(UnitData.Attack);
+        IsDead = false;
         Vector3 vec = Camera.main.transform.position;
         vec.x = this.transform.position.x;
         _characterImageGameObject.transform.LookAt(vec);
@@ -97,6 +98,7 @@ public class UnitBase : MonoBehaviour
     protected void GetDamage(float damage)
     {
         // HPが０未満にならないようにダメージを受ける
+        Debug.Log($"<color=red>{gameObject.name}Current hp{CurrentHp} - damage{damage}</color>");
         CurrentHp = Mathf.Max(CurrentHp - damage, 0);
         Debug.Log($"Current hp{CurrentHp}");
         if(CurrentHp == 0)

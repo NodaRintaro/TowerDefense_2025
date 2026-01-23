@@ -5,7 +5,7 @@ public class UnitBase : MonoBehaviour
 {
     [SerializeField] private HPBar _hpBar;   // HPバー
     [SerializeField] protected GameObject _characterImageGameObject;
-    protected UnitBase BattleTarget;       // 交戦相手
+    private UnitBase _battleTarget;
     public UnitData UnitData;           // ユニットデータ
     
     protected static readonly int AttackTriggerCode = Animator.StringToHash("AttackTrigger");
@@ -34,6 +34,16 @@ public class UnitBase : MonoBehaviour
             OnHealthChangedEvent?.Invoke(value);
         }
     }
+    protected UnitBase BattleTarget 
+    { 
+        get => _battleTarget;
+        set
+        {
+            _battleTarget = value;
+            if(value == null) RotateForTarget(Vector3.zero);
+            else RotateForTarget(value.transform.position);
+        } 
+    }       // 交戦相手
 
     public bool IsFullHp => CurrentHp >= UnitData.MaxHp;
         
@@ -47,9 +57,9 @@ public class UnitBase : MonoBehaviour
         // HPバーを初期化
         _hpBar.Init(UnitData.Attack);
         IsDead = false;
-        Vector3 vec = Camera.main.transform.position;
-        vec.x = this.transform.position.x;
-        _characterImageGameObject.transform.LookAt(vec);
+        // Vector3 vec = Camera.main.transform.position;
+        // vec.x = this.transform.position.x;
+        // _characterImageGameObject.transform.LookAt(vec);
         OnHealthChangedEvent += _hpBar.UpdateHp;
     }
 
@@ -143,5 +153,9 @@ public class UnitBase : MonoBehaviour
         if (animator == null)
             return;
         animator.SetTrigger("AttackTrigger");
+    }
+
+    protected virtual void RotateForTarget(Vector3 vec)//Targetの方向にユニットを向ける
+    {
     }
 }

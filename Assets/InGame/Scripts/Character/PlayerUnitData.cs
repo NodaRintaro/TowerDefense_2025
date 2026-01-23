@@ -23,6 +23,14 @@ public class PlayerUnitData : UnitData
         _attackRange = 1f;
         _currentHp = _maxHp;
         _jobType = trainedCharacterData.CharacterRole;
+        if (_jobType == JobType.Archer || _jobType == JobType.Wizard)
+        {
+            _attackRange = 2.5f;
+        }
+        else if(_jobType == JobType.Healer)
+        {
+            _attackRange = 1.5f;
+        }
     }
     public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }
     public uint Cost { get => _cost; set => _cost = value; }

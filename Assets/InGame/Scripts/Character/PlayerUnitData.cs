@@ -23,6 +23,7 @@ public class PlayerUnitData : UnitData
         //_searchEnemyDistance = trainedCharacterData.SearchEnemyDistance;
         _attackRange = 1f;
         _currentHp = _maxHp;
+        _jobType = trainedCharacterData.CharacterRole;
     }
     public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }
     public JobType JobType { get => _jobType; set => _jobType = value; }

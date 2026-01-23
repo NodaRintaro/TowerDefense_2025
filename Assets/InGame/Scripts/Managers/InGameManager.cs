@@ -405,16 +405,27 @@ public class InGameManager : MonoBehaviour
         }
     }
     //最寄りの敵対ユニットを返す
-    public UnitBase FindNearestEnemy(UnitBase unit)
+    public UnitBase FindNearestTarget(UnitBase unit)
     {
         UnitBase nearestEnemy = null;
         float nearestDistance = float.MaxValue;
 
         foreach (UnitBase enemy in _unitList)
         {
-            if (enemy.IsDead || !unit.IsEnemy(enemy))
+            if (enemy.IsDead || !unit.IsEnemy(enemy))// 死んでいる敵は無視する
             {
-                // 死んでいる敵は無視する
+                // if (unit.UnitData == unit.UnitData as PlayerUnitData && unit.PlayerData.JobType == JobType.Healer) //ヒーラーは味方ユニットを返す
+                // {
+                //     Debug.Log("Healer");
+                //     if (unit.IsEnemy(enemy))
+                //     {
+                //         continue;
+                //     }
+                // }
+                // else if (!unit.IsEnemy(enemy))
+                // {
+                //     continue;
+                // }
                 continue;
             }
 

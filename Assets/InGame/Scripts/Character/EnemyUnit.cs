@@ -7,7 +7,7 @@ public class EnemyUnit : UnitBase
     EnemyUnitData EnemyUnitData => (EnemyUnitData)UnitData;
     
     private AIRoute _route;
-    public float moveSpeed;             // 移動速度
+    //public float moveSpeed;             // 移動速度
     private int _routeIndex = 1;        // ルートのインデックス
 
     protected override void Initialize()
@@ -20,14 +20,15 @@ public class EnemyUnit : UnitBase
     }
     public override void UpdateUnit(float deltaTime)
     {
+        Debug.Log(BattleTarget == null ? "Null" : "Not Null");
         //ユニットの行動を記述する
         if (BattleTarget != null)
         {   // 交戦相手がいるとき、攻撃行動を取る
-            AttackAction(deltaTime);	
+            Action(deltaTime);	
         }
         else
         {   // 交戦相手がいないとき一番近い敵を探す
-            UnitBase enemy = InGameManager.Instance.FindNearestEnemy(this);
+            UnitBase enemy = InGameManager.Instance.FindNearestTarget(this);
             if(enemy != null && Distance(enemy) <= EnemyUnitData.AttackRange)
             {   // 一番近い敵が索敵範囲内なら交戦に入る
                 BattleTarget = enemy;
@@ -47,8 +48,9 @@ public class EnemyUnit : UnitBase
     //移動処理
     private void MoveAction(float deltaTime)
     {
+        Debug.Log("Moving");
         // 目的地に向かって移動する
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, EnemyUnitData.MoveSpeed * deltaTime);
         if (transform.position == targetPosition)
         {
             ArriveTargetPosition();

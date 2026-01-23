@@ -66,7 +66,7 @@ public class UnitBase : MonoBehaviour
     }
 
     // 攻撃行動ををするメソッド
-    protected void AttackAction(float deltaTime)
+    protected void Action(float deltaTime)
     {
         // 次の行動間隔まで待つ
         UnitData.ActionTimer -= deltaTime;
@@ -94,8 +94,15 @@ public class UnitBase : MonoBehaviour
         AnimatorTrigger(AttackTriggerCode);
         // 自分の攻撃力から相手の防御力を引いたものをダメージとする（０未満にはならない）
         float damage = Mathf.Max(UnitData.Attack - target.UnitData.Defence, 0);
-        // 攻撃相手はダメージを受ける
-        target.GetDamage(damage);
+        if (UnitData == UnitData as PlayerUnitData && PlayerData.JobType == JobType.Healer)
+        {
+            target.GetHeal(UnitData.MagicPower);
+        }
+        else
+        {
+            target.GetDamage(damage);
+            // 攻撃相手はダメージを受ける
+        }
     }
     
     // ダメージを受ける
@@ -111,7 +118,7 @@ public class UnitBase : MonoBehaviour
         }
     }
 
-    public void Heal(float heal)
+    public void GetHeal(float  heal)
     {
         CurrentHp = Mathf.Min(CurrentHp + heal, UnitData.MaxHp);
     }

@@ -38,12 +38,16 @@ public class InGameManager : MonoBehaviour
     private playerState _playerState = playerState.Loading;         //プレイヤーの状態
     private int _towerHealth = 0;                                   //タワーの耐久値
     private int _remainingEnemyNums = 0;                            //残りの敵の数
+    private int _remainingEnemyNumOnField = 0;
     private int _maxEnemyNums = 0;                                  //敵の数
     private float _coinTimer = 0;
     private int _coins = 0;
     private float _coinInterval = 1;
+    public int lostEnemyNum = 0;
     private CancellationTokenSource _tokenSource = new CancellationTokenSource();
     private AddressableCharacterImageDataRepository _addressableCharacterImageDataRepository;
+    [SerializeField] private Result _result;
+    private Camera _camera;
 
     #region Properties
 
@@ -108,8 +112,10 @@ public class InGameManager : MonoBehaviour
         _loadingNotifier = _dataLoadManager.Container.Resolve<DataLoadCompleteNotifier>();
         _loadingNotifier.OnDataLoadComplete += StartGameFlow;
     }
+
     private void StartGameFlow()
     {
+        _camera = Camera.main;
         if (StageDataLoader.CurrentUseDeck != null) stageData = StageDataLoader.CurrentUseDeck;
         //アイコンの生成
         _ = StageInitialize();
@@ -142,9 +148,9 @@ public class InGameManager : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Fire2"))
                     {
-                        if (Camera.main != null)
+                        if (_camera != null)
                         {
-                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                             if (Physics.Raycast(ray, out RaycastHit hit))
                             {
                                 if (hit.transform.gameObject.CompareTag("PlayerUnit"))
@@ -177,7 +183,7 @@ public class InGameManager : MonoBehaviour
                     }
                     break;
                 }
-            case playerState.GameOver:
+            case playerState.GameEnd:
                 {
                     break;
                 }
@@ -223,9 +229,9 @@ public class InGameManager : MonoBehaviour
     //ドラッグ中の処理
     private void DraggingCharacter()
     {
-        if (Camera.main != null)
+        if (_camera != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 _selectedCharacterObj.transform.position = hit.point;
@@ -376,6 +382,8 @@ public class InGameManager : MonoBehaviour
         unit.Remove();
         _unitList.Remove(unit);
         Destroy(unit.gameObject);
+        _remainingEnemyNumOnField--;
+        GameEndCheck(); //ゲームが終わったかを確認する
     }
     //敵のユニットを出現するメソッド
     private void GenerateEnemyUnit(float time)
@@ -396,6 +404,7 @@ public class InGameManager : MonoBehaviour
                 unit.Init();
                 _waveEnemyIndex[i]++;
                 RemainingEnemyNums--;
+                _remainingEnemyNumOnField++;
                 // 敵の数が0になったらWaveの終了
                 if (waveData.IsWaveEnd(_waveEnemyIndex[i]))
                 {
@@ -410,19 +419,18 @@ public class InGameManager : MonoBehaviour
         UnitBase nearestEnemy = null;
         float nearestDistance = float.MaxValue;
 
-        foreach (UnitBase enemy in _unitList)
+        foreach (UnitBase targetUnit in _unitList)
         {
-            if (enemy.IsDead || !unit.IsEnemy(enemy))
+            if (targetUnit.IsDead || !unit.IsEnemy(targetUnit))// 死んでいるユニットは無視する
             {
-                // 死んでいる敵は無視する
                 continue;
             }
 
-            float distance = unit.Distance(enemy);
+            float distance = unit.Distance(targetUnit);
             if (distance < nearestDistance)
             {
                 // 一番近い敵を覚えておく
-                nearestEnemy = enemy;
+                nearestEnemy = targetUnit;
                 nearestDistance = distance;
             }
         }
@@ -430,12 +438,37 @@ public class InGameManager : MonoBehaviour
         // 一番近い敵を返す
         return nearestEnemy;
     }
+
+    public UnitBase FindNearestTeammate(UnitBase unit)
+    {
+        UnitBase nearestTeammate = null;
+        float nearestDistance = float.MaxValue;
+
+        foreach (UnitBase targetUnit in _unitList)
+        {
+            if (targetUnit.IsDead || unit.IsEnemy(targetUnit) || targetUnit.IsFullHp) // 死んでいる,またHPがMaxの場合は無視する
+            {
+                continue;
+            }
+            float distance = unit.Distance(targetUnit);
+            if (distance < nearestDistance)
+            {
+                // 一番近い敵を覚えておく
+                nearestTeammate = targetUnit;
+                nearestDistance = distance;
+            }
+        }
+
+        // 一番近い敵を返す
+        return nearestTeammate;
+    }
     //敵がタワーに到着したときに呼ばれる
     public void EnemyArriveGoal(EnemyUnit unit)
     {
         Debug.Log("敵がタワーに到着");
         RemoveEnemyUnit(unit);
         TowerDagame(1);
+        lostEnemyNum++;
     }
 
     //時間の速さを変更する
@@ -532,12 +565,24 @@ public class InGameManager : MonoBehaviour
         _coins += count;
         _coinText.text = $"{_coins}";
     }
+
+    private void GameEndCheck()
+    {
+        if (_towerHealth <= 0 || (_remainingEnemyNumOnField <= 0 && _remainingEnemyNums <= 0))
+        {
+            Debug.Log("GameEnd!");
+            _playerState = playerState.GameEnd;
+            _result.SetResultScore(_maxEnemyNums,lostEnemyNum);
+            _result.SetIsWin(_towerHealth > 0);
+            _result.StartResult();
+        }
+    }
 }
 public enum playerState
 {
     Idle,
     DraggingCharacter,
     Paused,
-    GameOver,
+    GameEnd,
     Loading,
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerUnit : UnitBase
 {
     [SerializeField] private SpriteRenderer _characterSprite;
+    PlayerUnitData playerunitData => UnitData as PlayerUnitData;
     public bool _isBack = false; //キャラクターをクリックしたときにデッキから戻る用のbool値
     protected override void Initialize()
     {
@@ -13,6 +14,7 @@ public class PlayerUnit : UnitBase
     public void SetImage(Sprite sprite)
     {
         _characterSprite.sprite = sprite;
+        _characterSprite.transform.localScale /= 10;
     }
     
     // ユニットの状態を更新する
@@ -21,14 +23,23 @@ public class PlayerUnit : UnitBase
         //ユニットの行動を記述する
         if (BattleTarget != null)
         {   // 交戦相手がいるとき、攻撃行動を取る
-            AttackAction(deltaTime);
+            Action(deltaTime);
         }
         else
-        {   // 交戦相手がいないとき一番近い敵を探す
-            UnitBase enemy = InGameManager.Instance.FindNearestEnemy(this);
-            if(enemy != null && Distance(enemy) <= UnitData.AttackRange)
+        {
+            UnitBase unit = InGameManager.Instance.FindNearestEnemy(this);
+            if (playerunitData.JobType == JobType.Healer)
+            {
+                unit = InGameManager.Instance.FindNearestTeammate(this);
+            }
+            else
+            {
+                // 交戦相手がいないとき一番近い敵を探す
+                unit = InGameManager.Instance.FindNearestEnemy(this);
+            }
+            if(unit != null && Distance(unit) <= UnitData.AttackRange)
             {   // 一番近い敵が索敵範囲内なら交戦に入る
-                BattleTarget = enemy;
+                BattleTarget = unit;
             }
         }
     }

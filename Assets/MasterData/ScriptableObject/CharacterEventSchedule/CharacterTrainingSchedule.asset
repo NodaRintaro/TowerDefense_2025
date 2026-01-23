@@ -65,3 +65,81 @@ MonoBehaviour:
       FirstUniqueEvent: 4
       SecondUniqueEvent: 0
       LastUniqueEvent: 5
+  - _characterID: 3
+    _trainingEventSchedule:
+    - IsRaid: 0
+      FirstUniqueEvent: 1
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 2
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 3
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 1
+      FirstUniqueEvent: 4
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 5
+  - _characterID: 4
+    _trainingEventSchedule:
+    - IsRaid: 0
+      FirstUniqueEvent: 1
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 2
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 3
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 1
+      FirstUniqueEvent: 4
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 5
+  - _characterID: 5
+    _trainingEventSchedule:
+    - IsRaid: 0
+      FirstUniqueEvent: 1
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 2
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 3
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 0
+      FirstUniqueEvent: 0
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 0
+    - IsRaid: 1
+      FirstUniqueEvent: 4
+      SecondUniqueEvent: 0
+      LastUniqueEvent: 5

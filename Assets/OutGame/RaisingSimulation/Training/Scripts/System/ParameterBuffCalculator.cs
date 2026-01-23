@@ -48,7 +48,7 @@ public class ParameterBuffCalculator
     }
 
     /// <summary> 育成イベントのバフ </summary>
-    public void OnTrainingEventBuff()
+    public void OnEventAllParameterBuff()
     {
         int totalPowerBuff = TotalBuffCalculate(_basePowerBuff, _powerPercentageBuff, _powerPlusBuff);
         int totalIntelligenceBuff = TotalBuffCalculate(_baseIntelligenceBuff, _intelligencePercentageBuff, _intelligencePlusBuff);
@@ -61,19 +61,19 @@ public class ParameterBuffCalculator
             _trainingCharacterData.AddCurrentPower((uint)totalPowerBuff);
 
         if (totalIntelligenceBuff < 0)
-            _trainingCharacterData.DecreaseCurrentPower((uint)Math.Abs(totalIntelligenceBuff));
+            _trainingCharacterData.DecreaseCurrentIntelligence((uint)Math.Abs(totalIntelligenceBuff));
         else if (totalIntelligenceBuff > 0)
-            _trainingCharacterData.AddCurrentPower((uint)totalIntelligenceBuff);
+            _trainingCharacterData.AddCurrentIntelligence((uint)totalIntelligenceBuff);
 
         if (totalPhysicalBuff < 0)
-            _trainingCharacterData.DecreaseCurrentPower((uint)Math.Abs(totalPhysicalBuff));
+            _trainingCharacterData.DecreaseCurrentPhysical((uint)Math.Abs(totalPhysicalBuff));
         else if (totalPhysicalBuff > 0)
-            _trainingCharacterData.AddCurrentPower((uint)totalPhysicalBuff);
+            _trainingCharacterData.AddCurrentPhysical((uint)totalPhysicalBuff);
 
         if (totalSpeedBuff < 0)
-            _trainingCharacterData.DecreaseCurrentPower((uint)Math.Abs(totalSpeedBuff));
+            _trainingCharacterData.DecreaseCurrentSpeed((uint)Math.Abs(totalSpeedBuff));
         else if (totalSpeedBuff > 0)
-            _trainingCharacterData.AddCurrentPower((uint)totalSpeedBuff);
+            _trainingCharacterData.AddCurrentSpeed((uint)totalSpeedBuff);
     }
 
     /// <summary> バフのベースとなる数値を決める処理 </summary>

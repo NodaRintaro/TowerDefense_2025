@@ -18,7 +18,7 @@ public class TrainingEventParameterView : MonoBehaviour
     [SerializeField, Header("素早さ")]
     private CharacterParameterUI _speedParameterUI = null;
 
-    private float _slideInCenterPos = 100f;
+    private float _slideInCenterPos = 180f;
     private float _slideInDuration = 0.5f;
 
     private RaisingSimulationLifeTimeScope _raisingSimulationLifeTimeScope = null;

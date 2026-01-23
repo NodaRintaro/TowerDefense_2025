@@ -89,15 +89,13 @@ public class TrainingNovelEventView : MonoBehaviour
     /// <summary> 送られてきたデータをもとに画面を整える処理 </summary>
     public async UniTask ReadNovel()
     {
-        Debug.Log("シナリオをひょうじ");
-
         _novelUI.SetNameText(_currentPageData.TalkCharacterName);
 
-        CharacterBaseData centerCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(_currentPageData.CharacterCenter);
-        CharacterBaseData leftBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(_currentPageData.CharacterLeftBottom);
-        CharacterBaseData rightBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(_currentPageData.CharacterRightBottom);
-        CharacterBaseData leftTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(_currentPageData.CharacterLeftTop);
-        CharacterBaseData rightTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(_currentPageData.CharacterRightTop);
+        CharacterBaseData centerCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterCenter));
+        CharacterBaseData leftBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterLeftBottom));
+        CharacterBaseData rightBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterRightBottom));
+        CharacterBaseData leftTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterLeftTop));
+        CharacterBaseData rightTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterRightTop));
 
         Sprite centerSprite = null, leftBottomSprite = null, rightBottomSprite = null, leftTopSprite = null , rightTopSprite = null;
 
@@ -119,6 +117,13 @@ public class TrainingNovelEventView : MonoBehaviour
             _currentAction = NovelEventPlayerActions.ReadScenario;
     }
 
+    private string ChangeName(string newName)
+    {
+        if(newName == "TrainingCharacter") 
+            return _jsonTrainingSaveData.RepositoryData.TrainingCharacterData.CharacterName;
+
+        return newName;
+    }
 
     public enum NovelEventPlayerActions
     {

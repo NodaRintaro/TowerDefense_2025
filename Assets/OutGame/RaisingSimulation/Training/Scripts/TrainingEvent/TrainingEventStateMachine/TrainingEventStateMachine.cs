@@ -164,7 +164,6 @@ public class EventLoadingState : TrainingEventStateBase
 
                     Debug.Log(TrainingEventStateMachine.CurrentEventType + "のイベントは空っぽ");
                     TrainingEventStateMachine.SetCurrentEventType(TrainingEventType.None);
-                    await TrainingEventStateMachine.FinishAllEvents();
                     return false;
                 }
                 else
@@ -238,6 +237,8 @@ public class FinishEventState : TrainingEventStateBase
         else
         {
             await GetEventBonus();
+
+            //await TrainingEventStateMachine.TrainingEventController
             await TrainingEventStateMachine.ChangeState(TrainingEventStateType.EventLoadingState);
         }
     }
@@ -247,10 +248,12 @@ public class FinishEventState : TrainingEventStateBase
     {
         ParameterBuffCalculator parameterBuffCalculator = TrainingEventStateMachine.RaisingSimulationLifeTimeScope.Container.Resolve<ParameterBuffCalculator>();
         parameterBuffCalculator.SetTrainingEventBuff(TrainingEventStateMachine.CurrentEventData);
-        parameterBuffCalculator.OnTrainingEventBuff();
+        parameterBuffCalculator.OnEventAllParameterBuff();
 
-        if(!parameterBuffCalculator.IsTotalBuffZero())
+        if(parameterBuffCalculator.IsTotalBuffZero())
             await TrainingEventStateMachine.TrainingEventController.GetEventBonus();
+
+        parameterBuffCalculator.DeleteBuff();
     }
 }
 

@@ -43,7 +43,7 @@ public class CreateStageEditor : UnityEditor.Editor
     }
 
     // 選択が解除されたとき
-    private void OnClosed()
+    private void OnDisable()
     {
         SortGenerateData();
         _instance = null;
@@ -131,8 +131,8 @@ public class CreateStageEditor : UnityEditor.Editor
         EditorGUILayout.FloatField(_instance.generateCoinSpeed, GUILayout.ExpandWidth(false), GUILayout.Width(100f));
         if(GUILayout.Button("SortGenerateData")) SortGenerateData();
         WaveDataGUI();
-        GUILayout.Space(10);
-        if(GUILayout.Button("ステージの編集を終える")) OnClosed();
+        //GUILayout.Space(10);
+        //if(GUILayout.Button("ステージの編集を終える")) OnClosed();
     }
 
     private void CellGUI()

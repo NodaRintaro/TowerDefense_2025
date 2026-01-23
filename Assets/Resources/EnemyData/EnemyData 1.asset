@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyData 1
   m_EditorClassIdentifier: 
   enemyName: BBB
-  hp: 0
-  moveSpeed: 0
-  range: 0
+  hp: 7
+  moveSpeed: 1
+  range: 1
   attackRate: 1
-  attack: 0
+  attack: 1
   defence: 0

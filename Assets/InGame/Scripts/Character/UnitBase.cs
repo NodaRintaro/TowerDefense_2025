@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitBase : MonoBehaviour
 {
     [SerializeField] private HPBar _hpBar;   // HPバー
+    [SerializeField] private GameObject _characterImageGameObject;
     protected UnitBase BattleTarget;       // 交戦相手
     public UnitData UnitData;           // ユニットデータ
     public PlayerUnitData PlayerData => UnitData as PlayerUnitData;   // プレイヤーユニットデータ
@@ -38,6 +39,9 @@ public class UnitBase : MonoBehaviour
         Initialize();
         // HPバーを初期化
         _hpBar.Init(UnitData.Attack);
+        Vector3 vec = Camera.main.transform.position;
+        vec.x = this.transform.position.x;
+        _characterImageGameObject.transform.LookAt(vec);
         OnHealthChangedEvent += _hpBar.UpdateHp;
     }
 
@@ -94,6 +98,7 @@ public class UnitBase : MonoBehaviour
     {
         // HPが０未満にならないようにダメージを受ける
         CurrentHp = Mathf.Max(CurrentHp - damage, 0);
+        Debug.Log($"Current hp{CurrentHp}");
         if(CurrentHp == 0)
         {
             IsDead = true;

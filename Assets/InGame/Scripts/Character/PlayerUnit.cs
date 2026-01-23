@@ -1,12 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerUnit : UnitBase
 {
     [SerializeField] private SpriteRenderer _characterSprite;
+    public bool _isBack = false; //キャラクターをクリックしたときにデッキから戻る用のbool値
     protected override void Initialize()
     {
         GetComponent<BoxCollider>().enabled = true;
+        Debug.Log($"Range{UnitData.AttackRange}\nSpeed{UnitData.ActionInterval}");
     }
     
     public void SetImage(Sprite sprite)

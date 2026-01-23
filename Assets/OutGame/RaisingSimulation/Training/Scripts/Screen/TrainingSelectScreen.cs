@@ -19,16 +19,19 @@ public class TrainingSelectScreen : ScreenBase
         if (!_fadeImage.gameObject.activeSelf)
             _fadeImage.gameObject.SetActive(true);
 
+        Debug.Log("フェードイン");
+
         //フェードイン
         await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() => _fadeImage.gameObject.SetActive(false));
     }
 
     public async override UniTask FadeOutScreen()
     {
-        bool isCompleteFadeOut = false;
         _fadeImage.gameObject.SetActive(true);
 
+        Debug.Log("フェードアウト");
+
         //フェードアウト
-        await _fadeImage.DOFade(1f, _fadeDuration).SetEase(Ease.InSine).OnComplete(() => isCompleteFadeOut = true);
+        await _fadeImage.DOFade(1f, _fadeDuration).SetEase(Ease.InSine);
     }
 }

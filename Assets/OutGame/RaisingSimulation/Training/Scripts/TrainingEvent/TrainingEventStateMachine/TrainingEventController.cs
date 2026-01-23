@@ -23,6 +23,8 @@ public enum EventInputActionType
 /// <summary> プレイヤーからの入力を受けてトレーニングイベントを進行するClass </summary>
 public class TrainingEventController : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private TrainingEventScreen _trainingEventScreen;
+
     [SerializeField] private TrainingEventStateMachine _trainingEventStateMachine;
 
     [SerializeField] private TrainingNovelEventView _trainingNovelEventView;
@@ -123,12 +125,15 @@ public class TrainingEventController : MonoBehaviour, IPointerClickHandler
         switch (_trainingEventStateMachine.CurrentEventData.BranchType)
         {
             case EventBranchType.StaminaValue:
+                Debug.Log("イベント分岐：スタミナ");
                 await EventBranchWithStaminaValueStaminaValue();
                 break;
             case EventBranchType.Button:
                 GenerateBranchEventSelectButton();
                 break;
         }
+
+
     }
 
     private async UniTask EventBranchWithStaminaValueStaminaValue()
@@ -215,5 +220,15 @@ public class TrainingEventController : MonoBehaviour, IPointerClickHandler
     public async UniTask GetEventBonus()
     {
         await _trainingEventBonusParameterView.TrainingBonusBuffEvent(_trainingEventStateMachine.CurrentTrainingSaveData.TrainingCharacterData);
+    }
+
+    public async UniTask ChangeScenarioFadeIn()
+    {
+        await _trainingEventScreen.FadeInScreen();
+    }
+
+    public async UniTask ChangeScenarioFadeOut()
+    {
+        await _trainingEventScreen.FadeOutScreen();
     }
 }

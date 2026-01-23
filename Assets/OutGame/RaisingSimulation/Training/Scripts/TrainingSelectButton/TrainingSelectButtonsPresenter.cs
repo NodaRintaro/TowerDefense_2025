@@ -50,6 +50,11 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         CheckSchedule();
     }
 
+    public void OnDisable()
+    {
+        
+    }
+
     public void Start()
     {
         SetOnclickTrainingSelectButtonEvents();
@@ -69,8 +74,6 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
 
         if (count != 0)
             _trainingRaidCountDownView.CountDown(count);
-        else
-            SetRaidEventMenu();
     }
 
     /// <summary> トレーニング開始ボタンのイベントを設定 </summary>
@@ -96,12 +99,9 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
         _trainingEventSelector.SetCharacterUniqueEvent();
         //_trainingEventSelector.SetSupportCardEvent();
 
-        if(_staminaBuff < 0)
-        {
-            uint decreaseStamina = (uint)Math.Abs(_staminaBuff);
-            _staminaSlider.ConsumeStamina(decreaseStamina);
-            _trainingSaveData.UseStamina(decreaseStamina);
-        }
+        uint decreaseStamina = (uint)Math.Abs(_staminaBuff);
+        _staminaSlider.ChangeStamina(_staminaBuff);
+        _trainingSaveData.UseStamina(decreaseStamina);
 
         await UniTask.Delay(700);
 
@@ -143,10 +143,5 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
 
         Debug.LogError("トレーニング結果が見れませんでした");
         return null;
-    }
-
-    private void SetRaidEventMenu()
-    {
-
     }
 }

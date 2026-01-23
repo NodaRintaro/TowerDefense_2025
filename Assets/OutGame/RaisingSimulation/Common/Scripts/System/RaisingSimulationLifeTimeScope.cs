@@ -25,8 +25,11 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
         //育成イベントのキャラクターへのバフ計算Class
         builder.Register<ParameterBuffCalculator>(Lifetime.Singleton);
 
-        //育成イベントの進行クラス
-        builder.Register<TrainingEventController>(Lifetime.Singleton);
+        //トレーニングイベントの生成を行うクラス
+        builder.Register<TrainingEventDataGenerator>(Lifetime.Singleton);
+
+        //一日で行われる育成イベントを決めるクラス
+        builder.Register<TrainingEventSelector>(Lifetime.Singleton);
     }
 
     /// <summary> RepositoryClassをContainer登録する </summary>

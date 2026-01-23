@@ -10,6 +10,8 @@ public class TrainingSelectScreen : ScreenBase
     [SerializeField, Header("フェードインする際のImage")]
     private Image _fadeImage;
 
+    [SerializeField] private TrainingSelectButtonsPresenter _presenter;
+
     [SerializeField] private float _fadeDuration = 3f;
 
     public async override UniTask FadeInScreen()
@@ -18,8 +20,7 @@ public class TrainingSelectScreen : ScreenBase
             _fadeImage.gameObject.SetActive(true);
 
         //フェードイン
-        _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() => _fadeImage.gameObject.SetActive(false));
-        await UniTask.WaitUntil(() => _fadeImage.gameObject.activeSelf);
+        await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() => _fadeImage.gameObject.SetActive(false));
     }
 
     public async override UniTask FadeOutScreen()
@@ -28,7 +29,6 @@ public class TrainingSelectScreen : ScreenBase
         _fadeImage.gameObject.SetActive(true);
 
         //フェードアウト
-        _fadeImage.DOFade(1f, _fadeDuration).SetEase(Ease.InSine).OnComplete(() => isCompleteFadeOut = true);
-        await UniTask.WaitUntil(() => isCompleteFadeOut);
+        await _fadeImage.DOFade(1f, _fadeDuration).SetEase(Ease.InSine).OnComplete(() => isCompleteFadeOut = true);
     }
 }

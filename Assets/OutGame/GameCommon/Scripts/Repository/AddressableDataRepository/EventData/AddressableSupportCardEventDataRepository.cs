@@ -8,61 +8,113 @@ using VContainer;
 /// <summary>
 /// サポートカード固有イベントのCSVデータのリポジトリ
 /// </summary>
-public class AddressableSupportCardEventDataRepository : RepositoryBase<TextAsset>, IAddressableDataRepository, ICSVDataRepository
+public class AddressableSupportCardEventDataRepository : RepositoryBase<TextAsset>, IAddressableDataRepository
 {
-    public string[,] CSVSplitRepositoryData => CSVLoader.LoadCsv(_repositoryData);
+    private string[,] _csvSplitRepositoryData = null;
 
     [Inject]
-    public AddressableSupportCardEventDataRepository() { }
+    public AddressableSupportCardEventDataRepository() 
+    { 
+        
+    }
 
-    public string[] GetCsvEventData(uint eventID)
+    /// <summary> トレーニングイベントの取得 </summary>
+    public TrainingEventData GetCsvEventData(uint eventID)
     {
-        int targetArrayLength = CSVSplitRepositoryData.GetLength(1);
+        int targetArrayLength = _csvSplitRepositoryData.GetLength(1);
         string[] targetArray = new string[targetArrayLength];
-        for (int column = 0; column < CSVSplitRepositoryData.GetLength(0); column++)
+        for (int column = 0; column < _csvSplitRepositoryData.GetLength(0); column++)
         {
-            if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 1]))
+            if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 1]))
             {
                 continue;
             }
-            else if (uint.Parse(CSVSplitRepositoryData[column, 1]) == eventID)
+            else if (uint.Parse(_csvSplitRepositoryData[column, 1]) == eventID)
             {
                 for (int row = 1; targetArray.Length > row; row++)
                 {
-                    targetArray[row] = CSVSplitRepositoryData[column, row];
+                    targetArray[row] = _csvSplitRepositoryData[column, row];
                 }
-                return targetArray;
+                return TrainingEventDataGenerator.GenerateEventData(targetArray);
             }
         }
+
+        Debug.Log("データが見つかりませんでした");
         return null;
     }
 
-    public List<string[]> GetBranchEvent(uint eventID)
+    public List<TrainingEventData> GetSupportCardTrainingEventDataList(uint cardID)
     {
-        //List<string[]> strings = new List<string[]>();
-        //int targetArrayLength = CSVSplitRepositoryData.GetLength(1);
-        //string[] targetArray = new string[targetArrayLength];
-        //for (int column = 0; column < CSVSplitRepositoryData.GetLength(0); column++)
-        //{
-        //    if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 1]))
-        //    {
-        //        continue;
-        //    }
-        //    else if (uint.Parse(CSVSplitRepositoryData[column, 1]) == eventID)
-        //    {
-        //        for (int row = 1; targetArray.Length > row; row++)
-        //        {
-        //            targetArray[row] = CSVSplitRepositoryData[column, row];
-        //        }
-        //        return targetArray;
-        //    }
-        //}
+        List<TrainingEventData> supportCardEventList = new List<TrainingEventData>();
+        bool isSearchCardID = true;
+        int targetArrayLength = _csvSplitRepositoryData.GetLength(1);
+        string[] targetArray = new string[targetArrayLength];
+        for (int column = 0; column < _csvSplitRepositoryData.GetLength(0); column++)
+        {
+            if(!isSearchCardID)
+            {
+                if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 0]))
+                {
+                    for (int row = 1; targetArray.Length > row; row++)
+                    {
+                        targetArray[row] = _csvSplitRepositoryData[column, row];
+                    }
+                    supportCardEventList.Add(TrainingEventDataGenerator.GenerateEventData(targetArray));
+                }
+                else
+                {
+                    return supportCardEventList;
+                }
+            }
+            else
+            {
+                uint parsedCardID;
+                if (uint.TryParse(_csvSplitRepositoryData[column, 0], out parsedCardID) && cardID == parsedCardID)
+                {
+                    isSearchCardID = false;
+                    continue;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+
+        Debug.Log("データが見つかりませんでした");
+        return null;
+    }
+
+    /// <summary> トレーニング分岐イベントの取得 </summary>
+    public List<TrainingEventData> GetBranchEventData(uint eventID)
+    {
+        string[] targetArray = new string[_csvSplitRepositoryData.GetLength(1)];
+        for (int column = 0; column < _csvSplitRepositoryData.GetLength(0); column++)
+        {
+            if (uint.Parse(_csvSplitRepositoryData[column, 1]) == eventID)
+            {
+                List<TrainingEventData> targetList = new List<TrainingEventData>();
+                int branchEventCount = 1;
+                while (string.IsNullOrEmpty(_csvSplitRepositoryData[column + branchEventCount, 1]))
+                {
+                    for (int row = 1; targetArray.Length > row; row++)
+                    {
+                        targetArray[row] = _csvSplitRepositoryData[column, row];
+                    }
+                    TrainingEventData targetData = TrainingEventDataGenerator.GenerateEventData(targetArray);
+                }
+                return targetList;
+            }
+        }
+
+        Debug.Log("データが見つかりませんでした");
         return null;
     }
 
     public override async UniTask DataLoadAsync(CancellationToken cancellation)
     {
         _repositoryData = await AssetsLoader.LoadAssetAsync<TextAsset>(AAGEventData.kAssets_MasterData_CSV_EventData_SupportCardEventDataCSV);
+        _csvSplitRepositoryData = CSVLoader.LoadCsv(_repositoryData);
     }
 
     public void DataRelease()
@@ -74,7 +126,7 @@ public class AddressableSupportCardEventDataRepository : RepositoryBase<TextAsse
 /// <summary>
 /// イベント発生条件
 /// </summary>
-public struct EventTriggerParamCondition
+public struct EventFireParamConditions
 {
     public RankType PowerRank;
     public RankType IntelligenceRank;

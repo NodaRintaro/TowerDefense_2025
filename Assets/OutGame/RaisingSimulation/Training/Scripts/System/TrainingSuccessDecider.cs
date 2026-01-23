@@ -8,7 +8,7 @@ using System;
 public class TrainingSuccessDecider
 {
 
-    public EventBranchType TrySuccessTrainingEvent(uint stamina)
+    public static EventBranchType TrySuccessTrainingEvent(uint stamina)
     {
         Debug.Log(stamina);
         uint trainingFileLine = 50;

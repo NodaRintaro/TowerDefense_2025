@@ -1,4 +1,4 @@
 ﻿public interface ICSVDataRepository
 {
-    public string[,] CSVSplitRepositoryData {  get; }
+    public string[,] _csvSplitRepositoryData {  get; }
 }

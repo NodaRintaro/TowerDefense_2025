@@ -5,9 +5,6 @@ using System;
 [Serializable]
 public class TrainingEventData : ITrainingEventData
 {
-    [Header("イベントの種類")]
-    [SerializeField] private TrainingEventType _trainingEventType;
-
     [Header("イベントのID")]
     [SerializeField] private uint _trainingEventID = 0;
 
@@ -41,10 +38,9 @@ public class TrainingEventData : ITrainingEventData
     [Header("獲得するアイテムのID")]
     [SerializeField] private uint _itemID = 0;
 
-    public TrainingEventType TrainingEventType => _trainingEventType;
     public uint EventID => _trainingEventID;
     public string EventName => _eventName;
-    public uint NovelEventID => _novelEventID;
+    public uint ScenarioID => _novelEventID;
     public bool IsBranch => _isBrunchScenario;
     public EventBranchType BranchType => _branchType;
     public TrainingEventBuffType BuffType => _buffType;

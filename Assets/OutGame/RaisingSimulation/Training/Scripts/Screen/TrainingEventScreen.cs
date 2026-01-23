@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TrainingEventScreen : ScreenBase
 {
+    [SerializeField] private TrainingEventController _controller;
+
     [SerializeField, Header("フェードインする際のImage")]
     private Image _fadeImage;
 
@@ -16,7 +18,8 @@ public class TrainingEventScreen : ScreenBase
             _fadeImage.gameObject.SetActive(true);
 
         //フェードイン
-        await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad);
+        await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() =>_fadeImage.gameObject.SetActive(false));
+        await _controller.StartTraining();
     }
 
     public async override UniTask FadeOutScreen()

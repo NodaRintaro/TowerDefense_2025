@@ -9,6 +9,8 @@ using VContainer;
 /// </summary>
 public class ButtonGenerator : MonoBehaviour
 {
+    [SerializeField, Header("ボタンにつけるテキストのオブジェクト")] private GameObject _textObj = null;
+
     private Transform _generateButtonParent;
 
     //生成するボタンのBaseObject
@@ -36,6 +38,7 @@ public class ButtonGenerator : MonoBehaviour
     private void InitBaseButtonObj()
     {
         _baseButtonObj = new();
+        GameObject textObj = new();
 
         // RectTransformを追加
         RectTransform rectTransform = _baseButtonObj.AddComponent<RectTransform>();
@@ -94,6 +97,7 @@ public class ButtonGenerator : MonoBehaviour
     private GameObject SpawnButtonObj()
     {
         GameObject buttonObj;
+        GameObject textObj;
         foreach (var button in _buttonPool)
         {
             if (!button.gameObject.activeSelf)
@@ -105,6 +109,8 @@ public class ButtonGenerator : MonoBehaviour
             }
         }
         buttonObj = Instantiate(_baseButtonObj);
+        textObj = Instantiate(_textObj);
+        textObj.gameObject.transform.parent = buttonObj.transform;
 
         return buttonObj;
     }

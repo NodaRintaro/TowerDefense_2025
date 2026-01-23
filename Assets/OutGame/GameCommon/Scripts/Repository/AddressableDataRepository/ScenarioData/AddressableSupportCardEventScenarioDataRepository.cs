@@ -9,9 +9,9 @@ using VContainer;
 /// <summary>
 /// サポートカード固有イベントのシナリオのCSVデータのリポジトリ
 /// </summary>
-public class AddressableSupportCardEventScenarioDataRepository : RepositoryBase<TextAsset>, IAddressableDataRepository , ICSVDataRepository
+public class AddressableSupportCardEventScenarioDataRepository : RepositoryBase<TextAsset>, IAddressableDataRepository
 {
-    public string[,] CSVSplitRepositoryData => CSVLoader.LoadCsv(_repositoryData);
+    private string[,] _csvSplitRepositoryData;
 
     [Inject]
     public AddressableSupportCardEventScenarioDataRepository() { }
@@ -21,29 +21,29 @@ public class AddressableSupportCardEventScenarioDataRepository : RepositoryBase<
         ScenarioData targetData = null;
         bool isSeachScenario = true;
 
-        for (int column = 1; column < CSVSplitRepositoryData.GetLength(0); column++)
+        for (int column = 1; column < _csvSplitRepositoryData.GetLength(0); column++)
         {
             if (isSeachScenario)
             {
-                if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 1]))
+                if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 1]))
                 {
                     continue;
                 }
-                else if (uint.Parse(CSVSplitRepositoryData[column, 1]) == eventID)
+                else if (uint.Parse(_csvSplitRepositoryData[column, 1]) == eventID)
                 {
                     isSeachScenario = false;
                     targetData = new ScenarioData();
 
                     NovelPageData novelPageData = new NovelPageData
                     {
-                        TalkCharacterName = CSVSplitRepositoryData[column, 2],
-                        ScenarioData = CSVSplitRepositoryData[column, 3],
-                        CharacterCenter = CSVSplitRepositoryData[column, 4],
-                        CharacterLeftBottom = CSVSplitRepositoryData[column, 5],
-                        CharacterRightBottom = CSVSplitRepositoryData[column, 6],
-                        CharacterLeftTop = CSVSplitRepositoryData[column, 7],
-                        CharacterRightTop = CSVSplitRepositoryData[column, 8],
-                        BackScreenName = CSVSplitRepositoryData[column, 9]
+                        TalkCharacterName = _csvSplitRepositoryData[column, 2],
+                        ScenarioData = _csvSplitRepositoryData[column, 3],
+                        CharacterCenter = _csvSplitRepositoryData[column, 4],
+                        CharacterLeftBottom = _csvSplitRepositoryData[column, 5],
+                        CharacterRightBottom = _csvSplitRepositoryData[column, 6],
+                        CharacterLeftTop = _csvSplitRepositoryData[column, 7],
+                        CharacterRightTop = _csvSplitRepositoryData[column, 8],
+                        BackScreenName = _csvSplitRepositoryData[column, 9]
                     };
 
                     targetData.EnQueuePageData(novelPageData);
@@ -52,18 +52,18 @@ public class AddressableSupportCardEventScenarioDataRepository : RepositoryBase<
             }
             else
             {
-                if (string.IsNullOrEmpty(CSVSplitRepositoryData[column, 1]))
+                if (string.IsNullOrEmpty(_csvSplitRepositoryData[column, 1]))
                 {
                     NovelPageData novelPageData = new NovelPageData
                     {
-                        TalkCharacterName = CSVSplitRepositoryData[column, 2],
-                        ScenarioData = CSVSplitRepositoryData[column, 3],
-                        CharacterCenter = CSVSplitRepositoryData[column, 4],
-                        CharacterLeftBottom = CSVSplitRepositoryData[column, 5],
-                        CharacterRightBottom = CSVSplitRepositoryData[column, 6],
-                        CharacterLeftTop = CSVSplitRepositoryData[column, 7],
-                        CharacterRightTop = CSVSplitRepositoryData[column, 8],
-                        BackScreenName = CSVSplitRepositoryData[column, 9]
+                        TalkCharacterName = _csvSplitRepositoryData[column, 2],
+                        ScenarioData = _csvSplitRepositoryData[column, 3],
+                        CharacterCenter = _csvSplitRepositoryData[column, 4],
+                        CharacterLeftBottom = _csvSplitRepositoryData[column, 5],
+                        CharacterRightBottom = _csvSplitRepositoryData[column, 6],
+                        CharacterLeftTop = _csvSplitRepositoryData[column, 7],
+                        CharacterRightTop = _csvSplitRepositoryData[column, 8],
+                        BackScreenName = _csvSplitRepositoryData[column, 9]
                     };
 
                     targetData.EnQueuePageData(novelPageData);
@@ -75,6 +75,7 @@ public class AddressableSupportCardEventScenarioDataRepository : RepositoryBase<
             }
         }
 
+        Debug.Log("データが見つかりませんでした");
         return null;
     }
 
@@ -86,5 +87,6 @@ public class AddressableSupportCardEventScenarioDataRepository : RepositoryBase<
     public void DataRelease()
     {
         AssetsLoader.Release(AAGScenarioData.kAssets_MasterData_CSV_ScenarioData_SupportCardScenarioDataCSV);
+        _csvSplitRepositoryData = CSVLoader.LoadCsv(_repositoryData);
     }
 }

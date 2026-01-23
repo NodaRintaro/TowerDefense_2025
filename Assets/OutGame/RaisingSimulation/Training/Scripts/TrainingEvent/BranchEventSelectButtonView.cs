@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,6 +13,8 @@ public class BranchEventSelectButtonView : MonoBehaviour
 
     private ButtonGenerator _buttonGenerator;
 
+    public ButtonGenerator ButtonGenerator => _buttonGenerator;
+
     public void OnEnable()
     {
         _buttonGenerator = FindFirstObjectByType<ButtonGenerator>();
@@ -22,6 +25,7 @@ public class BranchEventSelectButtonView : MonoBehaviour
     public Button GenerateSelectButton(string buttonName)
     {
         Button generateButton = _buttonGenerator.GenerateButton(buttonName, _selectButtonSprite);
+        generateButton.gameObject.transform.parent = _selectButtonParent;
         return generateButton;
     }
 

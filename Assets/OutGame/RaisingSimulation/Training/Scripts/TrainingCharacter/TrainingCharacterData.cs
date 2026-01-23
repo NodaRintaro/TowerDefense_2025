@@ -38,5 +38,13 @@ public class TrainingCharacterData : CharacterBaseData
     public void AddCurrentPower(uint power) => _currentPowerBuff += power;
     public void AddCurrentIntelligence(uint intelligence) => _currentIntelligenceBuff += intelligence;
     public void AddCurrentSpeed(uint speed) => _currentSpeedBuff += speed;
+
+    #endregion
+
+    #region 各種パラメータの減少処理
+    public void DecreaseCurrentPhysical(uint physical) => _currentPhysicalBuff -= physical;
+    public void DecreaseCurrentPower(uint power) => _currentPowerBuff -= power;
+    public void DecreaseCurrentIntelligence(uint intelligence) => _currentIntelligenceBuff -= intelligence;
+    public void DecreaseCurrentSpeed(uint speed) => _currentSpeedBuff -= speed;
     #endregion
 }

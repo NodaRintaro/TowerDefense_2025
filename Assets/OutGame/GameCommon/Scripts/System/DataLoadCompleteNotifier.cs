@@ -9,6 +9,7 @@ public class DataLoadCompleteNotifier : MonoBehaviour
 {
     private bool _isDataLoadComplete = false;
     public bool IsDataLoadComplete => _isDataLoadComplete;
+
     public event Action OnDataLoadComplete;
 
     public void NotifyDataLoadComplete()

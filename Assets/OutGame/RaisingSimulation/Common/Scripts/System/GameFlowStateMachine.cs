@@ -84,6 +84,7 @@ namespace RaisingSimulationGameFlowStateMachine
             await ChangeState(ScreenType.CharacterSelect);
             Debug.Log(_currentScreen);
 
+
         }
 
         public override async UniTask ChangeState(ScreenType stateType)

@@ -21,10 +21,16 @@ public class ScenarioData
         novelPageData = new();
 
         //ページが残っていなければFalseを返す
-        if(_novelData.Count == 0) return false;
-        
+        if (_novelData.Count == 0)
+        {
+            Debug.Log("データが残ってないよ");
+            return false;
+        }
+
+        Debug.Log("データを発見");
         //残っていればページを渡す
         novelPageData = _novelData.Dequeue();
+
         return true;
     }
 }

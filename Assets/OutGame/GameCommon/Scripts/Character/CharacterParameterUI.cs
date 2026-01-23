@@ -79,28 +79,24 @@ public class CharacterParameterUI
 
         if(_parameterUI.ParamRankImage.sprite != newRankSprite)
         {
-            Sequence seq = DOTween.Sequence();
-            bool isComplete = false;
             Vector3 originalPosition = _parameterUI.ParamRankImage.transform.localPosition;
 
-            // 1. はがす動き（左上に持ち上がりながら消える）
-            seq.Append(_parameterUI.ParamRankImage.transform.DOLocalMove(new Vector3(-50, 50, 0), 0.3f).SetRelative());
-            seq.Join(_parameterUI.ParamRankImage.transform.DOLocalRotate(new Vector3(0, 0, 15), 0.3f));
-            seq.Append(_parameterUI.ParamRankImage.transform.DOScale(0, 0.2f));
+            // Sequenceを構築してから一度に再生します
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_parameterUI.ParamRankImage.transform.DOLocalMove(new Vector3(-50, 50, 0), 0.3f).SetRelative())
+                .Join(_parameterUI.ParamRankImage.transform.DOLocalRotate(new Vector3(0, 0, 15), 0.3f))
+                .Append(_parameterUI.ParamRankImage.transform.DOScale(0, 0.2f))
+                .AppendCallback(() =>
+                {
+                    _parameterUI.ParamRankImage.sprite = newRankSprite;
+                    _parameterUI.ParamRankImage.transform.localPosition = originalPosition + new Vector3(0, 20, 0);
+                })
+                .Append(_parameterUI.ParamRankImage.transform.DOScale(1.0f, 0.3f))
+                .Join(_parameterUI.ParamRankImage.transform.DOLocalMove(originalPosition, 0.3f).SetEase(Ease.OutBounce))
+                .Join(_parameterUI.ParamRankImage.transform.DOLocalRotate(Vector3.zero, 0.3f));
 
-            // 2. Spriteの切り替え
-            seq.AppendCallback(() => {
-                _parameterUI.ParamRankImage.sprite = newRankSprite;
-                // 貼り付け位置の少し上にセット
-                _parameterUI.ParamRankImage.transform.localPosition = originalPosition + new Vector3(0, 20, 0);
-            });
-
-            // 3. 貼り直す動き（バウンドさせる）
-            seq.Append(_parameterUI.ParamRankImage.transform.DOScale(1.0f, 0.3f));
-            seq.Join(_parameterUI.ParamRankImage.transform.DOLocalMove(originalPosition, 0.3f).SetEase(Ease.OutBounce));
-            seq.Join(_parameterUI.ParamRankImage.transform.DOLocalRotate(Vector3.zero, 0.3f)).OnComplete(() => isComplete = true);
-
-            await UniTask.WaitUntil(() => isComplete);
+            // 構築したSequenceを再生し、完了を待機します
+            await seq.Play().ToUniTask();
         }
     }
 

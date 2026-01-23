@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using VContainer;
+using UnityEngine;
 
 /// <summary> 1ターンで行われるEventの登録先 </summary>
 public class TrainingEventPool
@@ -16,7 +17,12 @@ public class TrainingEventPool
 
     public void EnqueueData(TrainingEventType trainingEventType, uint eventID)
     {
-        _trainingEventPool[trainingEventType].Enqueue(eventID);
+        if(eventID != 0)
+        {
+            _trainingEventPool[trainingEventType].Enqueue(eventID);
+
+            Debug.Log(trainingEventType + "の" + eventID + "データが入りました");
+        }
     }
 
     public uint DequeueData(TrainingEventType trainingEventType)

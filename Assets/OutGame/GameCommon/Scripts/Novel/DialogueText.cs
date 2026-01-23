@@ -26,6 +26,8 @@ public class DialogueText : MonoBehaviour
         _currentCts = CancellationTokenSource.CreateLinkedTokenSource(ct, this.GetCancellationTokenOnDestroy());
         _isSkipping = false;
 
+
+
         try
         {
             await TypewriterEffectAsync(message, _currentCts.Token);

@@ -7,20 +7,18 @@ public class EnemyUnit : UnitBase
     EnemyUnitData EnemyUnitData => (EnemyUnitData)UnitData;
     
     private AIRoute _route;
-    //public float moveSpeed;             // 移動速度
     private int _routeIndex = 1;        // ルートのインデックス
 
     protected override void Initialize()
     {
         targetPosition = _route.points[1];
-        GameObject obj = Instantiate(EnemyUnitData.enemyImage,this.transform);
+        GameObject obj = Instantiate(EnemyUnitData.enemyImage,_characterImageGameObject.transform);
         obj.transform.localScale /= 2;
         animator = obj.GetComponent<Animator>();
         OnRemovedEvent += Destroy;
     }
     public override void UpdateUnit(float deltaTime)
     {
-        Debug.Log(BattleTarget == null ? "Null" : "Not Null");
         //ユニットの行動を記述する
         if (BattleTarget != null)
         {   // 交戦相手がいるとき、攻撃行動を取る
@@ -48,7 +46,6 @@ public class EnemyUnit : UnitBase
     //移動処理
     private void MoveAction(float deltaTime)
     {
-        Debug.Log("Moving");
         // 目的地に向かって移動する
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, EnemyUnitData.MoveSpeed * deltaTime);
         if (transform.position == targetPosition)

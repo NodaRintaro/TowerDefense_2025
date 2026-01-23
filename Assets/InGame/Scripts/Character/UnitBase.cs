@@ -4,7 +4,7 @@ using UnityEngine;
 public class UnitBase : MonoBehaviour
 {
     [SerializeField] private HPBar _hpBar;   // HPバー
-    [SerializeField] private GameObject _characterImageGameObject;
+    [SerializeField] protected GameObject _characterImageGameObject;
     protected UnitBase BattleTarget;       // 交戦相手
     public UnitData UnitData;           // ユニットデータ
     
@@ -34,6 +34,10 @@ public class UnitBase : MonoBehaviour
             OnHealthChangedEvent?.Invoke(value);
         }
     }
+
+    public bool IsFullHp => CurrentHp >= UnitData.MaxHp;
+        
+    
     #endregion
     public void Init()
     {
@@ -120,7 +124,9 @@ public class UnitBase : MonoBehaviour
 
     public void GetHeal(float  heal)
     {
+        Debug.Log($"<color=green>{gameObject.name}Current hp{CurrentHp} + heal{heal}</color>");
         CurrentHp = Mathf.Min(CurrentHp + heal, UnitData.MaxHp);
+        Debug.Log($"Current hp{CurrentHp}");
     }
     public float Distance(UnitBase targetUnit)
     {

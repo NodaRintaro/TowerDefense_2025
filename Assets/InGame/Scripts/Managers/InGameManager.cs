@@ -142,9 +142,10 @@ public class InGameManager : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Fire2"))
                     {
-                        if (Camera.main != null)
+                        Camera camera = Camera.main;
+                        if (camera != null)
                         {
-                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                             if (Physics.Raycast(ray, out RaycastHit hit))
                             {
                                 if (hit.transform.gameObject.CompareTag("PlayerUnit"))
@@ -410,30 +411,28 @@ public class InGameManager : MonoBehaviour
         UnitBase nearestEnemy = null;
         float nearestDistance = float.MaxValue;
 
-        foreach (UnitBase enemy in _unitList)
+        foreach (UnitBase targetUnit in _unitList)
         {
-            if (enemy.IsDead || !unit.IsEnemy(enemy))// 死んでいる敵は無視する
+            if (unit.UnitData == unit.UnitData as PlayerUnitData && unit.PlayerData.JobType == JobType.Healer)
             {
-                // if (unit.UnitData == unit.UnitData as PlayerUnitData && unit.PlayerData.JobType == JobType.Healer) //ヒーラーは味方ユニットを返す
-                // {
-                //     Debug.Log("Healer");
-                //     if (unit.IsEnemy(enemy))
-                //     {
-                //         continue;
-                //     }
-                // }
-                // else if (!unit.IsEnemy(enemy))
-                // {
-                //     continue;
-                // }
-                continue;
+                if (targetUnit.IsDead || !unit.IsEnemy(targetUnit) || targetUnit.IsFullHp)// 死んでいる,またHPがMaxの場合は無視する
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if (targetUnit.IsDead || !unit.IsEnemy(targetUnit))// 死んでいるユニットは無視する
+                {
+                    continue;
+                }
             }
 
-            float distance = unit.Distance(enemy);
+            float distance = unit.Distance(targetUnit);
             if (distance < nearestDistance)
             {
                 // 一番近い敵を覚えておく
-                nearestEnemy = enemy;
+                nearestEnemy = targetUnit;
                 nearestDistance = distance;
             }
         }

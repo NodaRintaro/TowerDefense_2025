@@ -11,6 +11,7 @@ public class UnitData
     protected float _actionTimer;             // 行動時間計測用タイマー
     protected float _currentHp;               // 現在のＨＰ
     protected bool _isDead = false;           // 死亡フラグ
+    protected JobType _jobType;             // ユニットのタイプ
     protected UnitData() { }
 
     #region Properties
@@ -25,6 +26,9 @@ public class UnitData
     public float ActionInterval { get => _actionInterval; set => _actionInterval = value; }
     public float CurrentHp { get => _currentHp; set => _currentHp = value; }
     public float ActionTimer { get => _actionTimer; set => _actionTimer = value; }
+
+    public JobType JobType { get => _jobType; set => _jobType = value; }
+
     #endregion
 }
 public enum GroupType

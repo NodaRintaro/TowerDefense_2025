@@ -1,7 +1,6 @@
 ﻿
 public class PlayerUnitData : UnitData
 {
-    protected JobType _jobType;             // ユニットのタイプ
     protected uint _id;                       // ユニットID
     protected uint _cost;                    // ユニットを出すのに必要なコスト
     protected float _rePlaceInterval;         // 再出撃に必要な時間
@@ -26,7 +25,6 @@ public class PlayerUnitData : UnitData
         _jobType = trainedCharacterData.CharacterRole;
     }
     public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }
-    public JobType JobType { get => _jobType; set => _jobType = value; }
     public uint Cost { get => _cost; set => _cost = value; }
     public float RePlaceInterval { get => _rePlaceInterval; set => _rePlaceInterval = value; }
     public uint ID { get => _id; set => _id = value; }

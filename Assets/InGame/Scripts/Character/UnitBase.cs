@@ -91,22 +91,27 @@ public class UnitBase : MonoBehaviour
     // targetのユニットに対して攻撃する
     protected void Attack(UnitBase target)
     {
-        if(!IsEnemy(target))
-        {   // 敵じゃないユニットには攻撃しない
-            return;
-        }
         AnimatorTrigger(AttackTriggerCode);
         // 自分の攻撃力から相手の防御力を引いたものをダメージとする（０未満にはならない）
         float damage = Mathf.Max(UnitData.Attack - target.UnitData.Defence, 0);
-        if (UnitData == UnitData as PlayerUnitData && PlayerData.JobType == JobType.Healer)
+        if (UnitData.JobType == JobType.Healer)
         {
+            if(IsEnemy(target))
+            {   // 敵ユニットには回復しない
+                return;
+            }
             target.GetHeal(UnitData.MagicPower);
         }
         else
         {
+            if(!IsEnemy(target))
+            {   // 敵じゃないユニットには攻撃しない
+                return;
+            }
             target.GetDamage(damage);
             // 攻撃相手はダメージを受ける
         }
+        AnimatorTrigger(AttackTriggerCode);
     }
     
     // ダメージを受ける

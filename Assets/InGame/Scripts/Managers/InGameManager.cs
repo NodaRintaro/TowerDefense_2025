@@ -406,26 +406,16 @@ public class InGameManager : MonoBehaviour
         }
     }
     //最寄りの敵対ユニットを返す
-    public UnitBase FindNearestTarget(UnitBase unit)
+    public UnitBase FindNearestEnemy(UnitBase unit)
     {
         UnitBase nearestEnemy = null;
         float nearestDistance = float.MaxValue;
 
         foreach (UnitBase targetUnit in _unitList)
         {
-            if (unit.UnitData == unit.UnitData as PlayerUnitData && unit.PlayerData.JobType == JobType.Healer)
+            if (targetUnit.IsDead || !unit.IsEnemy(targetUnit))// 死んでいるユニットは無視する
             {
-                if (targetUnit.IsDead || !unit.IsEnemy(targetUnit) || targetUnit.IsFullHp)// 死んでいる,またHPがMaxの場合は無視する
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                if (targetUnit.IsDead || !unit.IsEnemy(targetUnit))// 死んでいるユニットは無視する
-                {
-                    continue;
-                }
+                continue;
             }
 
             float distance = unit.Distance(targetUnit);
@@ -439,6 +429,30 @@ public class InGameManager : MonoBehaviour
 
         // 一番近い敵を返す
         return nearestEnemy;
+    }
+
+    public UnitBase FindNearestTeammate(UnitBase unit)
+    {
+        UnitBase nearestTeammate = null;
+        float nearestDistance = float.MaxValue;
+
+        foreach (UnitBase targetUnit in _unitList)
+        {
+            if (targetUnit.IsDead || unit.IsEnemy(targetUnit) || targetUnit.IsFullHp) // 死んでいる,またHPがMaxの場合は無視する
+            {
+                continue;
+            }
+            float distance = unit.Distance(targetUnit);
+            if (distance < nearestDistance)
+            {
+                // 一番近い敵を覚えておく
+                nearestTeammate = targetUnit;
+                nearestDistance = distance;
+            }
+        }
+
+        // 一番近い敵を返す
+        return nearestTeammate;
     }
     //敵がタワーに到着したときに呼ばれる
     public void EnemyArriveGoal(EnemyUnit unit)

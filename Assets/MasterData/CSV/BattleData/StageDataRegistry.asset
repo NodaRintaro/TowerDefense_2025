@@ -15,3 +15,5 @@ MonoBehaviour:
   _dataHolder:
   - {fileID: 11400000, guid: bdecd97a0f9a08a46982ab32dd6ce99c, type: 2}
   - {fileID: 11400000, guid: 36d6d83c62d9551468aa3f396b0ab4e0, type: 2}
+  - {fileID: 11400000, guid: 54054f7575042064d8b28672c63093ea, type: 2}
+  - {fileID: 11400000, guid: 9515cffaeab1b3a4ca591f59f0ef661a, type: 2}

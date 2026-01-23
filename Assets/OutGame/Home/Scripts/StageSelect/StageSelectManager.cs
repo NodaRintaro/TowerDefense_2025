@@ -6,17 +6,29 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class StageSelectManager : MonoBehaviour
 {
+    [SerializeField] private HomeMenuLifeTimeScope _homeMenuLifeTimeScope;
+    [SerializeField] private RectTransform _stageSelectMap;
     [SerializeField] private GameObject _stageUI;
     [SerializeField] private CanvasGroup _stageCanvasGroup;
     [SerializeField] private TMP_Text _stageNameText;
-    [SerializeField] private List<StageData> _stageDataList = new List<StageData>();
     
+    private DataLoadCompleteNotifier _dataLoadCompleteNotifier;
+    private AddressableStageDataRepository _addressableStageDataRepository;
+
+    private void Awake()
+    {
+        _dataLoadCompleteNotifier = _homeMenuLifeTimeScope.Container.Resolve<DataLoadCompleteNotifier>();
+        _addressableStageDataRepository =
+            _homeMenuLifeTimeScope.Container.Resolve<AddressableStageDataRepository>();
+    }
+
     public void StageDataView(int stageId)
     {
-        foreach (var stageData in _stageDataList)
+        foreach (var stageData in _addressableStageDataRepository.RepositoryData.DataHolder)
         {
             if (stageData.stageID == stageId)
             {

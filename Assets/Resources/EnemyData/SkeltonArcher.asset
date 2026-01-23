@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: SkeltonArcher
   m_EditorClassIdentifier: 
   enemyName: SkeltonArcher
-  hp: 4
+  hp: 50
   moveSpeed: 3
   range: 2
   attackRate: 3
-  attack: 2
+  attack: 10
   defence: 4
   enemyImage: {fileID: 7773741634138198696, guid: e0af057395df7b844966504a24b04288, type: 3}

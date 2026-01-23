@@ -21,5 +21,7 @@ public class EnemyUnitData : UnitData
         AttackRange = enemyData.range;
         enemyImage = enemyData.enemyImage;
         Group = GroupType.Enemy;
+        _jobType = JobType.Knight;
     }
+    //すべてのEnemyはとりあえずJobをKnightにした。（応急処置なのでのちほど修正）
 }

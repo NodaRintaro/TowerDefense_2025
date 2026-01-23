@@ -11,14 +11,8 @@ public class UnitData
     protected float _actionTimer;             // 行動時間計測用タイマー
     protected float _currentHp;               // 現在のＨＰ
     protected bool _isDead = false;           // 死亡フラグ
+    protected JobType _jobType;             // ユニットのタイプ
     protected UnitData() { }
-
-    public UnitData(EnemyData enemyData)
-    {
-        _name = enemyData.enemyName;
-        _maxHp = enemyData.hp;
-        
-    }
 
     #region Properties
     public GroupType Group { get => _group; set => _group = value; }
@@ -26,11 +20,15 @@ public class UnitData
     public bool IsDead { get => _isDead; set => _isDead = value; }
     public float MaxHp { get => _maxHp; set => _maxHp = value; }
     public float Attack { get => _attack; set => _attack = value; }
+    public float MagicPower { get => _magicPower; set => _magicPower = value; }
     public float Defence { get => _defence; set => _defence = value; }
     public float AttackRange { get => _attackRange; set => _attackRange = value; }
     public float ActionInterval { get => _actionInterval; set => _actionInterval = value; }
     public float CurrentHp { get => _currentHp; set => _currentHp = value; }
     public float ActionTimer { get => _actionTimer; set => _actionTimer = value; }
+
+    public JobType JobType { get => _jobType; set => _jobType = value; }
+
     #endregion
 }
 public enum GroupType

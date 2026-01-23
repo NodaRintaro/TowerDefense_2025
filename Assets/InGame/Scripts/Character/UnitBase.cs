@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
-
+using DG.Tweening;
 public class UnitBase : MonoBehaviour
 {
     [SerializeField] private HPBar _hpBar;   // HPバー
     [SerializeField] protected GameObject _characterImageGameObject;
     private UnitBase _battleTarget;
     public UnitData UnitData;           // ユニットデータ
+    private float _durationSeconds = 0.2f;
     
     protected static readonly int AttackTriggerCode = Animator.StringToHash("AttackTrigger");
     protected Animator animator;
@@ -14,7 +15,7 @@ public class UnitBase : MonoBehaviour
     public EnemyUnitData EnemyData => UnitData as EnemyUnitData;   // 敵ユニットデータ
     
     public event Action OnRemovedEvent;   //ユニット削除時イベント
-    public event Action<float> OnHealthChangedEvent;   //ユニット選択時イベント
+    public event Action<float> OnHealthChangedEvent;
 
     #region Property
     public bool IsDead
@@ -57,9 +58,6 @@ public class UnitBase : MonoBehaviour
         // HPバーを初期化
         _hpBar.Init(UnitData.Attack);
         IsDead = false;
-        // Vector3 vec = Camera.main.transform.position;
-        // vec.x = this.transform.position.x;
-        // _characterImageGameObject.transform.LookAt(vec);
         OnHealthChangedEvent += _hpBar.UpdateHp;
     }
 
@@ -135,6 +133,12 @@ public class UnitBase : MonoBehaviour
         {
             IsDead = true;
         }
+        else
+        {
+            SpriteRenderer sprite = _characterImageGameObject.GetComponent<SpriteRenderer>();
+            var tween = sprite.DOColor(new Color(0.7f, 0f, 0f, 1f), _durationSeconds).SetEase(Ease.INTERNAL_Zero);
+            tween.onComplete = () => sprite.color = new Color(1,1,1,1);
+        }
     }
 
     public void GetHeal(float  heal)
@@ -156,6 +160,5 @@ public class UnitBase : MonoBehaviour
     }
 
     protected virtual void RotateForTarget(Vector3 vec)//Targetの方向にユニットを向ける
-    {
-    }
+    { }
 }

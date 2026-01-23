@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bat
   m_EditorClassIdentifier: 
   enemyName: Bat
-  hp: 12
+  hp: 100
   moveSpeed: 2
   range: 1
   attackRate: 1

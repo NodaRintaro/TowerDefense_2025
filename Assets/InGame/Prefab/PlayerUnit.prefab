@@ -51,6 +51,7 @@ MonoBehaviour:
   _hpBar: {fileID: 2514168558043955735}
   _characterImageGameObject: {fileID: 7826707949874251532}
   _characterSprite: {fileID: 7058900874365888679}
+  _isBack: 0
 --- !u!65 &9037830682088798616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -97,7 +98,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7826707949874251532}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.000000019921686, y: -0.89010525, z: -0.45575503, w: 0.000000038907736}
   m_LocalPosition: {x: 0, y: 0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -287,9 +288,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4677666389947478014, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7149325664051616937, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_Name
       value: HPBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533117943410224043, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
+      propertyPath: m_Transition
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8530230937247834528, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_AnchorMax.x

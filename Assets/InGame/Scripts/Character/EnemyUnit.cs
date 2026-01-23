@@ -5,7 +5,7 @@ public class EnemyUnit : UnitBase
 {
     [HideInInspector]public Vector3 targetPosition; // 目標地点
     EnemyUnitData EnemyUnitData => (EnemyUnitData)UnitData;
-    private GameObject enemyImage;
+    //private GameObject enemyImage;
     
     private AIRoute _route;
     private int _routeIndex = 1;        // ルートのインデックス
@@ -13,9 +13,9 @@ public class EnemyUnit : UnitBase
     protected override void Initialize()
     {
         targetPosition = _route.points[1];
-        enemyImage = Instantiate(EnemyUnitData.enemyImage,_characterImageGameObject.transform);
-        enemyImage.transform.localScale /= 2;
-        animator = enemyImage.GetComponent<Animator>();
+        _characterImageGameObject = Instantiate(EnemyUnitData.enemyImage,this.transform);
+        _characterImageGameObject.transform.localScale /= 2;
+        animator = _characterImageGameObject.GetComponent<Animator>();
         OnRemovedEvent += Destroy;
         RotateForTarget(targetPosition);
     }
@@ -80,11 +80,11 @@ public class EnemyUnit : UnitBase
     {
         if (vec.x > this.transform.position.x)
         {
-            enemyImage.transform.eulerAngles = new Vector3(-54.227f, 180f, 0);
+            _characterImageGameObject.transform.eulerAngles = new Vector3(-54.227f, 180f, 0);
         }
         else
         {
-            enemyImage.transform.eulerAngles = new Vector3(54.227f, 0f, 0);
+            _characterImageGameObject.transform.eulerAngles = new Vector3(54.227f, 0f, 0);
         }
     }
 }

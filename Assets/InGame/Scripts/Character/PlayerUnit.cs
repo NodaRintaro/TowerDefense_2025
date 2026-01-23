@@ -14,6 +14,7 @@ public class PlayerUnit : UnitBase
     public void SetImage(Sprite sprite)
     {
         _characterSprite.sprite = sprite;
+        _characterSprite.transform.localScale /= 10;
     }
     
     // ユニットの状態を更新する

@@ -43,8 +43,10 @@ public class InGameManager : MonoBehaviour
     private float _coinTimer = 0;
     private int _coins = 0;
     private float _coinInterval = 1;
+    public int lostEnemyNum = 0;
     private CancellationTokenSource _tokenSource = new CancellationTokenSource();
     private AddressableCharacterImageDataRepository _addressableCharacterImageDataRepository;
+    [SerializeField] private Result _result;
     private Camera _camera;
 
     #region Properties
@@ -466,6 +468,7 @@ public class InGameManager : MonoBehaviour
         Debug.Log("敵がタワーに到着");
         RemoveEnemyUnit(unit);
         TowerDagame(1);
+        lostEnemyNum++;
     }
 
     //時間の速さを変更する
@@ -567,7 +570,11 @@ public class InGameManager : MonoBehaviour
     {
         if (_towerHealth <= 0 || (_remainingEnemyNumOnField <= 0 && _remainingEnemyNums <= 0))
         {
+            Debug.Log("GameEnd!");
             _playerState = playerState.GameEnd;
+            _result.SetResultScore(_maxEnemyNums,lostEnemyNum);
+            _result.SetIsWin(_towerHealth > 0);
+            _result.StartResult();
         }
     }
 }

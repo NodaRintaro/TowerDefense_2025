@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 2514168558043955735}
   _characterImageGameObject: {fileID: 7826707949874251532}
+  _characterSprite: {fileID: 7058900874365888679}
 --- !u!65 &9037830682088798616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -289,6 +290,14 @@ PrefabInstance:
     - target: {fileID: 7149325664051616937, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_Name
       value: HPBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530230937247834528, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530230937247834528, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

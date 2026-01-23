@@ -1,11 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUnit : UnitBase
 {
+    [SerializeField] private SpriteRenderer _characterSprite;
     protected override void Initialize()
     {
         GetComponent<BoxCollider>().enabled = true;
     }
+    
+    public void SetImage(Sprite sprite)
+    {
+        _characterSprite.sprite = sprite;
+    }
+    
     // ユニットの状態を更新する
     public override void UpdateUnit(float deltaTime)
     {

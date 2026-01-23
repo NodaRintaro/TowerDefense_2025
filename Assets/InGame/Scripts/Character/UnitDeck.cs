@@ -23,7 +23,8 @@ public class UnitDeck
                 _unitDatas[i].RePlaceTimer -= time;
                 if (_unitDatas[i].RePlaceTimer <= 0)
                 {
-                    _canPlaceCharacter[i] = true;
+                    _canPlaceCharacter[i-1] = true;
+                    Debug.Log($"index:{i} 配置可能になりました");
                 }
             }
         }
@@ -39,6 +40,7 @@ public class UnitDeck
     /// <returns></returns>
     public bool CanPlaceCharacter(int index)
     {
+        Debug.Log($"index:{index} canPlace:{_canPlaceCharacter[index]}");
         return _canPlaceCharacter[index];
     }
     /// <summary>

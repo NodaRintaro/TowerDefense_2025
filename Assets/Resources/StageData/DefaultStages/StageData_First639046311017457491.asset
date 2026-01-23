@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 143b9c6fca9641a4b8866884deb95028, type: 3}
+  m_Name: StageData_First639046311017457491
+  m_EditorClassIdentifier: 
+  stageID: 2
+  stageName: SecondStage
+  towerHealth: 10
+  initialCoinNum: 30
+  generateCoinSpeed: 1
+  width: 9
+  height: 5
+  cellDatas:
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  waveDatas:
+  - aiRoute:
+      points:
+      - {x: 0, y: 0, z: -2}
+      - {x: 4, y: 0, z: -2}
+      - {x: 8, y: 0, z: -2}
+    enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 20
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 22
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 24
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 44
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 46
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 48
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 50
+  - aiRoute:
+      points:
+      - {x: 4, y: 0, z: 0}
+      - {x: 4, y: 0, z: -2}
+      - {x: 8, y: 0, z: -2}
+    enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 28
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 30
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 32
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 52
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 54
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 56
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 70
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 72
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 72
+  - aiRoute:
+      points:
+      - {x: 4, y: 0, z: -4}
+      - {x: 4, y: 0, z: -2}
+      - {x: 8, y: 0, z: -2}
+    enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 36
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 38
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 40
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 60
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 62
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 62
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 64
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 66

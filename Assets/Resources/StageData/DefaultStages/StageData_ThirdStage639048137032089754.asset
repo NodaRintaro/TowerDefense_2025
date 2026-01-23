@@ -1,0 +1,234 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 143b9c6fca9641a4b8866884deb95028, type: 3}
+  m_Name: StageData_ThirdStage639048137032089754
+  m_EditorClassIdentifier: 
+  stageID: 3
+  stageName: ThirdStage
+  towerHealth: 10
+  initialCoinNum: 30
+  generateCoinSpeed: 1
+  width: 12
+  height: 6
+  cellDatas:
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 0
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  - cellType: 1
+    material: {fileID: 0}
+  waveDatas:
+  - aiRoute:
+      points:
+      - {x: 11, y: 0, z: -3}
+      - {x: 7, y: 0, z: -3}
+      - {x: 7, y: 0, z: -2}
+      - {x: 1, y: 0, z: -2}
+      - {x: 1, y: 0, z: -5}
+      - {x: 0, y: 0, z: -5}
+    enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 18
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 24
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 30
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 36
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 50
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 56
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 62
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 68
+    - enemyData: {fileID: 11400000, guid: 087f8e6b88a376f459c2b7c9fed25de0, type: 2}
+      spawnTime: 74
+  - aiRoute:
+      points:
+      - {x: 11, y: 0, z: -4}
+      - {x: 7, y: 0, z: -4}
+      - {x: 7, y: 0, z: -5}
+      - {x: 0, y: 0, z: -5}
+    enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 15
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 17
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 19
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 21
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 40
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 42
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 44
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 50
+    - enemyData: {fileID: 11400000, guid: 2ddada8f3471a114d82ba01466d6ef5d, type: 2}
+      spawnTime: 52
+  - aiRoute:
+      points:
+      - {x: 11, y: 0, z: 0}
+      - {x: 7, y: 0, z: 0}
+      - {x: 7, y: 0, z: -5}
+      - {x: 5, y: 0, z: -5}
+      - {x: 5, y: 0, z: -2}
+      - {x: 3, y: 0, z: -2}
+      - {x: 3, y: 0, z: -5}
+      - {x: 1, y: 0, z: -5}
+      - {x: 1, y: 0, z: 0}
+      - {x: 5, y: 0, z: 0}
+    enemyGenerateDatas:
+    - enemyData: {fileID: 11400000, guid: 90ec6a358e5304e4591979d9696d5282, type: 2}
+      spawnTime: 0

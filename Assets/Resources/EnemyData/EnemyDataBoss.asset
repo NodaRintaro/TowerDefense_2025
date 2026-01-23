@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7793c3f923f13be43afc87ad62166290, type: 3}
-  m_Name: EnemyData1-1
+  m_Name: EnemyDataBoss
   m_EditorClassIdentifier: 
-  enemyName: CCC
-  hp: 1
-  moveSpeed: 3
-  range: 4
-  attackRate: 5
-  attack: 5
-  defence: 4
+  enemyName: RedDragon
+  hp: 45000
+  moveSpeed: 0.1
+  range: 1
+  attackRate: 0.2
+  attack: 1600
+  defence: 500

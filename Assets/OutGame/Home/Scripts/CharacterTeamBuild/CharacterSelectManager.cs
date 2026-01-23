@@ -32,6 +32,8 @@ public class CharacterSelectManager : MonoBehaviour
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
         _noneBaseData.InitData(999, "None", 1, 1, 1, 1, 1, "", 1, 1, new());
         _noneData.SetBaseData(_noneBaseData);
+
+        Initialize();
     }
 
     private void OnEnable()
@@ -152,6 +154,7 @@ public class CharacterSelectManager : MonoBehaviour
 
     public void InitializeView()
     {
+        if(_loadingNotifier.IsDataLoadComplete == false) return;
         foreach (var obj in _selectedCharacterViews.Values)
         {
             obj.color = Color.white;

@@ -20,7 +20,7 @@ MonoBehaviour:
       _spriteType: 2
     - _characterSprite: {fileID: 21300000, guid: a21d441f181b2414b8ddd7f5eaa5a6d1, type: 3}
       _spriteType: 3
-    - _characterSprite: {fileID: 21300000, guid: 6ec6a3c005e95fb409175756b55d7fa8, type: 3}
+    - _characterSprite: {fileID: 21300000, guid: d44eec56c407c284585e7f9d1eab0e31, type: 3}
       _spriteType: 4
     _id: 1
   - _spriteData:

@@ -46,10 +46,17 @@ public class TrainingEventStateMachine : StateMachine<TrainingEventStateType>
     public TrainingEventData CurrentEventData => _currentEventData;
     public ScenarioData CurrentScenario => _currentScenarioData;
     public RaisingSimulationLifeTimeScope RaisingSimulationLifeTimeScope => _raisingSimulationLifeTimeScope;
-    public GameFlowStateMachine GameFlowStateMachine => _raisingSimulationLifeTimeScope.Container.Resolve<GameFlowStateMachine>();
+
+    public GameFlowStateMachine GameFlowStateMachine =>
+        _raisingSimulationLifeTimeScope.Container.Resolve<GameFlowStateMachine>();
+
     public TrainingEventPool EventPool => _raisingSimulationLifeTimeScope.Container.Resolve<TrainingEventPool>();
-    public TrainingSaveData CurrentTrainingSaveData => _raisingSimulationLifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>().RepositoryData;
-    public TrainingEventDataGenerator TrainingEventDataGenerator => _raisingSimulationLifeTimeScope.Container.Resolve<TrainingEventDataGenerator>();
+
+    public TrainingSaveData CurrentTrainingSaveData => _raisingSimulationLifeTimeScope.Container
+        .Resolve<JsonTrainingSaveDataRepository>().RepositoryData;
+
+    public TrainingEventDataGenerator TrainingEventDataGenerator =>
+        _raisingSimulationLifeTimeScope.Container.Resolve<TrainingEventDataGenerator>();
 
     private void Awake()
     {
@@ -70,20 +77,20 @@ public class TrainingEventStateMachine : StateMachine<TrainingEventStateType>
             await _currentState.OnExit();
         }
 
-        Debug.Log("現在のステート" +  trainingEventState);
+        Debug.Log("現在のステート" + trainingEventState);
         //次のステートに切り替える
         _currentState = _stateDict[trainingEventState];
         _currentStateType = trainingEventState;
         await _currentState.OnEnter();
-    } 
+    }
 
     public void SetCurrentEventType(TrainingEventType trainingEventType) => _currentEventType = trainingEventType;
 
     public void SetCurrentTrainingEvent(TrainingEventData trainingEventData) => _currentEventData = trainingEventData;
 
-    public void SetCurrentScenarioData(ScenarioData scenarioData) 
-    { 
-        _currentScenarioData = scenarioData; 
+    public void SetCurrentScenarioData(ScenarioData scenarioData)
+    {
+        _currentScenarioData = scenarioData;
     }
 
     public async UniTask OnFinishReadScenario()
@@ -96,18 +103,23 @@ public class TrainingEventStateMachine : StateMachine<TrainingEventStateType>
 
     public async UniTask FinishAllEvents()
     {
-        if(CurrentTrainingSaveData.CurrentCharacterSchedule.TrainingEventSchedule.Length > CurrentTrainingSaveData.CurrentElapsedDays)
+        if (CurrentTrainingSaveData.CurrentCharacterSchedule.TrainingEventSchedule.Length >
+            CurrentTrainingSaveData.CurrentElapsedDays+1)
         {
             await GameFlowStateMachine.ChangeState(ScreenType.TrainingSelectMenu);
         }
         else
         {
+            SceneChanger.SceneChange("Home");
             await GameFlowStateMachine.ChangeState(ScreenType.Result);
         }
+
+        Debug.Log("育成終了");
     }
 }
 
 #region トレーニング開始時の処理
+
 public class EventLoadingState : TrainingEventStateBase
 {
     public EventLoadingState(TrainingEventStateMachine trainingEventStateMachine)
@@ -117,7 +129,7 @@ public class EventLoadingState : TrainingEventStateBase
 
     public async override UniTask OnEnter()
     {
-        if(TrainingEventStateMachine.CurrentEventType == TrainingEventType.None)
+        if (TrainingEventStateMachine.CurrentEventType == TrainingEventType.None)
             TrainingEventStateMachine.SetCurrentEventType(TrainingEventType.TrainingEvent);
 
         if (await TrainingEventLoading())
@@ -161,7 +173,6 @@ public class EventLoadingState : TrainingEventStateBase
             case TrainingEventType.SupportCardEvent:
                 if (TrainingEventStateMachine.EventPool.IsEventQueueEmpty(TrainingEventType.SupportCardEvent))
                 {
-
                     Debug.Log(TrainingEventStateMachine.CurrentEventType + "のイベントは空っぽ");
                     TrainingEventStateMachine.SetCurrentEventType(TrainingEventType.None);
                     return false;
@@ -172,6 +183,7 @@ public class EventLoadingState : TrainingEventStateBase
                     return true;
                 }
         }
+
         return false;
     }
 
@@ -179,17 +191,20 @@ public class EventLoadingState : TrainingEventStateBase
     {
         uint dequeueData = TrainingEventStateMachine.EventPool.DequeueData(TrainingEventStateMachine.CurrentEventType);
 
-        TrainingEventStateMachine.SetCurrentTrainingEvent(TrainingEventStateMachine.TrainingEventDataGenerator.GenerateTrainingEvent
-            (TrainingEventStateMachine.CurrentEventType, dequeueData));
+        TrainingEventStateMachine.SetCurrentTrainingEvent(
+            TrainingEventStateMachine.TrainingEventDataGenerator.GenerateTrainingEvent
+                (TrainingEventStateMachine.CurrentEventType, dequeueData));
 
-        TrainingEventStateMachine.SetCurrentScenarioData(TrainingEventStateMachine.TrainingEventDataGenerator.GenerateScenarioData
-            (TrainingEventStateMachine.CurrentEventType, TrainingEventStateMachine.CurrentEventData.ScenarioID));
-
+        TrainingEventStateMachine.SetCurrentScenarioData(
+            TrainingEventStateMachine.TrainingEventDataGenerator.GenerateScenarioData
+                (TrainingEventStateMachine.CurrentEventType, TrainingEventStateMachine.CurrentEventData.ScenarioID));
     }
 }
+
 #endregion
 
 #region シナリオを読んでいる間の処理
+
 public class ReadScenarioState : TrainingEventStateBase
 {
     public ReadScenarioState(TrainingEventStateMachine trainingEventStateMachine)
@@ -204,9 +219,11 @@ public class ReadScenarioState : TrainingEventStateBase
         await TrainingEventStateMachine.TrainingEventController.OnClickEventAction();
     }
 }
+
 #endregion
 
 #region イベント分岐時の処理
+
 public class EventBranchState : TrainingEventStateBase
 {
     public EventBranchState(TrainingEventStateMachine trainingEventStateMachine)
@@ -219,6 +236,7 @@ public class EventBranchState : TrainingEventStateBase
         await TrainingEventStateMachine.TrainingEventController.EventBranch();
     }
 }
+
 #endregion
 
 public class FinishEventState : TrainingEventStateBase
@@ -246,14 +264,26 @@ public class FinishEventState : TrainingEventStateBase
     /// <summary> イベントボーナスを受け取る処理 </summary>
     public async UniTask GetEventBonus()
     {
-        ParameterBuffCalculator parameterBuffCalculator = TrainingEventStateMachine.RaisingSimulationLifeTimeScope.Container.Resolve<ParameterBuffCalculator>();
+        ParameterBuffCalculator parameterBuffCalculator = TrainingEventStateMachine.RaisingSimulationLifeTimeScope
+            .Container.Resolve<ParameterBuffCalculator>();
         parameterBuffCalculator.SetTrainingEventBuff(TrainingEventStateMachine.CurrentEventData);
         parameterBuffCalculator.OnEventAllParameterBuff();
 
-        if(parameterBuffCalculator.IsTotalBuffZero())
+        if (parameterBuffCalculator.IsTotalBuffZero())
             await TrainingEventStateMachine.TrainingEventController.GetEventBonus();
 
         parameterBuffCalculator.DeleteBuff();
     }
 }
 
+public class ResultEventState : TrainingEventStateBase
+{
+    public ResultEventState(TrainingEventStateMachine trainingEventStateMachine)
+    {
+        _stateMachine = trainingEventStateMachine;
+    }
+
+    public async override UniTask OnEnter()
+    {
+    }
+}

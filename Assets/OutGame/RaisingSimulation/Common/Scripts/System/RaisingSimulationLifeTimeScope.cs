@@ -39,7 +39,8 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
         builder.Register<JsonCharacterCollectionDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //サポートカードの所有データのRepository
-        builder.Register<JsonSupportCardCollectionDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<JsonSupportCardCollectionDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //トレーニング対象データのRepository
         builder.Register<JsonTrainingSaveDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
@@ -51,36 +52,51 @@ public class RaisingSimulationLifeTimeScope : LifetimeScope
         builder.Register<AddressableSupportCardDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //キャラクターの画像データのRepository
-        builder.Register<AddressableCharacterImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableCharacterImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //サポートカードの画像データのRepository
-        builder.Register<AddressableSupportCardImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableSupportCardImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //各ランクの画像データのRepository
         builder.Register<AddressableRankImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //キャラクターの職種の画像データのRepository
-        builder.Register<AddressableCharacterJobImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableCharacterJobImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //トレーニングイベントのノベルデータのRepository
-        builder.Register<AddressableTrainingEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableTrainingEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //トレーニングイベントデータのRepository
         builder.Register<AddressableTrainingEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-        
+
         //キャラクター固有トレーニングスケジュールデータのRepository
-        builder.Register<AddressableCharacterTrainingScheduleRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableCharacterTrainingScheduleRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //キャラクター固有イベントデータのRepository
-        builder.Register<AddressableCharacterEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableCharacterEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //キャラクター固有シナリオデータのRepository
-        builder.Register<AddressableCharacterEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableCharacterEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //サポートカード固有イベントデータのRepository
-        builder.Register<AddressableSupportCardEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableSupportCardEventDataRepository>(Lifetime.Singleton).AsImplementedInterfaces()
+            .AsSelf();
 
         //サポートカードシナリオデータのRepository
-        builder.Register<AddressableSupportCardEventScenarioDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<AddressableSupportCardEventScenarioDataRepository>(Lifetime.Singleton)
+            .AsImplementedInterfaces().AsSelf();
+
+        //レイドデータのRepository
+        builder.Register<AddressableRaidDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        //ステージデータのRepository
+        builder.Register<AddressableStageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
     }
 }

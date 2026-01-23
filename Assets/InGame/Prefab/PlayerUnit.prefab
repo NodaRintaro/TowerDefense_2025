@@ -292,9 +292,17 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 6640598145079244688, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7149325664051616937, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_Name
       value: HPBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533117943410224043, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7533117943410224043, guid: 30536675f347bd247a926edc4ff728f3, type: 3}
       propertyPath: m_Transition

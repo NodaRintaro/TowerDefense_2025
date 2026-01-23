@@ -19,10 +19,9 @@ public class PlayerUnitData : UnitData
         _maxHp = trainedCharacterData.TotalPhysical;
         _attack = trainedCharacterData.TotalPower;
         _magicPower = trainedCharacterData.TotalIntelligence;
-        _actionInterval = trainedCharacterData.TotalSpeed;
+        _actionInterval = 1.25f + 80 / trainedCharacterData.TotalSpeed;
         //_searchEnemyDistance = trainedCharacterData.SearchEnemyDistance;
         _attackRange = 1f;
-        //_actionInterval = trainedCharacterData.ActionInterval;
         _currentHp = _maxHp;
     }
     public float RePlaceTimer { get => _rePlaceTimer; set => _rePlaceTimer = value; }

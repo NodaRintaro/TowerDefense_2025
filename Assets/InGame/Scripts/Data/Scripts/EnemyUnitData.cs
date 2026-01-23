@@ -1,18 +1,14 @@
+using UnityEngine;
+
 public class EnemyUnitData : UnitData
 {
+    public GameObject enemyImage;
     private float _moveSpeed;
-    //private AIRoute _aiRoute;
     public float MoveSpeed
     {
         get { return _moveSpeed; }
         set { _moveSpeed = value; }
     }
-
-    // public AIRoute AiRoute
-    // {
-    //     get { return _aiRoute; }
-    //     set { _aiRoute = value; }
-    // }
 
     public EnemyUnitData(EnemyData enemyData)
     {
@@ -23,6 +19,7 @@ public class EnemyUnitData : UnitData
         Defence = enemyData.defence;
         ActionInterval = enemyData.attackRate;
         AttackRange = enemyData.range;
+        enemyImage = enemyData.enemyImage;
         Group = GroupType.Enemy;
     }
 }

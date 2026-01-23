@@ -1,10 +1,11 @@
+
 using UnityEngine;
 
 public class EnemyUnit : UnitBase
 {
     [HideInInspector]public Vector3 targetPosition; // 目標地点
     EnemyUnitData EnemyUnitData => (EnemyUnitData)UnitData;
-    //private AIRoute _route => EnemyUnitData.AiRoute; 　　　     //ルート管理クラス
+    
     private AIRoute _route;
     public float moveSpeed;             // 移動速度
     private int _routeIndex = 1;        // ルートのインデックス
@@ -12,6 +13,9 @@ public class EnemyUnit : UnitBase
     protected override void Initialize()
     {
         targetPosition = _route.points[1];
+        GameObject obj = Instantiate(EnemyUnitData.enemyImage,this.transform);
+        obj.transform.localScale /= 2;
+        animator = obj.GetComponent<Animator>();
         OnRemovedEvent += Destroy;
     }
     public override void UpdateUnit(float deltaTime)

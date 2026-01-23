@@ -110,7 +110,6 @@ public class InGameManager : MonoBehaviour
     }
     private void StartGameFlow()
     {
-
         if (StageDataLoader.CurrentUseDeck != null) stageData = StageDataLoader.CurrentUseDeck;
         //アイコンの生成
         _ = StageInitialize();
@@ -150,7 +149,8 @@ public class InGameManager : MonoBehaviour
                             {
                                 if (hit.transform.gameObject.CompareTag("PlayerUnit"))
                                 {
-                                    RemovePlayerUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                                    //RemovePlayerUnit(hit.transform.gameObject.GetComponent<UnitBase>());
+                                    hit.transform.gameObject.GetComponent<PlayerUnit>()._isBack = true;
                                 }
                             }
                         }
@@ -338,6 +338,11 @@ public class InGameManager : MonoBehaviour
         for (int i = _unitList.Count - 1; i >= 0; i--)
         {
             UnitBase unit = _unitList[i];
+            if (unit == unit as PlayerUnit)
+            {
+                PlayerUnit playerUnit = unit as PlayerUnit;
+                if(playerUnit._isBack) RemovePlayerUnit(unit);
+            }
             if (unit.IsDead)
             {
                 if(unit == unit as PlayerUnit)
@@ -351,13 +356,11 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-
     //ユニットを追加するメソッド
     public void AddUnit(UnitBase unit)
     {
         _unitList.Add(unit);
     }
-
     //ユニットを削除するメソッド
     private void RemovePlayerUnit(UnitBase unit)
     {

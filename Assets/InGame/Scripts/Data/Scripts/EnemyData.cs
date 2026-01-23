@@ -10,4 +10,5 @@ public class EnemyData : ScriptableObject
     public float attackRate;
     public float attack;
     public float defence;
+    public GameObject enemyImage;
 }

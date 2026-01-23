@@ -7,6 +7,9 @@ public class UnitBase : MonoBehaviour
     [SerializeField] private GameObject _characterImageGameObject;
     protected UnitBase BattleTarget;       // 交戦相手
     public UnitData UnitData;           // ユニットデータ
+    
+    protected static readonly int AttackTriggerCode = Animator.StringToHash("AttackTrigger");
+    protected Animator animator;
     public PlayerUnitData PlayerData => UnitData as PlayerUnitData;   // プレイヤーユニットデータ
     public EnemyUnitData EnemyData => UnitData as EnemyUnitData;   // 敵ユニットデータ
     
@@ -88,6 +91,7 @@ public class UnitBase : MonoBehaviour
         {   // 敵じゃないユニットには攻撃しない
             return;
         }
+        AnimatorTrigger(AttackTriggerCode);
         // 自分の攻撃力から相手の防御力を引いたものをダメージとする（０未満にはならない）
         float damage = Mathf.Max(UnitData.Attack - target.UnitData.Defence, 0);
         // 攻撃相手はダメージを受ける
@@ -114,5 +118,12 @@ public class UnitBase : MonoBehaviour
     public float Distance(UnitBase targetUnit)
     {
         return Vector3.Distance(transform.position, targetUnit.transform.position);
+    }
+
+    protected void AnimatorTrigger(int trigger)
+    {
+        if (animator == null)
+            return;
+        animator.SetTrigger("AttackTrigger");
     }
 }

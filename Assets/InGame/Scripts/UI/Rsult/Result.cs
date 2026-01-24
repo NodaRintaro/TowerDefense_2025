@@ -37,8 +37,14 @@ public class Result : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            int resultScore = (maxEnemyNum - lostEnemyNum) / 5;
-            _starImage.sprite = _starImages[resultScore];
+            int starnum = 0;
+            int tmp = lostEnemyNum;
+            while ((tmp -= (maxEnemyNum / 5)) < 0)
+            {
+                starnum++;
+            }
+            _starImage.sprite = _starImages[starnum % 5];
+        Debug.Log($"{starnum}");
         }
     }
 

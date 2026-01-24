@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using TowerDefenseDeckData;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using VContainer;
 
@@ -25,6 +26,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _coinText;             //コインのText
     [SerializeField] public StageData stageData;                    //ステージのデータ
     [SerializeField] private DataLoadManager _dataLoadManager;
+    [SerializeField] private GameObject _pausePanel;
     private DataLoadCompleteNotifier _loadingNotifier;
     private List<UnitBase> _unitList = new List<UnitBase>();        //ユニットのリスト
     private Dictionary<uint, CharacterIcon> _characterIconList = new Dictionary<uint,CharacterIcon>(); //キャラクターアイコンのリスト
@@ -130,11 +132,13 @@ public class InGameManager : MonoBehaviour
         }
 
         _coins = stageData.initialCoinNum;
+        _result.gameObject.SetActive(false);
         int tmp = 0;
         foreach (var VARIABLE in stageData.waveDatas)
         {
             tmp += VARIABLE.EnemyNumsInWave;
         }
+        _pausePanel.SetActive(false);
 
         _maxEnemyNums = tmp;
         UpdateRemainingEnemyText(_remainingEnemyNums);
@@ -223,7 +227,7 @@ public class InGameManager : MonoBehaviour
     //アイコンを押下した時に呼び出される関数
     public void SelectCharacter(int characterID)
     {
-        if (!_unitDeck.CanPlaceCharacter(characterID)) return;
+        if (!_unitDeck.CanPlaceCharacter(characterID) || _playerState == playerState.Paused) return;
         _selectedCharacterID = characterID;
         _selectedCharacterObj = Instantiate(_characterBasePrefab, transform);
         PlayerUnit playerUnit = _selectedCharacterObj.GetComponent<PlayerUnit>();
@@ -279,6 +283,7 @@ public class InGameManager : MonoBehaviour
     }
     private void PlaceCharacter(PlayerUnitData unitData)
     {
+        if (_playerState == playerState.Paused) return;
         Debug.Log("キャラを配置");
         _coins -= (int)unitData.Cost;
         UnitBase unit = _selectedCharacterObj.GetComponent<PlayerUnit>();
@@ -485,6 +490,7 @@ public class InGameManager : MonoBehaviour
         if (_playerState == playerState.Paused)
         {
             _playerState = playerState.Idle;
+            _pausePanel.SetActive(false);
         }
         else if (Mathf.Approximately(_timeSpeed, 1.0f))
         {
@@ -505,6 +511,7 @@ public class InGameManager : MonoBehaviour
     public void TimeStop()
     {
         _playerState = playerState.Paused;
+        _pausePanel.SetActive(true);
     }
     
     //タワーへのダメージ
@@ -579,6 +586,7 @@ public class InGameManager : MonoBehaviour
         if (_towerHealth <= 0 || (_remainingEnemyNumOnField <= 0 && _remainingEnemyNums <= 0))
         {
             Debug.Log("GameEnd!");
+            _result.gameObject.SetActive(true);
             _playerState = playerState.GameEnd;
             _result.SetResultScore(_maxEnemyNums,lostEnemyNum);
             _result.SetIsWin(_towerHealth > 0);

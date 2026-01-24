@@ -44,7 +44,7 @@ public class Result : MonoBehaviour, IPointerDownHandler
                 starnum++;
             }
             _starImage.sprite = _starImages[starnum % 5];
-        Debug.Log($"{starnum}");
+            Debug.Log($"{starnum}");
         }
     }
 

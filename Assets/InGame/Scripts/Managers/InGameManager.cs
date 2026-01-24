@@ -406,7 +406,7 @@ public class InGameManager : MonoBehaviour
         for (int i = 0; i < stageData.waveDatas.Length; i++)
         {
             WaveData waveData = stageData.waveDatas[i];
-            while (waveData.IsOverGenerateTime(time, _waveEnemyIndex[i]))
+            while (waveData.IsOverGenerateTime(time - 5, _waveEnemyIndex[i]))
             {
                 // 駒を生成する
                 GameObject enemyObj = Instantiate(_enemyPrefab, waveData.aiRoute.points[0], Quaternion.identity);

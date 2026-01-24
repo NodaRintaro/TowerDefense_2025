@@ -303,11 +303,11 @@ MonoBehaviour:
   _fadePanel: {fileID: 959124982732051066}
   _resultImage: {fileID: 4666584870419357362}
   _starImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 3271fa1e1f250b8468c40c7903d5ed46, type: 3}
+  - {fileID: 21300000, guid: 5b27a5cbe11d14f4dbcd73080ca15ae6, type: 3}
+  - {fileID: 21300000, guid: 0be927cfcf28b9c46827b5b46fc394b2, type: 3}
+  - {fileID: 21300000, guid: 45ea48d917a889d4fb89c062e864d2c3, type: 3}
+  - {fileID: 21300000, guid: 9f20588901a67f5408f880eb19303980, type: 3}
   _starImage: {fileID: 3198012917645647671}
 --- !u!1 &7982750342523804144
 GameObject:

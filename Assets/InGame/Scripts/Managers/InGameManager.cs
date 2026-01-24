@@ -179,11 +179,17 @@ public class InGameManager : MonoBehaviour
                         _timeSpeed = 0;
                         _playerState = playerState.Paused;
                     }
+                    float ingameDeltaTime = _timeSpeed * Time.deltaTime;
+                    IngameTimer += ingameDeltaTime;
+                    OnPreviousTimeUpdated?.Invoke(ingameDeltaTime);
                     break;
                 }
             case playerState.DraggingCharacter:
                 {
                     DraggingCharacter();
+                    float ingameDeltaTime = _timeSpeed * Time.deltaTime;
+                    IngameTimer += ingameDeltaTime;
+                    OnPreviousTimeUpdated?.Invoke(ingameDeltaTime);
                     break;
                 }
             case playerState.Paused:
@@ -200,10 +206,6 @@ public class InGameManager : MonoBehaviour
                     break;
                 }
         }
-
-        float ingameDeltaTime = _timeSpeed * Time.deltaTime;
-        IngameTimer += ingameDeltaTime;
-        OnPreviousTimeUpdated?.Invoke(ingameDeltaTime);
     }
     private void OnDestroy()
     {
@@ -568,6 +570,7 @@ public class InGameManager : MonoBehaviour
     }
     private void UpdateCoins(float deltaTime)
     {
+        
         _coinTimer += deltaTime;
         if (_coinTimer >= _coinInterval)
         {

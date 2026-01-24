@@ -63,7 +63,7 @@ public static class JsonDataSaveSystem
             byte[] encodeJson = await File.ReadAllBytesAsync(streamingFilePath);
 
 
-            if(File.Exists(persistentFilePath))
+            if(!File.Exists(persistentFilePath))
                 // 非同期でバイト配列を書き込む
                 await File.WriteAllBytesAsync(persistentFilePath, encodeJson);
         }

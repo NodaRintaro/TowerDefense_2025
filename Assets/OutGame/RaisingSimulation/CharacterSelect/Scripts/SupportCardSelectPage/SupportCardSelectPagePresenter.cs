@@ -18,7 +18,7 @@ public class SupportCardSelectPagePresenter : MonoBehaviour, IPagePresenter
     [SerializeField, Header("サポートカード選択ボタンの親オブジェクト")]
     private Transform _supportCardSelectButtonParent;
 
-    private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
+    private RaisingSimulationDataContainer _lifeTimeScope = null;
 
     /// <summary> 現在選択中のボタンの配列番号 </summary>
     private uint _currentDeckNum;
@@ -38,7 +38,7 @@ public class SupportCardSelectPagePresenter : MonoBehaviour, IPagePresenter
 
     private void Awake()
     {
-        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
+        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationDataContainer>();
 
         _addressableSupportCardDataRepository = _lifeTimeScope.Container.Resolve<AddressableSupportCardDataRepository>();
         _addressableSupportCardImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableSupportCardImageDataRepository>();

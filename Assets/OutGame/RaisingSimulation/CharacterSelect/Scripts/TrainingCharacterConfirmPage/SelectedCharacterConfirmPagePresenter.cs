@@ -10,7 +10,7 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
     [SerializeField, Header("PageView")]
     private SelectPageView _pageView;
 
-    private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
+    private RaisingSimulationDataContainer _lifeTimeScope = null;
     private GameFlowStateMachine _gameFlowStateMachine;
     private TrainingEventPool _trainingEventPool;
 
@@ -24,7 +24,7 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
 
     public void Awake()
     {
-        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
+        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationDataContainer>();
 
         _trainingTargetCharacterTrainingScheduleRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterTrainingScheduleRepository>();
         _gameFlowStateMachine = _lifeTimeScope.Container.Resolve<GameFlowStateMachine>();

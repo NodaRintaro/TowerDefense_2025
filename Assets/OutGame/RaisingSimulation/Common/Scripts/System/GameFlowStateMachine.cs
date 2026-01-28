@@ -35,7 +35,7 @@ namespace RaisingSimulationGameFlowStateMachine
     /// <summary> 育成ゲームの進行状況を管理するステートマシン </summary>
     public class GameFlowStateMachine : StateMachine<ScreenType>
     {
-        [SerializeField] private RaisingSimulationLifeTimeScope _lifeTimeScope;
+        [SerializeField] private RaisingSimulationDataContainer _lifeTimeScope;
 
         [Header("各種スクリーン")]
         [SerializeField] private CharacterSelectScreen _characterSelectScreen;

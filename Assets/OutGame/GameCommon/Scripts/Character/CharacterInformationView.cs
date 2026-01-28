@@ -29,7 +29,7 @@ public class CharacterInformationView : MonoBehaviour
     private CharacterParameterUI _speedParameterUI = null;
 
     //VContainerのLifeTimeScope継承クラス
-    private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
+    private RaisingSimulationDataContainer _lifeTimeScope = null;
 
     private const float _maxAlpha = 1.0f;
 
@@ -43,7 +43,7 @@ public class CharacterInformationView : MonoBehaviour
 
     public void Start()
     {
-        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
+        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationDataContainer>();
         _addressableCharacterImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterImageDataRepository>();
         _addressableCharacterJobImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterJobImageDataRepository>();
         _addressableRankImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableRankImageDataRepository>();

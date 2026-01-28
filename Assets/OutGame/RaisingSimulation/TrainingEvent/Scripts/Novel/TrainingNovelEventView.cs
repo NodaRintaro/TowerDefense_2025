@@ -1,0 +1,143 @@
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using VContainer;
+
+/// <summary>
+/// ノベルゲームのView
+/// </summary>
+public class TrainingNovelEventView : MonoBehaviour, IPointerClickHandler
+{
+    [Header("シナリオを読んでいる際View")]
+    [SerializeField] private NovelEventUI _novelUI;
+
+    [Header("ノベルイベントのControllerClass")]
+    [SerializeField] private NovelEventPresenter _novelEventController;
+
+    private ScenarioData _currentReadScenario;
+    private NovelEventPlayerActions _currentAction;
+
+    //この名前が出てきたらシナリオを読むのを中断し分岐イベントに移る
+    private string _eventBranchName = "EventBranch";
+
+    private NovelPageData _currentPageData;
+
+    //LifeTimeScope
+    private RaisingSimulationDataContainer _lifeTimeScope;
+
+    private ParameterBuffCalculator _trainingCharacterParameterTotalBuffCalculator;
+
+    private JsonTrainingSaveDataRepository _jsonTrainingSaveData;
+    private AddressableCharacterDataRepository _addressableCharacterDataRepository;
+
+    public void Awake()
+    {
+        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationDataContainer>();
+
+        _trainingCharacterParameterTotalBuffCalculator = _lifeTimeScope.Container.Resolve<ParameterBuffCalculator>();
+        _jsonTrainingSaveData = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
+        _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
+    }
+
+    public void OnEnable()
+    {
+        _novelUI.Init();
+    }
+
+    /// <summary> シナリオデータをセットする </summary>
+    public void SetScenarioData(ScenarioData scenarioData)
+    {
+        _currentReadScenario = scenarioData;
+    }
+
+    public async void OnPointerClick(PointerEventData eventData)
+    {
+        await OnScenarioReadingAction();
+        Debug.Log("Click");
+    }
+
+    /// <summary> 現在表示されているシナリオを読み進める処理 </summary>
+    public async UniTask OnScenarioReadingAction()
+    {
+        switch(_currentAction)
+        {
+            case NovelEventPlayerActions.ReadScenario:
+                if (_currentReadScenario == null) break;
+
+                bool isFinishScenarioReading = _currentReadScenario.TryGetNextPage(out _currentPageData);
+
+                if (!isFinishScenarioReading || _currentPageData.TalkCharacterName == _eventBranchName)
+                {
+                    ChangeNovelEventPlayerActions(NovelEventPlayerActions.FinishedRead);
+                    await OnScenarioReadingAction();
+                    break;
+                }
+
+                SetNovelCharacters();
+                await ReadNovel();
+                break;
+            case NovelEventPlayerActions.SkipTextAnimation:
+                _novelUI.DialogueText.SkipText();
+                break;
+            case NovelEventPlayerActions.FinishedRead:
+                ChangeNovelEventPlayerActions(NovelEventPlayerActions.Inactive);
+                await _novelEventController.OnFinishedReadScenarioEvent();
+                break;
+        }
+    }
+
+    public void ChangeNovelEventPlayerActions(NovelEventPlayerActions novelEventPlayerActions)
+    {
+        _currentAction = novelEventPlayerActions;
+    }
+
+    /// <summary> 送られてきたデータをもとに画面を整える処理 </summary>
+    private async UniTask ReadNovel()
+    {
+        _novelUI.SetNameText(_currentPageData.TalkCharacterName);
+
+        //テキストがフェードインしている間はアニメーションをいつでもスキップできるようにする
+        _currentAction = NovelEventPlayerActions.SkipTextAnimation;
+        await _novelUI.DialogueText.ShowTextAsync(_currentPageData.ScenarioData);
+
+        //テキストがすべて表示されたら次のページへ進めるようにする
+        if(_currentAction == NovelEventPlayerActions.SkipTextAnimation)
+            _currentAction = NovelEventPlayerActions.ReadScenario;
+    }
+
+    private void SetNovelCharacters()
+    {
+        CharacterBaseData centerCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterCenter));
+        CharacterBaseData leftBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterLeftBottom));
+        CharacterBaseData rightBottomCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterRightBottom));
+        CharacterBaseData leftTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterLeftTop));
+        CharacterBaseData rightTopCharacter = _addressableCharacterDataRepository.GetCharacterDataByName(ChangeName(_currentPageData.CharacterRightTop));
+
+        Sprite centerSprite = null, leftBottomSprite = null, rightBottomSprite = null, leftTopSprite = null, rightTopSprite = null;
+
+        if (centerCharacter != null) centerSprite = centerCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (leftBottomCharacter != null) leftBottomSprite = leftBottomCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (rightBottomCharacter != null) rightBottomSprite = rightBottomCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (leftTopCharacter != null) leftTopSprite = leftTopCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+        if (rightTopCharacter != null) rightTopSprite = rightTopCharacter.CharacterImageData.GetSprite(CharacterSpriteType.OverAllView);
+
+        //キャラクター立ち絵をViewに反映
+        _novelUI.SetCharacterImage(centerSprite, leftBottomSprite, rightBottomSprite, leftTopSprite, rightTopSprite);
+    }
+
+    private string ChangeName(string newName)
+    {
+        if(newName == "TrainingCharacter") 
+            return _jsonTrainingSaveData.RepositoryData.TrainingCharacterData.CharacterName;
+
+        return newName;
+    }
+
+    public enum NovelEventPlayerActions
+    {
+        Inactive = 0,
+        FinishedRead,
+        SkipTextAnimation,
+        ReadScenario,
+    }
+}

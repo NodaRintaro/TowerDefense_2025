@@ -18,7 +18,7 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     [SerializeField, Header("サポートカード選択ボタンの親オブジェクト")]
     private Transform _characterSelectButtonParent;
 
-    private RaisingSimulationLifeTimeScope _lifeTimeScope = null;
+    private RaisingSimulationDataContainer _lifeTimeScope = null;
     private ButtonGenerator _buttonGenerator;
 
     #region DataClass
@@ -31,7 +31,7 @@ public class CharacterSelectPagePresenter : MonoBehaviour, IPagePresenter
     private void Awake()
     {
         _buttonGenerator = FindFirstObjectByType<ButtonGenerator>();
-        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationLifeTimeScope>();
+        _lifeTimeScope = FindFirstObjectByType<RaisingSimulationDataContainer>();
 
         _addressableCharacterDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterDataRepository>();
         _addressableCharacterImageDataRepository = _lifeTimeScope.Container.Resolve<AddressableCharacterImageDataRepository>();

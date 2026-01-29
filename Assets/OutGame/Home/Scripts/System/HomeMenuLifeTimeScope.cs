@@ -1,4 +1,6 @@
-﻿using RaisingSimulationGameFlowStateMachine;
+﻿using OutGame;
+using OutGame.Home;
+using RaisingSimulationGameFlowStateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +9,7 @@ using VContainer.Unity;
 
 public class HomeMenuLifeTimeScope : LifetimeScope
 {
+    [SerializeField] HomeScreenView _homeScreenView;
     protected override void Configure(IContainerBuilder builder)
     {
         //データリポジトリ必要なデータリポジトリを全てContainerに登録する処理
@@ -15,6 +18,11 @@ public class HomeMenuLifeTimeScope : LifetimeScope
         //全てのデータリポジトリのロードを管理し、完了を通知するクラス
         builder.Register<RepositoryDataLoader>(Lifetime.Singleton).AsSelf().As<IAsyncStartable>();
 
+        builder.RegisterInstance<IHomeView>(_homeScreenView);
+        builder.Register<HomeScreenModel>(Lifetime.Scoped);
+        builder.Register<HomeScreenPresenter>(Lifetime.Scoped);
+        builder.RegisterEntryPoint<HomeScreenPresenter>(Lifetime.Scoped);
+        
         //全てのデータリポジトリのロードが完了したことを通知するクラス
         builder.RegisterComponentOnNewGameObject<DataLoadCompleteNotifier>(Lifetime.Singleton);
     }
@@ -29,7 +37,7 @@ public class HomeMenuLifeTimeScope : LifetimeScope
         builder.Register<AddressableCharacterImageDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         //現在のキャラクターデータベース
-        builder.Register<TowerDefenseCharacterDataBase>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+        builder.Register<JsonTowerDefenseCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         
         //キャラクターベースデータのRegistry
         builder.Register<AddressableCharacterDataRepository>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();

@@ -76,8 +76,8 @@ public class TowerDefenseJsonDataCreator : EditorWindow
                 RankCalculator.GetCurrentRank(_towerDefenseCharacterData.TotalParameter, TowerDefenseCharacterRankRateData.RankRateDict));
             
             if(!_dataBase.TryAddCharacterDict(_characterId, _towerDefenseCharacterData))
-                Debug.Log("データの保存に失敗しました");
-            else Debug.Log("データの保存に成功しました");
+                Debug.Log("データの追加に失敗しました");
+            else Debug.Log("データの追加に成功しました");
 
 
             _characterId = 0;
@@ -90,6 +90,7 @@ public class TowerDefenseJsonDataCreator : EditorWindow
         if (GUILayout.Button("データをセーブ"))
         {
             await CreateJsonData();
+            Debug.Log("データの保存に成功しました");
         }
     }
 

@@ -54,20 +54,20 @@ public class CharacterBaseData
     /// パラメータの初期化関数
     /// </summary>
     /// <param name="id">ID</param>
-    /// <param name="charaName">名前</param>
+    /// <param name="charName">名前</param>
     /// <param name="rarity">レアリティ</param>
-    /// <param name="physi">体力</param>
+    /// <param name="phys">体力</param>
     /// <param name="pow">筋力</param>
-    /// <param name="intelli">知力</param>
+    /// <param name="intelligence">知力</param>
     /// <param name="sp">素早さ</param>
-    public void InitData(uint id, string charaName, uint rarity, uint physi, uint pow, uint intelli, uint sp, string role, uint cost, uint skillID, CharacterImageData characterImageData)
+    public void InitData(uint id, string charName, uint rarity, uint phys, uint pow, uint intelligence, uint sp, string role, uint cost, uint skillID, CharacterImageData characterImageData)
     {
         _characterID = id;
-        _characterName = charaName;
+        _characterName = charName;
         _baseRarity = rarity;
-        _basePhysical = physi;
+        _basePhysical = phys;
         _basePower = pow;
-        _baseIntelligence = intelli;
+        _baseIntelligence = intelligence;
         _baseSpeed = sp;
         SetCharacterRole(role);
         _cost = cost;

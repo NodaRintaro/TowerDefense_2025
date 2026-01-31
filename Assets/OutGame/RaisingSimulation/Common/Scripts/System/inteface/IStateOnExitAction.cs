@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITrainingEventStateOnEnterAction
+public interface IStateOnExitAction
 {
-    public UniTask OnEnterAction();
+    public UniTask OnExitAction();
+    public void SetActionStateType();
 }

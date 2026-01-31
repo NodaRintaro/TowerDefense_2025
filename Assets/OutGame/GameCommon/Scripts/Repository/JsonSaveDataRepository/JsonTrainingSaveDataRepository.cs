@@ -11,6 +11,8 @@ public class JsonTrainingSaveDataRepository : RepositoryBase<TrainingSaveData>
 
     public const string SaveDataName = "JsonTrainingTargetSaveData";
 
+   
+
     public async UniTask DataSave()
     {
         await JsonDataSaveSystem.DataSaveAsync(_repositoryData, SaveDataName);

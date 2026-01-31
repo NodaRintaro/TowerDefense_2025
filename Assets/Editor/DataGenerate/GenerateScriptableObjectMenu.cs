@@ -253,7 +253,7 @@ public class GenerateScriptableObjectMenu : EditorWindow
         {
             case DataType.CharacterData:
                 _scriptableObjectName = "CharacterDataRegistry";
-                GenerateCharacterData(parseCsvData);
+                await GenerateCharacterData(parseCsvData);
                 break;
             case DataType.SupportCard:
                 _scriptableObjectName = "SupportCardDataRegistry";

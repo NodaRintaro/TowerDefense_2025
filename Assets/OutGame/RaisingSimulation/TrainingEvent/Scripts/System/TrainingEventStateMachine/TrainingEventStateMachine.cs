@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
-using System.Collections.Generic;
 
 public enum TrainingEventStateType
 {
@@ -9,50 +8,8 @@ public enum TrainingEventStateType
     ReadScenario,
     EventBranch,
     RaidEvent,
-    FinishEvent
+    EventResult
 }
-
-#region ステートのベースクラス
-/// <summary> ステートのベースクラス </summary>
-public class TrainingEventStateBase : State<TrainingEventStateType>
-{
-    List<ITrainingEventStateOnEnterAction> _onEnterActionList = new();
-
-    List<ITrainingEventStateOnExitAction> _onExitActionList = new();
-
-    protected TrainingEventStateMachine _trainingEventStateMachine => _stateMachine as TrainingEventStateMachine;
-
-    /// <summary> このステートに遷移した時に行う処理を追加する </summary>
-    public void AddEnterAction(ITrainingEventStateOnEnterAction action)
-    {
-        _onEnterActionList.Add(action);
-    }
-
-    /// <summary> 別のステートへの遷移時に行う処理を追加する </summary>
-    public void AddExitAction(ITrainingEventStateOnExitAction action)
-    {
-        _onExitActionList.Add(action);
-    }
-
-    /// <summary> このステートに遷移した時に行う処理 </summary>
-    public async override UniTask OnEnter()
-    {
-        foreach (var action in _onEnterActionList)
-        {
-            await action.OnEnterAction();
-        }
-    }
-
-    /// <summary> 別のステートへの遷移時に行う処理 </summary>
-    public async override UniTask OnExit()
-    {
-        foreach(var action in _onExitActionList)
-        {
-            await action.OnExitAction();
-        }
-    }
-}
-#endregion
 
 /// <summary>
 /// トレーニング中のイベントの生成と管理を行うステートマシン
@@ -73,7 +30,7 @@ public class TrainingEventStateMachine : StateMachine<TrainingEventStateType>
         _stateDict.Add(TrainingEventStateType.EventStartState, new EventStartState(this));
         _stateDict.Add(TrainingEventStateType.ReadScenario, new ReadScenarioState(this));
         _stateDict.Add(TrainingEventStateType.EventBranch, new EventBranchState(this));
-        _stateDict.Add(TrainingEventStateType.FinishEvent, new FinishEventState(this));
+        _stateDict.Add(TrainingEventStateType.EventResult, new EventResultState(this));
     }
 
     public override async UniTask ChangeState(TrainingEventStateType trainingEventState)
@@ -92,7 +49,7 @@ public class TrainingEventStateMachine : StateMachine<TrainingEventStateType>
 }
 
 #region イベント開始時のステート
-public class EventStartState : TrainingEventStateBase
+public class EventStartState : State<TrainingEventStateType>
 {
     public EventStartState(TrainingEventStateMachine trainingEventStateMachine)
     {
@@ -102,7 +59,7 @@ public class EventStartState : TrainingEventStateBase
 #endregion
 
 #region イベントシナリオを読んでいる間の処理
-public class ReadScenarioState : TrainingEventStateBase
+public class ReadScenarioState : State<TrainingEventStateType>
 {
     public ReadScenarioState(TrainingEventStateMachine trainingEventStateMachine)
     {
@@ -112,24 +69,19 @@ public class ReadScenarioState : TrainingEventStateBase
 #endregion
 
 #region イベント分岐時の処理
-public class EventBranchState : TrainingEventStateBase
+public class EventBranchState : State<TrainingEventStateType>
 {
     public EventBranchState(TrainingEventStateMachine trainingEventStateMachine)
     {
         _stateMachine = trainingEventStateMachine;
     }
-
-    public async override UniTask OnEnter()
-    {
-        
-    }
 }
 #endregion
 
 #region イベント終了時の処理
-public class FinishEventState : TrainingEventStateBase
+public class EventResultState : State<TrainingEventStateType>
 {
-    public FinishEventState(TrainingEventStateMachine trainingEventStateMachine)
+    public EventResultState(TrainingEventStateMachine trainingEventStateMachine)
     {
         _stateMachine = trainingEventStateMachine;
     }

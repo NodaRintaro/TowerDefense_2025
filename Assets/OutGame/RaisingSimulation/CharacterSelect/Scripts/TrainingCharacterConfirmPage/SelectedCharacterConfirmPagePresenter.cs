@@ -63,7 +63,7 @@ public class SelectedCharacterConfirmPagePresenter : MonoBehaviour, IPagePresent
 
         _lifeTimeScope.Container.Resolve<TrainingEventSelector>().SetCharacterUniqueEvent();
 
-        await _gameFlowStateMachine.ChangeState(ScreenType.TrainingEvent);
+        await _gameFlowStateMachine.ChangeState(ScreenStateType.TrainingEvent);
     }
 
     /// <summary> 現在のページからほかのページへ移行するイベントをボタンに登録する処理 </summary>

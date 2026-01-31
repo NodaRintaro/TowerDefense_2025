@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace RaisingSimulationGameFlowStateMachine
 {
-    public enum ScreenType
+    public enum ScreenStateType
     {
         CharacterSelect,
         TrainingSelectMenu,
@@ -14,80 +14,19 @@ namespace RaisingSimulationGameFlowStateMachine
         Result
     }
 
-    public abstract class ScreenState : State<ScreenType>
-    {
-        protected ScreenBase _screen;
-
-        public override async UniTask OnEnter()
-        {
-            _screen.gameObject.SetActive(true);
-            await _screen.FadeInScreen();
-        }
-
-        public override async UniTask OnExit()
-        {
-            await _screen.FadeOutScreen();
-            _screen.gameObject.SetActive(false);
-        }
-    }
-
-
     /// <summary> 育成ゲームの進行状況を管理するステートマシン </summary>
-    public class GameFlowStateMachine : StateMachine<ScreenType>
+    public class GameFlowStateMachine : StateMachine<ScreenStateType>
     {
-        [SerializeField] private RaisingSimulationDataContainer _lifeTimeScope;
-
-        [Header("各種スクリーン")]
-        [SerializeField] private CharacterSelectScreen _characterSelectScreen;
-        [SerializeField] private TrainingSelectScreen _trainingSelectScreen;
-        [SerializeField] private TrainingEventScreen _trainingEventScreen;
-        [SerializeField] private ResultScreen _resultScreen;
-
-        [SerializeField, Header("シーン遷移してすぐのフェードアウト中の画面")]
-        private GameObject _fadeScreen;
-
-        private DataLoadCompleteNotifier _loadingNotifier;
-        private ScreenType _currentScreen;
-
-        public void Awake()
-        {
-            //最初に全てのスクリーンの状態を非アクティブにしておく
-            _characterSelectScreen.gameObject.SetActive(false);
-            _trainingSelectScreen.gameObject.SetActive(false);
-            _trainingEventScreen.gameObject.SetActive(false);
-            _resultScreen.gameObject.SetActive(false);
-
-            //DataLoadが済んだタイミングでゲームを動かし始める
-            _fadeScreen.SetActive(true);
-            _loadingNotifier = _lifeTimeScope.Container.Resolve<DataLoadCompleteNotifier>();
-            _loadingNotifier.OnDataLoadComplete += StartGameFlow;
-        }
-
-        public void OnDisable()
-        {
-            _loadingNotifier.OnDataLoadComplete -= StartGameFlow;
-        }
-
-        public async void StartGameFlow()
+        public void Start()
         {
             Debug.Log("ゲームスタート");
-            _stateDict.Add(ScreenType.CharacterSelect, new CharacterSelectScreenState(_characterSelectScreen, this));
-            _stateDict.Add(ScreenType.TrainingSelectMenu, new TrainingSelectScreenState(_trainingSelectScreen, this));
-            _stateDict.Add(ScreenType.TrainingEvent, new TrainingEventScreenState(_trainingEventScreen, this));
-            _stateDict.Add(ScreenType.Result, new ResultScreenState(_resultScreen, this));
-
-            JsonTrainingSaveDataRepository tSaveData = _lifeTimeScope.Container.Resolve<JsonTrainingSaveDataRepository>();
-
-            //セーブデータを確認してデータが残っていれば途中の画面からスタート
-            tSaveData.SetData(new TrainingSaveData());
-            _currentScreen = ScreenType.CharacterSelect;
-            await ChangeState(ScreenType.CharacterSelect);
-            Debug.Log(_currentScreen);
-
-
+            _stateDict.Add(ScreenStateType.CharacterSelect, new CharacterSelectState(this));
+            _stateDict.Add(ScreenStateType.TrainingSelectMenu, new TrainingSelectState(this));
+            _stateDict.Add(ScreenStateType.TrainingEvent, new TrainingEventState(this));
+            _stateDict.Add(ScreenStateType.Result, new ResultState(this));
         }
 
-        public override async UniTask ChangeState(ScreenType stateType)
+        public override async UniTask ChangeState(ScreenStateType stateType)
         {
             if (_stateDict[stateType] != null)
             {
@@ -103,41 +42,37 @@ namespace RaisingSimulationGameFlowStateMachine
     }
 
     /// <summary> キャラクター選択画面のステート </summary>
-    public class CharacterSelectScreenState : ScreenState
+    public class CharacterSelectState : State<ScreenStateType>
     {
-        public CharacterSelectScreenState(CharacterSelectScreen characterSelectScreen, StateMachine<ScreenType> stateMachine)
+        public CharacterSelectState(StateMachine<ScreenStateType> stateMachine)
         {
-            _screen = characterSelectScreen;
             _stateMachine = stateMachine;
         }
     }
 
     /// <summary> トレーニング選択画面のステート </summary>
-    public class TrainingSelectScreenState : ScreenState
+    public class TrainingSelectState : State<ScreenStateType>
     {
-        public TrainingSelectScreenState(TrainingSelectScreen trainingSelectScreen, StateMachine<ScreenType> stateMachine)
+        public TrainingSelectState(StateMachine<ScreenStateType> stateMachine)
         {
-            _screen = trainingSelectScreen;
             _stateMachine = stateMachine;
         }
     }
 
     /// <summary> トレーニングイベント画面のステート </summary>
-    public class TrainingEventScreenState : ScreenState
+    public class TrainingEventState : State<ScreenStateType>
     {
-        public TrainingEventScreenState(TrainingEventScreen trainingEventScreen, StateMachine<ScreenType> stateMachine)
+        public TrainingEventState(StateMachine<ScreenStateType> stateMachine)
         {
-            _screen = trainingEventScreen;
             _stateMachine = stateMachine;
         }
     }
 
     /// <summary> キャラクター育成結果表示画面のステート </summary>
-    public class ResultScreenState : ScreenState
+    public class ResultState : State<ScreenStateType>
     {
-        public ResultScreenState(ResultScreen resultScreen, StateMachine<ScreenType> stateMachine)
+        public ResultState(StateMachine<ScreenStateType> stateMachine)
         {
-            _screen = resultScreen;
             _stateMachine = stateMachine;
         }
     }

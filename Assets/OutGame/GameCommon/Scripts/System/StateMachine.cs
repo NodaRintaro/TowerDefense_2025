@@ -6,13 +6,38 @@ public abstract class State<TStateType>
 {
     protected StateMachine<TStateType> _stateMachine;
 
-    public virtual UniTask OnEnter()
+    List<IStateOnEnterAction> _onEnterActionList = new();
+
+    List<IStateOnExitAction> _onExitActionList = new();
+
+    /// <summary> このステートに遷移した時に行う処理を追加する </summary>
+    public void AddEnterAction(IStateOnEnterAction action)
     {
-        return UniTask.CompletedTask;
+        _onEnterActionList.Add(action);
     }
-    public virtual UniTask OnExit()
+
+    /// <summary> 別のステートへの遷移時に行う処理を追加する </summary>
+    public void AddExitAction(IStateOnExitAction action)
     {
-        return UniTask.CompletedTask;
+        _onExitActionList.Add(action);
+    }
+
+    /// <summary> このステートに遷移した時に行う処理 </summary>
+    public async UniTask OnEnter()
+    {
+        foreach (var action in _onEnterActionList)
+        {
+            await action.OnEnterAction();
+        }
+    }
+
+    /// <summary> 別のステートへの遷移時に行う処理 </summary>
+    public async UniTask OnExit()
+    {
+        foreach (var action in _onExitActionList)
+        {
+            await action.OnExitAction();
+        }
     }
 }
 

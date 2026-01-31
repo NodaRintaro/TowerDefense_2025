@@ -21,7 +21,7 @@ MonoBehaviour:
     _baseIntelligence: 50
     _baseSpeed: 70
     _roleType: 1
-    _cost: 18
+    _cost: 9
     _skillID: 1
     _imageData:
       _spriteData:
@@ -42,7 +42,7 @@ MonoBehaviour:
     _baseIntelligence: 35
     _baseSpeed: 40
     _roleType: 2
-    _cost: 15
+    _cost: 10
     _skillID: 2
     _imageData:
       _spriteData:
@@ -63,7 +63,7 @@ MonoBehaviour:
     _baseIntelligence: 70
     _baseSpeed: 50
     _roleType: 3
-    _cost: 25
+    _cost: 20
     _skillID: 3
     _imageData:
       _spriteData:
@@ -84,7 +84,7 @@ MonoBehaviour:
     _baseIntelligence: 50
     _baseSpeed: 48
     _roleType: 4
-    _cost: 22
+    _cost: 20
     _skillID: 4
     _imageData:
       _spriteData:
@@ -105,7 +105,7 @@ MonoBehaviour:
     _baseIntelligence: 60
     _baseSpeed: 45
     _roleType: 5
-    _cost: 28
+    _cost: 25
     _skillID: 5
     _imageData:
       _spriteData:

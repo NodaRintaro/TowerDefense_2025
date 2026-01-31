@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 8881908847191011440}
   - component: {fileID: 8279735034167571267}
   m_Layer: 5
-  m_Name: CharacterSelectPage
+  m_Name: CharacterSelectMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

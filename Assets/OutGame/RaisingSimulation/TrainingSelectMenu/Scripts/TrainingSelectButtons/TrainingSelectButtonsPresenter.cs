@@ -100,7 +100,7 @@ public class TrainingSelectButtonsPresenter : MonoBehaviour
 
         await UniTask.Delay(700);
 
-        await _gameFlowStateMachine.ChangeState(ScreenType.TrainingEvent);
+        await _gameFlowStateMachine.ChangeState(ScreenStateType.TrainingEvent);
     }
 
     /// <summary> トレーニング選択ボタンのイベント </summary>

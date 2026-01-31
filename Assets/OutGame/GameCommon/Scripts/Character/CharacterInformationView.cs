@@ -1,7 +1,4 @@
-﻿
-using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;

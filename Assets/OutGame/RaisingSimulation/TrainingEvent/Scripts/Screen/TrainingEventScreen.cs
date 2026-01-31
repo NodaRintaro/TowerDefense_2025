@@ -18,8 +18,7 @@ public class TrainingEventScreen : ScreenBase
             _fadeImage.gameObject.SetActive(true);
 
         //フェードイン
-        await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() =>_fadeImage.gameObject.SetActive(false));
-        await _controller.StartTraining();
+        await _fadeImage.DOFade(0f, _fadeDuration).SetEase(Ease.InQuad).OnComplete(() =>_fadeImage.gameObject.SetActive(false));    
     }
 
     public async override UniTask FadeOutScreen()

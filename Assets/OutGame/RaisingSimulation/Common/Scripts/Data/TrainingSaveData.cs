@@ -23,7 +23,7 @@ public class TrainingSaveData : IJsonSaveData
     [JsonProperty] private uint _currentStamina = 100;
 
     //現在のゲームスクリーン
-    [JsonProperty] private ScreenType _currentScreenType;
+    [JsonProperty] private ScreenStateType _currentScreenType = ScreenStateType.CharacterSelect;
 
     //現在のキャラクターのトレーニングスケジュール
     [JsonProperty] private CharacterTrainingSchedule _currentCharacterSchedule = null;
@@ -34,7 +34,7 @@ public class TrainingSaveData : IJsonSaveData
     public uint CurrentElapsedDays => _currentElapsedDays;
     public uint MaxStamina => _maxStamina;
     public uint CurrentStamina => _currentStamina;
-    public ScreenType CurrentScreenType => _currentScreenType;
+    public ScreenStateType CurrentScreenType => _currentScreenType;
     public CharacterTrainingSchedule CurrentCharacterSchedule => _currentCharacterSchedule;
     #endregion
 

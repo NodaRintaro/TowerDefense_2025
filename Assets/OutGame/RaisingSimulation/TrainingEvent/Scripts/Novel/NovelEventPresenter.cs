@@ -19,7 +19,7 @@ public enum EventInputActionType
 }
 
 /// <summary> プレイヤーからの入力を受けてトレーニングイベントを進行するClass </summary>
-public class NovelEventPresenter : MonoBehaviour, ITrainingEventStateOnEnterAction, ITrainingEventStateOnExitAction
+public class NovelEventPresenter : MonoBehaviour, IStateOnEnterAction, IStateOnExitAction
 {
     [SerializeField] private TrainingEventScreen _trainingEventScreen = null;
 
@@ -60,6 +60,10 @@ public class NovelEventPresenter : MonoBehaviour, ITrainingEventStateOnEnterActi
         
     }
 
+    public void SetActionStateType()
+    {
+
+    }
 
     private void DataResolve()
     {
@@ -67,12 +71,6 @@ public class NovelEventPresenter : MonoBehaviour, ITrainingEventStateOnEnterActi
         _trainingEventDataGenerator = _lifeTimeScope.Container.Resolve<TrainingEventDataGenerator>();
 
         _dataLoadCompleteNotifier.OnDataLoadComplete -= DataResolve;
-    }
-
-    public async UniTask StartTraining()
-    {
-        Debug.Log("トレーニング開始");
-        await _trainingEventStateMachine.ChangeState(TrainingEventStateType.EventStartState);
     }
 
     /// <summary> プレーヤーの入力によって行う処理を変更 </summary>
